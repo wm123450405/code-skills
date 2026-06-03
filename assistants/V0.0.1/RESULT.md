@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.1`
 - 创建时间:2026-06-03 19:25
-- 最近更新:2026-06-03 20:55
+- 最近更新:2026-06-03 21:00
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.1` |
 | 创建时间 | 2026-06-03 19:25 |
-| 最近更新 | 2026-06-03 20:55 |
+| 最近更新 | 2026-06-03 21:00 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -81,8 +81,9 @@
 | --- | --- | --- | --- | --- | --- |
 | REQ-00001 | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 2026-06-03 20:25 | 2026-06-03 20:25 | [RESULT.md](design/REQ-00001/RESULT.md) |
 | REQ-00002 | 编码格式统一(REQ/TASK/BUG 均 5 位,采用新规则) | 已完成 | 2026-06-03 20:25 | 2026-06-03 20:25 | [RESULT.md](design/REQ-00002/RESULT.md) |
+| REQ-00003 | 优化 `code-rule` 技能,增加不同类型的核心编码规范的解析或引导 | 已完成 | 2026-06-03 21:00 | 2026-06-03 21:00 | [RESULT.md](design/REQ-00003/RESULT.md) |
 
-**统计**:2 / 已完成 2 / 进行中 0
+**统计**:3 / 已完成 3 / 进行中 0
 
 ---
 
@@ -201,6 +202,7 @@
 | 2026-06-03 20:52 | 开发状态更新 | `REQ-00001-003` 开发状态"待开始"→"已完成",T-003 核查 CLAUDE.md(0 命中 3 关键词,0 变更,无 commit) | `REQ-00001-003` |
 | 2026-06-03 20:54 | 开发状态更新 | `REQ-00001-004` 开发状态"待开始"→"已完成",T-004 全仓库 Grep + 11 不变量自检 + 单 commit `f147ea7`(3 files, 5+/5-);3 处偏离记入 `code/REQ-00001-004/deviations.md`;**M1 达成** | `REQ-00001-004` |
 | 2026-06-03 20:55 | 计划新增 | REQ-00002 详细设计与编码计划完成(共 8 个任务,`REQ-00002-001` ~ `REQ-00002-008`)。范围:10 SKILL.md(只改正文)+ 27 模板(占位符+示例值)+ 中英 README + CLAUDE.md 核查 + (条件)encoding-conventions.md + (条件)migration-mapping.md + 全仓库 Grep + 看板同步;多 commit 粒度按文件类型(7 个 commit);继承概要设计 8 决策 + 11 不变量 + 本设计新增 2 不变量(INV-12/13);Q-1 ~ Q-12 全部采纳 REQU 文档默认;plan 阶段 D-PLAN-1(`code-it` 创建新规范文件,授权);无新增依赖,无偏离规范;**M2 待开始** | REQ-00002 |
+| 2026-06-03 21:00 | 设计新增 | REQ-00003 概要设计完成(v1,核心架构=单技能 + 3 子流程;9 个模块 M-1~M-9;Type A 6 分类 + 4 保留 + 1 弃用[H2 决策];Type B/C 数据结构 5/4 字段;9 条不变量;5 commit 实施计划)。范围:扩展 `code-rule/SKILL.md` 正文(不改 frontmatter)+ 扩展 `templates/rule.md`(占位/引导模式)+ 6 个新分类文件(全空占位 H1 决策)+ `module-conventions.md` 追加 DEPRECATED 标记 + `plugins/code-skills/CLAUDE.md` 末尾追加"AI 工作约定"小节。严守 FR-9 边界(不修改 marketplace.json / plugin.json / 9 个其他 SKILL.md / 4 保留规范文件 / V0.0.0~V0.0.1 工作文件);Q-4(C-4=`directory-conventions`)/Q-5(全空占位)/Q-8(H2 module→directory 迁移)用户确认,Q-6(Type B 无示例字段)/Q-7(Type C `## 提示:` + `### 提示:` 并存)采纳默认;design 阶段新增 D-DESIGN-1(保留旧关键词向后兼容)/D-DESIGN-2(`code-rule` description 不变)/D-DESIGN-3(5 commit 按模块拆分);无新增依赖,无偏离规范;**M3 待开始,REQ-00003 阻塞 `code-plan` REQ-00003 等待用户触发** | REQ-00003 |
 
 ---
 
@@ -213,6 +215,7 @@
 - 概要设计:`./assistants/V0.0.1/design/<需求编号>/RESULT.md` × N
   - REQ-00001 → [design/REQ-00001/RESULT.md](design/REQ-00001/RESULT.md)
   - REQ-00002 → [design/REQ-00002/RESULT.md](design/REQ-00002/RESULT.md)
+  - REQ-00003 → [design/REQ-00003/RESULT.md](design/REQ-00003/RESULT.md)
 - 详细设计:`./assistants/V0.0.1/plan/<需求编号>/RESULT.md` × N
   - REQ-00001 → [plan/REQ-00001/RESULT.md](plan/REQ-00001/RESULT.md)
   - REQ-00002 → [plan/REQ-00002/RESULT.md](plan/REQ-00002/RESULT.md)
@@ -221,6 +224,8 @@
   - REQ-00002 → [plan/REQ-00002/PLAN.md](plan/REQ-00002/PLAN.md)(8 个任务:`REQ-00002-001`~`008`)
 - 过程文档:`./assistants/V0.0.1/plan/REQ-00002/*.md`
   - [materials-index.md](plan/REQ-00002/materials-index.md) / [design-notes.md](plan/REQ-00002/design-notes.md) / [module-details.md](plan/REQ-00002/module-details.md) / [interface-specs.md](plan/REQ-00002/interface-specs.md) / [data-changes.md](plan/REQ-00002/data-changes.md) / [risk-analysis.md](plan/REQ-00002/risk-analysis.md) / [rule-compliance.md](plan/REQ-00002/rule-compliance.md) / [clarifications.md](plan/REQ-00002/clarifications.md)
+- 过程文档:`./assistants/V0.0.1/design/REQ-00003/*.md`
+  - [materials-index.md](design/REQ-00003/materials-index.md) / [design-notes.md](design/REQ-00003/design-notes.md) / [module-breakdown.md](design/REQ-00003/module-breakdown.md) / [dependencies.md](design/REQ-00003/dependencies.md) / [related-designs.md](design/REQ-00003/related-designs.md) / [rule-compliance.md](design/REQ-00003/rule-compliance.md) / [clarifications.md](design/REQ-00003/clarifications.md)
 - 代码改修正文:`./assistants/V0.0.1/code/<任务编码>/RESULT.md` × N
   - REQ-00001-001 → [code/REQ-00001-001/RESULT.md](code/REQ-00001-001/RESULT.md) + [work-log.md](code/REQ-00001-001/work-log.md)
   - REQ-00001-002 → [code/REQ-00001-002/RESULT.md](code/REQ-00001-002/RESULT.md) + [work-log.md](code/REQ-00001-002/work-log.md)
