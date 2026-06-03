@@ -25,64 +25,21 @@
   ],
   "plugins": [
     {
-      "name": "code-init",
-      "description": "工程初始化 — 项目接入,创建基线版本,分析现有代码并登记为 EXISTING-NNN 需求",
-      "source": "./skills/code-init",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-version",
-      "description": "版本管理 — 切换/创建版本工作空间",
-      "source": "./skills/code-version",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-rule",
-      "description": "编码规范管理 — 维护 assistants/rules/ 下的项目级共享规范",
-      "source": "./skills/code-rule",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-require",
-      "description": "需求分析 — 接收需求编码,产出需求 RESULT.md",
-      "source": "./skills/code-require",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-design",
-      "description": "概要设计 — 基于需求产出概要设计",
-      "source": "./skills/code-design",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-plan",
-      "description": "详细设计与实施计划 — 接收需求编码或缺陷编号",
-      "source": "./skills/code-plan",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-it",
-      "description": "开发编码 — 接收任务编码或缺陷编号,执行实际代码改动",
-      "source": "./skills/code-it",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-unit",
-      "description": "单元测试 — 补齐/编写单元测试,固化代码契约",
-      "source": "./skills/code-unit",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-fix",
-      "description": "缺陷登记与跟踪 — 维护 BUG-NNN 状态机",
-      "source": "./skills/code-fix",
-      "skills": ["./SKILL.md"]
-    },
-    {
-      "name": "code-review",
-      "description": "代码评审 — 产出整体评审报告与派生改修任务",
-      "source": "./skills/code-review",
-      "skills": ["./SKILL.md"]
+      "name": "code-skills",
+      "description": "编码全流程工具包",
+      "source": "./",
+      "skills": [
+        "code-require",
+        "code-design",
+        "code-plan",
+        "code-it",
+        "code-unit",
+        "code-review",
+        "code-fix",
+        "code-version",
+        "code-init",
+        "code-rule"
+      ]
     }
   ]
 }
