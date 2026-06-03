@@ -1,34 +1,22 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "code-skills",
   "version": "1.0.0",
   "description": "A suite of Claude Code skills that guide AI through the complete software development lifecycle, with built-in version-aware workspace management.",
   "owner": {
     "name": "code-skills"
   },
-  "homepage": "./plugins/code-skills/README.md",
-  "license": "MIT",
-  "keywords": [
-    "skills",
-    "code-require",
-    "code-design",
-    "code-plan",
-    "code-it",
-    "code-unit",
-    "code-review",
-    "code-fix",
-    "code-version",
-    "code-init",
-    "code-rule",
-    "version-aware",
-    "sdlc",
-    "lifecycle"
-  ],
   "plugins": [
     {
       "name": "code-skills",
       "description": "编码全流程工具包",
+      "version": "1.0.0",
+      "author": {
+        "name": "code-skills"
+      },
       "source": "./plugins/code-skills",
-      "skills": [
+      "keywords": [
+        "skills",
         "code-require",
         "code-design",
         "code-plan",
@@ -38,7 +26,22 @@
         "code-fix",
         "code-version",
         "code-init",
-        "code-rule"
+        "code-rule",
+        "version-aware",
+        "sdlc",
+        "lifecycle"
+      ],
+      "skills": [
+        "./skills/code-require",
+        "./skills/code-design",
+        "./skills/code-plan",
+        "./skills/code-it",
+        "./skills/code-unit",
+        "./skills/code-review",
+        "./skills/code-fix",
+        "./skills/code-version",
+        "./skills/code-init",
+        "./skills/code-rule"
       ]
     }
   ]

@@ -1,12 +1,11 @@
 {
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "code-skills",
   "version": "1.0.0",
   "description": "A suite of Claude Code skills that guide AI through the complete software development lifecycle, with built-in version-aware workspace management.",
-  "owner": {
+  "author": {
     "name": "code-skills"
   },
-  "license": "MIT",
-  "homepage": "./README.md",
   "keywords": [
     "skills",
     "code-require",
