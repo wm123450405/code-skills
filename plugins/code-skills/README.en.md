@@ -4,6 +4,23 @@
 
 A suite of Claude Code skills that guide AI through the complete software development lifecycle, with **built-in version-aware workspace management**.
 
+## Install
+
+```bash
+# 1. Register the marketplace (add the repo to your local marketplace list)
+claude plugin marketplace add https://github.com/wm123450405/code-skills.git
+
+# 2. Install the plugin
+claude plugin install code-skills@code-skills
+
+# 3. Activate the skills
+/reload-plugins
+```
+
+After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/code-skills:code-version`, `/code-skills:code-require`.
+
+> ⚠️ The form `claude plugin install code-skills@https://github.com/...` (splicing a GitHub URL directly after `@`) **does not work** in current Claude Code versions. You must first `marketplace add` to register, then install via `@marketplace-name` (the marketplace name `code-skills` comes from the `name` field in `marketplace.json`).
+
 ## Skills Overview
 
 | Skill | Purpose | Reads | Writes | Downstream |

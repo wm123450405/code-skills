@@ -4,6 +4,23 @@
 
 一套用于引导 AI 走完完整软件开发生命周期的 Claude Code 技能集合,内置**版本感知工作空间管理**。
 
+## 安装
+
+```bash
+# 1. 注册 marketplace(把仓库加到本地 marketplace 列表)
+claude plugin marketplace add https://github.com/wm123450405/code-skills.git
+
+# 2. 安装插件
+claude plugin install code-skills@code-skills
+
+# 3. 激活技能
+/reload-plugins
+```
+
+安装完成后,所有技能以 `/code-skills:<技能名>` 形式调用,例如 `/code-skills:code-version`、`/code-skills:code-require`。
+
+> ⚠️ `claude plugin install code-skills@https://github.com/...` 这种把 GitHub URL 直接拼到 `@` 后面的形式在当前 Claude Code 版本下**不会工作** —— 必须先 `marketplace add` 注册,再用 `@marketplace-name`(本仓库的 marketplace name 是 `code-skills`,来自 `marketplace.json` 的 `name` 字段)安装。
+
 ## 技能概览
 
 | 技能 | 用途 | 读取 | 写入 | 下游 |
