@@ -16,15 +16,15 @@
 
 | 任务编号 | 标题 | 类型 | 触发/来源 | 开发状态 | 测试状态 | 涉及文件 | 完成时间 | 提交哈希 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `REQ-00001-001` | 改 `.claude-plugin/marketplace.json` 根 name | 修改 | 需求新增 | 待开始 | 不适用 | `.claude-plugin/marketplace.json` | — | — | — |
-| `REQ-00001-002` | 同步中英 README | 修改 | 需求新增 | 待开始 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | — | — | — |
-| `REQ-00001-003` | 核查 `plugins/code-skills/CLAUDE.md` | 文档 | 需求新增 | 待开始 | 不适用 | `plugins/code-skills/CLAUDE.md`(预期 0 变更) | — | — | — |
-| `REQ-00001-004` | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 + commit | 文档 | 需求新增 | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00001-004/RESULT.md` | — | — | — |
+| `REQ-00001-001` | 改 `.claude-plugin/marketplace.json` 根 name | 修改 | 需求新增 | 已完成 | 不适用 | `.claude-plugin/marketplace.json` | 2026-06-03 20:50 | f147ea7 | — |
+| `REQ-00001-002` | 同步中英 README | 修改 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | 2026-06-03 20:51 | f147ea7 | — |
+| `REQ-00001-003` | 核查 `plugins/code-skills/CLAUDE.md` | 文档 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md`(0 变更) | 2026-06-03 20:52 | (不提交) | — |
+| `REQ-00001-004` | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 + commit | 文档 | 需求新增 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00001-004/RESULT.md` | 2026-06-03 20:54 | f147ea7 | — |
 
 **统计**:
 - 总任务数:4
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):待 code-it 推进
-- 开发已完成 / 未完成:0 / 4
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):4 / 4 ✅ M1 已达成
+- 开发已完成 / 未完成:4 / 0
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 4 / 0(纯文档/字符串任务,全部不适用)
 
 ---
@@ -213,3 +213,4 @@
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- | --- |
 | 2026-06-03 20:30 | v1 | 计划新增 | 完成首次详细设计与编码计划:4 个任务(`REQ-00001-001`~`004`),单 commit 提交;继承概要设计 7 决策 + 11 不变量 + 4 文件变更集;Q-3/Q-4/Q-5 采用 REQU 文档默认;无新增依赖,无偏离规范 | wangmiao |
+| 2026-06-03 20:54 | v1 | 状态推进 | 4 任务全部完成(`REQ-00001-001`~`004`):T-001 改 marketplace.json 根 name、T-002 同步中英 README、T-003 核查 CLAUDE.md(0 变更)、T-004 全仓库 Grep + 11 不变量自检 + 单 commit `f147ea7`(3 files, 5+/5-);3 处偏离记入 `code/REQ-00001-004/deviations.md`(doc-conventions 正面示例 / V0.0.0 基线 / git push 未自动);M1 达成 | wangmiao |
