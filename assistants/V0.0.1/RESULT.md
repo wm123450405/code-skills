@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.1`
 - 创建时间:2026-06-03 19:25
-- 最近更新:2026-06-03 19:25
+- 最近更新:2026-06-03 20:45
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.1` |
 | 创建时间 | 2026-06-03 19:25 |
-| 最近更新 | 2026-06-03 19:25 |
+| 最近更新 | 2026-06-03 20:45 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -37,7 +37,7 @@
 | 里程碑 | 包含任务范围 | 完成定义 | 状态 | 计划时间 | 实际完成 |
 | --- | --- | --- | --- | --- | --- |
 | M0:工作空间就绪 | — | 本看板创建 | 已完成 | 2026-06-03 | 2026-06-03 |
-| M1:<标题> | <需求/任务范围> | 关键路径开发完成,任务清单内"开发=已完成 ∧ 测试∈{已运行-通过, 不适用}" | 待开始 | YYYY-MM-DD | — |
+| M1:Marketplace 改名落地 | REQ-00001:T-001~T-004(`REQ-00001-001`~`004`) | 4 任务开发=已完成 ∧ 1 个 commit 已 push(单 commit,doc-conventions §规则 1) | 待开始 | 2026-06-03 | — |
 | M2:<标题> | ... | ... | 待开始 | YYYY-MM-DD | — |
 | M3:可发布 | 本版本所有任务 | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
 
@@ -52,15 +52,24 @@
 
 | 需求编码 | 标题 | 状态 | 创建时间 | 完成时间 | 需求文档 | 概要设计 | 详细设计 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| (待添加) | | | | | | | |
+| REQ-00001(原 REQ-2026-0001) | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 2026-06-03 20:10 | 2026-06-03 20:20 | [RESULT.md](require/REQ-00001/RESULT.md) | [RESULT.md](design/REQ-00001/RESULT.md) | [RESULT.md](plan/REQ-00001/RESULT.md) |
+| REQ-00002 | 编码格式统一(REQ/TASK/BUG 均 5 位,采用新规则) | 已完成 | 2026-06-03 20:14 | 2026-06-03 20:18 | [RESULT.md](require/REQ-00002/RESULT.md) | [RESULT.md](design/REQ-00002/RESULT.md) | — |
+| REQ-00003 | 优化 `code-rule` 技能,增加不同类型的核心编码规范的解析或引导 | 已完成 | 2026-06-03 20:35 | 2026-06-03 20:45 | [RESULT.md](require/REQ-00003/RESULT.md) | — | — |
 
 **统计**:
-- 总数:0
-- 已完成:0
+- 总数:3
+- 已完成:3(需求分析阶段已完成,下游 design/plan/it/review 待开展)
 - 进行中:0
 - 待开始:0
 - 已取消:0
 - 阻塞:0
+
+> 备注:本表"状态"反映**需求分析(code-require)**阶段是否完成;下游各阶段(概要设计/详细设计/编码/评审)状态在对应区段独立追踪。
+> FR/NFR/AC 统计:
+> - REQ-00001:7 FR / 7 NFR / 9 AC / 3 项待澄清(Q-3/Q-4/Q-5)
+> - REQ-00002:10 FR / 7 NFR / 11 AC / 6 项待澄清(Q-6/Q-8/Q-9/Q-10/Q-11/Q-12)+ 1 项已锁定(Q-7);v2 已锁定 Q-7(TASK = `TASK-REQ-<REQ 数字段>-NNNNN` / `TASK-BUG-<BUG 数字段>-NNNNN`),并新增 Q-12("需求编码"在 TASK 编码中是否含 `REQ-` 前缀;默认 (a) 仅数字段);v3 反映 FR-6 部分提前落地
+> - REQ-00003:10 FR / 6 NFR / 10 AC / 5 项待澄清(Q-4~Q-8)+ 3 项已锁定(Q-1/Q-2/Q-3);Q-1 锁定 6 类核心规范(部分条件性,部分默认,部分"未来占位"),Q-2 锁定类型识别"两者结合",Q-3 锁定 Type C 插入位置"两者都支持"
+> 编码格式说明:REQ-00001 与 REQ-00002 均采用新格式(5 位纯数字);REQ-00001 原编码 REQ-2026-0001 已于 2026-06-03 20:20 提前重命名(部分落地 REQ-00002 FR-6,仅目录+本工作空间引用,SKILL.md/模板/README/CLAUDE.md 的旧编码引用由 REQ-00002 `code-it` 阶段统一清理)
 
 ---
 
@@ -70,8 +79,10 @@
 
 | 需求编码 | 设计标题 | 状态 | 创建时间 | 完成时间 | 概要设计文档 |
 | --- | --- | --- | --- | --- | --- |
+| REQ-00001 | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 2026-06-03 20:25 | 2026-06-03 20:25 | [RESULT.md](design/REQ-00001/RESULT.md) |
+| REQ-00002 | 编码格式统一(REQ/TASK/BUG 均 5 位,采用新规则) | 已完成 | 2026-06-03 20:25 | 2026-06-03 20:25 | [RESULT.md](design/REQ-00002/RESULT.md) |
 
-**统计**:0 / 已完成 0 / 进行中 0
+**统计**:2 / 已完成 2 / 进行中 0
 
 ---
 
@@ -81,8 +92,9 @@
 
 | 需求编码 | 计划标题 | 状态 | 任务总数 | 开发完成 | 测试通过 | 创建时间 | 计划文档 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| REQ-00001 | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 4 | 0 | 0(全部不适用) | 2026-06-03 20:30 | [PLAN.md](plan/REQ-00001/PLAN.md) |
 
-**统计**:0 个计划 / 共 0 个任务 / 开发完成 0 / 测试通过 0
+**统计**:1 个计划 / 共 4 个任务 / 开发完成 0 / 测试通过 0(全部不适用)
 
 ---
 
@@ -95,12 +107,16 @@
 
 | 任务编号 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 | 完成时间 | 提交哈希 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `REQ-00001-001` | REQ-00001 | 修改 | 需求新增 | 改 `.claude-plugin/marketplace.json` 根 name | 待开始 | 不适用 | `.claude-plugin/marketplace.json` | — | — | — |
+| `REQ-00001-002` | REQ-00001 | 修改 | 需求新增 | 同步中英 README | 待开始 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | — | — | — |
+| `REQ-00001-003` | REQ-00001 | 文档 | 需求新增 | 核查 `plugins/code-skills/CLAUDE.md` | 待开始 | 不适用 | `plugins/code-skills/CLAUDE.md`(预期 0 变更) | — | — | — |
+| `REQ-00001-004` | REQ-00001 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 + commit | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00001-004/RESULT.md` | — | — | — |
 
 **统计**:
-- 总任务数:0
+- 总任务数:4
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):0
-- 开发已完成 / 未完成:0 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 0 / 0
+- 开发已完成 / 未完成:0 / 4
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 4 / 0
 
 ---
 
@@ -157,15 +173,31 @@
 | 时间 | 变更类型 | 变更摘要 | 关联项 |
 | --- | --- | --- | --- |
 | 2026-06-03 19:25 | 初始化 | 创建版本 V0.0.1 工作空间(从 V0.0.0 切换) | — |
+| 2026-06-03 20:10 | 需求新增 | REQ-00001 需求分析完成(原 REQ-2026-0001,共 7 条 FR / 7 条 NFR / 9 条 AC / 3 项待澄清)。范围:仅 `.claude-plugin/marketplace.json` 根 `name` 字段 `code-skills` → `code-skills-marketplace`;同步 README.md / README.en.md / CLAUDE.md 中引用,严禁修改 plugin.json / 目录结构 / SKILL.md / 规范文件 | REQ-00001(原 REQ-2026-0001) |
+| 2026-06-03 20:14 | 需求新增 | REQ-00002 需求分析完成(10 FR / 7 NFR / 11 AC / 6 项待澄清 Q-6~Q-11)。范围:三类编码格式统一(REQ-NNNNN / TASK-? / BUG-NNNNN,5 位);追溯重命名 REQ-2026-0001 → REQ-00001;横切 10 个 SKILL.md / 20+ 模板 / README / CLAUDE.md;严禁修改 marketplace 协议清单与目录结构 | REQ-00002 |
+| 2026-06-03 20:18 | 需求变更 | REQ-00002 增量更新 v2:用户回答 Q-7,TASK 编码改为嵌套式 `TASK-REQ-<REQ 编码>-NNNNN`(需求任务) / `TASK-BUG-<BUG 编码>-NNNNN`(修复任务);FR-1 / FR-2 / FR-3 正则与示例同步;新增 Q-12 澄清"需求编码"在 TASK 编码中是否含 `REQ-` 前缀 | REQ-00002 |
+| 2026-06-03 20:20 | 需求重命名 | 按用户指令提前落地 REQ-00002 FR-6 部分工作:目录 `assistants/V0.0.1/require/REQ-2026-0001/` → `REQ-00001/`,本工作空间及 V0.0.1 看板中的"当前"引用同步;v1 历史变更记录保留原字面值。**未触及**:SKILL.md / 模板 / README / CLAUDE.md / V0.0.0 EXISTING-* — 仍由 REQ-00002 `code-it` 阶段统一清理 | REQ-00001(原 REQ-2026-0001) |
+| 2026-06-03 20:20 | 需求变更 | REQ-00002 增量更新 v3:同步反映 FR-6 部分提前落地的状态(FR-6 描述、AC-6 步骤、§场景 1、§1 概述、§11 关联需求、related-requirements.md §实施顺序建议均标注"已发生 / ✅");Q-11 措辞调整为"原先后顾虑部分消解" | REQ-00002 |
+| 2026-06-03 20:25 | 设计新增 | REQ-00001 概要设计完成(v1,7 项设计决策,4 文件变更集,关键不变量 7 条,规范 100% 合规;Q-3/Q-4/Q-5 采用 REQU 文档默认值,详见 design/REQ-00001/clarifications.md)。范围:仅 .claude-plugin/marketplace.json 根 name + 2 README + 1 CLAUDE?(Grep 后决定);严守 marketplace-protocol §规则 1.3(plugin 标识保持)、doc-conventions §规则 1(中英同次提交) | REQ-00001 |
+| 2026-06-03 20:25 | 设计新增 | REQ-00002 概要设计完成(v1,8 项设计决策,5 个修改文件类型 + 2 条件新文件,11 个子任务预想,11 条不变量;Q-7 已锁定 v2 G4 新嵌套式;Q-6/Q-8/Q-9/Q-10/Q-12 采用 REQU 文档默认值,详见 design/REQ-00002/clarifications.md)。范围:10 SKILL.md(只改正文)+ 20+ 模板(占位符+示例值)+ 3 文档 + 1 看板模板(只改示例值,不触发 dashboard-conventions §规则 1)+ (条件)encoding-conventions.md + (条件)migration-mapping.md;严守 doc-conventions §规则 1/2、skill-conventions §规则 1(frontmatter 保持) | REQ-00002 |
+| 2026-06-03 20:30 | 计划新增 | REQ-00001 详细设计与编码计划完成(共 4 个任务,`REQ-00001-001` ~ `REQ-00001-004`)。范围:`.claude-plugin/marketplace.json` 根 name + 中英 README 同步 + CLAUDE.md 核查 + 全仓库 Grep + 单 commit 提交;继承概要设计 7 决策 + 11 不变量;Q-3/Q-4/Q-5 采用 REQU 文档默认;无新增依赖,无偏离规范 | REQ-00001 |
+| 2026-06-03 20:45 | 需求新增 | REQ-00003 需求分析完成(共 10 FR / 6 NFR / 10 AC / 5 项待澄清 Q-4~Q-8 + 3 项已锁定 Q-1/Q-2/Q-3)。范围:扩展 `code-rule` 技能支持 3 种目标类型(Type A 规则 / Type B CLAUDE.md / Type C 模板),Type A 覆盖 6 类核心规范(部分条件性,部分支持"未来占位");类型识别为"自动+显式"两者结合;Type C 支持末尾追加与内联两种插入位置;保持现有 Type A 流程向后兼容(NFR-1);严守 FR-9 边界(不修改 marketplace.json / plugin.json / 其他 9 SKILL.md frontmatter / V0.0.0~V0.0.1 工作文件);Q-1 锁定 6 类规范(C-1 框架 / C-2 三方依赖 / C-3 语言与命名 / C-4 目录与模块 / C-5 代码书写 / C-6 提交与合并),Q-2 锁定"自动+显式",Q-3 锁定"两者都支持"。**未阻塞** `code-design` 阶段(Q-4~Q-8 采用合理默认并显式记录回退路径) | REQ-00003 |
 
 ---
 
 ## 索引:本版本所有文件
 
-- 需求:`./assistants/V0.0.1/require/<需求编号>/RESULT.md` × N(待添加)
-- 概要设计:`./assistants/V0.0.1/design/<需求编号>/RESULT.md` × N(待添加)
-- 详细设计:`./assistants/V0.0.1/plan/<需求编号>/RESULT.md` × N(待添加)
-- 任务计划:`./assistants/V0.0.1/plan/<需求编号>/PLAN.md` × N(待添加)
+- 需求:`./assistants/V0.0.1/require/<需求编号>/RESULT.md` × N
+  - REQ-00001 → [require/REQ-00001/RESULT.md](require/REQ-00001/RESULT.md)
+  - REQ-00002 → [require/REQ-00002/RESULT.md](require/REQ-00002/RESULT.md)
+  - REQ-00003 → [require/REQ-00003/RESULT.md](require/REQ-00003/RESULT.md)
+- 概要设计:`./assistants/V0.0.1/design/<需求编号>/RESULT.md` × N
+  - REQ-00001 → [design/REQ-00001/RESULT.md](design/REQ-00001/RESULT.md)
+  - REQ-00002 → [design/REQ-00002/RESULT.md](design/REQ-00002/RESULT.md)
+- 详细设计:`./assistants/V0.0.1/plan/<需求编号>/RESULT.md` × N
+  - REQ-00001 → [plan/REQ-00001/RESULT.md](plan/REQ-00001/RESULT.md)
+- 任务计划:`./assistants/V0.0.1/plan/<需求编号>/PLAN.md` × N
+  - REQ-00001 → [plan/REQ-00001/PLAN.md](plan/REQ-00001/PLAN.md)(4 个任务:`REQ-00001-001`~`004`)
 - 代码改修正文:`./assistants/V0.0.1/code/<任务编码>/RESULT.md` × N(待添加)
 - 测试改修正文:`./assistants/V0.0.1/test/<任务编码>/RESULT.md` × N(待添加)
 - 评审报告:`./assistants/V0.0.1/review/<需求编号>/REVIEW-REPORT.md` × N(待添加)
