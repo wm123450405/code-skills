@@ -11,7 +11,7 @@ A suite of Claude Code skills that guide AI through the complete software develo
 claude plugin marketplace add https://github.com/wm123450405/code-skills.git
 
 # 2. Install the plugin
-claude plugin install code-skills@code-skills
+claude plugin install code-skills@code-skills-marketplace
 
 # 3. Activate the skills
 /reload-plugins
@@ -19,7 +19,7 @@ claude plugin install code-skills@code-skills
 
 After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/code-skills:code-version`, `/code-skills:code-require`.
 
-> ⚠️ The form `claude plugin install code-skills@https://github.com/...` (splicing a GitHub URL directly after `@`) **does not work** in current Claude Code versions. You must first `marketplace add` to register, then install via `@marketplace-name` (the marketplace name `code-skills` comes from the `name` field in `marketplace.json`).
+> ⚠️ The form `claude plugin install code-skills@https://github.com/...` (splicing a GitHub URL directly after `@`) **does not work** in current Claude Code versions. You must first `marketplace add` to register, then install via `@marketplace-name` (the marketplace name `code-skills-marketplace` comes from the `name` field in `marketplace.json`).
 
 ## Skills Overview
 
