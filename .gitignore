@@ -1,0 +1,17 @@
+# Claude Code local settings (per-user, not for version control)
+.claude/settings.local.json
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+ehthumbs_view.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
