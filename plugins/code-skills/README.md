@@ -43,70 +43,78 @@ code-version → code-require → code-design → code-plan → code-it → code
 
 ## 仓库结构
 
+本仓库按 Claude Code **marketplace** 协议布局:仓库根承载 marketplace 清单,插件本体放在 `plugins/code-skills/` 子目录中。这样既可以整体发布到 marketplace,也支持直接以子目录作为 `claude plugin install` 的源。
+
 ```
-code-skills/
-├── README.md              # 本文件,工作流总览 + 技能表
-├── README.en.md           # 本文件的英文版本
-├── CLAUDE.md              # 给 Claude Code 使用的开发指南
-└── skills/
-    ├── code-init/         # 工程初始化(项目级一次性引导)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── INIT-REPORT.md
-    │       ├── existing-requirement.md
-    │       └── assistants-layout.md
-    ├── code-version/      # 版本管理(版本感知入口)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── version-RESULT.md
-    │       └── assistants-layout.md
-    ├── code-rule/         # 编码规范管理(项目级共享)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── rule.md
-    │       └── assistants-layout.md
-    ├── code-require/      # 需求分析
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── requirements.md
-    │       └── assistants-layout.md
-    ├── code-design/       # 概要设计
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── design.md
-    │       └── assistants-layout.md
-    ├── code-plan/         # 详细设计 + 任务计划 / 缺陷修复方案
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── plan.md
-    │       ├── task-plan.md
-    │       ├── fix-plan.md
-    │       └── assistants-layout.md
-    ├── code-it/           # 开发编码 / 缺陷修复实施
-    │   ├── SKILL.md
-    │   ├── guidelines/coding-style.md
-    │   └── templates/
-    │       ├── RESULT.md
-    │       └── assistants-layout.md
-    ├── code-unit/         # 单元测试
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── RESULT.md
-    │       ├── test-spec.md
-    │       └── assistants-layout.md
-    ├── code-fix/          # 缺陷登记与跟踪
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── bug.md
-    │       ├── fix-registry.md
-    │       └── assistants-layout.md
-    └── code-review/       # 代码评审
-        ├── SKILL.md
-        ├── checklists/review-checklist.md
-        └── templates/
-            ├── REVIEW-REPORT.md
-            ├── REVIEW-FIX.md
-            └── assistants-layout.md
+code-skills/                          ← marketplace 仓库根
+├── .claude-plugin/
+│   └── marketplace.json              # 插件市场清单(plugins[] 数组)
+└── plugins/
+    └── code-skills/                  ← 插件本体(与插件名同名)
+        ├── .claude-plugin/
+        │   └── plugin.json           # 插件自身元信息
+        ├── README.md                 # 本文件,工作流总览 + 技能表
+        ├── README.en.md              # 本文件的英文版本
+        ├── CLAUDE.md                 # 给 Claude Code 使用的开发指南
+        └── skills/
+            ├── code-init/            # 工程初始化(项目级一次性引导)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── INIT-REPORT.md
+            │       ├── existing-requirement.md
+            │       └── assistants-layout.md
+            ├── code-version/         # 版本管理(版本感知入口)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── version-RESULT.md
+            │       └── assistants-layout.md
+            ├── code-rule/            # 编码规范管理(项目级共享)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── rule.md
+            │       └── assistants-layout.md
+            ├── code-require/         # 需求分析
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── requirements.md
+            │       └── assistants-layout.md
+            ├── code-design/          # 概要设计
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── design.md
+            │       └── assistants-layout.md
+            ├── code-plan/            # 详细设计 + 任务计划 / 缺陷修复方案
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── plan.md
+            │       ├── task-plan.md
+            │       ├── fix-plan.md
+            │       └── assistants-layout.md
+            ├── code-it/              # 开发编码 / 缺陷修复实施
+            │   ├── SKILL.md
+            │   ├── guidelines/coding-style.md
+            │   └── templates/
+            │       ├── RESULT.md
+            │       └── assistants-layout.md
+            ├── code-unit/            # 单元测试
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── RESULT.md
+            │       ├── test-spec.md
+            │       └── assistants-layout.md
+            ├── code-fix/             # 缺陷登记与跟踪
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── bug.md
+            │       ├── fix-registry.md
+            │       └── assistants-layout.md
+            └── code-review/          # 代码评审
+                ├── SKILL.md
+                ├── checklists/review-checklist.md
+                └── templates/
+                    ├── REVIEW-REPORT.md
+                    ├── REVIEW-FIX.md
+                    └── assistants-layout.md
 ```
 
 ## 核心概念

@@ -44,70 +44,78 @@ Version Mgmt   Requirements   High-level   Detailed    Implement   Unit Tests   
 
 ## Repository Structure
 
+This repository follows the Claude Code **marketplace** layout: the repo root hosts the marketplace manifest, and the plugin itself lives under `plugins/code-skills/`. This lets us publish the whole thing as a marketplace, while still allowing `claude plugin install` to point directly at the plugin subdirectory.
+
 ```
-code-skills/
-├── README.md              # This file, workflow overview + skills table
-├── README.en.md           # English version of this file
-├── CLAUDE.md              # Development guide for Claude Code
-└── skills/
-    ├── code-init/         # Project initialization (one-time project bootstrap)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── INIT-REPORT.md
-    │       ├── existing-requirement.md
-    │       └── assistants-layout.md
-    ├── code-version/      # Version management (version-aware entry)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── version-RESULT.md
-    │       └── assistants-layout.md
-    ├── code-rule/         # Coding-standard management (project-wide shared)
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── rule.md
-    │       └── assistants-layout.md
-    ├── code-require/      # Requirements analysis
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── requirements.md
-    │       └── assistants-layout.md
-    ├── code-design/       # High-level design
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── design.md
-    │       └── assistants-layout.md
-    ├── code-plan/         # Detailed design + task plan / bug fix plan
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── plan.md
-    │       ├── task-plan.md
-    │       ├── fix-plan.md
-    │       └── assistants-layout.md
-    ├── code-it/           # Implementation / bug-fix execution
-    │   ├── SKILL.md
-    │   ├── guidelines/coding-style.md
-    │   └── templates/
-    │       ├── RESULT.md
-    │       └── assistants-layout.md
-    ├── code-unit/         # Unit testing
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── RESULT.md
-    │       ├── test-spec.md
-    │       └── assistants-layout.md
-    ├── code-fix/          # Bug registration & tracking
-    │   ├── SKILL.md
-    │   └── templates/
-    │       ├── bug.md
-    │       ├── fix-registry.md
-    │       └── assistants-layout.md
-    └── code-review/       # Code review
-        ├── SKILL.md
-        ├── checklists/review-checklist.md
-        └── templates/
-            ├── REVIEW-REPORT.md
-            ├── REVIEW-FIX.md
-            └── assistants-layout.md
+code-skills/                          ← marketplace repo root
+├── .claude-plugin/
+│   └── marketplace.json              # Marketplace manifest (plugins[] array)
+└── plugins/
+    └── code-skills/                  ← Plugin body (same name as the plugin)
+        ├── .claude-plugin/
+        │   └── plugin.json           # Plugin's own metadata
+        ├── README.md                 # This file, workflow overview + skills table
+        ├── README.en.md              # English version of this file
+        ├── CLAUDE.md                 # Development guide for Claude Code
+        └── skills/
+            ├── code-init/            # Project initialization (one-time project bootstrap)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── INIT-REPORT.md
+            │       ├── existing-requirement.md
+            │       └── assistants-layout.md
+            ├── code-version/         # Version management (version-aware entry)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── version-RESULT.md
+            │       └── assistants-layout.md
+            ├── code-rule/            # Coding-standard management (project-wide shared)
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── rule.md
+            │       └── assistants-layout.md
+            ├── code-require/         # Requirements analysis
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── requirements.md
+            │       └── assistants-layout.md
+            ├── code-design/          # High-level design
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── design.md
+            │       └── assistants-layout.md
+            ├── code-plan/            # Detailed design + task plan / bug fix plan
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── plan.md
+            │       ├── task-plan.md
+            │       ├── fix-plan.md
+            │       └── assistants-layout.md
+            ├── code-it/              # Implementation / bug-fix execution
+            │   ├── SKILL.md
+            │   ├── guidelines/coding-style.md
+            │   └── templates/
+            │       ├── RESULT.md
+            │       └── assistants-layout.md
+            ├── code-unit/            # Unit testing
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── RESULT.md
+            │       ├── test-spec.md
+            │       └── assistants-layout.md
+            ├── code-fix/             # Bug registration & tracking
+            │   ├── SKILL.md
+            │   └── templates/
+            │       ├── bug.md
+            │       ├── fix-registry.md
+            │       └── assistants-layout.md
+            └── code-review/          # Code review
+                ├── SKILL.md
+                ├── checklists/review-checklist.md
+                └── templates/
+                    ├── REVIEW-REPORT.md
+                    ├── REVIEW-FIX.md
+                    └── assistants-layout.md
 ```
 
 ## Key Concepts

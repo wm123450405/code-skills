@@ -25,25 +25,30 @@ code-version → code-require → code-design → code-plan → code-it → code
 
 ## 仓库结构
 
+本仓库按 Claude Code **marketplace** 协议布局:仓库根承载一个 marketplace 清单,插件本体放在 `plugins/<name>/` 子目录中,这样既能整体发布到 marketplace,也能单插件直接 `claude plugin install` 引用子目录。
+
 ```
-code-skills/
-├── README.md            # 工作流总览与技能表(中文)
-├── README.en.md         # 工作流总览与技能表(英文)
-├── CLAUDE.md            # 本文件
-├── .claude-plugin/      # Claude Code 插件清单
-│   ├── marketplace.json # 插件市场清单(描述整套技能)
-│   └── plugin.json      # 当前插件元信息
-└── skills/
-    ├── code-init/       # 工程初始化(项目级一次性引导)
-    ├── code-version/    # 版本管理(版本感知入口)
-    ├── code-rule/       # 编码规范管理(项目级共享)
-    ├── code-require/    # 需求分析
-    ├── code-design/     # 概要设计
-    ├── code-plan/       # 详细设计 / 实施计划(REQ 路径)+ 缺陷修复方案(BUG 路径)
-    ├── code-it/         # 开发编码(任务路径)+ 缺陷修复实施(缺陷路径)
-    ├── code-unit/       # 单元测试
-    ├── code-fix/        # 缺陷登记与跟踪
-    └── code-review/     # 代码评审
+code-skills/                          ← marketplace 仓库根
+├── .claude-plugin/
+│   └── marketplace.json              # 插件市场清单(列出 plugins[])
+└── plugins/
+    └── code-skills/                  ← 插件本体
+        ├── .claude-plugin/
+        │   └── plugin.json           # 插件自身元信息
+        ├── README.md                 # 工作流总览与技能表(中文)
+        ├── README.en.md              # 工作流总览与技能表(英文)
+        ├── CLAUDE.md                 # 本文件
+        └── skills/
+            ├── code-init/            # 工程初始化(项目级一次性引导)
+            ├── code-version/         # 版本管理(版本感知入口)
+            ├── code-rule/            # 编码规范管理(项目级共享)
+            ├── code-require/         # 需求分析
+            ├── code-design/          # 概要设计
+            ├── code-plan/            # 详细设计 / 实施计划(REQ 路径)+ 缺陷修复方案(BUG 路径)
+            ├── code-it/              # 开发编码(任务路径)+ 缺陷修复实施(缺陷路径)
+            ├── code-unit/            # 单元测试
+            ├── code-fix/             # 缺陷登记与跟踪
+            └── code-review/          # 代码评审
 ```
 
 ## 需与用户确认的约定
