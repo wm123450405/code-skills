@@ -1,0 +1,26 @@
+{
+  "name": "code-skills",
+  "version": "1.0.0",
+  "description": "A suite of Claude Code skills that guide AI through the complete software development lifecycle, with built-in version-aware workspace management.",
+  "author": {
+    "name": "code-skills"
+  },
+  "license": "MIT",
+  "homepage": "./README.md",
+  "keywords": [
+    "skills",
+    "code-require",
+    "code-design",
+    "code-plan",
+    "code-it",
+    "code-unit",
+    "code-review",
+    "code-fix",
+    "code-version",
+    "code-init",
+    "code-rule",
+    "version-aware",
+    "sdlc",
+    "lifecycle"
+  ]
+}
