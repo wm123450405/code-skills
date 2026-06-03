@@ -5,7 +5,7 @@
   "owner": {
     "name": "code-skills"
   },
-  "homepage": "./README.md",
+  "homepage": "./plugins/code-skills/README.md",
   "license": "MIT",
   "keywords": [
     "skills",
@@ -27,7 +27,7 @@
     {
       "name": "code-skills",
       "description": "编码全流程工具包",
-      "source": "./",
+      "source": "./plugins/code-skills",
       "skills": [
         "code-require",
         "code-design",
