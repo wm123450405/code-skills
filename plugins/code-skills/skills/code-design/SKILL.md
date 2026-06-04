@@ -81,6 +81,19 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 
 ## 工作流程
 
+### 步骤 0a — 拉取最新代码(强制前置,新增)
+所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。`code-design` **不**含步骤 0b(FR-2 显式仅 `code-require` 专属)。
+1. 探测 `git` 可用性 → 执行 `Bash: git --version`,失败 → 中断 + 提示"未检测到 git,本需求需要 git,请先安装 git 后重试"(E-12)
+2. 执行 `Bash: git pull`(默认 upstream / tracking 分支)
+3. 拉取失败 3 种情况分类处理(Q-2 锁定 A:中断 + 报错退出):
+   - **冲突**(退出码非 0 + stderr 含 "CONFLICT" / "Merge conflict" / "unmerged")→ 打印 `✗ git pull 失败:存在未解决的冲突,冲突文件:<列出>`,提示"请手动解决冲突后,重跑该技能"(E-2)
+   - **网络**(退出码非 0 + stderr 含 "Could not resolve host" / "Connection" / "timeout")→ 打印 `✗ git pull 失败:网络/remote 不可达,远程仓库:<remote-url>`,提示"请检查网络/代理后重试"(E-3)
+   - **凭据**(退出码非 0 + stderr 含 "Permission denied" / "Authentication failed" / "403")→ 打印 `✗ git pull 失败:权限/凭据`,提示"请检查 git 凭据(SSH key / token)后重试"(E-4)
+   - **其他错误** → 透传 stderr,中断退出
+4. 拉取成功(包含 no-op / "Already up to date"):
+   - **立即**执行 `Read "./assistants/.current-version"`,记为"拉取后版本"(NFR-8 强约束)
+   - 进入既有"步骤 0 — 版本上下文检测"
+
 ### 步骤 0 — 版本上下文检测(强制前置)
 1. 读取 `./assistants/.current-version`
 2. **文件不存在** → 立即停下,告知用户先调 `code-version`
@@ -320,6 +333,40 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 4. 汇报:**新增 / 修改 / 废弃 / 规范触发的修订 / 未变 / 版本看板更新点**
 
 ---
+
+### 步骤 N — 末尾兜底提交(强制收尾,新增)
+**所有其他步骤执行完毕后的最后一步,覆盖"过程文件 + 结果文件"。**
+
+> 注:本步骤对**首次设计(步骤 7A–15A)** 和**增量更新(步骤 7B–10B)** 两条分支都执行,均作为收尾。
+
+1. **收集 dirty 文件**:
+   - 执行 `Bash: git status --porcelain`
+   - 输出为空 → 打印 `无文件变更,跳过末尾提交`,**跳过步骤 2-4,直接退出**(NFR-4)
+   - 输出非空 → 进入步骤 2
+
+2. **暂存文件**:
+   - 执行 `Bash: git add <所有 dirty 文件>`
+   - 失败 → 透传 stderr,中断退出
+
+3. **生成 commit message 预览**:
+   ```
+   chore(code-design): <需求编码> <设计标题>
+
+   概要设计完成:<关键决策数> 项决策,<不变量数> 条不变量
+   过程文件 N + 结果文件 1
+   ```
+   - `<设计标题>` 从本轮 RESULT.md 的标题提取
+   - `<关键决策数>` / `<不变量数>` 从 RESULT.md §3 / §3.1 提取
+
+4. **弹 3 选 1 确认**(Q-3 锁定 A / FR-3.AC-3.4):
+   - **A. 确认提交(推荐)** → 进入步骤 5
+   - **B. 修改 commit message** → 重新生成预览(可由用户编辑)→ 返回步骤 4
+   - **C. 取消** → 跳过 commit,打印"已取消提交,文件保持暂存/工作区状态",**退出**(E-9)
+
+5. **执行 commit**:
+   - 执行 `Bash: git commit -m "<message>"`
+   - 成功 → 打印 `commit 完成,hash: <hash>`,退出
+   - 失败(退出码非 0,pre-commit hook / 其他)→ 打印 stderr,**不重试**(E-10),提示"末尾提交失败,文件已暂存,请手动处理后执行 git commit",退出
 
 ## 过程文档格式
 
