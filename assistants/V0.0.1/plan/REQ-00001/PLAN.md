@@ -20,11 +20,12 @@
 | `REQ-00001-002` | 同步中英 README | 修改 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | 2026-06-03 20:51 | f147ea7 | — |
 | `REQ-00001-003` | 核查 `plugins/code-skills/CLAUDE.md` | 文档 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md`(0 变更) | 2026-06-03 20:52 | (不提交) | — |
 | `REQ-00001-004` | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 + commit | 文档 | 需求新增 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00001-004/RESULT.md` | 2026-06-03 20:54 | f147ea7 | — |
+| `REQ-00001-005` | 同步中英 README 中 GitHub URL 仓库名(审查派生) | 修改 | 审查改修 | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md`(0 变更,合理偏离) | 2026-06-04 11:54 | (不提交,见 deviations.md) | REQ-00001-002 |
 
 **统计**:
 - 总任务数:4
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):4 / 4 ✅ M1 已达成
-- 开发已完成 / 未完成:4 / 0
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):5 / 5 ✅ M2 已达成
+- 开发已完成 / 未完成:5 / 0
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 4 / 0(纯文档/字符串任务,全部不适用)
 
 ---
@@ -214,3 +215,5 @@
 | --- | --- | --- | --- | --- |
 | 2026-06-03 20:30 | v1 | 计划新增 | 完成首次详细设计与编码计划:4 个任务(`REQ-00001-001`~`004`),单 commit 提交;继承概要设计 7 决策 + 11 不变量 + 4 文件变更集;Q-3/Q-4/Q-5 采用 REQU 文档默认;无新增依赖,无偏离规范 | wangmiao |
 | 2026-06-03 20:54 | v1 | 状态推进 | 4 任务全部完成(`REQ-00001-001`~`004`):T-001 改 marketplace.json 根 name、T-002 同步中英 README、T-003 核查 CLAUDE.md(0 变更)、T-004 全仓库 Grep + 11 不变量自检 + 单 commit `f147ea7`(3 files, 5+/5-);3 处偏离记入 `code/REQ-00001-004/deviations.md`(doc-conventions 正面示例 / V0.0.0 基线 / git push 未自动);M1 达成 | wangmiao |
+| 2026-06-04 10:35 | v2 | 增量更新(审查) | 评审发现 2 项问题:1 项派生任务 T-005(建议改,GitHub URL 与 marketplace name 一致性),1 项记入 findings-no-task.md(可选,CLAUDE.md 图例)。计划版本 v1 → v2。| wangmiao |
+| 2026-06-04 11:54 | v2 | 状态推进 | T-005 完成(0 文件变更,合理偏离):WebFetch + git remote 双确认 GitHub 仓库未重命名为 `code-skills-marketplace`,URL `https://github.com/wm123450405/code-skills.git` 保持原样;记入 `code/REQ-00001-005/deviations.md`;M2 达成(5/5 真正可发布) | wangmiao |

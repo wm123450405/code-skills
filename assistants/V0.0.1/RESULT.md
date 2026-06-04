@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.1`
 - 创建时间:2026-06-03 19:25
-- 最近更新:2024-06-04 11:00
+- 最近更新:2026-06-04 12:40
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.1` |
 | 创建时间 | 2026-06-03 19:25 |
-| 最近更新 | 2024-06-04 11:00 |
+| 最近更新 | 2026-06-04 12:40 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -130,13 +130,13 @@
 | `REQ-00003-005` | REQ-00003 | 修改 | 需求新增 | 追加 `CLAUDE.md` "## AI 工作约定"小节(首次) | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md` | 2026-06-04 10:55 | 35bc26b | T-001 |
 | `REQ-00003-006` | REQ-00003 | 文档 | 需求新增 | 同步版本看板 + 更新 `plan/REQ-00003/PLAN.md` 状态 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md`, `assistants/V0.0.1/plan/REQ-00003/PLAN.md` | 2024-06-04 11:00 | ded7613 | T-001 ~ T-005 |
 | `REQ-00003-007` | REQ-00003 | 文档 | 需求新增 | 全仓库 Grep + 不变量自检 + 6 commit 整理 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00003-007/{RESULT,work-log,deviations,compile-and-run}.md` | 2024-06-04 10:55 | (无 commit) | T-001 ~ T-006 |
-| `REQ-00002-009` | REQ-00002 | 文档 | 审查改修 | 同步 PLAN.md 任务总览 + M2 描述(审查派生) | 待开始 | 未编写 | `assistants/V0.0.1/plan/REQ-00002/PLAN.md`, `V0.0.1/RESULT.md` | — | — | REQ-00002-007, REQ-00002-008 |
-| `REQ-00001-005` | REQ-00001 | 修改 | 审查改修 | 同步中英 README 中 GitHub URL 仓库名(审查派生) | 待开始 | 未编写 | `plugins/code-skills/README.md`, `README.en.md` | — | — | REQ-00001-002 |
+| `REQ-00002-009` | REQ-00002 | 文档 | 审查改修 | 同步 PLAN.md 任务总览 + M2 描述(审查派生) | 已完成 | 不适用 | `assistants/V0.0.1/plan/REQ-00002/PLAN.md`(3 核心 Edit + 1 自身状态) | 2026-06-04 12:40 | (不提交) | REQ-00002-007, REQ-00002-008 |
+| `REQ-00001-005` | REQ-00001 | 修改 | 审查改修 | 同步中英 README 中 GitHub URL 仓库名(审查派生) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md`(0 变更,合理偏离) | 2026-06-04 11:54 | (不提交) | REQ-00001-002 |
 
 **统计**:
 - 总任务数:21(原 19 + REQ-00001-005 派生 + REQ-00002-009 派生)
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):19 / 21(M1 已达成, M2 已完成, **M3 已完成 7/7**)
-- 开发已完成 / 未完成:19 / 2
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):21 / 21(M1 已达成, M2 已完成, **M3 已完成 7/7**, 派生任务 2 已完成 ✅)
+- 开发已完成 / 未完成:21 / 0
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 21 / 0
 
 ---
@@ -161,13 +161,14 @@
 
 | 评审 ID | 需求 | 任务 | 维度 | 级别 | 描述 | 派生改修任务 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-1 | REQ-00001 | REQ-00001-002 | 一致性 / 规范 | 建议改 | GitHub 仓库 URL 未与 marketplace name 同步(`https://github.com/wm123450405/code-skills.git` 应询问用户后决定) | REQ-00001-005 | 待开始 |
+| F-1 | REQ-00001 | REQ-00001-002 | 一致性 / 规范 | 建议改 | GitHub 仓库 URL 未与 marketplace name 同步(`https://github.com/wm123450405/code-skills.git` 应询问用户后决定) | REQ-00001-005 | 已处理(0 变更,合理偏离) |
 | F-2 | REQ-00001 | REQ-00001-002 | 可维护性 | 可选 | CLAUDE.md 目录树图例与新 marketplace name 关联弱 | (无,记入 findings-no-task.md) | 留作 follow-up |
 | F-3 | REQ-00002 | REQ-00002-005 | 可维护性 | 可选 | encoding-conventions.md 结构验证(212 行,4 规则,无偏离) | (无,记入 findings-no-task.md) | 留作 follow-up |
-| F-4 | REQ-00002 | REQ-00002-007 | 一致性 | 建议改 | PLAN.md 任务总览行 27 T-007 状态字段"待开始",与看板(已完成) + 实际产出(4 文档)不一致 | REQ-00002-009 | 待开始 |
-| F-5 | REQ-00002 | REQ-00002-008 | 一致性 | 建议改 | M2 里程碑描述"7 commit"与实际"5 commit + 2 无 commit task"不一致 | REQ-00002-009 | 待开始 |
+| F-4 | REQ-00002 | REQ-00002-007 | 一致性 | 建议改 | PLAN.md 任务总览行 25 T-007 状态字段"待开始",与看板(已完成) + 实际产出(4 文档)不一致 | REQ-00002-009 | 已处理(2026-06-04 12:40) |
+| F-5 | REQ-00002 | REQ-00002-008 | 一致性 | 建议改 | M2 里程碑描述"7 commit"与实际"5 commit + 2 无 commit task"不一致 | REQ-00002-009 | 已处理(2026-06-04 12:40,见 deviations.md 偏离 1) |
+| F-6 | REQ-00003 | REQ-00003-004 | 可维护性 | 可选 | `templates/rule.md:11-13` 行号描述因占位/引导模式前插入后不再准确(实际"## 适用场景"在行 32 而非紧接 H2 头部) | (无,记入 findings-no-task.md) | 留作 follow-up |
 
-**统计**:5 / 必须改: 0 / 建议改: 3 / 可选: 2 / 已处理: 0
+**统计**:6 / 必须改: 0 / 建议改: 3 / 可选: 3 / 已处理: 3
 **统计**:0 / 必须改: 0 / 建议改: 0 / 可选: 0 / 已处理: 0
 
 ---
@@ -179,8 +180,8 @@
 
 | 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
 | --- | --- | --- | --- | --- |
-| REQ-00001-005 | REQ-00001-002 | 2026-06-04 10:35 | [REVIEW-REPORT.md](review/REQ-00001/REVIEW-REPORT.md) | 待开始 |
-| REQ-00002-009 | REQ-00002-007, REQ-00002-008 | 2026-06-04 10:40 | [REVIEW-REPORT.md](review/REQ-00002/REVIEW-REPORT.md) | 待开始 |
+| REQ-00001-005 | REQ-00001-002 | 2026-06-04 10:35 | [REVIEW-REPORT.md](review/REQ-00001/REVIEW-REPORT.md) | 已完成(0 变更,合理偏离) |
+| REQ-00002-009 | REQ-00002-007, REQ-00002-008 | 2026-06-04 10:40 | [REVIEW-REPORT.md](review/REQ-00002/REVIEW-REPORT.md) | 已完成(3 核心 Edit,无 commit) |
 
 | 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
 | --- | --- | --- | --- | --- |
@@ -222,6 +223,12 @@
 | 2026-06-04 10:55 | `git add plugins/code-skills/skills/code-rule/templates/rule.md` | Bash | 0 | staged 1 file (+23 insertions) | REQ-00003-004 |
 | 2026-06-04 10:55 | `git commit -m "feat(code-rule): extend templates/rule.md ..."` | Bash | 0 | commit `2f41bb0` 创建成功 | REQ-00003-004 |
 | 2026-06-04 10:55 | `git add plugins/code-skills/CLAUDE.md` | Bash | 0 | staged 1 file (+7 insertions) | REQ-00003-005 |
+| 2026-06-04 11:54 | `git diff plugins/code-skills/README.md plugins/code-skills/README.en.md` | Bash | 0 | 空输出(0 变更) | REQ-00001-005 |
+| 2026-06-04 11:54 | `git remote -v` | Bash | 0 | origin 仍指向 `code-skills`(未重命名) | REQ-00001-005 |
+| 2026-06-04 11:54 | `WebFetch https://github.com/wm123450405/code-skills` | WebFetch | 0 | 仓库名 = `code-skills`(分叉依据) | REQ-00001-005 |
+| 2026-06-04 12:40 | `Read plan/REQ-00002/PLAN.md:25-27,288,393-396` | Read | 0 | 3 个 Edit 落点全部就位 | REQ-00002-009 |
+| 2026-06-04 12:40 | `git diff plan/REQ-00002/PLAN.md` | Bash | 0 | 4 个 hunk(行 25 / 28 / 288 / 396) | REQ-00002-009 |
+| 2026-06-04 12:40 | `git status` | Bash | 0 | 1 modified(PLAN.md),dirty tree(按 review §7 不 commit) | REQ-00002-009 |
 | 2026-06-04 10:55 | `git commit -m "feat(CLAUDE.md): add AI 工作约定 section ..."` | Bash | 0 | commit `35bc26b` 创建成功 | REQ-00003-005 |
 
 ---
@@ -267,6 +274,9 @@
 | 2024-06-04 11:00 | 开发状态更新 | `REQ-00003-006` 开发状态"待开始"→"已完成"(M3 全部 7 任务完成;看板 6 区段同步;M3 状态"待开始"→"已完成";commit `ded7613`) | `REQ-00003-006` |
 | 2026-06-04 10:35 | 评审发现 | REQ-00001 评审完成(2 条发现:F-1 建议改派生 T-005 + F-2 可选记入 findings-no-task.md;无 P0/P1 阻塞;M1 派生 1 任务) | REQ-00001 |
 | 2026-06-04 10:40 | 评审发现 | REQ-00002 评审完成(3 条发现:F-4 + F-5 建议改合并派生 T-009 + F-3 可选;8 任务全部通过 8/8;无 P0/P1 阻塞) | REQ-00002 |
+| 2024-06-04 11:10 | 评审发现 | REQ-00003 评审完成(1 条发现:F-6 可选,`templates/rule.md` 行号描述模糊;7 任务全部通过 9/9;用户答复"不派生,仅记录";无 P0/P1 阻塞) | REQ-00003 |
+| 2026-06-04 11:54 | 开发状态更新 | `REQ-00001-005` 开发状态"待开始"→"已完成"(0 文件变更,合理偏离;WebFetch + git remote 双确认 GitHub 仓库未重命名为 `code-skills-marketplace`;L11 URL `https://github.com/wm123450405/code-skills.git` 保持原样;记入 `code/REQ-00001-005/deviations.md`;F-1 派生任务 1/1 已处理;无 commit) | `REQ-00001-005` |
+| 2026-06-04 12:40 | 开发状态更新 | `REQ-00002-009` 开发状态"待开始"→"已完成"(3 个核心 Edit + 1 自身状态推进):PLAN.md:25 T-007 字段回填(开发状态/时间/提交/涉及文件)+ 行 288 "7 commit"→"5 commit + T-004/T-007 列表" + 行 396 M2 完成定义"5 commit / 已完成" + 自身状态;F-2 review 标的 V0.0.1/RESULT.md:41 实际已被 T-008 修正不再重复(见 `code/REQ-00002-009/deviations.md` 偏离 1);F-4 + F-5 派生任务 2/2 已处理;无 commit(留 dirty tree 给用户手动) | `REQ-00002-009` |
 
 ---
 
@@ -297,6 +307,8 @@
   - REQ-00001-002 → [code/REQ-00001-002/RESULT.md](code/REQ-00001-002/RESULT.md) + [work-log.md](code/REQ-00001-002/work-log.md)
   - REQ-00001-003 → [code/REQ-00001-003/RESULT.md](code/REQ-00001-003/RESULT.md) + [work-log.md](code/REQ-00001-003/work-log.md)
   - REQ-00001-004 → [code/REQ-00001-004/RESULT.md](code/REQ-00001-004/RESULT.md) + [work-log.md](code/REQ-00001-004/work-log.md) + [deviations.md](code/REQ-00001-004/deviations.md)
+  - REQ-00001-005 → [code/REQ-00001-005/RESULT.md](code/REQ-00001-005/RESULT.md) + [work-log.md](code/REQ-00001-005/work-log.md) + [compile-and-run.md](code/REQ-00001-005/compile-and-run.md) + [test-results.md](code/REQ-00001-005/test-results.md) + [deviations.md](code/REQ-00001-005/deviations.md)
+  - REQ-00002-009 → [code/REQ-00002-009/RESULT.md](code/REQ-00002-009/RESULT.md) + [work-log.md](code/REQ-00002-009/work-log.md) + [compile-and-run.md](code/REQ-00002-009/compile-and-run.md) + [test-results.md](code/REQ-00002-009/test-results.md) + [deviations.md](code/REQ-00002-009/deviations.md)
 - 测试改修正文:`./assistants/V0.0.1/test/<任务编码>/RESULT.md` × N(待添加)
 - 评审报告:`./assistants/V0.0.1/review/<需求编号>/REVIEW-REPORT.md` × N(待添加)
 - 审查改修任务:`./assistants/V0.0.1/review/<任务编码>/RESULT.md` × N(待添加)
