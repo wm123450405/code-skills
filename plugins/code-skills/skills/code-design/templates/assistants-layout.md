@@ -20,11 +20,11 @@
 │   └── <版本号>/                       ★ 版本工作空间
 │       ├── RESULT.md                   ← 版本开发进度看板
 │       ├── require/
-│       │   └── REQ-2026-0001/
+│       │   └── REQ-00001/
 │       │       ├── RESULT.md            ← 上游,本技能只读
 │       │       └── ...
 │       └── design/
-│           ├── REQ-2026-0001/
+│           ├── REQ-00001/
 │           │   ├── RESULT.md            # 本技能产出
 │           │   ├── materials-index.md
 │           │   ├── design-notes.md
@@ -33,9 +33,9 @@
 │           │   ├── related-designs.md
 │           │   ├── rule-compliance.md
 │           │   └── clarifications.md
-│           ├── REQ-2026-0002/
+│           ├── REQ-00002/
 │           │   └── ...
-│           └── REQ-2025-0099/
+│           └── REQ-00510/
 │               └── ...
 ├── src/                                # 用户的项目源码
 ├── package.json / pyproject.toml / ... # 用户的项目配置

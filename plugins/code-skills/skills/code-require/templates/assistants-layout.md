@@ -14,7 +14,7 @@
     └── <版本号>/                       ★ 版本工作空间
         ├── RESULT.md                   ← 版本开发进度看板(code-version 初始化,本技能追加"需求清单"区段)
         └── require/                    ← 本技能的目录粒度
-            ├── REQ-2026-0001/
+            ├── REQ-00001/
             │   ├── prd-v1.md              # ← 用户放置
             │   ├── design-login.png       # ← 用户放置
             │   ├── design-home.png        # ← 用户放置
@@ -26,9 +26,9 @@
             │   ├── clarifications.md      # 技能产出
             │   ├── related-requirements.md# 技能产出
             │   └── analysis-notes.md      # 技能产出(可选)
-            ├── REQ-2026-0002/
+            ├── REQ-00002/
             │   └── ...
-            └── REQ-2025-0099/
+            └── REQ-00510/
                 └── ...
 ```
 

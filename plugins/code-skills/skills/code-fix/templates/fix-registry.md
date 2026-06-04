@@ -21,8 +21,8 @@
 
 | 缺陷编号 | 严重度 | 标题 | 状态 | 报告时间 | 报告人 | 修复时间 | 修复人 | 关联需求 | 缺陷详情 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| BUG-001 | P1 | <一句话> | 已修复-已验证 | YYYY-MM-DD | <报告人> | YYYY-MM-DD | <修复人> | REQ-... | [RESULT.md](BUG-001/RESULT.md) |
-| BUG-002 | P2 | <一句话> | 修复编码中 | YYYY-MM-DD | <报告人> | — | — | — | [RESULT.md](BUG-002/RESULT.md) |
+| BUG-00001 | P1 | <一句话> | 已修复-已验证 | YYYY-MM-DD | <报告人> | YYYY-MM-DD | <修复人> | REQ-... | [RESULT.md](BUG-00001/RESULT.md) |
+| BUG-00002 | P2 | <一句话> | 修复编码中 | YYYY-MM-DD | <报告人> | — | — | — | [RESULT.md](BUG-00002/RESULT.md) |
 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 ### 状态值
@@ -83,12 +83,12 @@
 
 | 时间 | 变更类型 | 变更摘要 | 关联缺陷 |
 | --- | --- | --- | --- |
-| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-001(严重度 P1) | BUG-001 |
-| YYYY-MM-DD HH:mm | 状态推进 | BUG-001 状态"报告"→"调查中" | BUG-001 |
-| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-002(严重度 P2) | BUG-002 |
-| YYYY-MM-DD HH:mm | 状态推进 | BUG-001 状态"调查中"→"修复规划中" | BUG-001 |
-| YYYY-MM-DD HH:mm | 修复完成 | BUG-001 修复完成,提交 abc1234 | BUG-001 |
-| YYYY-MM-DD HH:mm | 状态推进 | BUG-001 状态"已修复-待验证"→"已修复-已验证" | BUG-001 |
+| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-00001(严重度 P1) | BUG-00001 |
+| YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"报告"→"调查中" | BUG-00001 |
+| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-00002(严重度 P2) | BUG-00002 |
+| YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"调查中"→"修复规划中" | BUG-00001 |
+| YYYY-MM-DD HH:mm | 修复完成 | BUG-00001 修复完成,提交 abc1234 | BUG-00001 |
+| YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"已修复-待验证"→"已修复-已验证" | BUG-00001 |
 
 **变更类型枚举**:
 - `缺陷登记`:新增 BUG-NNN

@@ -125,7 +125,7 @@
 
 ## 关联项
 
-- **关联需求**:<如有,如 REQ-2026-0001>
+- **关联需求**:<如有,如 REQ-00001>
 - **关联 PR/提交**:<git sha>
 - **关联评审**:`./review/<缺陷编号>/REVIEW-REPORT.md`(若有)
 - **关联测试**:<如 `tests/test_login.py::test_password_validation`>

@@ -20,31 +20,31 @@
 │   ├── v1.0.0/                         ← 版本工作空间 1(由 code-version 创建)
 │   │   ├── RESULT.md                   ★ 版本开发进度看板
 │   │   ├── require/                    ← code-require 产出
-│   │   │   └── REQ-2026-0001/
+│   │   │   └── REQ-00001/
 │   │   │       ├── RESULT.md
 │   │   │       └── ...
 │   │   ├── design/                     ← code-design 产出
-│   │   │   └── REQ-2026-0001/
+│   │   │   └── REQ-00001/
 │   │   │       ├── RESULT.md
 │   │   │       └── ...
 │   │   ├── plan/                       ← code-plan 产出
-│   │   │   └── REQ-2026-0001/
+│   │   │   └── REQ-00001/
 │   │   │       ├── RESULT.md
 │   │   │       ├── PLAN.md
 │   │   │       └── ...
 │   │   ├── code/                       ← code-it 产出
-│   │   │   └── REQ-2026-0001-001/
+│   │   │   └── TASK-REQ-00001-00001/
 │   │   │       ├── RESULT.md
 │   │   │       └── ...
 │   │   ├── test/                       ← code-unit 产出
-│   │   │   └── REQ-2026-0001-001/
+│   │   │   └── TASK-REQ-00001-00001/
 │   │   │       ├── RESULT.md
 │   │   │       └── ...
 │   │   └── review/                     ← code-review 产出
-│   │       ├── REQ-2026-0001/
+│   │       ├── REQ-00001/
 │   │       │   ├── REVIEW-REPORT.md
 │   │       │   └── ...
-│   │       └── REQ-2026-0001-005/
+│   │       └── TASK-REQ-00001-00005/
 │   │           ├── RESULT.md           (派生"审查改修"任务)
 │   │           └── ...
 │   │
