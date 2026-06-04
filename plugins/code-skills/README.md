@@ -436,7 +436,7 @@ flowchart TD
 | 需求编码 | 是(交互式) | 推荐 `REQ-YYYY-NNNN`;AI 会校验 `require/<需求编码>/RESULT.md` 存在性 |
 
 **示例**:
-- `code-require REQ-2026-0001`
+- `code-require REQ-00001`
 - `code-require`(交互式)
 
 **前置材料**(用户预先放入 `./assistants/<版本号>/require/<需求编码>/` 目录):
@@ -477,7 +477,7 @@ flowchart TD
 | 需求编码 | 是 | 同 `code-require` 用的编码;AI 会校验 `require/<需求编码>/RESULT.md` 与 `design/<需求编码>/RESULT.md` |
 
 **示例**:
-- `code-design REQ-2026-0001`
+- `code-design REQ-00001`
 
 **输入**:
 - `./assistants/<版本号>/require/<需求编码>/RESULT.md`(上游)
@@ -521,8 +521,8 @@ flowchart TD
 | `BUG-NNN` | 缺陷分支 | `fix/<id>/RESULT.md` | `fix/<id>/fix-plan.md` |
 
 **示例**:
-- `code-plan REQ-2026-0001`(主流程路径)
-- `code-plan BUG-001`(缺陷分支路径)
+- `code-plan REQ-00001`(主流程路径)
+- `code-plan BUG-00001`(缺陷分支路径)
 - `code-plan`(交互式)
 
 **输出**:
@@ -572,9 +572,9 @@ flowchart TD
 - `审查改修` → 读 `review/<任务编码>/RESULT.md`(**不读** `plan/`)
 
 **示例**:
-- `code-it REQ-2026-0001-001`(主流程:第 1 个任务)
-- `code-it BUG-001`(缺陷修复)
-- `code-it REQ-2026-0001-005`(如果该任务是从 `code-review` 派生的"审查改修")
+- `code-it TASK-REQ-00001-00001`(主流程:第 1 个任务)
+- `code-it BUG-00001`(缺陷修复)
+- `code-it TASK-REQ-00001-00005`(如果该任务是从 `code-review` 派生的"审查改修")
 
 **关键约束**:
 - **必须确保软件可正常编译、可启动运行**,出现错误时迭代修复直到消除
@@ -612,7 +612,7 @@ flowchart TD
 | 任务编码 | 是 | 格式 `REQ-YYYY-NNNN-NNN` |
 
 **示例**:
-- `code-unit REQ-2026-0001-001`
+- `code-unit TASK-REQ-00001-00001`
 
 **输出**:
 - 测试代码
@@ -643,7 +643,7 @@ flowchart TD
 | 需求编码 | 是 | 格式 `REQ-YYYY-NNNN` |
 
 **示例**:
-- `code-review REQ-2026-0001`
+- `code-review REQ-00001`
 
 **输出**:
 - `./assistants/<版本号>/review/<需求编码>/REVIEW-REPORT.md`
@@ -678,8 +678,8 @@ flowchart TD
 | 缺陷编号 或 缺陷描述 | 是(二选一) | `BUG-NNN`(已有)或自然语言(新建) |
 
 **示例**:
-- `code-fix "用户报告:登录页密码框不显示"`<br/>(新建,自动生成 BUG-001)
-- `code-fix BUG-001`<br/>(查看/推进已有 bug)
+- `code-fix "用户报告:登录页密码框不显示"`<br/>(新建,自动生成 BUG-00001)
+- `code-fix BUG-00001`<br/>(查看/推进已有 bug)
 - `code-fix`(交互式)
 
 **可选补充**(交互式收集):
@@ -728,15 +728,15 @@ flowchart TD
    → 写入 3 条规范到 rules/
 3. 调 code-version v0.1.0
    → 切到 v0.1.0 开发版本
-4. 调 code-require REQ-2026-0001
-   → 把需求材料放进 require/REQ-2026-0001/
+4. 调 code-require REQ-00001
+   → 把需求材料放进 require/REQ-00001/
    → AI 产出需求 RESULT.md
-5. 调 code-design REQ-2026-0001
-6. 调 code-plan REQ-2026-0001
+5. 调 code-design REQ-00001
+6. 调 code-plan REQ-00001
    → 拆出 5 个任务
-7. 依次调 code-it REQ-2026-0001-001 ... 005
+7. 依次调 code-it TASK-REQ-00001-00001 ... 005
    → 每个任务完成后调 code-unit <任务>
-8. 调 code-review REQ-2026-0001
+8. 调 code-review REQ-00001
    → 通过 → 准备发布
 ```
 
@@ -753,11 +753,11 @@ flowchart TD
 2. 调 code-rule "补几条项目特有的规范"
 3. 调 code-version v0.1.0
    → 切到 v0.1.0
-4. 调 code-require REQ-2026-0001 "添加新功能 X"
+4. 调 code-require REQ-00001 "添加新功能 X"
    → ... 走主流程
-5. (若发现 bug)调 code-fix "用户报告:..." → BUG-001
-   → code-plan BUG-001 → code-it BUG-001
-6. 调 code-review REQ-2026-0001
+5. (若发现 bug)调 code-fix "用户报告:..." → BUG-00001
+   → code-plan BUG-00001 → code-it BUG-00001
+6. 调 code-review REQ-00001
 ```
 
 ---
@@ -766,22 +766,22 @@ flowchart TD
 
 ```
 1. 调 code-fix "生产环境:用户支付时偶发 500 错误"
-   → 自动生成 BUG-001
-2. 调 code-fix BUG-001
+   → 自动生成 BUG-00001
+2. 调 code-fix BUG-00001
    → AI 询问推进到哪个状态
    → 选"调查中"
    → 补充根因(根据日志/监控推断)
-3. 调 code-plan BUG-001
+3. 调 code-plan BUG-00001
    → 产出 fix-plan.md(选定方案 + 风险 + 回退)
-4. 调 code-it BUG-001
+4. 调 code-it BUG-00001
    → 实施代码修改
    → 编译/启动/测试全部通过
    → 缺陷状态 → "已修复-待验证"
 5. 部署到预发,跑回归
-6. 调 code-fix BUG-001
+6. 调 code-fix BUG-00001
    → 推进"已修复-待验证" → "已修复-已验证"
    → 记录验证信息
-7. 调 code-fix BUG-001
+7. 调 code-fix BUG-00001
    → 推进"已修复-已验证" → "已关闭"
 ```
 
@@ -794,10 +794,10 @@ flowchart TD
 
 1. 调 code-version v0.1.0
    → 切到 v0.1.0(只读浏览,不建议修改)
-2. 读 v0.1.0/require/REQ-2026-0001/RESULT.md
+2. 读 v0.1.0/require/REQ-00001/RESULT.md
 3. 调 code-version v0.2.0
    → 切回当前
-4. 调 code-require REQ-2026-0050 "基于 v0.1.0 的功能,扩展..."
+4. 调 code-require REQ-00050 "基于 v0.1.0 的功能,扩展..."
    → 继续在新版本工作
 ```
 
@@ -806,19 +806,19 @@ flowchart TD
 ### 场景 5:主流程中发现 bug,转支线
 
 ```
-# 当前在做 REQ-2026-0001-003 (code-it)
+# 当前在做 TASK-REQ-00001-00003 (code-it)
 
-1. code-it REQ-2026-0001-003
+1. code-it TASK-REQ-00001-00003
    → 实施过程中发现一个非本任务的 bug
    → 不擅自修复(避免范围蔓延)
    → 记入 deviations.md
-2. 调 code-fix "在 code-it REQ-2026-0001-003 过程中发现:..."
-   → 登记 BUG-005
+2. 调 code-fix "在 code-it TASK-REQ-00001-00003 过程中发现:..."
+   → 登记 BUG-00005
 3. 调 code-version v0.2.0
    → 切回当前版本(可能已经在 v0.2.0)
-4. 调 code-plan BUG-005 → code-it BUG-005
-5. 完成后再调 code-fix BUG-005 推进/关闭
-6. 调 code-version v0.2.0(若切走过)+ code-it REQ-2026-0001-003
+4. 调 code-plan BUG-00005 → code-it BUG-00005
+5. 完成后再调 code-fix BUG-00005 推进/关闭
+6. 调 code-version v0.2.0(若切走过)+ code-it TASK-REQ-00001-00003
    → 继续原任务
 ```
 

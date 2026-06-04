@@ -437,7 +437,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Requirement ID | Yes (interactive) | Recommend `REQ-YYYY-NNNN`; AI will check existence of `require/<req-id>/RESULT.md` |
 
 **Examples**:
-- `code-require REQ-2026-0001`
+- `code-require REQ-00001`
 - `code-require` (interactive)
 
 **Prerequisite Materials** (user pre-places in `./assistants/<version>/require/<req-id>/` directory):
@@ -478,7 +478,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Requirement ID | Yes | Same ID used in `code-require`; AI will check `require/<req-id>/RESULT.md` and `design/<req-id>/RESULT.md` |
 
 **Examples**:
-- `code-design REQ-2026-0001`
+- `code-design REQ-00001`
 
 **Input**:
 - `./assistants/<version>/require/<req-id>/RESULT.md` (upstream)
@@ -522,8 +522,8 @@ Connect the following in order, each step only cares about the previous step's o
 | `BUG-NNN` | Bug branch | `fix/<id>/RESULT.md` | `fix/<id>/fix-plan.md` |
 
 **Examples**:
-- `code-plan REQ-2026-0001` (main-flow path)
-- `code-plan BUG-001` (bug-branch path)
+- `code-plan REQ-00001` (main-flow path)
+- `code-plan BUG-00001` (bug-branch path)
 - `code-plan` (interactive)
 
 **Output**:
@@ -573,9 +573,9 @@ Connect the following in order, each step only cares about the previous step's o
 - `Review Fix` → read `review/<task-id>/RESULT.md` (**do not** read `plan/`)
 
 **Examples**:
-- `code-it REQ-2026-0001-001` (main flow: 1st task)
-- `code-it BUG-001` (bug fix)
-- `code-it REQ-2026-0001-005` (if this task is a "Review Fix" derived from `code-review`)
+- `code-it TASK-REQ-00001-00001` (main flow: 1st task)
+- `code-it BUG-00001` (bug fix)
+- `code-it TASK-REQ-00001-00005` (if this task is a "Review Fix" derived from `code-review`)
 
 **Key Constraints**:
 - **Must ensure the software can compile and start normally**, iterate to fix when errors appear until they are eliminated
@@ -613,7 +613,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Task ID | Yes | Format `REQ-YYYY-NNNN-NNN` |
 
 **Examples**:
-- `code-unit REQ-2026-0001-001`
+- `code-unit TASK-REQ-00001-00001`
 
 **Output**:
 - Test code
@@ -644,7 +644,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Requirement ID | Yes | Format `REQ-YYYY-NNNN` |
 
 **Examples**:
-- `code-review REQ-2026-0001`
+- `code-review REQ-00001`
 
 **Output**:
 - `./assistants/<version>/review/<req-id>/REVIEW-REPORT.md`
@@ -679,8 +679,8 @@ Connect the following in order, each step only cares about the previous step's o
 | Bug ID or bug description | Yes (either) | `BUG-NNN` (existing) or natural language (new) |
 
 **Examples**:
-- `code-fix "User report: login page password field not showing"`<br/>(new, auto-generate BUG-001)
-- `code-fix BUG-001`<br/>(view/advance existing bug)
+- `code-fix "User report: login page password field not showing"`<br/>(new, auto-generate BUG-00001)
+- `code-fix BUG-00001`<br/>(view/advance existing bug)
 - `code-fix` (interactive)
 
 **Optional Supplements** (collected interactively):
@@ -729,15 +729,15 @@ Any state → Blocked / Cancelled
    → Write 3 standards to rules/
 3. Call code-version v0.1.0
    → Switch to v0.1.0 development version
-4. Call code-require REQ-2026-0001
-   → Put requirement materials into require/REQ-2026-0001/
+4. Call code-require REQ-00001
+   → Put requirement materials into require/REQ-00001/
    → AI produces requirement RESULT.md
-5. Call code-design REQ-2026-0001
-6. Call code-plan REQ-2026-0001
+5. Call code-design REQ-00001
+6. Call code-plan REQ-00001
    → Break into 5 tasks
-7. Sequentially call code-it REQ-2026-0001-001 ... 005
+7. Sequentially call code-it TASK-REQ-00001-00001 ... 005
    → After each task, call code-unit <task>
-8. Call code-review REQ-2026-0001
+8. Call code-review REQ-00001
    → Pass → Prepare to release
 ```
 
@@ -754,11 +754,11 @@ Any state → Blocked / Cancelled
 2. Call code-rule "Add a few project-specific standards"
 3. Call code-version v0.1.0
    → Switch to v0.1.0
-4. Call code-require REQ-2026-0001 "Add new feature X"
+4. Call code-require REQ-00001 "Add new feature X"
    → ... go through main flow
-5. (If find a bug) Call code-fix "User report: ..." → BUG-001
-   → code-plan BUG-001 → code-it BUG-001
-6. Call code-review REQ-2026-0001
+5. (If find a bug) Call code-fix "User report: ..." → BUG-00001
+   → code-plan BUG-00001 → code-it BUG-00001
+6. Call code-review REQ-00001
 ```
 
 ---
@@ -767,22 +767,22 @@ Any state → Blocked / Cancelled
 
 ```
 1. Call code-fix "Production: users get occasional 500 error during payment"
-   → Auto-generate BUG-001
-2. Call code-fix BUG-001
+   → Auto-generate BUG-00001
+2. Call code-fix BUG-00001
    → AI asks to advance to which state
    → Choose "Investigating"
    → Supplement root cause (inferred from logs/monitoring)
-3. Call code-plan BUG-001
+3. Call code-plan BUG-00001
    → Produce fix-plan.md (selected solution + risks + rollback)
-4. Call code-it BUG-001
+4. Call code-it BUG-00001
    → Implement code change
    → Compile/start/test all pass
    → Bug status → "Fixed-Pending-Verify"
 5. Deploy to pre-prod, run regression
-6. Call code-fix BUG-001
+6. Call code-fix BUG-00001
    → Advance "Fixed-Pending-Verify" → "Fixed-Verified"
    → Record verification info
-7. Call code-fix BUG-001
+7. Call code-fix BUG-00001
    → Advance "Fixed-Verified" → "Closed"
 ```
 
@@ -795,10 +795,10 @@ Any state → Blocked / Cancelled
 
 1. Call code-version v0.1.0
    → Switch to v0.1.0 (read-only browsing, modifying not recommended)
-2. Read v0.1.0/require/REQ-2026-0001/RESULT.md
+2. Read v0.1.0/require/REQ-00001/RESULT.md
 3. Call code-version v0.2.0
    → Switch back to current
-4. Call code-require REQ-2026-0050 "Based on v0.1.0's feature, extend ..."
+4. Call code-require REQ-00050 "Based on v0.1.0's feature, extend ..."
    → Continue working on the new version
 ```
 
@@ -807,19 +807,19 @@ Any state → Blocked / Cancelled
 ### Scenario 5: Find a Bug in Main Flow, Switch to Side Flow
 
 ```
-# Currently working on REQ-2026-0001-003 (code-it)
+# Currently working on TASK-REQ-00001-00003 (code-it)
 
-1. code-it REQ-2026-0001-003
+1. code-it TASK-REQ-00001-00003
    → During implementation, find a bug not belonging to this task
    → Don't fix on your own (avoid scope creep)
    → Write to deviations.md
-2. Call code-fix "During code-it REQ-2026-0001-003 found: ..."
-   → Register BUG-005
+2. Call code-fix "During code-it TASK-REQ-00001-00003 found: ..."
+   → Register BUG-00005
 3. Call code-version v0.2.0
    → Switch back to current version (may already be in v0.2.0)
-4. Call code-plan BUG-005 → code-it BUG-005
-5. After completing, call code-fix BUG-005 to advance/close
-6. Call code-version v0.2.0 (if switched away) + code-it REQ-2026-0001-003
+4. Call code-plan BUG-00005 → code-it BUG-00005
+5. After completing, call code-fix BUG-00005 to advance/close
+6. Call code-version v0.2.0 (if switched away) + code-it TASK-REQ-00001-00003
    → Continue the original task
 ```
 
