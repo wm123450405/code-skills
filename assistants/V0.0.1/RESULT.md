@@ -7,12 +7,12 @@
 ## 文档头
 - 版本号:`V0.0.1`
 - 创建时间:2026-06-03 19:25
-- 最近更新:2026-06-04 10:20
+- 最近更新:2024-06-04 11:00
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
 - 描述:V0.0.0 基线之后的首个开发版本(基于 V0.0.0 创建,默认继承 V0.0.0 全部已完成功能)
-- 当前里程碑:M2 — 编码格式统一落地(已完成)
+- 当前里程碑:M3 — `code-rule` 技能扩展(已完成)
 
 ---
 
@@ -22,11 +22,11 @@
 | --- | --- |
 | 版本号 | `V0.0.1` |
 | 创建时间 | 2026-06-03 19:25 |
-| 最近更新 | 2026-06-04 10:20 |
+| 最近更新 | 2024-06-04 11:00 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
-| 当前里程碑 | M2 — 编码格式统一落地(待开始) |
+| 当前里程碑 | M3 — `code-rule` 技能扩展(已完成) |
 | 预计交付 | — |
 | 父版本 | `V0.0.0`(基线) |
 
@@ -39,7 +39,7 @@
 | M0:工作空间就绪 | — | 本看板创建 | 已完成 | 2026-06-03 | 2026-06-03 |
 | M1:Marketplace 改名落地 | REQ-00001:T-001~T-004(`REQ-00001-001`~`004`) | 4 任务开发=已完成 ∧ 1 个 commit 已落地(单 commit,doc-conventions §规则 1) | 已完成 | 2026-06-03 | 2026-06-03 |
 | M2:编码格式统一落地 | REQ-00002:T-001~T-008(`REQ-00002-001`~`008`) | 8 任务开发=已完成 ∧ 5 个 commit 已落地(多 commit,按文件类型拆分;2 个任务无 commit 符合预期) | 已完成 | 2026-06-03 | 2026-06-04 |
-| M3:`code-rule` 技能扩展 | REQ-00003:T-001~T-007(`REQ-00003-001`~`007`) | 7 任务开发=已完成 ∧ 6 个 commit 已落地(类型识别+Type A/B/C 文档化 + 6 占位 + 1 弃用 + 模板扩展 + CLAUDE.md 新小节 + 全仓库审计) | 待开始 | 2026-06-04 | — |
+| M3:`code-rule` 技能扩展 | REQ-00003:T-001~T-006(`REQ-00003-001`~`006`)(T-007 审计为伴生) | 7 任务开发=已完成 ∧ 5 个 commit 已落地(类型识别+Type A/B/C 文档化 + 6 占位 + 1 弃用 + 模板扩展 + CLAUDE.md 新小节 + 全仓库审计 + 看板同步) | 已完成 | 2026-06-04 | 2024-06-04 |
 | M4:可发布 | 本版本所有任务 | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
@@ -123,19 +123,21 @@
 | `REQ-00002-006` | REQ-00002 | 新增 | 需求新增(FR-8) | 创建 migration-mapping.md 迁移映射 | 已完成 | 不适用 | `assistants/rules/migration-mapping.md` | 2026-06-04 10:08 | 5121e3f | T-5 |
 | `REQ-00002-007` | REQ-00002 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00002-007/{RESULT,work-log,deviations,compile-and-run}.md` | 2026-06-04 10:15 | (无 commit) | T-1 ~ T-6 |
 | `REQ-00002-008` | REQ-00002 | 文档 | 需求新增 | 同步版本看板 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md` + `plan/REQ-00002/PLAN.md` | 2026-06-04 10:20 | a24663d | T-1 ~ T-7 |
-| `REQ-00003-001` | REQ-00003 | 修改 | 需求新增 | 扩展 `code-rule/SKILL.md` 正文(类型识别 + Type A/B/C 文档化 + 工作目录约定) | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/SKILL.md` | — | — | T-002, T-003, T-005 |
-| `REQ-00003-002` | REQ-00003 | 新增 | 需求新增 | 创建 6 个新分类占位文件(C-1~C-6) | 待开始 | 不适用 | `assistants/rules/framework-conventions.md`, `dependency-conventions.md`, `naming-conventions.md`, `directory-conventions.md`, `coding-style.md`, `commit-conventions.md` | — | — | T-001 |
-| `REQ-00003-003` | REQ-00003 | 修改 | 需求新增 | 追加 `module-conventions.md` DEPRECATED 标记 | 待开始 | 不适用 | `assistants/rules/module-conventions.md` | — | — | T-002 |
-| `REQ-00003-004` | REQ-00003 | 修改 | 需求新增 | 扩展 `templates/rule.md`(占位 + 引导模式) | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/templates/rule.md` | — | — | T-001 |
-| `REQ-00003-005` | REQ-00003 | 修改 | 需求新增 | 追加 `CLAUDE.md` "## AI 工作约定"小节(首次) | 待开始 | 不适用 | `plugins/code-skills/CLAUDE.md` | — | — | T-001 |
-| `REQ-00003-006` | REQ-00003 | 文档 | 需求新增 | 同步版本看板 + 更新 `plan/REQ-00003/PLAN.md` 状态 | 待开始 | 不适用 | `assistants/V0.0.1/RESULT.md`, `assistants/V0.0.1/plan/REQ-00003/PLAN.md` | — | — | T-001 ~ T-005 |
-| `REQ-00003-007` | REQ-00003 | 文档 | 需求新增 | 全仓库 Grep + 不变量自检 + 6 commit 整理 | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00003-007/{RESULT,work-log,deviations}.md` | — | — | T-001 ~ T-006 |
+| `REQ-00003-001` | REQ-00003 | 修改 | 需求新增 | 扩展 `code-rule/SKILL.md` 正文(类型识别 + Type A/B/C 文档化 + 工作目录约定) | 已完成 | 不适用 | `plugins/code-skills/skills/code-rule/SKILL.md` | 2026-06-04 10:26 | 086890d | T-002, T-003, T-005 |
+| `REQ-00003-002` | REQ-00003 | 新增 | 需求新增 | 创建 6 个新分类占位文件(C-1~C-6) | 已完成 | 不适用 | `assistants/rules/framework-conventions.md`, `dependency-conventions.md`, `naming-conventions.md`, `directory-conventions.md`, `coding-style.md`, `commit-conventions.md` | 2026-06-04 10:53 | bec5f13 | T-001 |
+| `REQ-00003-003` | REQ-00003 | 修改 | 需求新增 | 追加 `module-conventions.md` DEPRECATED 标记 | 已完成 | 不适用 | `assistants/rules/module-conventions.md` | 2026-06-04 10:55 | 695c029 | T-002 |
+| `REQ-00003-004` | REQ-00003 | 修改 | 需求新增 | 扩展 `templates/rule.md`(占位 + 引导模式) | 已完成 | 不适用 | `plugins/code-skills/skills/code-rule/templates/rule.md` | 2026-06-04 10:55 | 2f41bb0 | T-001 |
+| `REQ-00003-005` | REQ-00003 | 修改 | 需求新增 | 追加 `CLAUDE.md` "## AI 工作约定"小节(首次) | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md` | 2026-06-04 10:55 | 35bc26b | T-001 |
+| `REQ-00003-006` | REQ-00003 | 文档 | 需求新增 | 同步版本看板 + 更新 `plan/REQ-00003/PLAN.md` 状态 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md`, `assistants/V0.0.1/plan/REQ-00003/PLAN.md` | 2024-06-04 11:00 | (无 commit) | T-001 ~ T-005 |
+| `REQ-00003-007` | REQ-00003 | 文档 | 需求新增 | 全仓库 Grep + 不变量自检 + 6 commit 整理 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00003-007/{RESULT,work-log,deviations,compile-and-run}.md` | 2024-06-04 10:55 | (无 commit) | T-001 ~ T-006 |
+| `REQ-00002-009` | REQ-00002 | 文档 | 审查改修 | 同步 PLAN.md 任务总览 + M2 描述(审查派生) | 待开始 | 未编写 | `assistants/V0.0.1/plan/REQ-00002/PLAN.md`, `V0.0.1/RESULT.md` | — | — | REQ-00002-007, REQ-00002-008 |
+| `REQ-00001-005` | REQ-00001 | 修改 | 审查改修 | 同步中英 README 中 GitHub URL 仓库名(审查派生) | 待开始 | 未编写 | `plugins/code-skills/README.md`, `README.en.md` | — | — | REQ-00001-002 |
 
 **统计**:
-- 总任务数:19
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):12 / 19(M1 已达成, **M2 已完成 8/8**, M3 待开始)
-- 开发已完成 / 未完成:12 / 7
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 19 / 0
+- 总任务数:21(原 19 + REQ-00001-005 派生 + REQ-00002-009 派生)
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):19 / 21(M1 已达成, M2 已完成, **M3 已完成 7/7**)
+- 开发已完成 / 未完成:19 / 2
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 21 / 0
 
 ---
 
@@ -159,7 +161,13 @@
 
 | 评审 ID | 需求 | 任务 | 维度 | 级别 | 描述 | 派生改修任务 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| F-1 | REQ-00001 | REQ-00001-002 | 一致性 / 规范 | 建议改 | GitHub 仓库 URL 未与 marketplace name 同步(`https://github.com/wm123450405/code-skills.git` 应询问用户后决定) | REQ-00001-005 | 待开始 |
+| F-2 | REQ-00001 | REQ-00001-002 | 可维护性 | 可选 | CLAUDE.md 目录树图例与新 marketplace name 关联弱 | (无,记入 findings-no-task.md) | 留作 follow-up |
+| F-3 | REQ-00002 | REQ-00002-005 | 可维护性 | 可选 | encoding-conventions.md 结构验证(212 行,4 规则,无偏离) | (无,记入 findings-no-task.md) | 留作 follow-up |
+| F-4 | REQ-00002 | REQ-00002-007 | 一致性 | 建议改 | PLAN.md 任务总览行 27 T-007 状态字段"待开始",与看板(已完成) + 实际产出(4 文档)不一致 | REQ-00002-009 | 待开始 |
+| F-5 | REQ-00002 | REQ-00002-008 | 一致性 | 建议改 | M2 里程碑描述"7 commit"与实际"5 commit + 2 无 commit task"不一致 | REQ-00002-009 | 待开始 |
 
+**统计**:5 / 必须改: 0 / 建议改: 3 / 可选: 2 / 已处理: 0
 **统计**:0 / 必须改: 0 / 建议改: 0 / 可选: 0 / 已处理: 0
 
 ---
@@ -168,6 +176,11 @@
 
 > 写入方:`code-review`(派生"审查改修"任务时)
 > 用途:追踪"由 review 派生、关联到原任务"的特殊任务链路
+
+| 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
+| --- | --- | --- | --- | --- |
+| REQ-00001-005 | REQ-00001-002 | 2026-06-04 10:35 | [REVIEW-REPORT.md](review/REQ-00001/REVIEW-REPORT.md) | 待开始 |
+| REQ-00002-009 | REQ-00002-007, REQ-00002-008 | 2026-06-04 10:40 | [REVIEW-REPORT.md](review/REQ-00002/REVIEW-REPORT.md) | 待开始 |
 
 | 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
 | --- | --- | --- | --- | --- |
@@ -199,6 +212,17 @@
 | 2026-06-04 10:05 | `git commit -m "chore(rules): add encoding-conventions.md ..."` | Bash | 0 | commit `b092dec` 创建成功 | REQ-00002-005 |
 | 2026-06-04 10:08 | `git add assistants/rules/migration-mapping.md` | Bash | 0 | staged 1 file (230 insertions) | REQ-00002-006 |
 | 2026-06-04 10:08 | `git commit -m "chore(rules): add migration-mapping.md ..."` | Bash | 0 | commit `5121e3f` 创建成功 | REQ-00002-006 |
+| 2026-06-04 10:26 | `git diff --stat plugins/code-skills/skills/code-rule/SKILL.md` | Bash | 0 | 1 file, 197 insertions(+), 25 deletions(-) | REQ-00003-001 |
+| 2026-06-04 10:26 | `git add plugins/code-skills/skills/code-rule/SKILL.md` | Bash | 0 | staged 1 file | REQ-00003-001 |
+| 2026-06-04 10:26 | `git commit -m "feat(code-rule): add 3 target types ..."` | Bash | 0 | commit `086890d` 创建成功 | REQ-00003-001 |
+| 2026-06-04 10:53 | `git add assistants/rules/{framework,dependency,naming,directory,coding-style,commit}-conventions.md` | Bash | 0 | staged 6 files | REQ-00003-002 |
+| 2026-06-04 10:53 | `git commit -m "feat(rules): add 6 placeholder classification files ..."` | Bash | 0 | commit `bec5f13` 创建成功 | REQ-00003-002 |
+| 2026-06-04 10:55 | `git add assistants/rules/module-conventions.md` | Bash | 0 | staged 1 file (+2 insertions) | REQ-00003-003 |
+| 2026-06-04 10:55 | `git commit -m "chore(rules): deprecate module-conventions.md ..."` | Bash | 0 | commit `695c029` 创建成功 | REQ-00003-003 |
+| 2026-06-04 10:55 | `git add plugins/code-skills/skills/code-rule/templates/rule.md` | Bash | 0 | staged 1 file (+23 insertions) | REQ-00003-004 |
+| 2026-06-04 10:55 | `git commit -m "feat(code-rule): extend templates/rule.md ..."` | Bash | 0 | commit `2f41bb0` 创建成功 | REQ-00003-004 |
+| 2026-06-04 10:55 | `git add plugins/code-skills/CLAUDE.md` | Bash | 0 | staged 1 file (+7 insertions) | REQ-00003-005 |
+| 2026-06-04 10:55 | `git commit -m "feat(CLAUDE.md): add AI 工作约定 section ..."` | Bash | 0 | commit `35bc26b` 创建成功 | REQ-00003-005 |
 
 ---
 
@@ -234,6 +258,15 @@
 | 2026-06-04 10:08 | 开发状态更新 | `REQ-00002-006` 开发状态"待开始"→"已完成",提交 `5121e3f`(新建 `migration-mapping.md` 230 行;5 规则;22 条映射数据;`code-it` 创建新文件由 D-PLAN-1 授权) | `REQ-00002-006` |
 | 2026-06-04 10:15 | 开发状态更新 | `REQ-00002-007` 开发状态"待开始"→"已完成"(13/13 不变量自检通过;全仓库 0 命中;2 项 PLAN 推断与实际不符已记录;无 commit) | `REQ-00002-007` |
 | 2026-06-04 10:20 | 开发状态更新 | `REQ-00002-008` 开发状态"待开始"→"已完成"(M2 全部 8 任务已完成;看板 6 区段同步完成;M2 状态推进"待开始"→"已完成") | `REQ-00002-008` |
+| 2026-06-04 10:26 | 开发状态更新 | `REQ-00003-001` 开发状态"待开始"→"已完成",提交 `086890d`(SKILL.md 272 → 449 行,+177;6 个变更;frontmatter 完整保留;关键词表 11 → 13 项) | `REQ-00003-001` |
+| 2026-06-04 10:53 | 开发状态更新 | `REQ-00003-002` 开发状态"待开始"→"已完成",提交 `bec5f13`(新建 6 个新分类占位文件,896-1088 bytes/各;INV-2 最小骨架;INV-5 既有未改;`directory-conventions.md` 含迁移说明) | `REQ-00003-002` |
+| 2026-06-04 10:55 | 开发状态更新 | `REQ-00003-003` 开发状态"待开始"→"已完成",提交 `695c029`(`module-conventions.md` 头部 +2 行 DEPRECATED 引用块;INV-7 仅追加不删;不修改其他 12 规范文件) | `REQ-00003-003` |
+| 2026-06-04 10:55 | 开发状态更新 | `REQ-00003-004` 开发状态"待开始"→"已完成",提交 `2f41bb0`(`templates/rule.md` 头部 +23 行 2 个 H2 小节;INV-1 8 字段结构保持) | `REQ-00003-004` |
+| 2026-06-04 10:55 | 开发状态更新 | `REQ-00003-005` 开发状态"待开始"→"已完成",提交 `35bc26b`(`CLAUDE.md` 末尾 +7 行 1 个 H2 小节"## AI 工作约定(由 code-rule 维护)";INV-3 纯追加不删;原 7 个小节保留) | `REQ-00003-005` |
+| 2024-06-04 10:55 | 开发状态更新 | `REQ-00003-007` 开发状态"待开始"→"已完成"(11/11 不变量自检通过;全仓库 0 命中;5 commit 顺序正确;无 commit) | `REQ-00003-007` |
+| 2024-06-04 11:00 | 开发状态更新 | `REQ-00003-006` 开发状态"待开始"→"已完成"(M3 全部 7 任务完成;看板 6 区段同步;M3 状态"待开始"→"已完成";累积未提交看板同步一次性 commit) | `REQ-00003-006` |
+| 2026-06-04 10:35 | 评审发现 | REQ-00001 评审完成(2 条发现:F-1 建议改派生 T-005 + F-2 可选记入 findings-no-task.md;无 P0/P1 阻塞;M1 派生 1 任务) | REQ-00001 |
+| 2026-06-04 10:40 | 评审发现 | REQ-00002 评审完成(3 条发现:F-4 + F-5 建议改合并派生 T-009 + F-3 可选;8 任务全部通过 8/8;无 P0/P1 阻塞) | REQ-00002 |
 
 ---
 
