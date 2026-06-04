@@ -125,3 +125,10 @@ assistants/
 - `审查改修` → `./assistants/<版本号>/review/<任务编码>/RESULT.md`(审查派生的改修)
 
 完整技能清单、各自的输入/输出,以及端到端流程,请参见 `README.md`。
+
+## AI 工作约定(由 code-rule 维护)
+
+> 本小节由 `code-rule` 技能维护;手动修改可能被 `code-rule` 覆盖。
+> 适用对象:Claude Code 在本仓库工作时
+
+### 指引 1: (待添加)
