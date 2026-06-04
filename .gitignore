@@ -1,5 +1,5 @@
 # Claude Code local settings (per-user, not for version control)
-.claude/settings.local.json
+.claude/
 
 # OS / editor cruft
 .DS_Store
