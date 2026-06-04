@@ -122,7 +122,7 @@
 | `REQ-00002-005` | REQ-00002 | 新增 | 需求新增(FR-7) | 创建 encoding-conventions.md 规范文件 | 已完成 | 不适用 | `assistants/rules/encoding-conventions.md` | 2026-06-04 10:05 | b092dec | T-1, T-2 |
 | `REQ-00002-006` | REQ-00002 | 新增 | 需求新增(FR-8) | 创建 migration-mapping.md 迁移映射 | 已完成 | 不适用 | `assistants/rules/migration-mapping.md` | 2026-06-04 10:08 | 5121e3f | T-5 |
 | `REQ-00002-007` | REQ-00002 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00002-007/{RESULT,work-log,deviations,compile-and-run}.md` | 2026-06-04 10:15 | (无 commit) | T-1 ~ T-6 |
-| `REQ-00002-008` | REQ-00002 | 文档 | 需求新增 | 同步版本看板 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md` + `plan/REQ-00002/PLAN.md` | 2026-06-04 10:20 | (即将 commit) | T-1 ~ T-7 |
+| `REQ-00002-008` | REQ-00002 | 文档 | 需求新增 | 同步版本看板 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md` + `plan/REQ-00002/PLAN.md` | 2026-06-04 10:20 | a24663d | T-1 ~ T-7 |
 | `REQ-00003-001` | REQ-00003 | 修改 | 需求新增 | 扩展 `code-rule/SKILL.md` 正文(类型识别 + Type A/B/C 文档化 + 工作目录约定) | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/SKILL.md` | — | — | T-002, T-003, T-005 |
 | `REQ-00003-002` | REQ-00003 | 新增 | 需求新增 | 创建 6 个新分类占位文件(C-1~C-6) | 待开始 | 不适用 | `assistants/rules/framework-conventions.md`, `dependency-conventions.md`, `naming-conventions.md`, `directory-conventions.md`, `coding-style.md`, `commit-conventions.md` | — | — | T-001 |
 | `REQ-00003-003` | REQ-00003 | 修改 | 需求新增 | 追加 `module-conventions.md` DEPRECATED 标记 | 待开始 | 不适用 | `assistants/rules/module-conventions.md` | — | — | T-002 |
