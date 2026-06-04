@@ -4,6 +4,8 @@
 > 最后更新:2026-06-03 18:50
 > 适用版本:跨所有版本共享(项目级)
 
+> ⚠️ **DEPRECATED(已弃用)**:本文件内容已迁移到 `directory-conventions.md`(2026-06-04 REQ-00003 H2 决策,详见 `plan/REQ-00003/RESULT.md`)。本文件保留作为历史参考,新规则请追加到 `directory-conventions.md`。
+
 ## 适用场景
 本规范适用于 `plugins/code-skills/skills/<技能名>/` 目录内子目录的命名与用途,以及"技能引用的资源"在仓库中的摆放位置。涉及"模板/清单/规则放在哪里"时查阅本文件。
 
