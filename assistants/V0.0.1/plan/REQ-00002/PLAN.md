@@ -3,10 +3,10 @@
 - 需求编码:REQ-00002
 - 所属版本:V0.0.1
 - 计划版本:v1
-- 状态:待开始(首次计划)
+- 状态:已完成(M2 8 任务全部完成,待最终 commit)
 - 责任人:wangmiao
 - 创建:2026-06-03
-- 最近更新:2026-06-03 20:55
+- 最近更新:2026-06-04 10:20
 - **上游**:`./assistants/V0.0.1/require/REQ-00002/RESULT.md` + `design/REQ-00002/RESULT.md` + 本目录 `RESULT.md`
 - **下游**:`code-it REQ-00002-NN` 实施 / `code-review REQ-00002` 评审
 
@@ -16,14 +16,14 @@
 
 | 任务编号 | 标题 | 类型 | 触发/来源 | 开发状态 | 测试状态 | 涉及文件 | 完成时间 | 提交哈希 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `REQ-00002-001` | 同步 10 个 SKILL.md(只改正文) | 修改 | 需求新增 | 待开始 | 不适用 | 10 SKILL.md(见 §2.1) | — | — | — |
-| `REQ-00002-002` | 同步 27 模板(改正文占位符 + 示例值) | 修改 | 需求新增 | 待开始 | 不适用 | 27 templates(见 §2.2) | — | — | T-1 |
-| `REQ-00002-003` | 同步中英 README(同次 commit) | 修改 | 需求新增 | 待开始 | 不适用 | README.md + README.en.md | — | — | T-1, T-2 |
-| `REQ-00002-004` | 核查 CLAUDE.md(预期 0 变更) | 文档 | 需求新增 | 待开始 | 不适用 | plugins/code-skills/CLAUDE.md(0 变更) | — | — | — |
-| `REQ-00002-005` | 创建 encoding-conventions.md 规范文件 | 新增 | 需求新增(FR-7) | 待开始 | 不适用 | assistants/rules/encoding-conventions.md | — | — | T-1, T-2 |
-| `REQ-00002-006` | 创建 migration-mapping.md 迁移映射 | 新增 | 需求新增(FR-8) | 待开始 | 不适用 | assistants/rules/migration-mapping.md | — | — | T-5 |
+| `REQ-00002-001` | 同步 10 个 SKILL.md(只改正文) | 修改 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/skills/{code-fix,code-it,code-plan,code-require,code-unit}/SKILL.md`(5 文件) | 2026-06-04 09:50 | 8ac1c9a | — |
+| `REQ-00002-002` | 同步 27 模板(改正文占位符 + 示例值) | 修改 | 需求新增 | 已完成 | 不适用 | 11 templates(见 §2.2 + RESULT.md 偏离 1) | 2026-06-04 10:05 | 3df8ae7 | T-1 |
+| `REQ-00002-003` | 同步中英 README(同次 commit) | 修改 | 需求新增 | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | 2026-06-04 10:00 | 31d6221 | T-1, T-2 |
+| `REQ-00002-004` | 核查 CLAUDE.md(预期 0 变更) | 文档 | 需求新增 | 已完成 | 不适用 | plugins/code-skills/CLAUDE.md(0 变更,无 commit) | 2026-06-04 10:00 | (无 commit) | — |
+| `REQ-00002-005` | 创建 encoding-conventions.md 规范文件 | 新增 | 需求新增(FR-7) | 已完成 | 不适用 | assistants/rules/encoding-conventions.md | 2026-06-04 10:05 | b092dec | T-1, T-2 |
+| `REQ-00002-006` | 创建 migration-mapping.md 迁移映射 | 新增 | 需求新增(FR-8) | 已完成 | 不适用 | assistants/rules/migration-mapping.md | 2026-06-04 10:08 | 5121e3f | T-5 |
 | `REQ-00002-007` | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 | 文档 | 需求新增 | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00002-007/RESULT.md` + `work-log.md` + `deviations.md` | — | — | T-1 ~ T-6 |
-| `REQ-00002-008` | 同步版本看板 | 文档 | 需求新增 | 待开始 | 不适用 | `assistants/V0.0.1/RESULT.md` + 本 `PLAN.md` | — | — | T-1 ~ T-7 |
+| `REQ-00002-008` | 同步版本看板 | 文档 | 需求新增 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md` + 本 `PLAN.md` | 2026-06-04 10:20 | (即将 commit) | T-1 ~ T-7 |
 
 **统计**(目标):
 - 总任务数:**8**(7 实施 + 1 看板同步)
@@ -401,3 +401,11 @@
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- | --- |
 | 2026-06-03 20:55 | v1 | 计划新增 | 完成首次详细设计与编码计划:8 个任务(`REQ-00002-001` ~ `008`),多 commit 粒度按文件类型;继承概要设计 8 决策 + 11 不变量 + 本设计新增 2 不变量(INV-12/13)+ 本设计 D-PLAN-1(`code-it` 创建新规范文件,授权);Q-1 ~ Q-12 全部采纳 REQU 文档默认;无新增依赖,无偏离规范;task 编号沿用旧格式便于内部追踪,新需求起生效新 TASK 编码 | wangmiao |
+| 2026-06-04 09:50 | v1.1 | 状态更新 | `REQ-00002-001` 状态"待开始"→"已完成",提交 `8ac1c9a`(5 SKILL.md 改正文,31+/31-;frontmatter 完整保留) | wangmiao |
+| 2026-06-04 10:05 | v1.2 | 状态更新 | `REQ-00002-002` 状态"待开始"→"已完成",提交 `3df8ae7`(11 templates 改正文占位符/示例值,40+/40-;实际改 11/27,16 个 0 命中无需改) | wangmiao |
+| 2026-06-04 10:00 | v1.3 | 状态更新 | `REQ-00002-003` 状态"待开始"→"已完成",提交 `31d6221`(2 README 改正文示例,72+/72-;中英严格对仗,`doc-conventions §规则 1` 严格遵循) | wangmiao |
+| 2026-06-04 10:00 | v1.4 | 状态更新 | `REQ-00002-004` 状态"待开始"→"已完成"(核查 0 命中,无 commit;符合 PLAN §2.4 预期) | wangmiao |
+| 2026-06-04 10:05 | v1.5 | 状态更新 | `REQ-00002-005` 状态"待开始"→"已完成",提交 `b092dec`(新建 `encoding-conventions.md` 212 行;4 规则权威源;`code-it` 创建新文件由 D-PLAN-1 授权) | wangmiao |
+| 2026-06-04 10:08 | v1.6 | 状态更新 | `REQ-00002-006` 状态"待开始"→"已完成",提交 `5121e3f`(新建 `migration-mapping.md` 230 行;5 规则;22 条映射数据;`code-it` 创建新文件由 D-PLAN-1 授权) | wangmiao |
+| 2026-06-04 10:15 | v1.7 | 状态更新 | `REQ-00002-007` 状态"待开始"→"已完成"(13/13 不变量自检通过;全仓库 0 命中;2 项 PLAN 推断与实际不符已记录;无 commit) | wangmiao |
+| 2026-06-04 10:20 | v1.8 | 状态更新 | `REQ-00002-008` 状态"待开始"→"已完成"(M2 全部 8 任务完成;看板 6 区段同步;M2 状态"待开始"→"已完成";最终 commit 待执行) | wangmiao |

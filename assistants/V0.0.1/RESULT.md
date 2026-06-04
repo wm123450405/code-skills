@@ -7,12 +7,12 @@
 ## 文档头
 - 版本号:`V0.0.1`
 - 创建时间:2026-06-03 19:25
-- 最近更新:2026-06-03 21:00
+- 最近更新:2026-06-04 10:20
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
 - 描述:V0.0.0 基线之后的首个开发版本(基于 V0.0.0 创建,默认继承 V0.0.0 全部已完成功能)
-- 当前里程碑:M2 — 编码格式统一落地(待开始)
+- 当前里程碑:M2 — 编码格式统一落地(已完成)
 
 ---
 
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.1` |
 | 创建时间 | 2026-06-03 19:25 |
-| 最近更新 | 2026-06-03 21:00 |
+| 最近更新 | 2026-06-04 10:20 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -38,8 +38,9 @@
 | --- | --- | --- | --- | --- | --- |
 | M0:工作空间就绪 | — | 本看板创建 | 已完成 | 2026-06-03 | 2026-06-03 |
 | M1:Marketplace 改名落地 | REQ-00001:T-001~T-004(`REQ-00001-001`~`004`) | 4 任务开发=已完成 ∧ 1 个 commit 已落地(单 commit,doc-conventions §规则 1) | 已完成 | 2026-06-03 | 2026-06-03 |
-| M2:编码格式统一落地 | REQ-00002:T-001~T-008(`REQ-00002-001`~`008`) | 8 任务开发=已完成 ∧ 7 个 commit 已落地(多 commit,按文件类型拆分) | 待开始 | 2026-06-03 | — |
-| M3:可发布 | 本版本所有任务 | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
+| M2:编码格式统一落地 | REQ-00002:T-001~T-008(`REQ-00002-001`~`008`) | 8 任务开发=已完成 ∧ 5 个 commit 已落地(多 commit,按文件类型拆分;2 个任务无 commit 符合预期) | 已完成 | 2026-06-03 | 2026-06-04 |
+| M3:`code-rule` 技能扩展 | REQ-00003:T-001~T-007(`REQ-00003-001`~`007`) | 7 任务开发=已完成 ∧ 6 个 commit 已落地(类型识别+Type A/B/C 文档化 + 6 占位 + 1 弃用 + 模板扩展 + CLAUDE.md 新小节 + 全仓库审计) | 待开始 | 2026-06-04 | — |
+| M4:可发布 | 本版本所有任务 | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -54,7 +55,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | REQ-00001(原 REQ-2026-0001) | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 2026-06-03 20:10 | 2026-06-03 20:20 | [RESULT.md](require/REQ-00001/RESULT.md) | [RESULT.md](design/REQ-00001/RESULT.md) | [RESULT.md](plan/REQ-00001/RESULT.md) |
 | REQ-00002 | 编码格式统一(REQ/TASK/BUG 均 5 位,采用新规则) | 已完成 | 2026-06-03 20:14 | 2026-06-03 20:18 | [RESULT.md](require/REQ-00002/RESULT.md) | [RESULT.md](design/REQ-00002/RESULT.md) | — |
-| REQ-00003 | 优化 `code-rule` 技能,增加不同类型的核心编码规范的解析或引导 | 已完成 | 2026-06-03 20:35 | 2026-06-03 20:45 | [RESULT.md](require/REQ-00003/RESULT.md) | — | — |
+| REQ-00003 | 优化 `code-rule` 技能,增加不同类型的核心编码规范的解析或引导 | 已完成 | 2026-06-03 20:35 | 2026-06-03 20:45 | [RESULT.md](require/REQ-00003/RESULT.md) | [RESULT.md](design/REQ-00003/RESULT.md) | [RESULT.md](plan/REQ-00003/RESULT.md) |
 
 **统计**:
 - 总数:3
@@ -95,8 +96,9 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | REQ-00001 | Marketplace 根名称添加 `-marketplace` 后缀 | 已完成 | 4 | 4 | 0(全部不适用) | 2026-06-03 20:30 | [PLAN.md](plan/REQ-00001/PLAN.md) |
 | REQ-00002 | 编码格式统一(REQ/TASK/BUG 均 5 位,采用新规则) | 已完成 | 8 | 0 | 0(全部不适用) | 2026-06-03 20:55 | [PLAN.md](plan/REQ-00002/PLAN.md) |
+| REQ-00003 | 优化 `code-rule` 技能,增加不同类型的核心编码规范的解析或引导 | 已完成 | 7 | 0 | 0(全部不适用) | 2026-06-04 09:15 | [PLAN.md](plan/REQ-00003/PLAN.md) |
 
-**统计**:2 个计划 / 共 12 个任务 / 开发完成 4 / 测试通过 0(全部不适用) / **真正可发布 4 / 12** |
+**统计**:3 个计划 / 共 19 个任务 / 开发完成 4 / 测试通过 0(全部不适用) / **真正可发布 4 / 19** |
 
 ---
 
@@ -113,20 +115,27 @@
 | `REQ-00001-002` | REQ-00001 | 修改 | 需求新增 | 同步中英 README | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | 2026-06-03 20:51 | f147ea7 | — |
 | `REQ-00001-003` | REQ-00001 | 文档 | 需求新增 | 核查 `plugins/code-skills/CLAUDE.md` | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md`(0 变更) | 2026-06-03 20:52 | (不提交) | — |
 | `REQ-00001-004` | REQ-00001 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 + commit | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00001-004/{RESULT,work-log,deviations}.md` | 2026-06-03 20:54 | f147ea7 | — |
-| `REQ-00002-001` | REQ-00002 | 修改 | 需求新增 | 同步 10 个 SKILL.md(只改正文) | 待开始 | 不适用 | 10 SKILL.md(见 plan/REQ-00002/PLAN.md §2.1) | — | — | — |
-| `REQ-00002-002` | REQ-00002 | 修改 | 需求新增 | 同步 27 模板(改正文占位符 + 示例值) | 待开始 | 不适用 | 27 templates(见 §2.2) | — | — | T-1 |
-| `REQ-00002-003` | REQ-00002 | 修改 | 需求新增 | 同步中英 README(同次 commit) | 待开始 | 不适用 | `README.md` + `README.en.md` | — | — | T-1, T-2 |
-| `REQ-00002-004` | REQ-00002 | 文档 | 需求新增 | 核查 CLAUDE.md(预期 0 变更) | 待开始 | 不适用 | `plugins/code-skills/CLAUDE.md`(0 变更) | — | — | — |
-| `REQ-00002-005` | REQ-00002 | 新增 | 需求新增(FR-7) | 创建 encoding-conventions.md 规范文件 | 待开始 | 不适用 | `assistants/rules/encoding-conventions.md` | — | — | T-1, T-2 |
-| `REQ-00002-006` | REQ-00002 | 新增 | 需求新增(FR-8) | 创建 migration-mapping.md 迁移映射 | 待开始 | 不适用 | `assistants/rules/migration-mapping.md` | — | — | T-5 |
-| `REQ-00002-007` | REQ-00002 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00002-007/{RESULT,work-log,deviations}.md` | — | — | T-1 ~ T-6 |
-| `REQ-00002-008` | REQ-00002 | 文档 | 需求新增 | 同步版本看板 | 待开始 | 不适用 | `assistants/V0.0.1/RESULT.md` + `plan/REQ-00002/PLAN.md` | — | — | T-1 ~ T-7 |
+| `REQ-00002-001` | REQ-00002 | 修改 | 需求新增 | 同步 10 个 SKILL.md(只改正文) | 已完成 | 不适用 | `plugins/code-skills/skills/{code-fix,code-it,code-plan,code-require,code-unit}/SKILL.md`(5 文件) | 2026-06-04 09:50 | 8ac1c9a | — |
+| `REQ-00002-002` | REQ-00002 | 修改 | 需求新增 | 同步 27 模板(改正文占位符 + 示例值) | 已完成 | 不适用 | 11 templates(见 plan/REQ-00002/PLAN.md §2.2 + 偏离 1) | 2026-06-04 10:05 | 3df8ae7 | T-1 |
+| `REQ-00002-003` | REQ-00002 | 修改 | 需求新增 | 同步中英 README(同次 commit) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `README.en.md` | 2026-06-04 10:00 | 31d6221 | T-1, T-2 |
+| `REQ-00002-004` | REQ-00002 | 文档 | 需求新增 | 核查 CLAUDE.md(预期 0 变更) | 已完成 | 不适用 | `plugins/code-skills/CLAUDE.md`(0 变更,无 commit) | 2026-06-04 10:00 | (无 commit) | — |
+| `REQ-00002-005` | REQ-00002 | 新增 | 需求新增(FR-7) | 创建 encoding-conventions.md 规范文件 | 已完成 | 不适用 | `assistants/rules/encoding-conventions.md` | 2026-06-04 10:05 | b092dec | T-1, T-2 |
+| `REQ-00002-006` | REQ-00002 | 新增 | 需求新增(FR-8) | 创建 migration-mapping.md 迁移映射 | 已完成 | 不适用 | `assistants/rules/migration-mapping.md` | 2026-06-04 10:08 | 5121e3f | T-5 |
+| `REQ-00002-007` | REQ-00002 | 文档 | 需求新增 | 全仓库穷举式 Grep + 偏差日志 + 不变量自检 | 已完成 | 不适用 | 无文件修改,产出 `code/REQ-00002-007/{RESULT,work-log,deviations,compile-and-run}.md` | 2026-06-04 10:15 | (无 commit) | T-1 ~ T-6 |
+| `REQ-00002-008` | REQ-00002 | 文档 | 需求新增 | 同步版本看板 | 已完成 | 不适用 | `assistants/V0.0.1/RESULT.md` + `plan/REQ-00002/PLAN.md` | 2026-06-04 10:20 | (即将 commit) | T-1 ~ T-7 |
+| `REQ-00003-001` | REQ-00003 | 修改 | 需求新增 | 扩展 `code-rule/SKILL.md` 正文(类型识别 + Type A/B/C 文档化 + 工作目录约定) | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/SKILL.md` | — | — | T-002, T-003, T-005 |
+| `REQ-00003-002` | REQ-00003 | 新增 | 需求新增 | 创建 6 个新分类占位文件(C-1~C-6) | 待开始 | 不适用 | `assistants/rules/framework-conventions.md`, `dependency-conventions.md`, `naming-conventions.md`, `directory-conventions.md`, `coding-style.md`, `commit-conventions.md` | — | — | T-001 |
+| `REQ-00003-003` | REQ-00003 | 修改 | 需求新增 | 追加 `module-conventions.md` DEPRECATED 标记 | 待开始 | 不适用 | `assistants/rules/module-conventions.md` | — | — | T-002 |
+| `REQ-00003-004` | REQ-00003 | 修改 | 需求新增 | 扩展 `templates/rule.md`(占位 + 引导模式) | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/templates/rule.md` | — | — | T-001 |
+| `REQ-00003-005` | REQ-00003 | 修改 | 需求新增 | 追加 `CLAUDE.md` "## AI 工作约定"小节(首次) | 待开始 | 不适用 | `plugins/code-skills/CLAUDE.md` | — | — | T-001 |
+| `REQ-00003-006` | REQ-00003 | 文档 | 需求新增 | 同步版本看板 + 更新 `plan/REQ-00003/PLAN.md` 状态 | 待开始 | 不适用 | `assistants/V0.0.1/RESULT.md`, `assistants/V0.0.1/plan/REQ-00003/PLAN.md` | — | — | T-001 ~ T-005 |
+| `REQ-00003-007` | REQ-00003 | 文档 | 需求新增 | 全仓库 Grep + 不变量自检 + 6 commit 整理 | 待开始 | 不适用 | 无文件修改,产出 `code/REQ-00003-007/{RESULT,work-log,deviations}.md` | — | — | T-001 ~ T-006 |
 
 **统计**:
-- 总任务数:12
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):4 / 12(M1 已达成, M2 待开始)
-- 开发已完成 / 未完成:4 / 8
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 12 / 0
+- 总任务数:19
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):12 / 19(M1 已达成, **M2 已完成 8/8**, M3 待开始)
+- 开发已完成 / 未完成:12 / 7
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 19 / 0
 
 ---
 
@@ -177,6 +186,19 @@
 | 2026-06-03 20:53 | `Grep "code-skills@code-skills" --glob="**/*.{md,json}" .` | Grep | 0 | 见 RESULT.md §6.1 分类报告 | REQ-00001-004 |
 | 2026-06-03 20:54 | `git add .claude-plugin/marketplace.json plugins/code-skills/README.md plugins/code-skills/README.en.md` | Bash | 0 | staged 3 files | REQ-00001-004 |
 | 2026-06-03 20:54 | `git commit -m "chore(marketplace): rename ..."` | Bash | 0 | commit `f147ea7` 创建成功 | REQ-00001-004 |
+| 2026-06-04 09:50 | `git diff --stat plugins/code-skills/skills/` | Bash | 0 | 5 files changed, 31 insertions(+), 31 deletions(-) | REQ-00002-001 |
+| 2026-06-04 09:50 | `git add plugins/code-skills/skills/{code-fix,code-it,code-plan,code-require,code-unit}/SKILL.md` | Bash | 0 | staged 5 files | REQ-00002-001 |
+| 2026-06-04 09:50 | `git commit -m "chore(encoding): sync 5 SKILL.md ..."` | Bash | 0 | commit `8ac1c9a` 创建成功 | REQ-00002-001 |
+| 2026-06-04 10:05 | `git diff --stat plugins/code-skills/skills/*/templates/` | Bash | 0 | 11 files changed, 40 insertions(+), 40 deletions(-) | REQ-00002-002 |
+| 2026-06-04 10:05 | `git add plugins/code-skills/skills/*/templates/` | Bash | 0 | staged 11 files | REQ-00002-002 |
+| 2026-06-04 10:05 | `git commit -m "chore(encoding): sync 11 templates ..."` | Bash | 0 | commit `3df8ae7` 创建成功 | REQ-00002-002 |
+| 2026-06-04 10:00 | `git diff --stat plugins/code-skills/README.md plugins/code-skills/README.en.md` | Bash | 0 | 2 files, 72 insertions(+), 72 deletions(-) | REQ-00002-003 |
+| 2026-06-04 10:00 | `git add plugins/code-skills/README.md plugins/code-skills/README.en.md` | Bash | 0 | staged 2 files | REQ-00002-003 |
+| 2026-06-04 10:00 | `git commit -m "chore(encoding): sync README ..."` | Bash | 0 | commit `31d6221` 创建成功 | REQ-00002-003 |
+| 2026-06-04 10:05 | `git add assistants/rules/encoding-conventions.md` | Bash | 0 | staged 1 file (212 insertions) | REQ-00002-005 |
+| 2026-06-04 10:05 | `git commit -m "chore(rules): add encoding-conventions.md ..."` | Bash | 0 | commit `b092dec` 创建成功 | REQ-00002-005 |
+| 2026-06-04 10:08 | `git add assistants/rules/migration-mapping.md` | Bash | 0 | staged 1 file (230 insertions) | REQ-00002-006 |
+| 2026-06-04 10:08 | `git commit -m "chore(rules): add migration-mapping.md ..."` | Bash | 0 | commit `5121e3f` 创建成功 | REQ-00002-006 |
 
 ---
 
@@ -203,6 +225,15 @@
 | 2026-06-03 20:54 | 开发状态更新 | `REQ-00001-004` 开发状态"待开始"→"已完成",T-004 全仓库 Grep + 11 不变量自检 + 单 commit `f147ea7`(3 files, 5+/5-);3 处偏离记入 `code/REQ-00001-004/deviations.md`;**M1 达成** | `REQ-00001-004` |
 | 2026-06-03 20:55 | 计划新增 | REQ-00002 详细设计与编码计划完成(共 8 个任务,`REQ-00002-001` ~ `REQ-00002-008`)。范围:10 SKILL.md(只改正文)+ 27 模板(占位符+示例值)+ 中英 README + CLAUDE.md 核查 + (条件)encoding-conventions.md + (条件)migration-mapping.md + 全仓库 Grep + 看板同步;多 commit 粒度按文件类型(7 个 commit);继承概要设计 8 决策 + 11 不变量 + 本设计新增 2 不变量(INV-12/13);Q-1 ~ Q-12 全部采纳 REQU 文档默认;plan 阶段 D-PLAN-1(`code-it` 创建新规范文件,授权);无新增依赖,无偏离规范;**M2 待开始** | REQ-00002 |
 | 2026-06-03 21:00 | 设计新增 | REQ-00003 概要设计完成(v1,核心架构=单技能 + 3 子流程;9 个模块 M-1~M-9;Type A 6 分类 + 4 保留 + 1 弃用[H2 决策];Type B/C 数据结构 5/4 字段;9 条不变量;5 commit 实施计划)。范围:扩展 `code-rule/SKILL.md` 正文(不改 frontmatter)+ 扩展 `templates/rule.md`(占位/引导模式)+ 6 个新分类文件(全空占位 H1 决策)+ `module-conventions.md` 追加 DEPRECATED 标记 + `plugins/code-skills/CLAUDE.md` 末尾追加"AI 工作约定"小节。严守 FR-9 边界(不修改 marketplace.json / plugin.json / 9 个其他 SKILL.md / 4 保留规范文件 / V0.0.0~V0.0.1 工作文件);Q-4(C-4=`directory-conventions`)/Q-5(全空占位)/Q-8(H2 module→directory 迁移)用户确认,Q-6(Type B 无示例字段)/Q-7(Type C `## 提示:` + `### 提示:` 并存)采纳默认;design 阶段新增 D-DESIGN-1(保留旧关键词向后兼容)/D-DESIGN-2(`code-rule` description 不变)/D-DESIGN-3(5 commit 按模块拆分);无新增依赖,无偏离规范;**M3 待开始,REQ-00003 阻塞 `code-plan` REQ-00003 等待用户触发** | REQ-00003 |
+| 2026-06-04 09:15 | 计划新增 | REQ-00003 详细设计与编码计划完成(共 7 个任务,`REQ-00003-001` ~ `REQ-00003-007`)。范围:扩展 `code-rule/SKILL.md` 正文(类型识别 + Type A/B/C 文档化 + 工作目录约定) + 6 个新分类占位文件 + `module-conventions.md` 弃用标记 + 扩展 `templates/rule.md`(占位/引导模式) + 追加 `CLAUDE.md` "AI 工作约定"小节 + 看板同步 + 全仓库审计;6 commit 粒度按模块(commit 1 含 T-001 + T-006 看板同步);继承 design 8 决策 + 9 不变量 + 本 plan 新增 2 不变量(INV-10/11);**plan 阶段对 design 的微调**:**Q-PLAN-2 类型识别合并到步骤 4 子段 4.2**(design M-1 原为"独立子流程",变更为"步骤 4 子模块",模块命名保留便于追踪);**Q-PLAN-1 任务粒度按 5 commit 拆 7-9 任务**;无新增依赖,无偏离规范;**M3 待开始,REQ-00003 阻塞 `code-it` 等待用户触发** | REQ-00003 |
+| 2026-06-04 09:50 | 开发状态更新 | `REQ-00002-001` 开发状态"待开始"→"已完成",提交 `8ac1c9a`(5 SKILL.md 改正文,31+/31-;frontmatter 完整保留) | `REQ-00002-001` |
+| 2026-06-04 10:05 | 开发状态更新 | `REQ-00002-002` 开发状态"待开始"→"已完成",提交 `3df8ae7`(11 templates 改正文占位符/示例值,40+/40-;实际改 11/27,16 个 0 命中无需改) | `REQ-00002-002` |
+| 2026-06-04 10:00 | 开发状态更新 | `REQ-00002-003` 开发状态"待开始"→"已完成",提交 `31d6221`(2 README 改正文示例,72+/72-;中英严格对仗,`doc-conventions §规则 1` 严格遵循) | `REQ-00002-003` |
+| 2026-06-04 10:00 | 开发状态更新 | `REQ-00002-004` 开发状态"待开始"→"已完成"(核查 0 命中,无 commit;符合 PLAN §2.4 预期) | `REQ-00002-004` |
+| 2026-06-04 10:05 | 开发状态更新 | `REQ-00002-005` 开发状态"待开始"→"已完成",提交 `b092dec`(新建 `encoding-conventions.md` 212 行;4 规则权威源;`code-it` 创建新文件由 D-PLAN-1 授权) | `REQ-00002-005` |
+| 2026-06-04 10:08 | 开发状态更新 | `REQ-00002-006` 开发状态"待开始"→"已完成",提交 `5121e3f`(新建 `migration-mapping.md` 230 行;5 规则;22 条映射数据;`code-it` 创建新文件由 D-PLAN-1 授权) | `REQ-00002-006` |
+| 2026-06-04 10:15 | 开发状态更新 | `REQ-00002-007` 开发状态"待开始"→"已完成"(13/13 不变量自检通过;全仓库 0 命中;2 项 PLAN 推断与实际不符已记录;无 commit) | `REQ-00002-007` |
+| 2026-06-04 10:20 | 开发状态更新 | `REQ-00002-008` 开发状态"待开始"→"已完成"(M2 全部 8 任务已完成;看板 6 区段同步完成;M2 状态推进"待开始"→"已完成") | `REQ-00002-008` |
 
 ---
 
@@ -219,13 +250,15 @@
 - 详细设计:`./assistants/V0.0.1/plan/<需求编号>/RESULT.md` × N
   - REQ-00001 → [plan/REQ-00001/RESULT.md](plan/REQ-00001/RESULT.md)
   - REQ-00002 → [plan/REQ-00002/RESULT.md](plan/REQ-00002/RESULT.md)
+  - REQ-00003 → [plan/REQ-00003/RESULT.md](plan/REQ-00003/RESULT.md)
 - 任务计划:`./assistants/V0.0.1/plan/<需求编号>/PLAN.md` × N
   - REQ-00001 → [plan/REQ-00001/PLAN.md](plan/REQ-00001/PLAN.md)(4 个任务:`REQ-00001-001`~`004`)
   - REQ-00002 → [plan/REQ-00002/PLAN.md](plan/REQ-00002/PLAN.md)(8 个任务:`REQ-00002-001`~`008`)
+  - REQ-00003 → [plan/REQ-00003/PLAN.md](plan/REQ-00003/PLAN.md)(7 个任务:`REQ-00003-001`~`007`)
 - 过程文档:`./assistants/V0.0.1/plan/REQ-00002/*.md`
   - [materials-index.md](plan/REQ-00002/materials-index.md) / [design-notes.md](plan/REQ-00002/design-notes.md) / [module-details.md](plan/REQ-00002/module-details.md) / [interface-specs.md](plan/REQ-00002/interface-specs.md) / [data-changes.md](plan/REQ-00002/data-changes.md) / [risk-analysis.md](plan/REQ-00002/risk-analysis.md) / [rule-compliance.md](plan/REQ-00002/rule-compliance.md) / [clarifications.md](plan/REQ-00002/clarifications.md)
-- 过程文档:`./assistants/V0.0.1/design/REQ-00003/*.md`
-  - [materials-index.md](design/REQ-00003/materials-index.md) / [design-notes.md](design/REQ-00003/design-notes.md) / [module-breakdown.md](design/REQ-00003/module-breakdown.md) / [dependencies.md](design/REQ-00003/dependencies.md) / [related-designs.md](design/REQ-00003/related-designs.md) / [rule-compliance.md](design/REQ-00003/rule-compliance.md) / [clarifications.md](design/REQ-00003/clarifications.md)
+- 过程文档:`./assistants/V0.0.1/plan/REQ-00003/*.md`
+  - [materials-index.md](plan/REQ-00003/materials-index.md) / [design-notes.md](plan/REQ-00003/design-notes.md) / [module-details.md](plan/REQ-00003/module-details.md) / [interface-specs.md](plan/REQ-00003/interface-specs.md) / [data-changes.md](plan/REQ-00003/data-changes.md) / [risk-analysis.md](plan/REQ-00003/risk-analysis.md) / [rule-compliance.md](plan/REQ-00003/rule-compliance.md) / [clarifications.md](plan/REQ-00003/clarifications.md)
 - 代码改修正文:`./assistants/V0.0.1/code/<任务编码>/RESULT.md` × N
   - REQ-00001-001 → [code/REQ-00001-001/RESULT.md](code/REQ-00001-001/RESULT.md) + [work-log.md](code/REQ-00001-001/work-log.md)
   - REQ-00001-002 → [code/REQ-00001-002/RESULT.md](code/REQ-00001-002/RESULT.md) + [work-log.md](code/REQ-00001-002/work-log.md)
