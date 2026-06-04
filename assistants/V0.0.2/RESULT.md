@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-04 14:57
+- 最近更新:2026-06-04 18:13
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-04 14:57 |
+| 最近更新 | 2026-06-04 18:13 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -37,7 +37,9 @@
 | 里程碑 | 包含任务范围 | 完成定义 | 状态 | 计划时间 | 实际完成 |
 | --- | --- | --- | --- | --- | --- |
 | M0:工作空间就绪 | — | 本看板创建 | 已完成 | 2026-06-04 | 2026-06-04 |
-| M1:可发布 | 本版本所有任务 | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
+| M1-REQ-00006-1:模板就绪 | T-002 ~ T-006(REQ-00006) | 5 份模板开发状态=已完成,测试状态全 `不适用` | 待开始 | 2026-06-05 | — |
+| M1-REQ-00006-2:技能可触发 | M1-REQ-00006-1 + T-001(REQ-00006) | `code-publish` 技能可被 Claude Code 触发,工作流 7 步骤走通 | 待开始 | 2026-06-06 | — |
+| M1:可发布 | 本版本所有任务(含 REQ-00006 全部 8 任务 + 其他 9 需求 ~> 未来任务) | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -90,8 +92,9 @@
 
 | 需求编码 | 设计标题 | 状态 | 创建时间 | 完成时间 | 概要设计文档 |
 | --- | --- | --- | --- | --- | --- |
+| REQ-00006 | `/code-publish` 发布部署技能(7 模块 + 5 模板 + 0 修改 + 0 依赖) | 已完成(首次) | 2026-06-04 16:48 | 2026-06-04 16:48 | [RESULT.md](design/REQ-00006/RESULT.md) |
 
-**统计**:0 / 已完成 0 / 进行中 0
+**统计**:1 / 已完成 1 / 进行中 0
 
 ---
 
@@ -101,8 +104,9 @@
 
 | 需求编码 | 计划标题 | 状态 | 任务总数 | 开发完成 | 测试通过 | 创建时间 | 计划文档 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| REQ-00006 | `/code-publish` 发布部署技能(7 模块 + 5 模板 + 双 README 同步 + 自检) | **已完成** | 8 | 8 | 0 | 2026-06-04 17:01 | [RESULT.md](plan/REQ-00006/RESULT.md) / [PLAN.md](plan/REQ-00006/PLAN.md) |
 
-**统计**:0 个计划 / 共 0 个任务 / 开发完成 0 / 测试通过 0 / **真正可发布 0 / 0**
+**统计**:1 个计划 / 共 8 个任务 / **开发完成 8 ✅** / 测试通过 0 / **真正可发布 8 / 8 ✅**(任务全部测试状态预设 `不适用` — 纯文档型)
 
 ---
 
@@ -115,12 +119,21 @@
 
 | 任务编号 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 | 完成时间 | 提交哈希 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `TASK-REQ-00006-00001` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `code-publish/SKILL.md`(7 模块工作流 + frontmatter) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/SKILL.md` | 2026-06-04 17:30 | (不提交) | — |
+| `TASK-REQ-00006-00002` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `templates/DEPLOY.md` 模板(8 章节 + placeholder + 默认示例) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/templates/DEPLOY.md` | 2026-06-04 17:34 | (不提交) | — |
+| `TASK-REQ-00006-00003` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `templates/UPDATE.md` 模板(8 章节 + §8 回滚) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/templates/UPDATE.md` | 2026-06-04 17:45 | (不提交) | — |
+| `TASK-REQ-00006-00004` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `templates/Q&A.md` 模板(占位章节 + 提示) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/templates/Q&A.md` | 2026-06-04 17:52 | (不提交) | — |
+| `TASK-REQ-00006-00005` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `templates/qanda-README.md` 模板(用途/命名/引用/维护) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/templates/qanda-README.md` | 2026-06-04 17:56 | (不提交) | — |
+| `TASK-REQ-00006-00006` | REQ-00006 | 新增 | 需求新增 | [新增] 写 `templates/assistants-layout.md` 模板(沿用范式 + publish/qanda 段) | 已完成 | 不适用 | `plugins/code-skills/skills/code-publish/templates/assistants-layout.md` | 2026-06-04 18:00 | (不提交) | — |
+| `TASK-REQ-00006-00007` | REQ-00006 | 文档 | 需求新增 | [文档] 不变量自检 + 同步 V0.0.2 看板 + 偏差日志 | 已完成 | 不适用 | `assistants/V0.0.2/RESULT.md` + `code/TASK-REQ-00006-00007/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-04 18:03 | (不提交) | — |
+| `TASK-REQ-00006-00008` | REQ-00006 | 修改 | 需求新增 | [修改] 同步双 README "主要能力" 段(中英同次提交) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `plugins/code-skills/README.en.md` | 2026-06-04 18:08 | (不提交) | — |
+| `TASK-REQ-00006-00009` | REQ-00006 | 修改 | 审查改修 | [修改] 修订双 README `<code-publish>` 行措辞(明确"首次调用"语义) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `plugins/code-skills/README.en.md` | 2026-06-04 18:13 | (不提交) | `TASK-REQ-00006-00008` |
 
 **统计**:
-- 总任务数:0
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):0 / 0
-- 开发已完成 / 未完成:0 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 0 / 0
+- 总任务数:9
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):9 / 9 ✅
+- 开发已完成 / 未完成:9 / 0
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 8 / 1
 
 ---
 
@@ -144,8 +157,16 @@
 
 | 评审 ID | 需求 | 任务 | 维度 | 级别 | 描述 | 派生改修任务 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| F-001 | REQ-00006 | T-001 | 一致性 / 可维护性 | 建议改 | SKILL.md "## 报告模板" 中 S-6 强制发布场景与"## 不要做的事" 第 8 条(v1 不实现 --force)口径不一致 | (留 findings-no-task.md) | v2 follow-up |
+| F-002 | REQ-00006 | T-008 | 规范遵循 / 一致性 | **必须改** | `README.md` L38 + `README.en.md` L38 `<code-publish>` 行 "用途"列"顺带在项目级创建 `assistants/qanda/` 目录" 措辞误导(实际仅首次调用时创建) | **T-009** | **已完成** |
+| F-003 | REQ-00006 | T-002 | 设计符合度(规范内偏离) | 建议改 | DEPLOY.md §7 placeholder 拆分偏离已记录,但 `data-changes.md §4.1` 章节 7 需同步标注 | (留 findings-no-task.md) | v2 follow-up |
+| F-004 | REQ-00006 | T-006 | 一致性 | 可选 | assistants-layout.md 范式与 code-version 略有不同(简化了"目录粒度对比"表) | (留 findings-no-task.md) | v2 整体范式更新时处理 |
+| F-005 | REQ-00006 | T-001 | 安全 | 建议改 | SKILL.md 步骤 2.6 QandaAggregator 应显式提示 qanda/ 内容的 XSS 风险 + 解释为什么不防 | (留 findings-no-task.md) | v2 整体安全审视时处理 |
+| F-006 | REQ-00006 | T-006 / T-001 | 一致性 / 可维护性 | 建议改 | SKILL.md §工作目录约定 应补充"5 模板在项目级(不进入版本工作空间)"说明 | (留 findings-no-task.md) | v2 整体审视时处理 |
+| F-007 | REQ-00006 | T-005 | 可维护性 | 建议改 | qanda-README.md 应加"以模板为准"维护说明(避免循环引用导致的不同步) | (留 findings-no-task.md) | v2 整体审视时处理 |
+| F-008 | REQ-00006 | T-007 / T-008 | 可维护性 | 可选 | T-007 与 T-008 自检流程部分重叠;v2 应设计统一自检脚本 | (留 findings-no-task.md) | v2 整体流程优化时处理 |
 
-**统计**:0 / 必须改: 0 / 建议改: 0 / 可选: 0 / 已处理: 0
+**统计**:8 / **必须改: 1 / 建议改: 5 / 可选: 2** / 已处理: 1(派生 T-009 并已完成)
 
 ---
 
@@ -156,6 +177,7 @@
 
 | 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
 | --- | --- | --- | --- | --- |
+| `TASK-REQ-00006-00009` | `TASK-REQ-00006-00008` | 2026-06-04 18:09 | [REVIEW-REPORT.md §F-002](review/REQ-00006/REVIEW-REPORT.md) | 已完成 |
 
 ---
 
@@ -187,6 +209,18 @@
 | 2026-06-04 14:57 | 需求新增 | REQ-00011 需求分析完成(共 9 条 FR / 8 条 NFR / ~30 条 AC / 10 个边界场景 / 3 项已锁定 Q-1/Q-2/Q-3 + 5 项采纳默认 Q-4/Q-5/Q-6/Q-7/Q-8 + 1 项建议派生 Q-9)。范围:**优化 `/code-design` + `/code-plan` 2 个技能**(不改 frontmatter,不改"无设计目标"流程),**新增"步骤 0b 设计目标确认"环节**;Q-1 锁定"**都走步骤 0b**"(首步拉取之后、设计产出之前,与 REQ-00005 / REQ-00009 / REQ-00010 的"步骤 0a"模式同位叠加);Q-2 锁定"**回写** `RESULT.md` 顶部'## 设计目标' 小节"且**关键补充**"扩展性高的方法需要拆出'扩展架构设计' / '设计模式使用'等更细致任务步骤"(FR-4 据此设计);Q-3 锁定"**问多个问题**"(设计目标 + 4 维度,可分开提问,大需求场景);用户原文 1 处笔误已纠正(`/core-desgin` → `/code-design`);FR-2 `code-plan` 读 `design/.../RESULT.md` 的"## 设计目标"小节并沿用(不重新问);FR-3 `code-plan` 读不到时退化(回退到用户手动确认 + 仅写 `plan/.../RESULT.md`);FR-4 `code-plan` 据"设计目标"调整任务拆分粒度(扩展性高 → 加"扩展架构设计"等任务);FR-5 回写"## 设计目标"小节结构(整体 3 选项 + 4 维度优先级 + 回写时间 + 回写触发);NFR-3 幂等;NFR-4 不触发 `dashboard-conventions §规则 1`;NFR-5 与 `code-auto` 协同 0 冲突(`code-auto` 仍按"总选推荐项") | REQ-00011 |
 | 2026-06-04 15:11 | 需求新增 | REQ-00012 需求分析完成(共 7 条 FR / 8 条 NFR / ~25 条 AC / 9 个边界场景 / 3 项已锁定 Q-1/Q-2/Q-3 + 5 项采纳默认 Q-4/Q-5/Q-6/Q-7/Q-8 + 1 项建议派生 Q-9)。范围:**新建仓库根 `./README.md` + `./README.en.md`**(极简 < 50 行,中英同次提交,`doc-conventions §规则 1` 严格遵循),**移动 `plugins/code-skills/CLAUDE.md` → `./CLAUDE.md`**(git mv 保留历史,原位置**不保留**);仓库根 README 是"门面",`plugins/code-skills/README.md` 保留作为"详细技能文档";NFR-2 < 50 行;NFR-3 git mv 保留 blame;NFR-8 不提供重定向/软链;用户原文**无笔误** | REQ-00012 |
 | 2026-06-04 15:25 | 需求新增 | REQ-00013 需求分析完成(共 11 条 FR / 10 条 NFR / ~30 条 AC / 9 个边界场景 / 3 项已锁定 Q-1/Q-2/Q-3/Q-4 + 6 项采纳默认 Q-5/Q-6/Q-7/Q-8/Q-9/Q-10 + 1 项建议派生 Q-11)。范围:**优化 6 技能** `code-require`/`code-plan`/`code-fix`/`code-it`/`code-unit`/`code-review`/`code-auto`(其中 `code-fix` 是 V0.0.0 起的真实存在技能,SKILL.md 17,878 bytes,本轮**首次**升级),**统一启用"编号+标题"显示**(格式 `REQ-00001 · 标题` / `TASK-... · 标题` / `BUG-NNNNN · 标题`);Q-1 锁定"从已有内容派生,不新增字段"(零规范变更 — `RESULT.md` 第 1 行 + `PLAN.md` 任务总览"标题"列已存在);Q-2 锁定"`REQ-00001 · 标题`"(中点 `·` 格式);Q-3 锁定"字符数 ≤ 30";Q-4 锁定"本轮升级 6 技能"(`code-dashboard` 不变因看板标题列已存在);用户原文 5 处笔误已纠正;NFR-4 历史自动生效;NFR-5 `code-publish` 报告升级;NFR-6 不改 4 技能 | REQ-00013 |
+| 2026-06-04 16:48 | 设计新增 | REQ-00006 概要设计完成(首次):7 个新增模块(`code-publish` SKILL + PreflightChecker / BaselineDetector / ManualBuilder / QandaScaffolder / QandaAggregator / ReportFormatter)+ 5 份模板(DEPLOY/UPDATE/Q&A/qanda-README/assistants-layout)+ 0 修改既有(严格遵循 FR-8.AC-8.1~4)+ 0 新增依赖(NFR-1)+ 1 顺带产物(`assistants/qanda/` 项目级目录骨架);决策 D-1~D-8 全部从需求 v1 + 规范 + 项目现状演绎(0 阻塞);D-1 独立第 11 个 code-* 技能(用户口语化"第 9 个")、D-2 按行硬解析、D-3 字典序基线、D-4 可选参数缺省 `.current-version`、D-5 v1 不实现 `--force`、D-6 全部聚合 qanda、D-7 始终覆盖 + 报告"将覆盖 N"、D-8 纯文本 + 图标;规范自检 `dashboard-conventions §规则 1` 0 触发(不扩展看板字段) + `skill-conventions §规则 1` ✓ + `module-conventions §规则 1` ✓(templates/ 5 份);7 项 Q-D 留作 follow-up(Q-D-1 注册到 marketplace、Q-D-2 同步 README "主要能力"、Q-D-3 沉淀 publish-conventions、Q-D-4 dashboard 升级、Q-D-5 加入 REQ-00005、Q-D-6 v2 `--force` 实现方式、Q-D-7 报告升级 REQ-NNNNN·标题格式) | REQ-00006 |
+| 2026-06-04 17:01 | 设计新增 | REQ-00006 详细设计 + 编码计划完成(首次):RESULT.md 14 章节(覆盖详细化模块/算法/数据/接口/异常/安全/性能/测试/规范) + PLAN.md 8 条任务;实现层 8 项决策 DD-1~DD-8 全部演绎(0 阻塞);任务编号 TASK-REQ-00006-00001 ~ 00008(5 位嵌套式 `encoding-conventions §规则 3`);任务拆分:T-001 SKILL.md + T-002~T-006 5 份模板 + T-007 不变量自检与看板同步 + T-008 双 README 同步(纳入 Q-D-2 决策);全部测试状态预设"不适用"(纯文档型);依赖图:T-002~T-006 + T-008 并行 → T-001 → T-007;新里程碑:M1-REQ-00006-1 模板就绪 / M1-REQ-00006-2 技能可触发(嵌入版本 M1 之前);估算合计 ~2.9 天 | REQ-00006 |
+| 2026-06-04 17:30 | 开发状态更新 | T-001 `[新增] 写 code-publish/SKILL.md` 开发状态"进行中"→"已完成";完成时间 2026-06-04 17:30;完成人 wangmiao;不提交(留 dirty tree 由 T-007 后统一 commit);SKILL.md 475 行,严格遵循 `skill-conventions §规则 1`(name=code-publish,description ~800 字符) + `module-conventions §规则 1`(SKILL.md 在技能根目录);前置任务顺序偏离:用户已确认 T-001 按"当前应该第一个"执行(SKILL.md 中仅字符串引用模板路径,不依赖文件存在);详 `code/TASK-REQ-00006-00001/RESULT.md` | T-001 |
+| 2026-06-04 17:34 | 开发状态更新 | T-002 `[新增] 写 templates/DEPLOY.md 模板` 开发状态"进行中"→"已完成";完成时间 2026-06-04 17:34;完成人 wangmiao;不提交;DEPLOY.md 245 行,8 大章节 + 7 子节 + 1 附录(可选);14 种 placeholder;15 项验证 checkbox;3 项实现细节细化/增量(URL 拆为 server:port / 附录"发布后通知" / 启动方式 3 种补充),**0 与设计冲突的偏离**;详 `code/TASK-REQ-00006-00002/RESULT.md` | T-002 |
+| 2026-06-04 17:45 | 开发状态更新 | T-003 `[新增] 写 templates/UPDATE.md 模板` 开发状态"进行中"→"已完成";完成时间 2026-06-04 17:45;完成人 wangmiao;不提交;UPDATE.md 365 行,8 大章节 + 11 子节(§5 4 子节 / §8 4 子节),§8 回滚方案为新增(本模板专属),26 项 checkbox;2 自动 placeholder(`<本版本号>` + `<源版本>`);7 项实现细节细化/增量/收敛(均 0 与设计冲突),详 `code/TASK-REQ-00006-00003/RESULT.md` | T-003 |
+| 2026-06-04 17:52 | 开发状态更新 | T-004 `[新增] 写 templates/Q&A.md 模板` 开发状态"进行中"→"已完成";完成时间 2026-06-04 17:52;完成人 wangmiao;不提交;Q&A.md 63 行(对比 DEPLOY/UPDATE 是"小模板",符合设计预期);H1 + 引言 + 占位章节(含 4 步添加 Q&A 指南 + 完整生成结果示例 + 排除/排序规则);1 自动 placeholder;5 项实现细节增量/收敛(均 0 与设计冲突);模块边界清晰:Q&A.md 模板只占位,具体问答由 QandaAggregator 动态聚合 qanda/*.md;详 `code/TASK-REQ-00006-00004/RESULT.md` | T-004 |
+| 2026-06-04 17:56 | 开发状态更新 | T-005 `[新增] 写 templates/qanda-README.md 模板` 开发状态"进行中"→"已完成";完成时间 2026-06-04 17:56;完成人 wangmiao;不提交;qanda-README.md 134 行,4 大章节(用途/命名/引用/维护);与 T-004 Q&A.md 模板形成完整闭环(T-004 说什么做,T-005 说怎么做);7 项实现细节增量/收敛(均 0 与设计冲突);命名建议含 7 个具体示例(deploy-faq / db-init-faq / 等);引用规范显式说明 README.md 不被聚合 + 字典序排序;维护方式含 4 步流程 + 当前 v1 / 未来 v2 / "不做的事"3 条;详 `code/TASK-REQ-00006-00005/RESULT.md` | T-005 |
+| 2026-06-04 18:00 | 开发状态更新 | T-006 `[新增] 写 templates/assistants-layout.md 模板` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:00;完成人 wangmiao;不提交;assistants-layout.md 172 行,沿用 code-version 范式 6 段 + 1 段"code-publish 的特定扩展";目录树与 SKILL.md §工作目录约定 一致(含 publish/ + qanda/ + 完整结构);7 项实现细节增量/收敛(均 0 与设计冲突);5 类资源 + 4 类读/写角色表标注本技能访问模式;可写目录边界 4 行表;不反向引用 SKILL.md(模块边界);详 `code/TASK-REQ-00006-00006/RESULT.md` | T-006 |
+| 2026-06-04 18:03 | 开发状态更新 | T-007 `[文档] 不变量自检 + 同步 V0.0.2 看板 + 偏差日志` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:03;完成人 wangmiao;不提交;**收尾任务完成**;8 项不变量(FR-8.AC-8.1~8.4 + 看板责任划分 + 模板位置)全部通过;9 项 NFR 全部通过;0 项与设计冲突(36 项实现细节汇总,详 T-001~T-006 各 deviations.md);端到端 3 场景本任务未实际执行(等用户实际调用 code-publish 时验证);**T-008(双 README 同步)仍待开始,需用户后续手动处理**;详 `code/TASK-REQ-00006-00007/RESULT.md` | T-007 |
+| 2026-06-04 18:08 | 开发状态更新 | T-008 `[修改] 同步双 README "主要能力" 段(中英同次提交)` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:08;完成人 wangmiao;不提交;**REQ-00006 全部 8 任务完成**;`README.md` + `README.en.md` 各 +1 行(git diff --stat: 2 files, 2 insertions);中英 H2 数量对仗(11/11) + 表格列数对仗(5/5) + 表格行数对仗(12/12) + 同次提交就绪(2 文件 M);0 项与设计冲突;严格遵循 `doc-conventions §规则 1`;详 `code/TASK-REQ-00006-00008/RESULT.md` | T-008 |
+| 2026-06-04 18:09 | 评审发现 | REQ-00006 评审完成:8 任务 / 8 维度 / 8 条发现(1 必须改 F-002 + 5 建议改 F-001/F-003/F-005/F-006/F-007 + 2 可选 F-004/F-008);派生新"审查改修"任务 T-009(F-002 修订双 README `<code-publish>` 行措辞,明确"首次调用"语义);7 项建议改/可选留 `findings-no-task.md` 作为 v2 follow-up;本需求**条件性可合并**(T-009 完成后);详 `review/REQ-00006/REVIEW-REPORT.md` | REQ-00006 |
+| 2026-06-04 18:13 | 开发状态更新 | T-009 `[修改] 修订双 README <code-publish> 行措辞(明确"首次调用"语义)` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:13;完成人 wangmiao;不提交;**REQ-00006 全部 9 任务完成**;`README.md` + `README.en.md` 各修订 L38(git diff --stat: 2 files, 2 insertions);9 项静态验证 + 9 项不变量自检全部通过;0 项与设计冲突;严格遵循 `doc-conventions §规则 1` 与 `review/T-009/RESULT.md` §6 "不需要做的"约束;详 `code/TASK-REQ-00006-00009/RESULT.md` | T-009 |
 
 ---
 
@@ -226,6 +260,36 @@
 - [require/REQ-00006/materials-index.md](require/REQ-00006/materials-index.md)
 - [require/REQ-00006/clarifications.md](require/REQ-00006/clarifications.md)
 - [require/REQ-00006/related-requirements.md](require/REQ-00006/related-requirements.md)
+- [design/REQ-00006/materials-index.md](design/REQ-00006/materials-index.md)
+- [design/REQ-00006/design-notes.md](design/REQ-00006/design-notes.md)
+- [design/REQ-00006/module-breakdown.md](design/REQ-00006/module-breakdown.md)
+- [design/REQ-00006/dependencies.md](design/REQ-00006/dependencies.md)
+- [design/REQ-00006/related-designs.md](design/REQ-00006/related-designs.md)
+- [design/REQ-00006/rule-compliance.md](design/REQ-00006/rule-compliance.md)
+- [design/REQ-00006/clarifications.md](design/REQ-00006/clarifications.md)
+- [plan/REQ-00006/RESULT.md](plan/REQ-00006/RESULT.md)
+- [plan/REQ-00006/PLAN.md](plan/REQ-00006/PLAN.md)
+- [plan/REQ-00006/materials-index.md](plan/REQ-00006/materials-index.md)
+- [plan/REQ-00006/design-notes.md](plan/REQ-00006/design-notes.md)
+- [plan/REQ-00006/module-details.md](plan/REQ-00006/module-details.md)
+- [plan/REQ-00006/interface-specs.md](plan/REQ-00006/interface-specs.md)
+- [plan/REQ-00006/data-changes.md](plan/REQ-00006/data-changes.md)
+- [plan/REQ-00006/risk-analysis.md](plan/REQ-00006/risk-analysis.md)
+- [plan/REQ-00006/rule-compliance.md](plan/REQ-00006/rule-compliance.md)
+- [plan/REQ-00006/clarifications.md](plan/REQ-00006/clarifications.md)
+- [code/TASK-REQ-00006-00009/RESULT.md](code/TASK-REQ-00006-00009/RESULT.md)
+- [code/TASK-REQ-00006-00009/work-log.md](code/TASK-REQ-00006-00009/work-log.md)
+- [code/TASK-REQ-00006-00009/compile-and-run.md](code/TASK-REQ-00006-00009/compile-and-run.md)
+- [code/TASK-REQ-00006-00009/deviations.md](code/TASK-REQ-00006-00009/deviations.md)
+- [code/TASK-REQ-00006-00009/test-results.md](code/TASK-REQ-00006-00009/test-results.md)
+
+过程文档(本需求):
+- [review/REQ-00006/REVIEW-REPORT.md](review/REQ-00006/REVIEW-REPORT.md)
+- [review/REQ-00006/work-log.md](review/REQ-00006/work-log.md)
+- [review/REQ-00006/review-checklist-applied.md](review/REQ-00006/review-checklist-applied.md)
+- [review/REQ-00006/findings-no-task.md](review/REQ-00006/findings-no-task.md)
+- [review/TASK-REQ-00006-00009/RESULT.md](review/TASK-REQ-00006-00009/RESULT.md)
+- [review/TASK-REQ-00006-00009/work-log.md](review/TASK-REQ-00006-00009/work-log.md)
 
 过程文档(本需求):
 - [require/REQ-00007/materials-index.md](require/REQ-00007/materials-index.md)
