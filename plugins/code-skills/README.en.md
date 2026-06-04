@@ -35,6 +35,7 @@ After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/cod
 | [`code-unit`](skills/code-unit/SKILL.md) | Unit Testing | `plan.md` + `code/RESULT.md` + `assistants/rules/` | Test code + per-task `RESULT.md` | code-review |
 | [`code-fix`](skills/code-fix/SKILL.md) | Bug Registration & Tracking — maintains `fix/RESULT.md` and each `BUG-NNN/RESULT.md` | User description or existing `fix/` files | `assistants/<version>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
 | [`code-review`](skills/code-review/SKILL.md) | Code Review | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | Overall `REVIEW-REPORT.md` + derived fix tasks | code-it (fix tasks) |
+| [`code-dashboard`](skills/code-dashboard/SKILL.md) | Dev Dashboard (read-only) — shows current version's req/task/bug progress + up to 5 next-step suggestions | `.current-version` + `<version>/RESULT.md` (+ requirement mode: `require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (screen output, no files) | (guides user to call `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-version`) |
 
 ## Pipeline
 
