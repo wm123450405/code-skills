@@ -35,6 +35,7 @@ claude plugin install code-skills@code-skills-marketplace
 | [`code-unit`](skills/code-unit/SKILL.md) | 单元测试(Unit Testing) | `plan.md` + `code/RESULT.md` + `assistants/rules/` | 测试代码 + 任务级 `RESULT.md` | code-review |
 | [`code-fix`](skills/code-fix/SKILL.md) | 缺陷登记与跟踪— 维护 `fix/RESULT.md` 与各 `BUG-NNN/RESULT.md` | 用户描述或既有 `fix/` 文件 | `assistants/<版本号>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
 | [`code-review`](skills/code-review/SKILL.md) | 代码评审(Code Review) | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | 整体 `REVIEW-REPORT.md` + 派生改修任务 | code-it(改修任务) |
+| [`code-dashboard`](skills/code-dashboard/SKILL.md) | 开发看板(只读)— 展示当前版本需求/任务/缺陷进度 + 最多 5 条下一步建议 | `.current-version` + `<版本>/RESULT.md`(+ 需求模式:`require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (屏幕输出,无文件) | (引导用户调 `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-version`) |
 
 ## 工作流管道
 
