@@ -96,6 +96,80 @@ description: 代码评审(版本感知)。要求用户提供"需求编码",**所
 
 ---
 
+## 标题解析(REQ-00013 新增)
+
+> 适用对象:所有用户可见的屏幕输出位置(启动 / 完成 / 派生任务 / 评审发现 / 错误)
+> 依据规范:FR-8.AC-8.1~8.4(评审启动 / 派生任务标题截断 / 评审发现报告 / 评审完成) + NFR-10 派生任务标题 ≤ 30 字 + NFR-3
+
+**工具函数**(伪代码):
+
+```ts
+function truncateTitle(title: string, maxLen: number = 30): string {
+  if ([...title].length <= maxLen) return title
+  return [...title].slice(0, maxLen).join('') + '...'
+}
+
+function formatReqTitle(reqNum: string, title: string): string {
+  return `${reqNum} · ${truncateTitle(title)}`
+}
+
+function formatTaskTitle(taskNum: string, title: string): string {
+  return `${taskNum} · ${truncateTitle(title)}`
+}
+```
+
+**标题解析入口**:
+
+```ts
+function parseResultTitle(filePath: string): string {
+  const content = require('fs').readFileSync(filePath, 'utf-8')
+  const match = content.match(/^# 需求提示词文档 — (.+)$/m)
+  return match ? match[1] : ''
+}
+
+function parsePlanTaskTitle(planPath: string, taskNum: string): string {
+  const content = require('fs').readFileSync(planPath, 'utf-8')
+  const lines = content.split('\n').filter(l => l.startsWith('|') && l.includes(taskNum))
+  for (const line of lines) {
+    const cols = line.split('|').map(c => c.trim())
+    if (cols[1] === taskNum && cols[5]) return cols[5]
+  }
+  return ''
+}
+```
+
+**派生任务"标题"列截断**(D-5 选定 A,NFR-10 强约束):
+
+```ts
+// 在派生任务写入 PLAN.md 任务总览"标题"列时,显式截断
+const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle(taskTitle)} | ... |`
+// 下游消费方(code-it / code-unit / code-auto)零感知截断
+```
+
+**屏幕输出格式契约**:
+
+| 场景 | 格式 |
+| --- | --- |
+| 启动 | `正在处理: REQ-NNNNN · <需求标题>` |
+| 派生任务 | `派生任务: TASK-... · <任务标题>(审查派生)` |
+| 评审发现报告 | "派生改修任务"列含"编号+标题" |
+| 完成 | `已评审: REQ-NNNNN · <需求标题>(N 条发现)` |
+| 错误 | `✗ 错误: REQ-NNNNN · <需求标题>(<错误信息>)` |
+
+**边界与异常**:
+- E-2:标题 > 30 字符 → `truncateTitle` 自动截断
+- E-3:标题字段缺失 → 退化"编号+(无标题)"
+- E-6:派生任务标题 > 30 字 → **写入 `PLAN.md` 时即截断**(D-5 选定 A),下游消费方零感知
+
+**约束**:
+- **不**使用"本需求" / "本任务"等指代词
+- **不**修改 frontmatter(L1-3 字节级保留,NFR-7)
+- **不**修改既有章节(锚点 = "## 工具使用约定" 段后 + "---" + "## 工作流程" 前,本节为纯追加)
+- **不**修改模式 1 / 模式 2 行为(沿用 REQ-00008 既有)
+- **不**修改 `REVIEW-REPORT.md` / `REVIEW-FIX.md` 模板(NFR-2 零规范变更)
+
+---
+
 ## 工作流程
 
 ### 步骤 0 — 版本上下文检测(强制前置)

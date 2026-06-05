@@ -171,6 +171,88 @@ Read: ./assistants/<版本号>/RESULT.md
 - E-1:不通过(打印未完成项明细 + 阻塞统计,不写手册,退出)
 - E-2:看板缺区段(报告中显式标注"看板不完整",仍不通过)
 
+#### 1.5 报告格式升级 — 未完成项"编号+标题"(REQ-00013 新增)
+
+> 适用对象:PreflightChecker 输出"未完成项"明细行的格式
+> 依据规范:FR-10.AC-10.2(`code-publish` 前置检查报告"未完成项"用"编号+标题")+ NFR-3 字符数 ≤ 30
+
+**工具函数**(伪代码):
+
+```ts
+function truncateTitle(title: string, maxLen: number = 30): string {
+  if ([...title].length <= maxLen) return title
+  return [...title].slice(0, maxLen).join('') + '...'
+}
+
+function formatReqTitle(reqNum: string, title: string): string {
+  return `${reqNum} · ${truncateTitle(title)}`
+}
+
+function formatTaskTitle(taskNum: string, title: string): string {
+  return `${taskNum} · ${truncateTitle(title)}`
+}
+
+function formatBugTitle(bugNum: string, title: string): string {
+  return `${bugNum} · ${truncateTitle(title)}`
+}
+```
+
+**标题解析入口**:
+
+```ts
+function parseResultTitle(filePath: string): string {
+  const content = require('fs').readFileSync(filePath, 'utf-8')
+  const match = content.match(/^# 需求提示词文档 — (.+)$/m)
+  return match ? match[1] : ''
+}
+
+function parsePlanTaskTitle(planPath: string, taskNum: string): string {
+  const content = require('fs').readFileSync(planPath, 'utf-8')
+  const lines = content.split('\n').filter(l => l.startsWith('|') && l.includes(taskNum))
+  for (const line of lines) {
+    const cols = line.split('|').map(c => c.trim())
+    if (cols[1] === taskNum && cols[5]) return cols[5]
+  }
+  return ''
+}
+
+function parseFixTitle(fixPath: string): string {
+  const content = require('fs').readFileSync(fixPath, 'utf-8')
+  const match = content.match(/^## 缺陷标题\s*\n+(.+?)$/m)
+  return match ? match[1] : ''
+}
+```
+
+**报告"未完成项"行格式升级**(FR-10.AC-10.2 强约束):
+
+```
+原格式(改造前):
+  - [需求] REQ-NNNNN 状态=进行中(应该=已完成)
+  - [任务] TASK-... 开发状态=进行中(应该=已完成)
+  - [缺陷] BUG-NNNNN 状态=待修复(应该=已修复)
+
+新格式(改造后):
+  - [需求] REQ-NNNNN · <需求标题> 状态=进行中(应该=已完成)
+  - [任务] TASK-... · <任务标题> 开发状态=进行中(应该=已完成)
+  - [缺陷] BUG-NNNNN · <缺陷标题> 状态=待修复(应该=已修复)
+```
+
+**解析源**(与 `code-require` / `code-plan` / `code-fix` 同):
+
+| 类型 | 解析源 |
+| --- | --- |
+| 需求 | `./assistants/<版本号>/require/<需求编号>/RESULT.md` 第 1 行 |
+| 任务 | `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 任务总览"标题"列 |
+| 缺陷 | `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` "## 缺陷标题"小节 |
+
+**边界与异常**:
+- E-10:`code-publish` 报告标题解析失败 → 退化"REQ-NNNNN 状态=..."(无标题)
+
+**约束**:
+- **不**修改看板"任务清单" / "需求清单" / "缺陷清单" 3 区段解析(沿用既有"用列名识别"逻辑)
+- **不**修改 `ReportFormatter` 既有"未通过"模板的字段,仅在"未完成项明细"行嵌入"编号+标题"
+- **不**修改 `code-publish` 自身的 0 commit 行为(NFR-3 `code-publish` 自身不 commit)
+
 ### 步骤 2.0:基线识别(BaselineDetector)
 
 > **目的**:判定本版本是否是基线(规则 1 — NFR-7 锁定);基线版本跳过 UPDATE.md。

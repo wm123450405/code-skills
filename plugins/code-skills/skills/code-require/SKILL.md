@@ -74,6 +74,56 @@ description: 需求分析(版本感知)。要求用户提供"需求编码",**所
 
 ---
 
+## 标题解析(REQ-00013 新增)
+
+> 适用对象:所有用户可见的屏幕输出位置(启动 / 完成 / 中止 / 错误 / 报告)
+> 依据规范:Q-1 锁定"从已有内容派生,不新增字段"+ Q-2 锁定"`REQ-00001 · 标题`"(中点 `·`)+ Q-3 锁定"字符数 ≤ 30"+ FR-3 + NFR-3
+
+**工具函数**(伪代码):
+
+```ts
+function truncateTitle(title: string, maxLen: number = 30): string {
+  if ([...title].length <= maxLen) return title
+  return [...title].slice(0, maxLen).join('') + '...'
+}
+
+function formatReqTitle(reqNum: string, title: string): string {
+  return `${reqNum} · ${truncateTitle(title)}`
+}
+```
+
+**标题解析入口**:
+
+```ts
+function parseResultTitle(filePath: string): string {
+  const content = require('fs').readFileSync(filePath, 'utf-8')
+  const match = content.match(/^# 需求提示词文档 — (.+)$/m)
+  return match ? match[1] : ''  // E-3 退化:返回空字符串
+}
+```
+
+**屏幕输出格式契约**:
+
+| 场景 | 格式 |
+| --- | --- |
+| 启动 | `正在处理: REQ-NNNNN · <需求标题>` |
+| 完成 | `完成: REQ-NNNNN · <需求标题>` |
+| 中止 | `⛔ code-require 中止: REQ-NNNNN · <需求标题>(<原因>)` |
+| 错误 | `✗ 错误: REQ-NNNNN · <需求标题>(<错误信息>)` |
+
+**边界与异常**:
+- E-2:标题 > 30 字符 → `truncateTitle` 自动截断到 30 字 + `...`
+- E-3:标题字段缺失(理论不可能)→ 退化:屏幕输出"编号+(无标题)"
+- E-9:多次执行 `code-require` → 标题覆盖(NFR-4 幂等)
+
+**约束**:
+- **不**使用"本需求"等指代词 — 替换为"编号+标题"(FR-2.AC-2.4 强约束)
+- **不**修改 frontmatter(L1-3 字节级保留,NFR-7)
+- **不**修改既有章节(锚点 = "## 工具使用约定"段后 + "## 工作流程"前,本节为纯追加)
+- **不**修改 `require/.../RESULT.md` 模板(NFR-2 零规范变更)
+
+---
+
 ## 工作流程
 
 ### 步骤 0a — 拉取最新代码(强制前置,新增)

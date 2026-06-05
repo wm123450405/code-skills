@@ -444,6 +444,90 @@ status = "子技能异常"
 4. exit ≠ 0(由 Claude Code 决定具体值)
 ```
 
+---
+
+## 标题预读(REQ-00013 新增)
+
+> 适用对象:`code-auto` 在调子技能前的进度日志拼接 + 屏幕报告 + `auto-report.md`
+> 依据规范:FR-9.AC-9.1~9.3(`code-auto` 进度报告 / 完整报告 / 派生任务循环输出含"编号+标题")+ NFR-3 + D-8 选定 A 子技能零修改契约
+
+**工具函数**(伪代码):
+
+```ts
+function truncateTitle(title: string, maxLen: number = 30): string {
+  if ([...title].length <= maxLen) return title
+  return [...title].slice(0, maxLen).join('') + '...'
+}
+
+function formatReqTitle(reqNum: string, title: string): string {
+  return `${reqNum} · ${truncateTitle(title)}`
+}
+
+function formatTaskTitle(taskNum: string, title: string): string {
+  return `${taskNum} · ${truncateTitle(title)}`
+}
+
+function formatBugTitle(bugNum: string, title: string): string {
+  return `${bugNum} · ${truncateTitle(title)}`
+}
+```
+
+**标题预读入口**:
+
+```ts
+function parseResultTitle(filePath: string): string {
+  const content = require('fs').readFileSync(filePath, 'utf-8')
+  const match = content.match(/^# 需求提示词文档 — (.+)$/m)
+  return match ? match[1] : ''
+}
+
+function parsePlanTaskTitle(planPath: string, taskNum: string): string {
+  const content = require('fs').readFileSync(planPath, 'utf-8')
+  const lines = content.split('\n').filter(l => l.startsWith('|') && l.includes(taskNum))
+  for (const line of lines) {
+    const cols = line.split('|').map(c => c.trim())
+    if (cols[1] === taskNum && cols[5]) return cols[5]
+  }
+  return ''
+}
+
+function parseFixTitle(fixPath: string): string {
+  const content = require('fs').readFileSync(fixPath, 'utf-8')
+  const match = content.match(/^## 缺陷标题\s*\n+(.+?)$/m)
+  return match ? match[1] : ''
+}
+```
+
+**屏幕日志格式升级**(FR-9.AC-9.1 强约束):
+
+| 步骤 | 格式 |
+| --- | --- |
+| 步骤 1 (`code-require`) | `[code-auto] 步骤 1/6:code-require REQ-NNNNN · <需求标题>` |
+| 步骤 2 (`code-design`) | `[code-auto] 步骤 2/6:code-design REQ-NNNNN · <需求标题>` |
+| 步骤 3 (`code-plan`) | `[code-auto] 步骤 3/6:code-plan REQ-NNNNN · <需求标题>` |
+| 步骤 4 (任务循环) | `[code-auto]   → 1/N:code-it TASK-... · <任务标题> ✓` |
+| 步骤 4 (跳过) | `[code-auto]   → 1/N:code-unit TASK-... · <任务标题> ✓ (跳过,无需测试)` |
+| 步骤 5 (`code-review`) | `[code-auto] 步骤 5/6:code-review REQ-NNNNN · <需求标题>(第 1 轮)` |
+| 步骤 6 (派生循环) | `[code-auto]   → 1/2:code-it BUG-NNNNN · <缺陷标题> ✓` |
+| 完成 | `✓ code-auto 完成: REQ-NNNNN · <需求标题>` |
+
+**关键契约**(D-8 选定 A 子技能零修改):
+
+- `code-auto` 在调子技能前**自读**"标题"源,**不**向子技能传任何特殊参数
+- 子技能零感知被编排
+- 解析失败时退化"编号+(无标题)"(E-7 边界)
+
+**边界与异常**:
+- E-7:`code-auto` 调子技能时标题解析失败 → 退化"编号+(无标题)"
+- E-11:`code-auto` `auto-report.md` 写入失败 → 沿用 NFR-7 强约束,报告仅输出在屏幕
+
+**约束**:
+- **不**修改子技能 SKILL.md(D-8 零修改契约保持,FR-8.AC-8.1 强约束)
+- **不**修改 `auto-report.md` 模板的字段(仅在内容中嵌入"编号+标题")
+- **不**修改 7 步状态机既有结构(锚点 = "## 中断与异常" 段后 + "## 报告输出" 段前,本节为纯追加)
+
+---
+
 ## 报告输出
 
 ### 屏幕报告格式(完成时)
