@@ -251,6 +251,13 @@
 | F-002 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 Q-5 引用(不引入批量模式) | (无 — 归类为可选) | 待处理 |
 | F-003 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 `doc-conventions.md` 引用 | (无 — 归类为可选) | 待处理 |
 | F-004 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 `marketplace-protocol.md` 引用 | (无 — 归类为可选) | 待处理 |
+| F-001 | REQ-00011 | TASK-REQ-00011-00001 | 可维护性 | 建议改 | `code-design/SKILL.md` L130 屏显模板字段顺序与设计 §6.1 略有差异(整体→4 维度→回写行,中间缺"回写时间"与"回写触发"2 行) | —(留作 follow-up) | 待处理 |
+| F-002 | REQ-00011 | TASK-REQ-00011-00002 | 可维护性 | 建议改 | `code-plan/SKILL.md` L139 步骤 0b 步骤 2 `adjustTaskGranularityByGoals` 函数伪代码未在 §步骤 0b 章节内展开,需跳到 §步骤 10A 末尾 | —(留作 follow-up) | 待处理 |
+| F-003 | REQ-00011 | TASK-REQ-00011-00001 | 一致性 | 可选 | 屏显标题块风格(`=== ... ===`)与既有 §步骤 0a 失败处理(`✗ ...`)不严格一致 | —(留作 follow-up) | 待处理 |
+| F-004 | REQ-00011 | TASK-REQ-00011-00002 | 可维护性 | 可选 | `code-plan/SKILL.md` L132 步骤 0b 步骤 1 引用 E-1 / E-5 边界编号但未显式指向 design/REQ-00011/RESULT.md §8 | —(留作 follow-up) | 待处理 |
+
+**REQ-00011 评审统计**:4 / **必须改: 0 / 建议改: 2 / 可选: 2** / 已处理: 0 / **整体结论: ✅ 可合并**
+**合计统计(全版本)**:26 / **必须改: 1 / 建议改: 13 / 可选: 11** / 已处理: 3
 
 ## 派生任务记录
 
@@ -410,6 +417,7 @@
 | 2026-06-05 17:35 | 任务完成 | TASK-REQ-00009-00002 13 项 INV 自检 + 看板同步 + 收尾(开发状态:已完成) | TASK-REQ-00009-00002 |
 | 2026-06-05 20:00 | 任务完成 | TASK-REQ-00011-00001 `code-design/SKILL.md` 增量追加 — 步骤 0b 设计目标确认 + 模板顶部预留 + 步骤 0a 小注更新(开发状态:已完成) | TASK-REQ-00011-00001 |
 | 2026-06-05 20:05 | 任务完成 | TASK-REQ-00011-00002 `code-plan/SKILL.md` 增量追加 — 步骤 0b 设计目标确认 + 任务粒度调整段 + 模板顶部预留 + 步骤 0a 小注更新(开发状态:已完成) | TASK-REQ-00011-00002 |
+| 2026-06-05 20:10 | 评审发现 | REQ-00011 评审完成(2 个任务 T-001 / T-002,共 4 项发现 — **0 必须改 + 2 建议改 + 2 可选**,**0 派生任务**);整体结论 ✅ 可合并;20/20 INV 100% 通过(T-001 8 项 + T-002 12 项);0 触发 `dashboard-conventions §规则 1` 3 处同步;4 项发现全部为"文档风格"层面,与功能正确性 0 关系;详 `review/REQ-00011/REVIEW-REPORT.md` + 3 份过程文档 | REQ-00011 |
 | 2026-06-05 19:50 | 设计新增 | REQ-00011 概要设计完成(2 个 SKILL.md 增量追加 + 2 模板顶部预留 + 0 新增模块 + 0 三方依赖 + 0 触发 `dashboard-conventions §规则 1` 3 处同步;100% 沿用上游 9 FR / 8 NFR / ~30 AC;8 项决策 D-1~D-8 + 8 项不变量 INV-1~INV-8;Q-1~Q-8 全部沿用上游 clarifications.md 锁定;0 修改其他 8 个 `code-*` 技能;0 修改 `marketplace.json` / `plugin.json` / `assistants/rules/` 13 文件;NFR-1 零新增依赖;NFR-3 幂等(覆盖前次内容);NFR-4 不触发 `dashboard-conventions §规则 1`;NFR-5 与 `code-auto` 协同 0 冲突(沿用"总选推荐项");NFR-6 "步骤 0b"命名沿用"步骤 0a"模式;本次为 `code-auto` 调 `code-design` 模式,步骤 0b 触发 `AskUserQuestion` 时按"总选推荐项"作答(整体=--balanced,4 维度=中),故 `code-plan` 后续任务拆分按默认粒度产出;8 份过程文档已写完;详 `design/REQ-00011/RESULT.md` + 7 份过程文档 | REQ-00011 |
 | 2026-06-05 19:55 | 设计新增 | REQ-00011 详细设计与编码计划完成(共 **2 个任务**:T-001 `[修改]` `code-design/SKILL.md` 增量追加"步骤 0b 设计目标确认"(3 子节:1-5 问自适应 / writeDesignGoalsSection / 屏显模板)+ `design.md` 模板顶部预留"## 设计目标"占位 + §步骤 0a L107 既有"不含步骤 0b"小注更新 + T-002 `[修改]` `code-plan/SKILL.md` 增量追加"步骤 0b 设计目标确认"(沿用/退化/读 `design/.../RESULT.md`)+ §步骤 10A 末尾"按设计目标调整任务粒度"判定表段(FR-4)+ `plan.md` 模板顶部预留"## 设计目标"占位 + §步骤 0a L118 既有"不含步骤 0b"小注更新;**0**"更新看板"派生任务 — REQ-00017 强约束不拆;0 架构任务 — 本需求 `code-auto` 选 `--balanced` 不触发 FR-4 加扩展性任务;2 任务测试状态全 `不适用` 沿用 V0.0.2 既有 12 `code-*` 实践;0 触发 `dashboard-conventions §规则 1` 3 处同步;4 算法(askDesignGoals / writeDesignGoalsSection / readDesignGoalsFromDesign / adjustTaskGranularityByGoals);2 状态机(`code-design` / `code-plan` 步骤 0b);5 项本阶段决策 P-D1~P-D5 全部锁定;P-D1 步骤 0a L107/L118 小注更新 / P-D2 锚点="## 1." / P-D3 轻度合并 / P-D4 测试状态=不适用 / P-D5 commit message 沿用 V0.0.2;100% 沿用概要设计 8 决策 + 8 不变量;7 份过程文档已写完;2 里程碑(M-1 文档就绪 / M-2 本需求可发布);详 `plan/REQ-00011/{RESULT,PLAN}.md` + 7 份过程文档 | REQ-00011 |
 | 2026-06-05 17:40 | 评审发现 | REQ-00009 评审完成(共 0 条发现 — 0 必须改 + 0 建议改 + 0 可选,**0 派生任务**);整体结论 ✅ 通过(无阻塞,REVIEW 完整);9 维度 100% 通过(INV-7 部分失败 13 行已在 `code/T-001/deviations.md` 显式记录 + 接受,不构成本轮"必须改");T-001 实施期自检 13/13 INV 复核 11 通过 + 1 N/A + 1 部分失败;T-002 收尾期 0 新偏离;详 `review/REQ-00009/REVIEW-REPORT.md` + 3 份过程文档 | REQ-00009 |
