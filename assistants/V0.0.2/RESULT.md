@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-06 09:45
+- 最近更新:2026-06-06 09:55
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-06 09:45 |
+| 最近更新 | 2026-06-06 09:55 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -213,7 +213,7 @@
 | `TASK-REQ-00015-00001` | REQ-00015 | 新增 | 详细设计 | [新增] 写 `code-merge/SKILL.md`(frontmatter `name: code-merge` + `description: <完整>` + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid) | 已完成 | 不适用 | `plugins/code-skills/skills/code-merge/SKILL.md`(580 行) | 2026-06-06 09:20 | `<TBD>` | — |
 | `TASK-REQ-00015-00002` | REQ-00015 | 修改 | 详细设计 | [修改] `marketplace.json` 追加 `./skills/code-merge`(`plugins[0].skills[]` 数组末尾 +1 行) | 已完成 | 不适用 | `.claude-plugin/marketplace.json` | 2026-06-06 09:30 | `<TBD>` | T-001 |
 | `TASK-REQ-00015-00003` | REQ-00015 | 修改 | 详细设计 | [修改] 中英 README "主要能力" 段同步追加 1 行(中英对仗 `doc-conventions §规则 1`) | 已完成 | 不适用 | `plugins/code-skills/README.md` + `README.en.md`(各 +1 行) | 2026-06-06 09:40 | `<TBD>` | T-001 |
-| `TASK-REQ-00015-00004` | REQ-00015 | 文档 | 详细设计 | [文档] 同步 V0.0.2 看板 6 处(需求清单 REQ-00015 状态推进 + 详细设计汇总 1 行 + 任务清单 5 行 + 里程碑 1 个 + 文档头 + 变更记录) | 待开始 | 不适用 | `assistants/V0.0.2/RESULT.md` | T-001, T-002, T-003 | — | — |
+| `TASK-REQ-00015-00004` | REQ-00015 | 文档 | 详细设计 | [文档] 同步 V0.0.2 看板 6 处(需求清单 REQ-00015 状态推进 + 详细设计汇总 1 行 + 任务清单 5 行 + 里程碑 1 个 + 文档头 + 变更记录) | 已完成 | 不适用 | `assistants/V0.0.2/RESULT.md` | 2026-06-06 09:50 | `<TBD>` | T-001, T-002, T-003 |
 | `TASK-REQ-00015-00005` | REQ-00015 | 文档 | 详细设计 | [文档] 10 项不变量自检(INV-1~10)+ 偏差日志 + 收尾 | 待开始 | 不适用 | `code/TASK-REQ-00015-00005/{RESULT,work-log,deviations}.md` | T-001 ~ T-004 | — | — |
 
 **统计**:
@@ -480,6 +480,7 @@
 | 2026-06-06 09:25 | 任务完成 | TASK-REQ-00015-00001 `[新增]` `code-merge/SKILL.md` 580 行(frontmatter + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid + 10 INV "不要做的事"显式列出);开发状态"待开始"→"已完成";8/8 静态自检通过(INV-5/7/8/9/10 全部 0 命中);0 偏离;0 修改其他 11 个 `code-*` SKILL.md;0 修改 plugin.json;0 修改 rules/;0 派生;测试状态=`不适用`(纯文档);详 `code/TASK-REQ-00015-00001/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | TASK-REQ-00015-00001 |
 | 2026-06-06 09:35 | 任务完成 | TASK-REQ-00015-00002 `[修改]` `marketplace.json` 追加 `./skills/code-merge`(`plugins[0].skills[]` 数组末尾 +1 行);开发状态"待开始"→"已完成";4/4 JSON 静态自检通过(JSON 合法 + Diff 仅 +1 行 + INV-2 其他字段字节级保留 + `$schema` URL 保留);0 偏离;0 修改 `plugin.json`;0 触发 `dashboard-conventions §规则 1` 3 处同步;测试状态=`不适用`(纯 JSON 协议);详 `code/TASK-REQ-00015-00002/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | TASK-REQ-00015-00002 |
 | 2026-06-06 09:45 | 任务完成 | TASK-REQ-00015-00003 `[修改]` 中英 README "## 技能概览" 表格 `code-auto` 行后追加 `code-merge` 行(各 +1 行);开发状态"待开始"→"已完成";5/5 Markdown 静态自检通过(各 +1 行 + 中英对仗 + 5 列对齐 + 0 改其他段 + 0 触发 3 处同步);0 偏离;0 改其他 10 段(安装/工作流管道/仓库结构/核心概念/使用说明/完整工作流程/命令参考/典型场景/速查表/详细文档 全部不变);测试状态=`不适用`(纯文档);详 `code/TASK-REQ-00015-00003/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | TASK-REQ-00015-00003 |
+| 2026-06-06 09:55 | 任务完成 | TASK-REQ-00015-00004 `[文档]` 同步 V0.0.2 看板 6 处(6 处全部已在前面 T-001/T-002/T-003 / code-design / code-plan 阶段完成,本任务 = 验证 + 收尾);开发状态"待开始"→"已完成";6/6 Markdown 静态自检通过(需求清单 + 详细设计汇总 + 任务清单 + 里程碑 + 文档头 + 变更记录 全部对齐);0 偏离;0 触发 `dashboard-conventions §规则 1` 3 处同步;0 派生"更新看板"任务(REQ-00017 严守);0 修改 11 个既有 `code-*` SKILL.md;测试状态=`不适用`(纯文档);详 `code/TASK-REQ-00015-00004/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | TASK-REQ-00015-00004 |
 
 ---
 
