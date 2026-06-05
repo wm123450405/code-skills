@@ -104,7 +104,7 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 ## 工作流程
 
 ### 步骤 0a — 拉取最新代码(强制前置,新增)
-所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。`code-design` **不**含步骤 0b(FR-2 显式仅 `code-require` 专属)。
+所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。步骤 0a 成功后,`code-design` 进入"步骤 0b 设计目标确认"(本需求 REQ-00011 新增,FR-1)。
 1. 探测 `git` 可用性 → 执行 `Bash: git --version`,失败 → 中断 + 提示"未检测到 git,本需求需要 git,请先安装 git 后重试"(E-12)
 2. 执行 `Bash: git pull`(默认 upstream / tracking 分支)
 3. 拉取失败 3 种情况分类处理(Q-2 锁定 A:中断 + 报错退出):
@@ -114,7 +114,26 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
    - **其他错误** → 透传 stderr,中断退出
 4. 拉取成功(包含 no-op / "Already up to date"):
    - **立即**执行 `Read "./assistants/.current-version"`,记为"拉取后版本"(NFR-8 强约束)
-   - 进入既有"步骤 0 — 版本上下文检测"
+   - **执行"步骤 0b 设计目标确认"**(见下),成功后再进入既有"步骤 0 — 版本上下文检测"
+
+### 步骤 0b — 设计目标确认(本需求 REQ-00011 新增,FR-1)
+1. 评估需求规模(小/中/大),自适应问题数(FR-6 强约束):
+   - 小需求:1 个 `AskUserQuestion`(Q1 整体设计目标)
+   - 中等需求:3 个 `AskUserQuestion`(Q1 + Q2 功能性 + Q3 扩展性)
+   - 大需求:5 个 `AskUserQuestion`(Q1 + Q2 + Q3 + Q4 健壮性 + Q5 可维护性),可对不同细节功能分开提问(AC-6.3)
+2. 收集用户回答 → 调 `writeDesignGoalsSection(designResultPath, goals, "code-design")` 写入 `design/.../RESULT.md` 顶部"## 设计目标"小节(算法 2 / NFR-3 幂等覆盖)
+3. 屏显:
+   ```
+   === code-design 设计目标确认 ===
+   整体设计目标:<--minimal/--extensible/--balanced>
+   维度优先级:
+     功能性:<高/中/低>  扩展性:<高/中/低>  健壮性:<高/中/低>  可维护性:<高/中/低>
+   已回写至 design/<REQ>/RESULT.md "## 设计目标" 小节
+   ```
+4. 用户取消 `AskUserQuestion` → 中止 + 回写空"## 设计目标"小节(E-3)
+5. **不**修改 frontmatter(INV-1)
+6. **不**修改"步骤 0"及之后的原有内容(INV-2)
+7. 完成后进入既有"步骤 0 — 版本上下文检测"
 
 ### 步骤 0 — 版本上下文检测(强制前置)
 1. 读取 `./assistants/.current-version`
