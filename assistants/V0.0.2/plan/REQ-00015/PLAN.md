@@ -12,7 +12,7 @@
 | 任务编号 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `TASK-REQ-00015-00001` | REQ-00015 | 新增 | 详细设计 | [新增] 写 `code-merge/SKILL.md`(frontmatter + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid) | 已完成 | 不适用 | `plugins/code-skills/skills/code-merge/SKILL.md`(580 行) | 2026-06-06 09:20 | `<TBD>` | — |
-| `TASK-REQ-00015-00002` | REQ-00015 | 修改 | 详细设计 | [修改] `marketplace.json` 追加 `./skills/code-merge` | 待开始 | 不适用 | `.claude-plugin/marketplace.json` |
+| `TASK-REQ-00015-00002` | REQ-00015 | 修改 | 详细设计 | [修改] `marketplace.json` 追加 `./skills/code-merge` | 已完成 | 不适用 | `.claude-plugin/marketplace.json` | 2026-06-06 09:30 | `<TBD>` | T-001 |
 | `TASK-REQ-00015-00003` | REQ-00015 | 修改 | 详细设计 | [修改] 中英 README "主要能力" 段同步追加 1 行 | 待开始 | 不适用 | `plugins/code-skills/README.md` + `README.en.md` |
 | `TASK-REQ-00015-00004` | REQ-00015 | 文档 | 详细设计 | [文档] 同步 V0.0.2 看板 4 处(详细设计与任务计划汇总 + 任务清单 5 行 + 里程碑 1 个 + 文档头 + 变更记录) | 待开始 | 不适用 | `assistants/V0.0.2/RESULT.md` |
 | `TASK-REQ-00015-00005` | REQ-00015 | 文档 | 详细设计 | [文档] 10 项不变量自检 + 偏差日志 + 收尾 | 待开始 | 不适用 | `assistants/V0.0.2/code/TASK-REQ-00015-00005/{RESULT,work-log,deviations}.md` |
@@ -202,3 +202,4 @@ graph TD
 | --- | --- | --- |
 | 2026-06-06 09:10 | 计划新增 | REQ-00015 详细设计与编码计划完成(共 5 个任务 — 0 架构任务 + 5 功能点任务,触发/来源**全部**=详细设计;任务编号 `TASK-REQ-00015-00001 ~ 00005` 严格 `encoding-conventions §规则 1+3` 5+5 位嵌套;1 里程碑 M1-REQ-00015-1:本需求可发布;5 任务测试状态全 = `不适用` 因纯文档 + 仓库无可测载体 — REQ-00009 守卫判定"不可测";6 项验证手段:Read + Grep + Edit + git diff + JSON 校验 + 中英对仗;100% 沿用上游 8 FR / 10 NFR / ~30 AC;8 份过程文档齐全;**0 触发** `dashboard-conventions §规则 1` 3 处同步;**0 派生**"更新看板"任务 — REQ-00017 强约束) | REQ-00015 |
 | 2026-06-06 09:25 | 状态更新 | T-001 状态"待开始"→"已完成",提交 `<TBD>` | T-001 |
+| 2026-06-06 09:35 | 状态更新 | T-002 状态"待开始"→"已完成",提交 `<TBD>` | T-002 |
