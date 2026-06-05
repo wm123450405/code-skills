@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "code-skills",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "A suite of Claude Code skills that guide AI through the complete software development lifecycle, with built-in version-aware workspace management.",
   "author": {
     "name": "code-skills"
