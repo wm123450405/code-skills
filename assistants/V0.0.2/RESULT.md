@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-06 09:10
+- 最近更新:2026-06-06 09:25
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-06 09:10 |
+| 最近更新 | 2026-06-06 09:25 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -210,7 +210,7 @@
 | TASK-REQ-00013-00007 | REQ-00013 | 修改 | 详细设计 | [修改] `code-auto/SKILL.md` 增量追加(标题预读 + 屏幕日志格式升级) | **已完成** | 不适用 | `plugins/code-skills/skills/code-auto/SKILL.md` § 中断与异常 段后 + § 报告输出 段前 | 2026-06-05 21:30 | (留 dirty tree) | — |
 | TASK-REQ-00013-00008 | REQ-00013 | 修改 | 详细设计 | [修改] `code-publish/SKILL.md` 增量追加(报告未完成项格式升级) | **已完成** | 不适用 | `plugins/code-skills/skills/code-publish/SKILL.md` § PreflightChecker 章节 末尾 | 2026-06-05 21:30 | (留 dirty tree) | — |
 | TASK-REQ-00013-00009 | REQ-00013 | 文档 | 详细设计 | [文档] 8 项 INV 自检 + 5 处看板同步 + 收尾 | **已完成** | 不适用 | `assistants/V0.0.2/RESULT.md` + `code/TASK-REQ-00013-00009/{RESULT,work-log,deviations}.md` | 2026-06-05 21:30 | (留 dirty tree) | T-001 ~ T-008 |
-| `TASK-REQ-00015-00001` | REQ-00015 | 新增 | 详细设计 | [新增] 写 `code-merge/SKILL.md`(frontmatter `name: code-merge` + `description: <完整>` + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid) | 待开始 | 不适用 | `plugins/code-skills/skills/code-merge/SKILL.md`(600~800 行) | — | — | — |
+| `TASK-REQ-00015-00001` | REQ-00015 | 新增 | 详细设计 | [新增] 写 `code-merge/SKILL.md`(frontmatter `name: code-merge` + `description: <完整>` + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid) | 已完成 | 不适用 | `plugins/code-skills/skills/code-merge/SKILL.md`(580 行) | 2026-06-06 09:20 | `<TBD>` | — |
 | `TASK-REQ-00015-00002` | REQ-00015 | 修改 | 详细设计 | [修改] `marketplace.json` 追加 `./skills/code-merge`(`plugins[0].skills[]` 数组末尾 +1 行) | 待开始 | 不适用 | `.claude-plugin/marketplace.json` | T-001 | — | — |
 | `TASK-REQ-00015-00003` | REQ-00015 | 修改 | 详细设计 | [修改] 中英 README "主要能力" 段同步追加 1 行(中英对仗 `doc-conventions §规则 1`) | 待开始 | 不适用 | `plugins/code-skills/README.md` + `README.en.md`(各 +1 行) | T-001 | — | — |
 | `TASK-REQ-00015-00004` | REQ-00015 | 文档 | 详细设计 | [文档] 同步 V0.0.2 看板 6 处(需求清单 REQ-00015 状态推进 + 详细设计汇总 1 行 + 任务清单 5 行 + 里程碑 1 个 + 文档头 + 变更记录) | 待开始 | 不适用 | `assistants/V0.0.2/RESULT.md` | T-001, T-002, T-003 | — | — |
@@ -477,6 +477,7 @@
 | 2026-06-05 16:30 | 开发状态更新 | T-002 `[文档] 同步 V0.0.2 看板 5 处` + T-003 `[文档] 13 项不变量自检(INV-1~13) + 偏差日志 + 收尾` 状态"待开始"/"进行中"→"已完成";完成时间 2026-06-05 16:30(T-002 / T-003 同步完成);完成人 wangmiao;不提交(留 dirty tree);**3 个修改文件** `assistants/V0.0.2/RESULT.md`(L168-170 任务清单 3 行 + L46-47 里程碑 2 个 + L127 详细设计汇总 + L130 统计行 + L10 文档头 + L388 变更记录)+ `assistants/V0.0.2/code/TASK-REQ-00008-00003/RESULT.md`(新建 9 章节自检总结)+ `work-log.md`(新建 13 项不变量逐项)+ `deviations.md`(新建 0 偏离);**REQ-00008 整体收尾**:**3/3 任务完成**(T-001 SKILL.md +94 行 / T-002 看板 / T-003 自检),**2/2 里程碑完成**(M-1 文档就绪 16:25 + M-2 本需求可发布 16:30),**13/13 INV 100% 通过**(INV-1/2/3/4/5/6/7/8/9/10/11/12/13 全部 ✅),**8/8 风险有缓解**,**0 偏离 / 0 冲突 / 0 授权**;新增行数 94(60-120 范围内,P-2 锁定通过,未触发 R-8);**0 触发第二轮 code-review**(本需求 13 项 INV 字节级自检已通过,无需二次评审);详 `code/TASK-REQ-00008-00003/{RESULT,work-log,deviations}.md` | T-002 + T-003 |
 | 2026-06-06 09:00 | 设计新增 | REQ-00015 概要设计完成(8 FR + 10 NFR + 10 AC + 12 边界场景 E-M1~M12;1 模块新增 `code-merge` 技能 + 0 模块修改 + 0 三方依赖;**10 项 INV 100% 通过自检** — INV-1 不改其他 11 技能 / INV-2 marketplace 仅追加 / INV-3 plugin.json 0 改 / INV-4 0 过程文件 / INV-5 不 --squash / INV-6 不自动 push / INV-7 不实现 v1 follow-up / INV-8 SKILL.md 不嵌命令 / INV-9 不调子技能 / INV-10 worktree 强约束;**0 触发** `dashboard-conventions §规则 1` 3 处同步;0 派生 / 0 新增依赖 / 0 偏离 / 0 冲突 / 0 授权;7 份过程文档齐全;看板同步 4 处 — 概要设计清单新增 1 行 + 需求清单 REQ-00015 状态推进 + 文档头 + 变更记录) | REQ-00015 |
 | 2026-06-06 09:10 | 设计新增 | REQ-00015 详细设计与编码计划完成(共 **5 个任务** 纯文档型 — T-001 `[新增]` 写 `code-merge/SKILL.md` 600~800 行 + T-002 `[修改]` `marketplace.json` +1 项 + T-003 `[修改]` 中英 README 各 +1 行 + T-004 `[文档]` 看板 6 处同步 + T-005 `[文档]` 10 项 INV 自检收尾;5 任务触发/来源**全部**=详细设计;**0**"更新看板"派生任务 — REQ-00017 强约束;0 架构任务 — 本需求不满足 REQ-00014 3 触发条件;5 任务测试状态全 `不适用`(纯文档 + 仓库无可测载体 — REQ-00009 守卫判定"不可测");**0 触发** `dashboard-conventions §规则 1` 3 处同步;10 项 INV INV-1~10 全部 100% 沿用概要设计(本计划无新增 INV);100% 沿用概要设计 8 决策 D-1~8;8 份过程文档齐全(`materials-index` / `design-notes` / `module-details` / `interface-specs` / `data-changes` / `risk-analysis` / `rule-compliance` / `clarifications`);1 里程碑 M1-REQ-00015-1:本需求可发布;5 任务依赖图 T-001→{T-002, T-003}→T-004→T-005;详 `plan/REQ-00015/{RESULT,PLAN}.md` + 8 份过程文档) | REQ-00015 |
+| 2026-06-06 09:25 | 任务完成 | TASK-REQ-00015-00001 `[新增]` `code-merge/SKILL.md` 580 行(frontmatter + 12 章节正文 + 8 FR 伪代码 + E-M1~M12 边界异常 + 状态机 Mermaid + 10 INV "不要做的事"显式列出);开发状态"待开始"→"已完成";8/8 静态自检通过(INV-5/7/8/9/10 全部 0 命中);0 偏离;0 修改其他 11 个 `code-*` SKILL.md;0 修改 plugin.json;0 修改 rules/;0 派生;测试状态=`不适用`(纯文档);详 `code/TASK-REQ-00015-00001/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | TASK-REQ-00015-00001 |
 
 ---
 
