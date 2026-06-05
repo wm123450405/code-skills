@@ -48,7 +48,7 @@
 
 ## 用户原文笔误纠正(已在 materials-index.md §1 标注)
 - `/code-desgin` → `/code-design`
-- `/core-require` → `/code-require`
+- `/code-require` → `/code-require`
 - 影响范围:**`code-require` / `code-design` / `code-plan` 三个技能**(对应"上游→中游→下游"管道的前 3 步)
 
 ## 待澄清 / 未决项(留作 follow-up)

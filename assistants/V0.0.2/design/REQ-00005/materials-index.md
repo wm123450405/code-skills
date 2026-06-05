@@ -36,7 +36,7 @@
   - **13 个边界 E-1 ~ E-13**(Q-2 锁定 A:中断 + 报错退出)
   - **8 个澄清项 Q-1 ~ Q-8**:Q-1/Q-2/Q-3/Q-4 已锁定 A;Q-5/Q-7 未采用(留 follow-up);Q-6/Q-8 采纳默认
   - **关联需求**:REQ-00001/00002/00003/00004(详见 §related-requirements.md)
-- **用户原文笔误**:已纠正(`/code-desgin` → `/code-design`、`/core-require` → `/code-require`)
+- **用户原文笔误**:已纠正(`/code-desgin` → `/code-design`、`/code-require` → `/code-require`)
 
 ## 项目现状(本次扫描)
 

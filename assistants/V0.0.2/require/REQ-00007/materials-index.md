@@ -17,7 +17,7 @@
 
 ### 1. 用户原文笔误纠正
 - `/code-desgin` → **`/code-design`**(与 REQ-00005 同样的笔误)
-- `/core-require` 在本需求中未出现,但 `/code-require` 出现 → **无**
+- `/code-require` 在本需求中未出现,但 `/code-require` 出现 → **无**
 - "如何需要" → "**如需要**"(语义校正)
 
 ### 2. 核心需求拆解
