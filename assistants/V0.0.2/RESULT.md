@@ -261,8 +261,10 @@
 | F-002 | REQ-00011 | TASK-REQ-00011-00002 | 可维护性 | 建议改 | `code-plan/SKILL.md` L139 步骤 0b 步骤 2 `adjustTaskGranularityByGoals` 函数伪代码未在 §步骤 0b 章节内展开,需跳到 §步骤 10A 末尾 | —(留作 follow-up) | 待处理 |
 | F-003 | REQ-00011 | TASK-REQ-00011-00001 | 一致性 | 可选 | 屏显标题块风格(`=== ... ===`)与既有 §步骤 0a 失败处理(`✗ ...`)不严格一致 | —(留作 follow-up) | 待处理 |
 | F-004 | REQ-00011 | TASK-REQ-00011-00002 | 可维护性 | 可选 | `code-plan/SKILL.md` L132 步骤 0b 步骤 1 引用 E-1 / E-5 边界编号但未显式指向 design/REQ-00011/RESULT.md §8 | —(留作 follow-up) | 待处理 |
+| F-001 | REQ-00012 | T-001 ~ T-003(整体) | — | **0 必须改 + 0 建议改 + 0 可选** | 24/24 项检查(3 任务 × 8 维度)全部通过;字节级保留 9,418 bytes ✓;§规则 1 章节对仗 ✓;NFR-3 git blame 6 条 commit 历史 ✓;0 触发 `dashboard-conventions §规则 1` 3 处同步;0 触发其他 11 技能修改 | —(无派生任务) | 整体通过 |
 
 **REQ-00011 评审统计**:4 / **必须改: 0 / 建议改: 2 / 可选: 2** / 已处理: 0 / **整体结论: ✅ 可合并**
+**REQ-00012 评审统计**:0 发现 / 24/24 检查通过 / **0 必须改 / 0 建议改 / 0 可选** / 整体结论: ✅ 可合并
 **合计统计(全版本)**:26 / **必须改: 1 / 建议改: 13 / 可选: 11** / 已处理: 3
 
 ## 派生任务记录
@@ -426,6 +428,7 @@
 | 2026-06-05 20:15 | 任务完成 | TASK-REQ-00012-00001 创建仓库根 `./README.md`(中文,47 行,5 核心小节 + 11 技能表格 + 详细文档链) — 6 项验证手段全部通过;0 编译 / 0 测试(纯文档 + 仓库无可测载体);同次提交准备中(待 T-002 完成 §规则 1 强约束) | TASK-REQ-00012-00001 |
 | 2026-06-05 20:20 | 任务完成 | TASK-REQ-00012-00002 创建仓库根 `./README.en.md`(英文,47 行,5 核心小节 + 11 技能表格 1-1 对应中文版) — 7 项验证手段全部通过;章节对仗校验 §规则 1 ✓;同次提交准备就绪(`git add README.md README.en.md`) | TASK-REQ-00012-00002 |
 | 2026-06-05 20:25 | 任务完成 | TASK-REQ-00012-00003 `git mv plugins/code-skills/CLAUDE.md → ./CLAUDE.md`(9,418 bytes 字节级保留 + NFR-3 4 条 commit blame 保留) — 7 项验证手段全部通过;原位置 `plugins/code-skills/CLAUDE.md` 已删除(FR-3 AC-3.3);NFR-8 不提供重定向 | TASK-REQ-00012-00003 |
+| 2026-06-05 20:30 | 评审发现 | REQ-00012 评审完成(3 任务 T-001/T-002/T-003,8 维度 × 3 = 24 项检查全部通过 — **0 必须改 + 0 建议改 + 0 可选**);**0 派生任务**;整体结论 ✅ 可合并;字节级保留 9,418 bytes ✓;§规则 1 章节对仗 ✓;NFR-3 git blame 6 条 commit 保留 ✓;中英同次提交(commit 766add1)✓;0 触发 `dashboard-conventions §规则 1` 3 处同步;0 触发其他 11 技能修改(NFR-5 锁);详 `review/REQ-00012/REVIEW-REPORT.md` + 3 份过程文档 | REQ-00012 |
 | 2026-06-05 20:10 | 评审发现 | REQ-00011 评审完成(2 个任务 T-001 / T-002,共 4 项发现 — **0 必须改 + 2 建议改 + 2 可选**,**0 派生任务**);整体结论 ✅ 可合并;20/20 INV 100% 通过(T-001 8 项 + T-002 12 项);0 触发 `dashboard-conventions §规则 1` 3 处同步;4 项发现全部为"文档风格"层面,与功能正确性 0 关系;详 `review/REQ-00011/REVIEW-REPORT.md` + 3 份过程文档 | REQ-00011 |
 | 2026-06-05 19:50 | 设计新增 | REQ-00011 概要设计完成(2 个 SKILL.md 增量追加 + 2 模板顶部预留 + 0 新增模块 + 0 三方依赖 + 0 触发 `dashboard-conventions §规则 1` 3 处同步;100% 沿用上游 9 FR / 8 NFR / ~30 AC;8 项决策 D-1~D-8 + 8 项不变量 INV-1~INV-8;Q-1~Q-8 全部沿用上游 clarifications.md 锁定;0 修改其他 8 个 `code-*` 技能;0 修改 `marketplace.json` / `plugin.json` / `assistants/rules/` 13 文件;NFR-1 零新增依赖;NFR-3 幂等(覆盖前次内容);NFR-4 不触发 `dashboard-conventions §规则 1`;NFR-5 与 `code-auto` 协同 0 冲突(沿用"总选推荐项");NFR-6 "步骤 0b"命名沿用"步骤 0a"模式;本次为 `code-auto` 调 `code-design` 模式,步骤 0b 触发 `AskUserQuestion` 时按"总选推荐项"作答(整体=--balanced,4 维度=中),故 `code-plan` 后续任务拆分按默认粒度产出;8 份过程文档已写完;详 `design/REQ-00011/RESULT.md` + 7 份过程文档 | REQ-00011 |
 | 2026-06-05 | 设计新增 | REQ-00012 概要设计完成(共 6 关键不变量 + 6 文档模块清单 + 0 API/数据/依赖 + 0 规范冲突 + 1 规范-现状偏离:§规则 2 适用范围不含根 README 但主动善意覆盖核心小节)。范围:新建仓库根 `./README.md`(中文 < 50 行)+ `./README.en.md`(英文 < 50 行,与中文版章节对仗,`doc-conventions §规则 1` 严格遵循)+ `git mv plugins/code-skills/CLAUDE.md → ./CLAUDE.md`(9,418 bytes 内容不变,原位置**不保留**,NFR-8 锁不提供重定向);复用既有 `plugins/code-skills/README.md` + `README.en.md` 作为详细技能文档(NFR-4 不破坏);Q-1/Q-2/Q-3 + 5 项采纳默认 + 1 项建议派生全部采纳 `code-require` 阶段结论;遵循 7 个过程文档(materials-index / design-notes / module-breakdown / dependencies / related-designs / rule-compliance / clarifications) | REQ-00012 |
