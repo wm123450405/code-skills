@@ -12,8 +12,8 @@
 
 | 任务编码 | 关联需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `TASK-REQ-00017-00001` | REQ-00017 | 修改 | 需求新增 | [修改] `/code-plan` SKILL.md 增量追加(锚点 A 步骤 10A 拆任务约束 + 锚点 B 步骤 16A 第 2.5 款只追加真实任务) | 待开始 | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` |
-| `TASK-REQ-00017-00002` | REQ-00017 | 修改 | 需求新增 | [修改] `/code-it` SKILL.md 增量追加(锚点 C 末尾兜底后 P-1 推进看板小步) | 待开始 | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` |
+| `TASK-REQ-00017-00001` | REQ-00017 | 修改 | 需求新增 | [修改] `/code-plan` SKILL.md 增量追加(锚点 A 步骤 10A 拆任务约束 + 锚点 B 步骤 16A 第 2.5 款只追加真实任务) | **已完成** | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` |
+| `TASK-REQ-00017-00002` | REQ-00017 | 修改 | 需求新增 | [修改] `/code-it` SKILL.md 增量追加(锚点 C 末尾兜底后 P-1 推进看板小步) | **已完成** | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` |
 
 **统计**:
 - 总数:2
