@@ -37,6 +37,7 @@ claude plugin install code-skills@code-skills-marketplace
 | [`code-review`](skills/code-review/SKILL.md) | 代码评审(Code Review) | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | 整体 `REVIEW-REPORT.md` + 派生改修任务 | code-it(改修任务) |
 | [`code-publish`](skills/code-publish/SKILL.md) | 发布部署(Release & Deployment)— 接收可选"版本号";先做发布前置检查(看板 3 区段全检查最严);通过后在 `<版本号>/publish/` 生成 `DEPLOY.md` + `UPDATE.md`(基线跳过) + `Q&A.md`(从 `qanda/` 聚合);3 份手册为通用骨架 + placeholder + 默认示例,用户手动补全;**(首次调用时)在项目级创建 `assistants/qanda/` 目录(若已存在则跳过)** | `.current-version` + `<版本号>/RESULT.md` 3 区段 + `qanda/*.md` + 5 份模板 | `qanda/README.md`(顺带)+ `<版本号>/publish/{DEPLOY,UPDATE,Q&A}.md` | (运维 / 现场支持 — 部署后查阅手册) |
 | [`code-dashboard`](skills/code-dashboard/SKILL.md) | 开发看板(只读)— 展示当前版本需求/任务/缺陷进度 + 最多 5 条下一步建议 | `.current-version` + `<版本>/RESULT.md`(+ 需求模式:`require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (屏幕输出,无文件) | (引导用户调 `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-version`) |
+| [`code-auto`](skills/code-auto/SKILL.md) | 自动开发编排— 接收 1 个需求内容,按 `code-require` → `code-design` → `code-plan` → `code-it`(+ `code-unit` 条件)→ `code-review` 循环的固定顺序,串行驱动 6 个子技能完成完整开发周期;`code-review` 派生任务自动驱动 `code-it` / `code-unit` 完成,复评至"无必须改"为止;所有 `AskUserQuestion` 自动选推荐项(完全无人确认);支持 `Ctrl+C` 中止 + 异常立即中断 + 完成时输出报告到 `auto-report.md` | (用户输入 1 个需求内容) | `<版本>/require/<REQ>/auto-report.md`(完成时) | (一键从需求到代码 + 单测 + 评审全自动跑通) |
 
 ## 工作流管道
 

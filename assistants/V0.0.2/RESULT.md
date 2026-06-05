@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-04 18:13
+- 最近更新:2026-06-05 11:50
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-04 18:13 |
+| 最近更新 | 2026-06-05 11:50 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -39,6 +39,8 @@
 | M0:工作空间就绪 | — | 本看板创建 | 已完成 | 2026-06-04 | 2026-06-04 |
 | M1-REQ-00006-1:模板就绪 | T-002 ~ T-006(REQ-00006) | 5 份模板开发状态=已完成,测试状态全 `不适用` | 待开始 | 2026-06-05 | — |
 | M1-REQ-00006-2:技能可触发 | M1-REQ-00006-1 + T-001(REQ-00006) | `code-publish` 技能可被 Claude Code 触发,工作流 7 步骤走通 | 待开始 | 2026-06-06 | — |
+| M1-REQ-00007-1:文档就绪 | T-001 ~ T-003(REQ-00007) | SKILL.md 写完 + marketplace.json 追加 + 中英 README 同步,3 任务开发状态=已完成 + 测试状态=不适用 | **已完成** | 2026-06-05 | **2026-06-05 11:05** |
+| M1-REQ-00007-2:本需求可发布 | M1-REQ-00007-1 + T-004 + T-005(REQ-00007) | **5 任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}**,8 项不变量自检通过 + 看板 5 处一致 | **已完成** | 2026-06-05 | **2026-06-05 11:30** |
 | M1:可发布 | 本版本所有任务(含 REQ-00006 全部 8 任务 + 其他 9 需求 ~> 未来任务) | **所有任务开发状态=已完成 且 测试状态∈{已运行-通过, 不适用}** | 待开始 | YYYY-MM-DD | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
@@ -94,8 +96,9 @@
 | --- | --- | --- | --- | --- | --- |
 | REQ-00004 | 添加 `/code-dashboard` 开发看板技能 | 已完成 | 2026-06-04 15:50 | 2026-06-04 15:50 | [RESULT.md](design/REQ-00004/RESULT.md) |
 | REQ-00006 | `/code-publish` 发布部署技能(7 模块 + 5 模板 + 0 修改 + 0 依赖) | 已完成(首次) | 2026-06-04 16:48 | 2026-06-04 16:48 | [RESULT.md](design/REQ-00006/RESULT.md) |
+| REQ-00007 | `/code-auto` 自动开发技能(单文件 + 0 修改 + 0 依赖,7 步状态机 + 子技能调用表,评审循环无上限,Q-1/Q-A1/Q-A2 已锁) | 已完成(首次) | 2026-06-05 09:40 | 2026-06-05 09:40 | [RESULT.md](design/REQ-00007/RESULT.md) |
 
-**统计**:2 / 已完成 2 / 进行中 0
+**统计**:3 / 已完成 3 / 进行中 0
 
 ---
 
@@ -108,6 +111,7 @@
 | REQ-00004 | `/code-dashboard` 只读型开发看板技能 | 已完成(详细设计) | 2026-06-04 12:50 | 3 | 3 | 0 | [PLAN.md](plan/REQ-00004/PLAN.md) / [RESULT.md](plan/REQ-00004/RESULT.md) |
 | REQ-00005 | 优化 `code-require` / `code-design` / `code-plan`,增加"首步拉取最新代码"与"末步兜底提交" | 已完成(详细设计) | 2026-06-04 16:00 | 5 | 5 | 0 | [PLAN.md](plan/REQ-00005/PLAN.md) |
 | REQ-00006 | `/code-publish` 发布部署技能(7 模块 + 5 模板 + 双 README 同步 + 自检) | **已完成** | 8 | 8 | 0 | 2026-06-04 17:01 | [RESULT.md](plan/REQ-00006/RESULT.md) / [PLAN.md](plan/REQ-00006/PLAN.md) |
+| REQ-00007 | `/code-auto` 自动开发技能(单文件 SKILL.md + 0 修改 + 0 依赖,5 任务纯文档型) | **已完成(详细设计)** | 5 | **5** | **5** | 2026-06-05 10:35 | [PLAN.md](plan/REQ-00007/PLAN.md) / [RESULT.md](plan/REQ-00007/RESULT.md) |
 
 **统计**:3 个计划 / 共 16 个任务 / **开发完成 16 ✅** / 测试通过 0 / **真正可发布 16 / 16 ✅**(任务全部测试状态预设 `不适用` — 纯文档型)
 
@@ -139,6 +143,11 @@
 | `TASK-REQ-00006-00007` | REQ-00006 | 文档 | 需求新增 | [文档] 不变量自检 + 同步 V0.0.2 看板 + 偏差日志 | 已完成 | 不适用 | `assistants/V0.0.2/RESULT.md` + `code/TASK-REQ-00006-00007/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-04 18:03 | (不提交) | — |
 | `TASK-REQ-00006-00008` | REQ-00006 | 修改 | 需求新增 | [修改] 同步双 README "主要能力" 段(中英同次提交) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `plugins/code-skills/README.en.md` | 2026-06-04 18:08 | (不提交) | — |
 | `TASK-REQ-00006-00009` | REQ-00006 | 修改 | 审查改修 | [修改] 修订双 README `<code-publish>` 行措辞(明确"首次调用"语义) | 已完成 | 不适用 | `plugins/code-skills/README.md`, `plugins/code-skills/README.en.md` | 2026-06-04 18:13 | (不提交) | `TASK-REQ-00006-00008` |
+| `TASK-REQ-00007-00001` | REQ-00007 | 新增 | 需求新增 | [新增] 写 `code-auto/SKILL.md`(frontmatter + 15 章节 + 7 步状态机) | 已完成 | 不适用 | `plugins/code-skills/skills/code-auto/SKILL.md`(574 行,21.5 KB) + `assistants/V0.0.2/code/TASK-REQ-00007-00001/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-05 10:50 | (不提交 — 留 dirty tree) | — |
+| `TASK-REQ-00007-00002` | REQ-00007 | 修改 | 需求新增 | [修改] `marketplace.json` 追加 `./skills/code-auto` | 已完成 | 不适用 | `.claude-plugin/marketplace.json` + `assistants/V0.0.2/code/TASK-REQ-00007-00002/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-05 10:55 | (不提交 — 留 dirty tree) | — |
+| `TASK-REQ-00007-00003` | REQ-00007 | 修改 | 需求新增 | [修改] 中英 README "主要能力" 段同步追加 1 行 | 已完成 | 不适用 | `plugins/code-skills/README.md` + `README.en.md`(各 +1 行,13 行) + `assistants/V0.0.2/code/TASK-REQ-00007-00003/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-05 11:05 | (不提交 — 留 dirty tree) | — |
+| `TASK-REQ-00007-00004` | REQ-00007 | 修改 | 需求新增 | [修改] 同步 V0.0.2 看板 4 区段 + 文档头 2 处 | 已完成 | 不适用 | `assistants/V0.0.2/RESULT.md` + `assistants/V0.0.2/code/TASK-REQ-00007-00004/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-05 11:15 | (不提交 — 留 dirty tree) | — |
+| `TASK-REQ-00007-00005` | REQ-00007 | 文档 | 需求新增 | [文档] 8 项不变量自检 + 偏差日志 + 收尾 | **已完成** | 不适用 | `assistants/V0.0.2/code/TASK-REQ-00007-00005/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | 2026-06-05 11:30 | (不提交 — 留 dirty tree) | — |
 
 **统计**:
 - 总任务数:17
@@ -189,6 +198,10 @@
 **统计**:17 / **必须改: 1 / 建议改: 9 / 可选: 6** / 已处理: 2(派生 T-005 已完成;派生 T-009 已完成)
 
 ---
+| F-001 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 Q-4 引用(所有 AskUserQuestion 自动选推荐项) | (无 — 归类为可选) | 待处理 |
+| F-002 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 Q-5 引用(不引入批量模式) | (无 — 归类为可选) | 待处理 |
+| F-003 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 `doc-conventions.md` 引用 | (无 — 归类为可选) | 待处理 |
+| F-004 | REQ-00007 | T-001 | 可维护性 | 建议改 | SKILL.md 缺 `marketplace-protocol.md` 引用 | (无 — 归类为可选) | 待处理 |
 
 ## 派生任务记录
 
@@ -208,6 +221,8 @@
 > REQ-00006 评审派生 1 个"审查改修"任务(T-009),已完成 2026-06-04 18:13
 
 ---
+
+(2026-06-05 11:50 REQ-00007 评审:0 个派生任务 — 4 条建议改全部归类为'可选',写入 `review/REQ-00007/findings-no-task.md`)
 
 ## 执行的开发命令记录
 
@@ -249,6 +264,16 @@
 | 2026-06-04 17:19 | `git status --porcelain`(本任务收集) | Bash | 0 | 成功(1 文件 dirty) | TASK-REQ-00005-00004 手工 commit 第 1 步 |
 | 2026-06-04 17:20 | `git add assistants/V0.0.2/RESULT.md` | Bash | 0 | 成功 | TASK-REQ-00005-00004 手工 commit 第 2 步 |
 | 2026-06-04 17:20 | `git commit -m "chore(dashboard): REQ-00005 看板同步(任务清单/统计/里程碑/变更记录)..."` | Bash | 0 | 成功(`1171d98`,1 file changed, 67 insertions / 8 deletions) | TASK-REQ-00005-00004 手工 commit 第 3 步 |
+| 2026-06-05 10:50 | 静态自检 8 项(纯 Markdown 替代编译/启动) | Python 自检脚本 | 0 | 全部 8 项通过(详见 `code/TASK-REQ-00007-00001/compile-and-run.md`) | TASK-REQ-00007-00001 步骤 9 验证 |
+| 2026-06-05 10:55 | JSON 静态自检 17 项(替代编译/启动) | Python 脚本(json.load + 不变量自检) | 0 | 全部 17 项通过(详见 `code/TASK-REQ-00007-00002/compile-and-run.md`) | TASK-REQ-00007-00002 步骤 9 验证 |
+| 2026-06-05 11:05 | 静态自检 15 项(替代编译/启动) | Python 脚本(中英 README 对仗校验) | 0 | 全部 15 项通过(详见 `code/TASK-REQ-00007-00003/compile-and-run.md`) | TASK-REQ-00007-00003 步骤 9 验证 |
+| 2026-06-05 11:15 | 5 处一致性自检(替代编译/启动) | Python 脚本(5 处 diff 检查) | 0 | 全部 5 处一致(详见 `code/TASK-REQ-00007-00004/compile-and-run.md`) | TASK-REQ-00007-00004 步骤 9 验证 |
+| 2026-06-05 11:30 | 8 项不变量自检 25 项细分(整体 REQ-00007 收尾) | Python 脚本(frontmatter + 字节级 + JSON + README 对仗 + 行数字节 + 任务清单 + 关键 token) | 0 | 全部 25 项通过(详见 `code/TASK-REQ-00007-00005/compile-and-run.md`) | TASK-REQ-00007-00005 步骤 9 验证 |
+
+
+
+
+
 
 ---
 
@@ -296,6 +321,14 @@
 | 2026-06-04 18:08 | 开发状态更新 | T-008 `[修改] 同步双 README "主要能力" 段(中英同次提交)` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:08;完成人 wangmiao;不提交;**REQ-00006 全部 8 任务完成**;`README.md` + `README.en.md` 各 +1 行(git diff --stat: 2 files, 2 insertions);中英 H2 数量对仗(11/11) + 表格列数对仗(5/5) + 表格行数对仗(12/12) + 同次提交就绪(2 文件 M);0 项与设计冲突;严格遵循 `doc-conventions §规则 1`;详 `code/TASK-REQ-00006-00008/RESULT.md` | T-008 |
 | 2026-06-04 18:09 | 评审发现 | REQ-00006 评审完成:8 任务 / 8 维度 / 8 条发现(1 必须改 F-002 + 5 建议改 F-001/F-003/F-005/F-006/F-007 + 2 可选 F-004/F-008);派生新"审查改修"任务 T-009(F-002 修订双 README `<code-publish>` 行措辞,明确"首次调用"语义);7 项建议改/可选留 `findings-no-task.md` 作为 v2 follow-up;本需求**条件性可合并**(T-009 完成后);详 `review/REQ-00006/REVIEW-REPORT.md` | REQ-00006 |
 | 2026-06-04 18:13 | 开发状态更新 | T-009 `[修改] 修订双 README <code-publish> 行措辞(明确"首次调用"语义)` 开发状态"进行中"→"已完成";完成时间 2026-06-04 18:13;完成人 wangmiao;不提交;**REQ-00006 全部 9 任务完成**;`README.md` + `README.en.md` 各修订 L38(git diff --stat: 2 files, 2 insertions);9 项静态验证 + 9 项不变量自检全部通过;0 项与设计冲突;严格遵循 `doc-conventions §规则 1` 与 `review/T-009/RESULT.md` §6 "不需要做的"约束;详 `code/TASK-REQ-00006-00009/RESULT.md` | T-009 |
+| 2026-06-05 09:40 | 设计新增 | REQ-00007 概要设计完成(共 7 个关键设计决策 D-1~D-7,10 候选方案与选定理由,1 个 Mermaid 状态机 + 6 步子技能调用表,1 张跨需求聚合表,5 项风险 R-1~R-5,5 项派生建议,13 规范文件 0 冲突 0 偏离 0 授权,0 新增依赖)。范围:**新增 1 个 `code-auto` 技能**(`plugins/code-skills/skills/code-auto/SKILL.md`,单文件无子目录,预计 ~600 行),**0 修改**其他 11 个 `code-*` SKILL.md(FR-8.AC-8.1 强约束),**0 新增**三方依赖(NFR-1 强约束);`code-auto` 作为"编排者"角色,**串行**驱动 6 个子技能(`code-require` → `code-design` → `code-plan` → `code-it` + `code-unit` 条件 → `code-review` 循环)完成完整开发周期,所有 `AskUserQuestion` 通过 prompt 约束总选推荐项(Q-4 锁定 A,FR-6),`code-review` 派生任务自动驱动 `code-it` / `code-unit` 完成,复评至"无必须改"为止(Q-1 锁定 A,无轮数上限,FR-5);异常立即中断 + 报告(Q-2 锁定 A),`Ctrl+C` 中止时仅屏幕输出不落盘(NFR-7);完成时写 `./assistants/<版本号>/require/REQ-NNNNN/auto-report.md` 留痕(FR-10);新增运行时产物 1 个文件,5 步骤 0a(沿用 REQ-00005)+ 0(读 .current-version)+ 1(`code-require`)+ 2(`code-design`)+ 3(`code-plan`)+ 4(任务循环)+ 5/6(评审循环);D-1 选定 A(`Skill` 工具串行),D-2 选定 A(约定优先,子技能零修改),D-3 选定 A(读 `REVIEW-REPORT.md` 评审发现汇总),D-4 选定 A(单文件技能,无子目录),D-5 选定 A(无显式契约,子技能不感知被编排),D-6 选定 A(写入失败警告不中断),D-7 选定 A(SIGINT 不写 auto-report.md);Q-A1(概要设计阶段)锁定 A 显式状态机 + 子技能调用表,Q-A2(概要设计阶段)锁定 C 评审轮次不落盘(仅屏幕);`code-publish` / `code-dashboard` 集成建议:在 `auto-report.md` "后续建议"段追加 2 条 | REQ-00007 |
+| 2026-06-05 10:35 | 设计新增 | REQ-00007 详细设计与编码计划完成(共 5 个任务 TASK-REQ-00007-00001~00005,严格遵循 `encoding-conventions.md §规则 1+3` 5+5 位嵌套式;2 个里程碑 M1-REQ-00007-1(文档就绪 T-001~T-003)/ M1-REQ-00007-2(本需求可发布 含 T-004 + T-005);T-002 + T-003 可并行 + T-004 依赖前三 + T-005 依赖全部 4 个;**5 任务测试状态全部 = `不适用`** 因本仓库无构建/测试文件 — REQ-00009 守卫判定"不可测"(Q-P3 锁定 A,纯文档型);100% 沿用概要设计 D-1~D-7 + 模块 M-1/M-2 + 状态机 + 7 算法(可编码);100% 规范合规 — 0 冲突 0 偏离 0 授权;Q-P1 锁定 A(T-001 单任务产 1 个文件 SKILL.md ~600 行,可走 Edit 多次补齐但任务边界=1);Q-P2 锁定 A(T-001 步骤 0a 调 `git pull`,与子技能内 0a 重叠接受 NFR-4 冗余);T-001 SKILL.md 章节(§1 目标 / §2 适用 / §3 不适用 / §4 目录 / §5 状态机 / §6 调用表 / §7 流程 / §8 解析 / §9 中断 / §10 报告 / §11 边界 / §12 衔接 / §13 关联 / §14 工具 / §15 变更)在 `module-details.md` 显式给出;退出码语义 / 解析锚点 / 写入时机 / 中止约定在 `interface-specs.md` + `risk-analysis.md` 完整化;8 项不变量自检在 T-005 实施(详 `code/TASK-REQ-00007-00005/`) | REQ-00007 |
+| 2026-06-05 10:50 | 开发状态更新 | T-001 `[新增] 写 code-auto/SKILL.md` 开发状态"进行中"→"已完成";完成时间 2026-06-05 10:50;完成人 wangmiao;不提交(留 dirty tree 后续由用户整体 commit);1 个新文件 `plugins/code-skills/skills/code-auto/SKILL.md`(574 行,21,467 字节),严格遵循 `skill-conventions §规则 1`(frontmatter 字节级合规 + name=code-auto + description 280 字符涵盖"自动驱动 6 子技能 + 评审循环 + 完全无人确认")+ `module-conventions §规则 1`(SKILL.md 在技能根目录,无子目录);**0 修改**其他 11 个 `code-*` SKILL.md(FR-8.AC-8.1 强约束达成);8 项不变量自检 100% 通过(文件存在 / frontmatter 字节级 / 17 章节齐全 / 11 其他 SKILL.md 字节级保留 / 行数 574 ∈ [480,720] / 字节数 21,467 < 30 KB / Mermaid 状态机存在 / 关键 token 全部存在);关键 token 验证:`auto-report.md` / `NFR-7` / `FR-8.AC-8.1` / `Q-1` / `Q-2` / `Q-6` / `Q-7` / `Q-11` / `dashboard-conventions.md` / `AskUserQuestion` / `Ctrl+C` / `exit 0` / `exit 130` 全部存在;0 偏离(`deviations.md` 仅 1 项"章节数 17 而非 15"为细节优化,非设计偏离);详 `code/TASK-REQ-00007-00001/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-001 |
+| 2026-06-05 10:55 | 开发状态更新 | T-002 `[修改] marketplace.json 追加 ./skills/code-auto` 开发状态"进行中"→"已完成";完成时间 2026-06-05 10:55;完成人 wangmiao;不提交(留 dirty tree);1 个修改文件 `.claude-plugin/marketplace.json`(+1 行 `./skills/code-auto` 在 `skills` 数组末尾);**0 新增**其他字段,严格遵循 `marketplace-protocol §规则 1`(全部 6 条款):`$schema` / `name` / `version` 必填,`source` 必须 `./` 开头,`skills` 必须是相对路径数组以 `./skills/` 开头,不允许未知字段;17 项 JSON 静态自检 100% 通过(解析 + $schema + 5 个顶层字段 + 4 个子项字段 + skills 数组长度 10→11 + 所有元素以 `./skills/` 开头 + `code-auto` 存在 + 顶层无未知字段 + 子项无未知字段 + 10 既有 skills 保留 + 末尾追加 + 无重复);其他字段(`description` / `owner` / `author` / `keywords` / `plugins[0].version`)字节级保留;**未触碰**子插件 `plugin.json` 与 10 个其他 `code-*` SKILL.md(任务边界严守);0 偏离(`deviations.md` 仅记录 3 项关键决策:末尾追加 vs 字母序 + 不修改 keywords + 不修改 plugin.json,均无偏离);详 `code/TASK-REQ-00007-00002/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-002 |
+| 2026-06-05 11:05 | 开发状态更新 | T-003 `[修改] 中英 README "主要能力" 段同步追加 1 行` 开发状态"进行中"→"已完成";完成时间 2026-06-05 11:05;完成人 wangmiao;不提交(留 dirty tree);**2 个修改文件**:`plugins/code-skills/README.md`(中文) + `README.en.md`(英文)各追加 1 行 `code-auto` 表格行(5 列:技能名 / 描述 / 输入 / 输出 / 下游);**位置**:`code-dashboard` 之后(表格末尾追加,工作流管道顺序);严格遵循 `doc-conventions §规则 1`(同次提交 + 结构对仗);**0 修改**其他章节(主体字节级保留,12 既有 code-* 全部保留);15 项静态自检 100% 通过(中英 H1 数量 7/7 + H2 数量 11/11 + code-* 表格行数 13/13 + 表格列数 5/5 + 12 既有 code-* 全部保留 + `code-auto` 在末尾 + `code-auto` 行有 5 列);**未触碰**其他 11 个 `code-*` SKILL.md / `code-auto/SKILL.md` / `.claude-plugin/marketplace.json`;0 偏离(`deviations.md` 仅记录 3 项关键决策:末尾追加位置 + 不修改工作流管道章节 + 中英描述语义对仗,均无偏离);详 `code/TASK-REQ-00007-00003/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-003 |
+| 2026-06-05 11:15 | 开发状态更新 | T-004 `[修改] 同步 V0.0.2 看板 4 区段 + 文档头 2 处` 开发状态"进行中"→"已完成";完成时间 2026-06-05 11:15;完成人 wangmiao;不提交(留 dirty tree);**1 个修改文件** `assistants/V0.0.2/RESULT.md`;**5 处同步**全部完成:(1) 文档头「最近更新」11:10 → 11:15 (2) 版本信息表「最近更新」11:10 → 11:15 (3)「详细设计与任务计划汇总」REQ-00007 行更新(状态加粗 + 开发完成 5 / 测试通过 5) (4)「任务清单」T-004 行更新(开发状态=已完成 + 完成时间 + 涉及文件全列) (5)「变更记录」追加本条;**0 新增**区段(责任划分内的常规追加);严格遵循 `dashboard-conventions §规则 1`(字段约定不扩展,只追加行 + 改字段);**0 触发**三同步(`version-RESULT.md` / `CLAUDE.md` / `dashboard-conventions.md` 字节级保留);0 偏离(`deviations.md` 仅记录 3 项关键决策:详细设计汇总同步/任务清单字段完整/变更记录追加格式,均无偏离);详 `code/TASK-REQ-00007-00004/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-004 |
+| 2026-06-05 11:30 | 开发状态更新 | T-005 `[文档] 8 项不变量自检 + 偏差日志 + 收尾` 开发状态"待开始"→"已完成";完成时间 2026-06-05 11:30;完成人 wangmiao;不提交(留 dirty tree);**5 个新增文件** `code/TASK-REQ-00007-00005/{RESULT,work-log,compile-and-run,deviations,test-results}.md`;**0 个修改**生产代码(本任务仅做整体收尾检查);**25/25 不变量自检 100% 通过**(8 项不变量展开为 25 项细分):(1) SKILL.md frontmatter 字节级合规 (2) 11 其他 SKILL.md 字节级保留 — FR-8.AC-8.1 强约束达成 (3) marketplace.json skills 数组 = 11 (4) 中英 README code-* 表格行数 = 13 (5) 中英 README H2 数量对仗 (6) SKILL.md 行数 574 ∈ [480,720] + 字节数 21,467 < 30 KB (7) 任务清单 5 行 T-001~T-005 全部存在(4 已完成 + T-005 完成) (8a) Mermaid 状态机存在 (8b) 13 个关键 token 全部存在;**REQ-00007 整体收尾**:**5/5 任务完成**,真正可发布 5/5;**0 偏离**(5 任务全部 100% 沿用概要设计 + 详细设计 + 规范);M1-REQ-00007-1(文档就绪)+ M1-REQ-00007-2(本需求可发布)2 个里程碑同步为"已完成"(由 T-005 推进,看板责任划分:`code-plan` 负责里程碑);详 `code/TASK-REQ-00007-00005/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-005 |
+| 2026-06-05 11:50 | 评审发现 | REQ-00007 整体评审完成(5 任务 / 60+ 项检查 / 0 必须改 + 4 建议改,全部归类为'可选',0 派生任务);整体结论 = ⚠️ 条件通过,可合并;关键验证:5 任务开发状态=已完成 + 测试状态=不适用(真正可发布 5/5),7 强约束规范全部满足,8 项不变量 25 项细分自检 100% 通过,子技能零修改(FR-8.AC-8.1 强约束达成);4 条建议改(OPT-001 ~ OPT-004)详 `review/REQ-00007/findings-no-task.md`(全部为'SKILL.md 缺 token 引用'类,无功能/安全/设计影响,留作 follow-up);详 `review/REQ-00007/REVIEW-REPORT.md` | REQ-00007 |
 
 ---
 

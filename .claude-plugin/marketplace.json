@@ -41,7 +41,8 @@
         "./skills/code-fix",
         "./skills/code-version",
         "./skills/code-init",
-        "./skills/code-rule"
+        "./skills/code-rule",
+        "./skills/code-auto"
       ]
     }
   ]
