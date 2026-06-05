@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-05 21:30
+- 最近更新:2026-06-06 09:00
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-05 21:30 |
+| 最近更新 | 2026-06-06 09:00 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -78,7 +78,7 @@
 | REQ-00014 | 优化 `/code-plan` 任务拆分维度(按功能点拆 + 架构任务作为首个 + 仅未来生效) | 已完成(需求分析) | 2026-06-05 12:20 | — | [RESULT.md](require/REQ-00014/RESULT.md) | — | — |
 | REQ-00016 | 优化 `/code-design` / `/code-plan`,增加"快模式"(跳过非必要步骤 + 减少过程文档 + 末尾兜底提交跳过 3 选 1 确认);触发方式 = `CODE_FAST_MODE=1` 环境变量 / `--fast` CLI 标志(优先级 CLI > 环境变量 > 默认值);完整模式字节级不变;0 修改其他 9 个 `code-*` 技能;0 修改 `marketplace.json` / `plugin.json` / `assistants/rules/` / README | 已完成(需求分析) | 2026-06-05 16:05 | — | [RESULT.md](require/REQ-00016/RESULT.md) | — | — |
 | REQ-00013 | 优化 6 技能(code-require/code-plan/code-fix/code-it/code-unit/code-review/code-auto),启用"编号+标题"显示(从已有内容派生,零规范变更) | 已完成(需求分析) | 2026-06-04 15:25 | — | [RESULT.md](require/REQ-00013/RESULT.md) | — | — |
-| REQ-00015 | 新增 `/code-merge` 技能(worktree 模式下自动合并:提交+合并主干+ LLM 智能冲突解决+看板 5 区段自检+ git merge 合回 main;不产过程/结果文件) | 已完成(需求分析) | 2026-06-05 15:50 | — | [RESULT.md](require/REQ-00015/RESULT.md) | — | — |
+| REQ-00015 | 新增 `/code-merge` 技能(worktree 模式下自动合并:提交+合并主干+ LLM 智能冲突解决+看板 5 区段自检+ git merge 合回 main;不产过程/结果文件) | 已完成(概要设计) | 2026-06-05 15:50 | — | [RESULT.md](require/REQ-00015/RESULT.md) | [RESULT.md](design/REQ-00015/RESULT.md) | — |
 | REQ-00017 | 优化 `/code-plan` 拆分任务逻辑:不再为"更新看板"单独拆出派生任务;`/code-it` 在末尾兜底提交后自行推进本任务看板状态(开发状态:待开发→已完成;触发/来源保持=详细设计;NFR-1:0 修改其他 7 个 `code-*` 技能;NFR-2:仅改 `/code-plan` 与 `/code-it` 2 个 SKILL.md;NFR-4:看板 3 区段解析锚点保持) | 已完成(需求分析) | 2026-06-05 16:25 | — | [RESULT.md](require/REQ-00017/RESULT.md) | 4 | 6 | 8 |
 
 **统计**:
@@ -119,8 +119,9 @@
 | REQ-00011 | `code-design` / `code-plan` 步骤 0b 设计目标确认(1-5 个 AskUserQuestion + 顶部"## 设计目标"小节;`code-plan` 沿用 design 退化路径;FR-4 任务粒度调整;0 修改 8 其他技能;0 触发 dashboard 3 处同步;NFR-5 code-auto 0 冲突) | 已完成(首次) | 2026-06-05 | 2026-06-05 | [RESULT.md](design/REQ-00011/RESULT.md) |
 | REQ-00012 | 在仓库根创建极简 README + 移动 CLAUDE.md 到根(0 模块新增 / 0 API 变更 / 0 数据模型 / 0 依赖;6 关键不变量 + 6 文档模块清单;1 规范-现状偏离:§规则 2 适用范围不含根 README) | 已完成(首次) | 2026-06-05 | 2026-06-05 | [RESULT.md](design/REQ-00012/RESULT.md) |
 | REQ-00013 | 6 技能启用"编号+标题"显示(8 项设计决策全锁定;8 个 SKILL.md 增量追加,0 新增 0 删除;8 项 INV 字节级保留;13 规范 0 冲突 0 偏离 0 授权;0 触发 `dashboard-conventions §规则 1` 3 处同步;`code-fix` "## 缺陷标题"新增在 `fix/.../RESULT.md` 内部不外溢;`code-auto` 子技能零修改契约保持;`code-dashboard` 看板"标题"列已存在 0 改动) | **已完成(首次)** | **2026-06-05** | **2026-06-05** | [RESULT.md](design/REQ-00013/RESULT.md) |
+| REQ-00015 | 新增第 12 个 `code-merge` 技能(worktree 强约束:`git rev-parse --git-common-dir ≠ --git-dir` 识别;8 FR + 10 NFR + 10 AC + 12 边界 E-M1~M12;1 模块新增 0 模块修改 0 三方依赖;执行阶段 0 过程/结果文件严守 NFR-1;`git merge --no-ff` 严守 NFR-7;不自动 push / 不自动 `worktree remove`;看板自检复用既有 5 区段**不**触发 `dashboard-conventions §规则 1` 3 处同步;`marketplace.json` 仅追加 `./skills/code-merge` 严守 NFR-6;SKILL.md 不嵌入 git 命令严守 NFR-9;7 项 v1 follow-up 不实现;0 派生 / 0 调其他子技能;10 项 INV 100% 通过自检) | **已完成(首次)** | **2026-06-06** | **2026-06-06** | [RESULT.md](design/REQ-00015/RESULT.md) |
 
-**统计**:9 / 已完成 9 / 进行中 0
+**统计**:10 / 已完成 10 / 进行中 0
 
 ---
 
@@ -467,6 +468,7 @@
 | 2026-06-05 16:46 | 开发状态更新 | TASK-REQ-00017-00002 `[修改]` /code-it/SKILL.md 增量追加 — 步骤 14.5 推进看板开发状态(REQ-00017 新增,2026-06-05 起生效)显式契约 — 开发状态"待开始"→"已完成";完成时间 2026-06-05 16:46;**1 个修改文件** `plugins/code-skills/skills/code-it/SKILL.md`(+31 净增,1 处增量:锚点 C 步骤 14 后,步骤 15 前插"### 步骤 14.5 推进看板开发状态");**1 处偏离** — 实施期发现 P-1 与步骤 15 既有实现重复,调整为"显式契约"(引用步骤 15 + 引用 /code-plan 拆任务约束);INV-2/3/4/6/7 全部 100% 通过(锚点字面精度 1/1 + 字节级保留 2/2 + 0 触发 `dashboard-conventions §规则 1` 3 处同步);既有步骤 14 + 步骤 15 字节级保留;详 `code/TASK-REQ-00017-00002/{RESULT,deviations}.md` | T-002 |
 | 2026-06-05 16:50 | 评审发现 | REQ-00017 评审完成(2 任务 / 9 维度 / **0 发现** — 0 必须改 + 0 建议改 + 0 可选,**0 派生任务**);整体结论 ✅ 通过(0 触发 `dashboard-conventions §规则 1` 同步,0 修改其他 7 个 `code-*` 技能,0 新增依赖,INV-1~7 全部 100% 通过);M-1 文档就绪里程碑达成(2026-06-05 16:46);M-2 本需求可发布里程碑待未来 `code-auto` 跑一个完整需求验证 P-1 推进看板;**1 处偏差**已用户授权(T-002 步骤 14.5 显式契约 vs 详细设计 §3.3 P-1 独立步骤);详 `review/REQ-00017/REVIEW-REPORT.md` + 3 份过程文档 | REQ-00017 |
 | 2026-06-05 16:30 | 开发状态更新 | T-002 `[文档] 同步 V0.0.2 看板 5 处` + T-003 `[文档] 13 项不变量自检(INV-1~13) + 偏差日志 + 收尾` 状态"待开始"/"进行中"→"已完成";完成时间 2026-06-05 16:30(T-002 / T-003 同步完成);完成人 wangmiao;不提交(留 dirty tree);**3 个修改文件** `assistants/V0.0.2/RESULT.md`(L168-170 任务清单 3 行 + L46-47 里程碑 2 个 + L127 详细设计汇总 + L130 统计行 + L10 文档头 + L388 变更记录)+ `assistants/V0.0.2/code/TASK-REQ-00008-00003/RESULT.md`(新建 9 章节自检总结)+ `work-log.md`(新建 13 项不变量逐项)+ `deviations.md`(新建 0 偏离);**REQ-00008 整体收尾**:**3/3 任务完成**(T-001 SKILL.md +94 行 / T-002 看板 / T-003 自检),**2/2 里程碑完成**(M-1 文档就绪 16:25 + M-2 本需求可发布 16:30),**13/13 INV 100% 通过**(INV-1/2/3/4/5/6/7/8/9/10/11/12/13 全部 ✅),**8/8 风险有缓解**,**0 偏离 / 0 冲突 / 0 授权**;新增行数 94(60-120 范围内,P-2 锁定通过,未触发 R-8);**0 触发第二轮 code-review**(本需求 13 项 INV 字节级自检已通过,无需二次评审);详 `code/TASK-REQ-00008-00003/{RESULT,work-log,deviations}.md` | T-002 + T-003 |
+| 2026-06-06 09:00 | 设计新增 | REQ-00015 概要设计完成(8 FR + 10 NFR + 10 AC + 12 边界场景 E-M1~M12;1 模块新增 `code-merge` 技能 + 0 模块修改 + 0 三方依赖;**10 项 INV 100% 通过自检** — INV-1 不改其他 11 技能 / INV-2 marketplace 仅追加 / INV-3 plugin.json 0 改 / INV-4 0 过程文件 / INV-5 不 --squash / INV-6 不自动 push / INV-7 不实现 v1 follow-up / INV-8 SKILL.md 不嵌命令 / INV-9 不调子技能 / INV-10 worktree 强约束;**0 触发** `dashboard-conventions §规则 1` 3 处同步;0 派生 / 0 新增依赖 / 0 偏离 / 0 冲突 / 0 授权;7 份过程文档齐全;看板同步 4 处 — 概要设计清单新增 1 行 + 需求清单 REQ-00015 状态推进 + 文档头 + 变更记录) | REQ-00015 |
 
 ---
 
