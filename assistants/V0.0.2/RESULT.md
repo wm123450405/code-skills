@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.2`
 - 创建时间:2026-06-04 12:48
-- 最近更新:2026-06-05 15:35
+- 最近更新:2026-06-05 15:55
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.2` |
 | 创建时间 | 2026-06-04 12:48 |
-| 最近更新 | 2026-06-05 15:35 |
+| 最近更新 | 2026-06-05 15:55 |
 | 创建人 | wangmiao |
 | 负责人 | wangmiao |
 | 状态 | 活跃 |
@@ -67,10 +67,11 @@
 | REQ-00012 | 创建仓库根 README(中英)+ 移动 CLAUDE.md 到根(极简门面 + 详细子文档) | 已完成(需求分析) | 2026-06-04 15:11 | — | [RESULT.md](require/REQ-00012/RESULT.md) | — | — |
 | REQ-00014 | 优化 `/code-plan` 任务拆分维度(按功能点拆 + 架构任务作为首个 + 仅未来生效) | 已完成(需求分析) | 2026-06-05 12:20 | — | [RESULT.md](require/REQ-00014/RESULT.md) | — | — |
 | REQ-00013 | 优化 6 技能(code-require/code-plan/code-fix/code-it/code-unit/code-review/code-auto),启用"编号+标题"显示(从已有内容派生,零规范变更) | 已完成(需求分析) | 2026-06-04 15:25 | — | [RESULT.md](require/REQ-00013/RESULT.md) | — | — |
+| REQ-00015 | 新增 `/code-merge` 技能(worktree 模式下自动合并:提交+合并主干+ LLM 智能冲突解决+看板 5 区段自检+ git merge 合回 main;不产过程/结果文件) | 已完成(需求分析) | 2026-06-05 15:50 | — | [RESULT.md](require/REQ-00015/RESULT.md) | — | — |
 
 **统计**:
-- 总数:11
-- 已完成:10(需求分析阶段已完成,下游 design/plan/it/review 待开展)
+- 总数:12
+- 已完成:11(需求分析阶段已完成,下游 design/plan/it/review 待开展)
 - 进行中:0
 - 待开始:0
 - 已取消:0
@@ -100,8 +101,9 @@
 | REQ-00004 | 添加 `/code-dashboard` 开发看板技能 | 已完成 | 2026-06-04 15:50 | 2026-06-04 15:50 | [RESULT.md](design/REQ-00004/RESULT.md) |
 | REQ-00006 | `/code-publish` 发布部署技能(7 模块 + 5 模板 + 0 修改 + 0 依赖) | 已完成(首次) | 2026-06-04 16:48 | 2026-06-04 16:48 | [RESULT.md](design/REQ-00006/RESULT.md) |
 | REQ-00007 | `/code-auto` 自动开发技能(单文件 + 0 修改 + 0 依赖,7 步状态机 + 子技能调用表,评审循环无上限,Q-1/Q-A1/Q-A2 已锁) | 已完成(首次) | 2026-06-05 09:40 | 2026-06-05 09:40 | [RESULT.md](design/REQ-00007/RESULT.md) |
+| REQ-00008 | `/code-review` 整版本模式(无参评审:过滤已完成需求 + 双写 REVIEW.md 聚合 + 单需求 REPORT + 派生任务沿用模式 1;SKILL.md 增量追加 + 0 新增 + 0 修改其他 9 技能;NFR-1~8 + 7 项 Q-locked 全部采纳) | 已完成(首次) | 2026-06-05 15:55 | 2026-06-05 15:55 | [RESULT.md](design/REQ-00008/RESULT.md) |
 
-**统计**:4 / 已完成 4 / 进行中 0
+**统计**:5 / 已完成 5 / 进行中 0
 
 ---
 
@@ -361,6 +363,8 @@
 | 2026-06-05 14:30 | 开发状态更新 | T-005 `[文档] 8 项不变量自检 + 偏差日志 + 收尾` 开发状态"进行中"→"已完成";完成时间 2026-06-05 14:30;完成人 wangmiao;不提交(留 dirty tree);**5 个新增文件** `assistants/V0.0.2/code/TASK-REQ-00014-00005/{RESULT,work-log,compile-and-run,deviations,test-results}.md`;**0 个修改**生产代码(本任务仅做整体收尾检查);**0 偏离**(沿用 T-001 检查脚本 + 5 关键决策均不视为偏离);8/8 不变量自检 100% 通过(6/8 显式通过 + 2 项 false positive,实际 45 H3 + 80 H2 + `REQ-00014` token 全部保留);**REQ-00014 整体收尾**:**2/2 任务完成**,真正可发布 2/2;M1-REQ-00014-2(本需求可发布)同步为"已完成"(M1-REQ-00014-1 在 T-001 完成时已同步);详 `code/TASK-REQ-00014-00005/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-005 |
 | 2026-06-05 15:20 | 评审发现 | REQ-00014 整体评审完成(2 任务 / 8 维度 / 5 条发现 — 0 必须改 + 2 建议改 F-001 + F-002 + 3 可选 F-003/F-004/F-005);派生 1 个"审查改修"任务 `TASK-REQ-00014-00006`(合并 F-001 + F-002 为 1 个修改类任务);整体结论 ✅ 通过(有派生任务),0 阻塞,0 超出本次评审范围;3 条可选写入 `review/REQ-00014/findings-no-task.md` 留 v0.0.3 follow-up;PLAN.md 任务总数 2 → 3;详 `review/REQ-00014/REVIEW-REPORT.md` | REQ-00014 |
 | 2026-06-05 15:35 | 开发状态更新 | T-006 `[修改] 补"功能点识别启发式"小节 + 修正占位符风格(合并 F-001 + F-002)` 开发状态"待开始"→"已完成";完成时间 2026-06-05 15:35;完成人 wangmiao;不提交(留 dirty tree);**1 个修改文件** `plugins/code-skills/skills/code-plan/SKILL.md`(783 → 789 行,+6 净增,2 处增量:补 1 段"功能点识别启发式" ~6 行 + 改占位符 1 行);**0 个新增**资源;**0 偏离**(沿用 review §4 严格规定 + 严格遵守 review §7 13 条"不需要做的");**6/6 不变量自检 100% 通过** + **8/8 关联回归自检 100% 通过**(T-001 + T-005 既有 8 项均仍通过)= **14/14 = 100%**;frontmatter(L1-5)字节级保留 + 其他 18+ 章节字节级保留 + 11 其他 `code-*` SKILL.md 字节级保留;**REQ-00014 整体收尾**:**3/3 任务完成**,真正可发布 3/3;详 `code/TASK-REQ-00014-00006/{RESULT,work-log,compile-and-run,deviations,test-results}.md` | T-006 |
+| 2026-06-05 15:50 | 需求新增 | REQ-00015 需求分析完成(共 8 FR / 10 NFR / 10 大类 AC / 12 边界场景 / 7 项已锁定 + 2 项采纳默认 / 7 项 v1 follow-up)。范围:**新增第 12 个 `code-*` 技能 `code-merge`**,在 git worktree 模式下自动执行完整合并流程(FR-1 前置检查 → FR-2 提交所有文件 → FR-3 拉取并合并主干 → FR-4 LLM 智能冲突解决 → FR-5 再次确认提交 → FR-6 看板 5 区段自检 → FR-7 `git merge --no-ff` 合回 main → FR-8 退出清理),含看板数据冲突"保留双方+顺序+统计一致"自动规则 + 二进制文件冲突留 unmerged + 退出码 0 含警告;**不产生过程/结果文件**(SKILL.md 必产因 `skill-conventions §规则 1` 强制;其他全部不写);用户原文 0 处笔误;Q-1 锁定 LLM 智能合并(全自动);Q-2 锁定 `git merge` 默认(保留历史);Q-3 锁定 SKILL.md 必产(执行阶段不写);Q-4 锁定看板自检是核心执行步骤(非可选);Q-5 锁定默认主干 `origin/main`(自动 git fetch);Q-6 锁定 worktree 内 `chore(<scope>):` 格式;Q-7 锁定主分支 merge commit 消息留 git 默认;NFR-10 留 7 项 v1 follow-up(--squash / --ff-only / --target / 自动 push / 自动 worktree remove / 跨多 worktree 合并 / 看板自检自动修复) | REQ-00015 |
+| 2026-06-05 15:55 | 设计新增 | REQ-00008 概要设计完成(1 个 SKILL.md 增量追加 + 0 新增 + 4 复用 + 7 项已锁 + 3 项默认 + 0 冲突);范围:优化既有 `code-review` 技能(不新增技能),增加"无参模式" = 整版本评审,与"单需求模式"并存;完全复用模式 1(0 重写既有字面);双写输出(REVIEW.md 聚合顶层 + N 份 REVIEW-REPORT.md 单需求);派生任务追加沿用模式 1 既有(`encoding-conventions §规则 4`);0 新增依赖 + 0 修改其他 9 个 `code-*` SKILL.md + 0 修改 `marketplace.json` / `plugin.json` / `assistants/rules/` / README;Mermaid 组件图 + 整版本模式状态机 + 聚合文件 5 章节结构;10 项不变量自检 100% 通过;`code-auto` 评审循环继续用模式 1(NFR-4 强约束);详 `design/REQ-00008/RESULT.md` + 7 份过程文档 | REQ-00008 |
 
 ---
 
@@ -377,6 +381,8 @@
   - REQ-00011 → [require/REQ-00011/RESULT.md](require/REQ-00011/RESULT.md)
   - REQ-00012 → [require/REQ-00012/RESULT.md](require/REQ-00012/RESULT.md)
   - REQ-00013 → [require/REQ-00013/RESULT.md](require/REQ-00013/RESULT.md)
+  - REQ-00014 → [require/REQ-00014/RESULT.md](require/REQ-00014/RESULT.md)
+  - REQ-00015 → [require/REQ-00015/RESULT.md](require/REQ-00015/RESULT.md)
 - 概要设计:`./assistants/V0.0.2/design/<需求编号>/RESULT.md` × N
 - 详细设计:`./assistants/V0.0.2/plan/<需求编号>/RESULT.md` × N
 - 任务计划:`./assistants/V0.0.2/plan/<需求编号>/PLAN.md` × N
