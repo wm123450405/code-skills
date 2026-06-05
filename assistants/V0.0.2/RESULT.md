@@ -193,7 +193,7 @@
 | `TASK-REQ-00011-00002` | REQ-00011 | 修改 | 详细设计 | [修改] `code-plan/SKILL.md` 增量追加"步骤 0b 设计目标确认"(沿用/退化/读 `design/.../RESULT.md`) + §步骤 10A 末尾"按设计目标调整任务粒度"判定表段(FR-4) + `plan.md` 模板顶部预留"## 设计目标"占位 + §步骤 0a L118 既有"`code-plan` **不**含步骤 0b"小注更新;INV-1/2/3/4 字节级保留 + frontmatter 字节级保留 | **已完成** | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md`(+33 行) + `plugins/code-skills/skills/code-plan/templates/plan.md`(+3 行) | 2026-06-05 20:05 | — | T-001 |
 | `TASK-REQ-00012-00001` | REQ-00012 | 文档 | 详细设计 | [文档] 创建仓库根 `./README.md`(中文,< 50 行,5 核心小节:简介/快速开始/主要能力/📖 详细文档/许可证;11 技能表格;"📖 详细文档"链到 `./plugins/code-skills/README.md`) | 已完成 | 不适用 | `./README.md`(47 行) | 2026-06-05 | 766add1 | — |
 | `TASK-REQ-00012-00002` | REQ-00012 | 文档 | 详细设计 | [文档] 创建仓库根 `./README.en.md`(英文,< 50 行,与 T-001 同次提交 `doc-conventions §规则 1`;5 二级标题 1-1 对应中文版:Introduction/Quick Start/Main Capabilities/📖 Detailed Documentation/License;11 技能表格行顺序与中文版一致) | 已完成 | 不适用 | `./README.en.md`(47 行) | 2026-06-05 | 766add1 | T-001 |
-| `TASK-REQ-00012-00003` | REQ-00012 | 文档 | 详细设计 | [文档] `git mv plugins/code-skills/CLAUDE.md → ./CLAUDE.md`(9,418 bytes 字节级保留;NFR-3 保留 git blame;FR-3 AC-3.3 原位置**不保留**;NFR-8 不提供重定向) | 已完成 | 不适用 | `./CLAUDE.md`(9,418 bytes,从 `plugins/code-skills/CLAUDE.md` 移动) | 2026-06-05 | 待回填 | — |
+| `TASK-REQ-00012-00003` | REQ-00012 | 文档 | 详细设计 | [文档] `git mv plugins/code-skills/CLAUDE.md → ./CLAUDE.md`(9,418 bytes 字节级保留;NFR-3 保留 git blame;FR-3 AC-3.3 原位置**不保留**;NFR-8 不提供重定向) | 已完成 | 不适用 | `./CLAUDE.md`(9,418 bytes,从 `plugins/code-skills/CLAUDE.md` 移动) | 2026-06-05 | 85b5543 | — |
 
 **统计**:
 - 总任务数:27
