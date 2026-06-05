@@ -21,7 +21,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00012-00001 | REQ-00012 | 文档 | 详细设计 | 创建仓库根 README.md(中文,< 50 行) | 已完成 | 不适用 | `./README.md` |
 | TASK-REQ-00012-00002 | REQ-00012 | 文档 | 详细设计 | 创建仓库根 README.en.md(英文,< 50 行,与 T-001 同次提交) | 已完成 | 不适用 | `./README.en.md` |
-| TASK-REQ-00012-00003 | REQ-00012 | 文档 | 详细设计 | 移动 `plugins/code-skills/CLAUDE.md` → `./CLAUDE.md`(git mv,原位置不保留) | 待开始 | 不适用 | `./CLAUDE.md` / `plugins/code-skills/CLAUDE.md` |
+| TASK-REQ-00012-00003 | REQ-00012 | 文档 | 详细设计 | 移动 `plugins/code-skills/CLAUDE.md` → `./CLAUDE.md`(git mv,原位置不保留) | 已完成 | 不适用 | `./CLAUDE.md` / `plugins/code-skills/CLAUDE.md` |
 
 **统计**:3 个任务 / 文档类 3 个 / 已完成 0 / 待开始 3 / 测试状态=不适用 3
 
