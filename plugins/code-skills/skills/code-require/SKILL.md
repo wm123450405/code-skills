@@ -124,6 +124,36 @@ function parseResultTitle(filePath: string): string {
 
 ---
 
+## 命令行参数解析(本需求 REQ-00021 新增,FR-1)
+
+> 本小节是 `code-require` 的**可选参数**解析约定。本参数**不**影响主流程,无参时按原行为执行。
+
+### 支持的参数
+
+| 参数 | 性质 | 模板产出物 | 备注 |
+| --- | --- | --- | --- |
+| `--result <模板文件>` | 可选 | `REQUIRE.<ext>`(后缀 = 模板后缀) | 沿用主产出物同目录 |
+
+### 解析规则(FR-1)
+
+1. 技能启动时(步骤 0 之前)解析用户输入,识别 `--result <路径>`
+2. 校验模板文件存在性:不存在 → 屏显 `⚠ 模板文件不存在:<路径>`,**跳过**模板填充(不阻断主流程)
+3. 记录参数到 `analysis-notes.md` "## 命令行参数解析"节
+4. 无参时:原行为执行,3 技能只产出 `RESULT.md`,**不**产出 `REQUIRE.<ext>`
+
+### 边界与异常
+
+- **E-1**:`--result` 缺值(只写 `--result` 不写路径)→ 屏显 `⚠ --result 缺模板文件路径`,跳过
+- **E-2**:`--result` 路径含通配符(`*.docx`)→ 屏显 `⚠ 模板路径不支持通配符`,跳过
+- **E-3**:`--result` 路径 `../` 跳出工作空间 → 屏显 `⚠ 模板路径不安全`,跳过
+- **E-4**:`code-auto` 上下文 → `code-auto` **不**传 `--result`(沿用 REQ-00007 Q-4)
+
+### 模板填充步骤
+
+> 详见 §"## 模板填充步骤(本需求 REQ-00021 新增)"小节(在本 SKILL.md 末尾"## 不要做的事"前)。
+
+---
+
 ## 工作流程
 
 ### 步骤 0a — 拉取最新代码(强制前置,新增)
@@ -416,6 +446,73 @@ function parseResultTitle(filePath: string): string {
 - 候选方案权衡
 - 临时假设
 - 下一轮要深挖的方向
+
+---
+
+## 模板填充步骤(本需求 REQ-00021 新增,FR-2)
+
+> 本小节是 `code-require` 在主产出物 `RESULT.md` 完成后,根据 `--result` 参数执行**可选**的模板填充步骤。
+> 本步骤**不**是必需步骤;无 `--result` 时跳过。
+
+### 触发条件
+
+- 用户调 `code-require <REQ> --result <模板文件>` 时触发
+- **不**触发条件:无 `--result` 参数 / `code-auto` 上下文 / 模板文件不存在 / 模板为二进制格式
+
+### 执行流程(FR-2)
+
+1. **读取模板**:`Read <模板文件路径>`
+   - 可文本化格式(.md / .html / .txt / .json / .xml / .csv / .yaml 等)→ 完整读取
+   - 二进制格式(.docx / .xlsx / .pdf / .pptx)→ 屏显 `⚠ 模板格式二进制,无法读取占位符,跳过填充`,**不**尝试读取(避免乱码)
+2. **占位符提取**:扫描 `{{...}}` 风格占位符
+3. **结构化数据准备**:从 `RESULT.md` 提取 8 类数据(REQ_ID / REQ_TITLE / 需求概述 / FR_LIST / NFR_LIST / AC_LIST / 关联需求 / 待澄清)
+4. **占位符替换**:按本需求内置的 15 个占位符映射表替换
+5. **写出文件**:`<原主产出物同目录>/REQUIRE.<ext>`(后缀 = 模板后缀)
+6. **屏显**:
+   ```
+   === code-require 模板填充 ===
+     模板:<路径>
+     输出:<路径>(<N> 个占位符已替换)
+   ```
+7. **过程文档**:在 `analysis-notes.md` 追加"模板填充结果"节(模板路径 / 输出路径 / 占位符填充数 / 失败占位符列表)
+
+### 占位符映射表(本需求内置 15 个,code-require 用其中 8 个)
+
+| 占位符 | 来源 | 适用技能 |
+| --- | --- | --- |
+| `{{REQ_ID}}` | `require/.../RESULT.md` 文档头 | code-require |
+| `{{REQ_TITLE}}` | `require/.../RESULT.md` 文档头 | code-require |
+| `{{需求概述}}` | `require/.../RESULT.md` §1 | code-require |
+| `{{FR_LIST}}` | `require/.../RESULT.md` §4 | code-require |
+| `{{NFR_LIST}}` | `require/.../RESULT.md` §5 | code-require |
+| `{{AC_LIST}}` | `require/.../RESULT.md` §10 | code-require |
+| `{{关联需求}}` | `require/.../RESULT.md` §11 | code-require |
+| `{{待澄清}}` | `require/.../RESULT.md` §12 | code-require |
+| `{{设计概述}}` | `design/.../RESULT.md` §1 | code-design / code-plan |
+| `{{模块列表}}` | `design/.../RESULT.md` §模块拆分 | code-design / code-plan |
+| `{{接口列表}}` | `design/.../RESULT.md` §接口 | code-design / code-plan |
+| `{{数据结构}}` | `design/.../RESULT.md` §数据结构 | code-design / code-plan |
+| `{{任务列表}}` | `plan/.../PLAN.md` §任务总览 | code-plan |
+| `{{依赖图}}` | `plan/.../PLAN.md` §任务依赖图 | code-plan |
+| `{{里程碑}}` | `plan/.../PLAN.md` §里程碑 | code-plan |
+
+### 边界与异常(本节子节)
+
+- **E-5**:模板无占位符 → 把 `RESULT.md` 完整内容追加到模板
+- **E-6**:占位符未识别 → 已识别的替换,未识别的保留原样
+- **E-7**:二进制格式模板 → 屏显 `⚠ 跳过`,不报错
+- **E-8**:模板文件 > 1MB → 屏显 `⚠ 过大`,继续
+- **E-9**:模板路径 `../` 跳出工作空间 → 屏显 `⚠ 模板路径不安全`,跳过
+- **E-10**:模板路径含通配符 → 屏显 `⚠ 模板路径不支持通配符`,跳过
+- **E-11**:多次执行(`--result` 模板相同)→ 输出文件**覆盖**(幂等)
+
+### 不变量(本节子节)
+
+- **不**修改 `RESULT.md`(主产出物)
+- **不**修改 frontmatter
+- **不**修改既有"## 工作流程"小节
+- **不**修改"## 不要做的事"小节
+- **不**触发 `dashboard-conventions §规则 1` 三同步(模板产出物**不**是任务)
 
 ---
 
