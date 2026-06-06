@@ -166,6 +166,22 @@ function parseResultTitle(filePath: string): string {
    - **选 B** → 在当前 `<用户意图版本>` 继续,直接进入既有"步骤 0 — 版本上下文检测"(FR-2.AC-2.5)
    - **选 C** → 退出 `code-require`,无任何文件变更(FR-2.AC-2.6)
 
+### 步骤 0b.0 — 调用上下文检测(BUG-00001 新增,2026-06-06)
+
+> 本步骤是 BUG-00001 修复方案 A3(脏标记文件)的子技能侧 — 在 `code-require` 触发 `AskUserQuestion` **前**先检测 `code-auto` 上下文。
+
+- **检测机制**:
+  ```
+  Bash: test -f ./assistants/.code-auto-running && echo "DETECTED" || echo "NOT_DETECTED"
+  ```
+- **24 小时超时判断**:同 `code-design` 步骤 0b.0
+- **决策**:
+  - **检测到 `code-auto` 上下文** → 步骤 0b 的 `AskUserQuestion` 自动选 A(切到拉取后版本后继续),屏幕输出 `⚠ code-auto 上下文:跳过版本不一致问路,自动选 A(切到 <拉取后版本> 后继续)`
+  - **未检测到 `code-auto` 上下文** → 正常进入步骤 0b 询问用户
+  - **检测失败** → 屏幕输出 `⚠ 无法检测 code-auto 上下文,默认按用户手动调子技能处理(触发 AskUserQuestion)` + 正常进入步骤 0b
+- **D-5 修订说明**:同 `code-design` / `code-plan` 步骤 0b.0
+- **约束**:**不**修改 frontmatter;**不**修改既有"## 工作流程"小节;**不**修改既有"步骤 0b"小节
+
 ### 步骤 0 — 版本上下文检测(强制前置)
 **所有其他 `code-*` 技能的第一步都是这一步**。
 1. 读取 `./assistants/.current-version`

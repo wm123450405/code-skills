@@ -194,6 +194,7 @@ graph TD
 > 在执行本任务时,若 Claude Code 触发 `AskUserQuestion` 询问用户,**总选第一项 / 标注 (推荐) 的项**;不向用户提问
 
 **不向子技能传任何特殊参数**(D-5 选定 A:无显式契约,子技能不感知被编排)。
+**D-5 修订(BUG-00001 生效,2026-06-06)**:本技能**不**向子技能传 prompt 参数(**状态文件除外**) — 详见步骤 0b(设置 code-auto 运行标记文件)。
 
 ## 工作流步骤(详细)
 
@@ -218,6 +219,22 @@ Read: ./assistants/.current-version
 
 - **失败处理**:文件不存在 → 提示"未找到 .current-version,请先调 /code-version" + 退出(3)
 - **成功**:记录 `<版本号>`(如 `V0.0.2`)
+
+### 步骤 0b:设置 code-auto 运行标记(BUG-00001 新增,2026-06-06)
+
+> 本步骤是 BUG-00001 修复方案 A3(脏标记文件)的实施入口 — 与 D-5 修订配套。
+
+```
+Bash: touch ./assistants/.code-auto-running
+```
+
+- **目标**:在 `./assistants/` 下创建空标记文件 `.code-auto-running`
+- **子技能感知**:子技能(主要 `code-design` 步骤 0b / `code-plan` 步骤 0b / `code-require` 步骤 1-3)Read 该文件判断是否在 `code-auto` 上下文中
+  - 文件存在 → 自己在被 `code-auto` 调用 → 跳过 `AskUserQuestion`,采纳 `--balanced` 默认值
+  - 文件不存在 → 用户手动调子技能 → 正常触发 `AskUserQuestion`
+- **D-5 修订说明**:本步骤是"状态文件设置",**不**是"prompt 参数" — 沿用 V0.0.1 既有的"脏标记文件"模式(类比 V0.0.1 步骤 0a 拉取阶段的 `.git/index.lock` 检查思路)
+- **失败处理**:`touch` 失败(权限/磁盘满)→ 屏幕输出 `⚠ 无法设置 code-auto 标记(./assistants/.code-auto-running),子技能可能仍会触发 AskUserQuestion,code-auto 完全无人确认约束可能受影响` + **不**中断主流程
+- **清理保证**:本步骤设置的标记在步骤 7 收尾(SIGINT / 异常 / 中断 / 完成 4 种路径)均会被清理(详 §"### 步骤 7 收尾 — 清理 code-auto 运行标记")
 
 ### 步骤 1:code-require(条件化)
 
@@ -525,6 +542,19 @@ function parseFixTitle(fixPath: string): string {
 - **不**修改子技能 SKILL.md(D-8 零修改契约保持,FR-8.AC-8.1 强约束)
 - **不**修改 `auto-report.md` 模板的字段(仅在内容中嵌入"编号+标题")
 - **不**修改 7 步状态机既有结构(锚点 = "## 中断与异常" 段后 + "## 报告输出" 段前,本节为纯追加)
+
+### 步骤 7 收尾 — 清理 code-auto 运行标记(BUG-00001 新增,2026-06-06)
+
+> 本步骤与步骤 0b 配套,保证 `code-auto` 退出时清理 `./assistants/.code-auto-running`,避免残留污染子技能检测。
+
+- **触发条件**:本步骤 7 的"完成分支" / "中止分支" / "中断分支"**三处**全部追加清理(覆盖 3 种退出路径)
+- **清理命令**:
+  ```
+  Bash: rm -f ./assistants/.code-auto-running
+  ```
+- **失败处理**:`rm` 失败(权限/文件被锁定)→ 屏幕输出 `⚠ 清理 code-auto 标记失败(./assistants/.code-auto-running),需手动删除` + **不**中断主流程
+- **幂等性**:`rm -f` 本身幂等(文件不存在**不**报错)
+- **SIGINT 处理**:用户 Ctrl+C 时,`code-auto` 走步骤 7 中止分支,本步骤 7 收尾**不**执行(SIGINT 是异步信号,无法保证清理)— 此场景下子技能检测到残留标记时会按"已超过 24 小时视为脏数据"降级处理(详子技能步骤 0b.0)
 
 ---
 

@@ -5,7 +5,7 @@
 - 严重度:**P0**
 - 报告人:wangmiao
 - 报告时间:2026-06-06 13:45
-- 状态:**修复规划中**
+- 状态:**已修复-待验证**
 - 当前负责人:wangmiao
 - 关联需求:—
 - 修复时间:—
@@ -57,6 +57,8 @@ code-auto 调用子技能时子技能仍会手...
 ```
 2026-06-06 13:45  登记  wangmiao 报告缺陷:code-auto 调用子技能时子技能仍会手动选择架构设计目标
 2026-06-06 14:00  修复规划  code-plan 已产出 fix-plan.md(选定方案 A3 脏标记文件 + 4 步修复 + 5 项 R-1~R-5 回归用例 + 13 份规范严守 + 0 待澄清)
+2026-06-06 14:05  修复开始  code-it 开始实施修复(方案 A3:脏标记文件 ./assistants/.code-auto-running)
+2026-06-06 14:05  修复完成  code-it 完成修复(4 个 SKILL.md 修改 + 8/8 INV 100% 通过自检 + 0 偏离),提交见关联 git log,等待验证
 ```
 
 ## 变更记录
@@ -64,6 +66,8 @@ code-auto 调用子技能时子技能仍会手...
 ```
 2026-06-06 13:45  缺陷登记  code-fix 创建缺陷 BUG-00001(严重度 P0)  BUG-00001
 2026-06-06 14:00  状态推进  BUG-00001 状态"报告"→"修复规划中"  BUG-00001
+2026-06-06 14:05  状态推进  BUG-00001 状态"修复规划中"→"修复编码中"  BUG-00001
+2026-06-06 14:05  状态推进  BUG-00001 状态"修复编码中"→"已修复-待验证"  BUG-00001
 ```
 
 ## 根因分析(已调查)
@@ -83,10 +87,18 @@ code-auto 调用子技能时子技能仍会手...
 - 子技能(`code-design` / `code-plan` / `code-require` 可选)在触发 `AskUserQuestion` **前**先 Read 标记,存在即跳过
 - D-8 修订:从"不传任何特殊参数"→"不传 prompt 参数(状态文件除外)"
 
-## 修复实施(待实施)
+## 修复实施(已完成)
 
-详见 `fix-work-log.md`(由 `code-it BUG-00001` 产出)
+详见 [fix-work-log.md](fix-work-log.md) / [fix-compile-and-run.md](fix-compile-and-run.md) / [fix-test-results.md](fix-test-results.md) / [deviations.md](deviations.md)
+
+**修复 4 步全部完成**:
+- 修复 1/4:`code-auto/SKILL.md` 步骤 0b(设置标记) + 步骤 7 收尾(清理标记) + D-5 修订
+- 修复 2/4:`code-design/SKILL.md` 步骤 0b.0(调用上下文检测)
+- 修复 3/4:`code-plan/SKILL.md` 步骤 0b.0(调用上下文检测)
+- 修复 4/4:`code-require/SKILL.md` 步骤 0b.0(调用上下文检测)
+
+**8/8 INV 100% 通过自检** + 0 偏离 + 0 触发 dashboard 3 处同步 + 0 派生"更新看板"任务
 
 ## 验证结果
 
-待修复后填写
+待用户调 `code-fix BUG-00001` 推进到"已修复-已验证"后填写(详 `fix-plan.md §5 测试方案` + 回归用例 R-1~R-5)

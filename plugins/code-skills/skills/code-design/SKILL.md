@@ -103,8 +103,7 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 
 ## 工作流程
 
-### 步骤 0a — 拉取最新代码(强制前置,新增)
-所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。步骤 0a 成功后,`code-design` 进入"步骤 0b 设计目标确认"(本需求 REQ-00011 新增,FR-1)。
+### 步骤 0a — 拉取最新代码(强制前置,新增)所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。步骤 0a 成功后,`code-design` 进入"步骤 0b 设计目标确认"(本需求 REQ-00011 新增,FR-1)。
 1. 探测 `git` 可用性 → 执行 `Bash: git --version`,失败 → 中断 + 提示"未检测到 git,本需求需要 git,请先安装 git 后重试"(E-12)
 2. 执行 `Bash: git pull`(默认 upstream / tracking 分支)
 3. 拉取失败 3 种情况分类处理(Q-2 锁定 A:中断 + 报错退出):
@@ -115,6 +114,26 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 4. 拉取成功(包含 no-op / "Already up to date"):
    - **立即**执行 `Read "./assistants/.current-version"`,记为"拉取后版本"(NFR-8 强约束)
    - **执行"步骤 0b 设计目标确认"**(见下),成功后再进入既有"步骤 0 — 版本上下文检测"
+
+### 步骤 0b.0 — 调用上下文检测(BUG-00001 新增,2026-06-06)
+
+> 本步骤是 BUG-00001 修复方案 A3(脏标记文件)的子技能侧 — 在触发 `AskUserQuestion` **前**先检测 `code-auto` 上下文。
+
+- **检测机制**:
+  ```
+  Bash: test -f ./assistants/.code-auto-running && echo "DETECTED" || echo "NOT_DETECTED"
+  ```
+  - 文件存在 → 自己在被 `code-auto` 调用
+  - 文件不存在 → 用户手动调子技能
+- **24 小时超时判断**(NFR-3 健壮性):
+  - 若 `./assistants/.code-auto-running` 存在 + 距 `code-auto` 启动 > 24 小时 → 视为"脏数据"(可能 `code-auto` 异常崩溃未清理)
+  - 此场景下屏幕输出 `⚠ 检测到残留的 .code-auto-running 文件(已超过 24 小时),按用户手动调子技能处理(触发 AskUserQuestion)`
+- **决策**:
+  - **检测到 `code-auto` 上下文**(非超时)→ 跳过 `AskUserQuestion`,直接采纳 `--balanced` 默认值写入 `design/.../RESULT.md` 顶部"## 设计目标"小节(`writeDesignGoalsSection(designResultPath, "balanced", "code-auto-detected")`),屏显 `⚠ code-auto 上下文:跳过设计目标问路,采纳 --balanced 默认`
+  - **未检测到 `code-auto` 上下文** → 正常进入步骤 0b 设计目标确认(用户手动选择 1-5 个 `AskUserQuestion`)
+  - **检测失败 / Read 异常** → 屏幕输出 `⚠ 无法检测 code-auto 上下文,默认按用户手动调子技能处理(触发 AskUserQuestion)` + 正常进入步骤 0b(失败降级,不阻断)
+- **D-5 修订说明**:本步骤 Read `./assistants/.code-auto-running` 是"状态文件检测",**不**是"prompt 参数解析" — 与 BUG-00001 选定的方案 A3(脏标记文件)配套
+- **约束**:**不**修改 frontmatter(L1-3 字节级保留);**不**修改既有"## 工作流程"小节;**不**修改既有"步骤 0b"小节;**不**修改 `code-design` 其他章节
 
 ### 步骤 0b — 设计目标确认(本需求 REQ-00011 新增,FR-1)
 1. 评估需求规模(小/中/大),自适应问题数(FR-6 强约束):

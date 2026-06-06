@@ -195,6 +195,26 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    - **立即**执行 `Read "./assistants/.current-version"`,记为"拉取后版本"(NFR-8 强约束)
    - **执行"步骤 0b 设计目标确认"**(见下),成功后再进入既有"步骤 0 — 版本上下文检测"
 
+### 步骤 0b.0 — 调用上下文检测(BUG-00001 新增,2026-06-06)
+
+> 本步骤是 BUG-00001 修复方案 A3(脏标记文件)的子技能侧 — 在 `code-plan` 步骤 0b 触发 `AskUserQuestion` **前**先检测 `code-auto` 上下文。
+
+- **检测机制**:
+  ```
+  Bash: test -f ./assistants/.code-auto-running && echo "DETECTED" || echo "NOT_DETECTED"
+  ```
+  - 文件存在 → 自己在被 `code-auto` 调用
+  - 文件不存在 → 用户手动调子技能
+- **24 小时超时判断**(NFR-3 健壮性):
+  - 若 `./assistants/.code-auto-running` 存在 + 距 `code-auto` 启动 > 24 小时 → 视为"脏数据"
+  - 此场景下屏幕输出 `⚠ 检测到残留的 .code-auto-running 文件(已超过 24 小时),按用户手动调子技能处理(触发 AskUserQuestion)`
+- **决策**:
+  - **检测到 `code-auto` 上下文**(非超时)→ 跳过 `AskUserQuestion`,直接采纳 `--balanced` 默认(由 `readDesignGoalsFromDesign` 退化路径自动使用)
+  - **未检测到 `code-auto` 上下文** → 正常进入步骤 0b 设计目标确认
+  - **检测失败 / Read 异常** → 屏幕输出 `⚠ 无法检测 code-auto 上下文,默认按用户手动调子技能处理(触发 AskUserQuestion)` + 正常进入步骤 0b
+- **D-5 修订说明**:同 `code-design` 步骤 0b.0 — 与 BUG-00001 选定的方案 A3 配套
+- **约束**:**不**修改 frontmatter(L1-3 字节级保留);**不**修改既有"## 工作流程"小节;**不**修改既有"步骤 0b"小节
+
 ### 步骤 0b — 设计目标确认(本需求 REQ-00011 新增,FR-2 / FR-3)
 1. 读 `design/<REQ>/RESULT.md` 的"## 设计目标"小节(算法 3 / `readDesignGoalsFromDesign`):
    - **存在** → 屏显"沿用 design 的设计目标:<摘要>" + 复制到 `plan/.../RESULT.md` 顶部"## 设计目标"小节(`writeDesignGoalsSection(..., "code-plan")` / NFR-3 幂等覆盖)
