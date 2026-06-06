@@ -2,7 +2,7 @@
 name: code-it
 description: 开发编码(版本感知)。要求用户提供"任务编码"或"缺陷编号":
 - **任务编码**(格式 `TASK-REQ-NNNNN-NNNNN` 或 `TASK-BUG-NNNNN-NNNNN`,如 `TASK-REQ-00001-00001`):所有产出物写入 `./assistants/<版本号>/code/<任务编码>/`,从 `PLAN.md` 找到本任务并读其**触发/来源**字段;大多数任务从 `./assistants/<版本号>/plan/<需求编号>/RESULT.md` 读取详细设计;**触发/来源=审查改修 的任务**从 `./assistants/<版本号>/review/<任务编码>/RESULT.md` 读取改修要求
-- **缺陷编号**(格式 `BUG-NNNNN`,如 `BUG-00001`):所有产出物写入 `./assistants/<版本号>/fix/<缺陷编号>/`(以 `fix-` 前缀命名的过程文档),从 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` 读取缺陷详情,从 `./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md` 读取修复方案
+- **缺陷编号**(格式 `BUG-NNNNN`,如 `BUG-00001`):所有产出物写入 `./assistants/<版本号>/fix/<缺陷编号>/`(主详细设计 `RESULT.md` + 任务列表 `PLAN.md`,沿用 REQ 路径同构产出),从 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` 读取缺陷详情,从 `./assistants/<版本号>/fix/<缺陷编号>/PLAN.md` 读取修复任务列表
 两者都遵循 `./assistants/rules/` 编码规范,完成实际代码开发,**开发完成时必须确保软件可正常编译、可启动运行,出现错误时迭代修复直到消除**。缺陷路径在编码完成后同步修改 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md`、`./assistants/<版本号>/fix/RESULT.md` 与版本看板"缺陷清单"中的缺陷登记状态;任务路径同步修改 `PLAN.md` 中本任务开发状态、版本看板"任务清单"开发状态与"缺陷清单"(若发现)。在 `code-plan` 完成后、`code-unit`/`code-review` 之前使用;**code-review 派生的"审查改修"任务**也由本技能执行。
 ---
 
@@ -637,26 +637,33 @@ loop:
 
 ## 缺陷分支(从步骤 1.2 判定为 BUG-NNN 时走)
 
-> **适用场景**:用户已通过 `code-fix` 登记缺陷,`code-plan` 已产出 `fix-plan.md`,现在要实施修复。
+> **适用场景**:用户已通过 `code-fix` 登记缺陷,`code-plan` 已产出 `RESULT.md` + `PLAN.md`(同构 REQ 模式),现在要实施修复。
 > **关键简化**:
 > - 缺陷已有"问题描述"和"修复方案",实施阶段聚焦代码改动
-> - 过程文档以 `fix-` 前缀命名(`fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`),与任务路径的 `work-log.md` 等区分
+> - 过程文档以 `TASK-BUG-` 任务编号命名(`work-log.md` / `compile-and-run.md` / `test-results.md` / `deviations.md`,沿用任务路径同套命名);原 `fix-` 前缀退场(本需求后**不**再使用;`fix-work-log.md` 等留作历史不删,见 E-9 边界)
 > - 实施完成时同步推进缺陷状态
 
-### 步骤 17 — 校验缺陷与修复方案存在
+### 步骤 17 — 校验缺陷与修复方案存在(本需求 REQ-00019 修订,2026-06-06 起生效)
 1. 读取 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` —— 验证:
    - 缺陷已登记
    - 当前状态 ∈ {`修复规划中`, `修复编码中`}(若是 `报告` / `调查中`,提示用户先调 `code-plan`)
-   - 有 `fix-plan.md` 存在
-2. 读取 `./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md` —— 提取:
-   - 根因定位
-   - 修复方案(选定的)
-   - 涉及文件与变更
-   - 测试方案
-3. 校验失败 → 报错并退出:
+2. 读取 `./assistants/<版本号>/fix/<缺陷编号>/PLAN.md` —— 提取:任务总览 + 任务详情 + 测试方案
+3. 读取 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` —— 提取:详细设计点(算法 / 数据结构 / 接口 / 异常处理 / 风险与回退)
+4. 校验失败 → 报错并退出:
    - 缺 `RESULT.md` → "请先调 `code-fix <缺陷编号>` 登记缺陷"
-   - 缺 `fix-plan.md` → "请先调 `code-plan <缺陷编号>` 规划修复方案"
+   - 缺 `PLAN.md` → "请先调 `code-plan <缺陷编号>` 规划修复方案"
    - 状态不符 → 提示用户:当前状态是 X,需要先 `code-fix` 推进到 `修复规划中` / `修复编码中`
+
+#### E-7 边界:`fix-plan.md` 存在 + `PLAN.md` 缺失(本需求 REQ-00019 新增)
+
+> 本边界是 BUG-00001 历史 `fix-plan.md` 的兼容检测(仅 BUG-00001 受影响;本需求后**不**再生成 `fix-plan.md`)。
+
+- **触发**:`fix-plan.md` 存在(仅 BUG-00001 历史)+ `PLAN.md` 缺失
+- **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md" && test -f "./assistants/<版本号>/fix/<缺陷编号>/PLAN.md" || echo "PLAN_MISSING"`
+- **处理**:
+  - `fix-plan.md` 存在 + `PLAN.md` 缺失 → 退化 + 屏显 `⚠ 检测到历史 fix-plan.md;请先用 code-plan <缺陷编号> 产出 PLAN.md`(沿用既有"缺 PLAN.md"错误信息 + 附加检测说明)
+  - `fix-plan.md` 不存在 + `PLAN.md` 存在 → 正常进入步骤 18
+- **依据规范**:`./assistants/rules/module-conventions §规则 1`(`templates/fix-plan.md` 留作历史不删)
 
 ### 步骤 18 — 定位 / 创建工作目录
 1. 检查 `./assistants/<版本号>/fix/<缺陷编号>/` 是否存在
@@ -704,27 +711,37 @@ loop:
 - **每次只做本修复范围的事**;发现需要跨修复改动,记入 `deviations.md` 并停下询问用户
 
 **过程记录**:
-- 持续追加到 `fix-work-log.md`(每完成一个文件、每跑一次命令、每遇到一个问题都记)
+- 持续追加到 `code/<TASK-BUG-...>/work-log.md`(每完成一个文件、每跑一次命令、每遇到一个问题都记;原 `fix-work-log.md` 退场,见 E-9 边界)
 - 重要的临时决策、踩坑、查到的关键信息都记
-- 修复过程中发现的"非本 bug"问题 → 记到 `deviations.md`,**不擅自修复**
+- 修复过程中发现的"非本 bug"问题 → 记到 `code/<TASK-BUG-...>/deviations.md`,**不擅自修复**
+
+#### E-9 边界:`fix-work-log.md` 存在(本需求 REQ-00019 新增)
+
+> 本边界是 BUG-00001 历史 `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` 的兼容检测(仅 BUG-00001 受影响;本需求后**不**再生成 `fix-` 前缀过程文档)。
+
+- **触发**:`fix-work-log.md` 存在(仅 BUG-00001 历史)
+- **检测**:`Bash: test -f "./assistants/<版本号>/code/<TASK-BUG-...>/fix-work-log.md"`
+- **处理**:
+  - 文件存在 → 屏显 `⚠ 检测到历史 fix- 前缀过程文档;本次为新结构 TASK-BUG- 任务编号,过程文档不再使用 fix- 前缀;是否手动迁移?推荐不迁移(BUG-00001 已修复-待验证,历史保留)`
+  - 文件不存在 → 正常写入 `code/<TASK-BUG-...>/work-log.md`
 
 ### 步骤 23 — 编译 / 启动 / 测试验证(同任务分支步骤 9-12)
 
 #### 23.1 编译验证
 - 执行构建命令
-- 记录到 `fix-compile-and-run.md`
+- 记录到 `code/<TASK-BUG-...>/compile-and-run.md`(原 `fix-compile-and-run.md` 退场,沿用 E-9 边界)
 - 失败处理 → 进入 23.4 错误修复循环
 - 同步到版本看板"执行的开发命令记录"
 
 #### 23.2 启动运行验证
 - 执行启动命令
 - 验证启动成功
-- 记录到 `fix-compile-and-run.md`
+- 记录到 `code/<TASK-BUG-...>/compile-and-run.md`(原 `fix-compile-and-run.md` 退场)
 - 失败处理 → 进入 23.4
 
 #### 23.3 测试验证
-- 跑 `fix-plan.md` 中"测试方案"列出的用例
-- 记录到 `fix-test-results.md`
+- 跑 `PLAN.md` 中"测试方案"列出的用例(原 `fix-plan.md` 退场,沿用既有读取路径)
+- 记录到 `code/<TASK-BUG-...>/test-results.md`(原 `fix-test-results.md` 退场)
 - 失败处理 → 进入 23.4
 
 #### 23.4 错误修复循环
@@ -737,9 +754,9 @@ loop:
     定位错误位置(行号/堆栈)
     判断错误类型:
       - 代码 bug(本修复范围内可修)→ 修代码 → 重跑
-      - 修复方案缺陷(fix-plan.md 不可行)→ 记入 deviations.md,停下,询问用户
-      - 环境/依赖问题(非代码 bug)→ 尝试解决,记入 fix-work-log.md
-      - 上游错误(fix-plan.md 有错)→ 停下,询问用户(可能需要回 code-plan 重新规划)
+      - 修复方案缺陷(`PLAN.md` 不可行)→ 记入 `code/<TASK-BUG-...>/deviations.md`,停下,询问用户
+      - 环境/依赖问题(非代码 bug)→ 尝试解决,记入 `code/<TASK-BUG-...>/work-log.md`(原 `fix-work-log.md` 退场)
+      - 上游错误(`PLAN.md` / `RESULT.md` 有错)→ 停下,询问用户(可能需要回 `code-plan` 重新规划)
     重新跑对应验证步骤
   else:
     跳出循环
@@ -747,7 +764,17 @@ loop:
 
 **最多连续失败 N 次后必须停下询问用户**:
 - N 推荐设为 5
-- 每次失败都要在 `fix-work-log.md` 记录已尝试的修复与结果
+- 每次失败都要在 `code/<TASK-BUG-...>/work-log.md` 记录已尝试的修复与结果(原 `fix-work-log.md` 退场)
+
+#### E-11 边界:`fix-plan.md` 存在(本需求 REQ-00019 新增)
+
+> 本边界是 BUG-00001 历史 `fix-plan.md` 在步骤 24 不再写动作的兼容检测。
+
+- **触发**:`fix-plan.md` 存在(仅 BUG-00001 历史)
+- **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md"`
+- **处理**:
+  - 文件存在 → 步骤 24 **不**写 `fix-plan.md` 同步动作(因本需求后**不**再生成 `fix-plan.md`;历史文件保留)
+  - 文件不存在 → 正常进入步骤 25
 
 **禁止**:
 - 跳过验证直接进入步骤 24
@@ -786,8 +813,8 @@ loop:
    YYYY-MM-DD HH:mm  缺陷状态  <缺陷编号> 状态"修复编码中"→"已修复-待验证"  <缺陷编号>
    ```
 
-### 步骤 25 — 完善过程文档与汇报
-- 收尾 `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`
+### 步骤 25 — 完善过程文档与汇报(本需求 REQ-00019 修订,2026-06-06 起生效)
+- 收尾 `code/<TASK-BUG-...>/{work-log.md, compile-and-run.md, test-results.md, deviations.md}`(原 `fix-` 前缀过程文档退场,见 E-9 边界)
 - 向用户汇报:
   - 改动的文件清单
   - 编译/启动/测试结果
