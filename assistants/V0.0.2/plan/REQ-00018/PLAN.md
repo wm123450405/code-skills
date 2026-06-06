@@ -19,7 +19,7 @@
 | 任务编号 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 | 前置任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `TASK-REQ-00018-00001` | REQ-00018 | 修改 | 详细设计 | `[修改] code-version/SKILL.md 增量追加"步骤 7 CWD 描述文件同步"` | **已完成** | 不适用 | `plugins/code-skills/skills/code-version/SKILL.md` | 2026-06-06 13:25 | `<TBD>` | — |
-| `TASK-REQ-00018-00002` | REQ-00018 | 文档 | 详细设计 | `[文档] 8 项 INV 自检 + 看板同步 + 收尾` | 待开始 | 不适用 | `plugins/code-skills/skills/code-version/SKILL.md` + `assistants/V0.0.2/RESULT.md` | T-001 |
+| `TASK-REQ-00018-00002` | REQ-00018 | 文档 | 详细设计 | `[文档] 8 项 INV 自检 + 看板同步 + 收尾` | **已完成** | 不适用 | `plugins/code-skills/skills/code-version/SKILL.md` + `assistants/V0.0.2/RESULT.md` | 2026-06-06 13:30 | `<TBD>` | T-001 |
 
 **任务总数**:**2**(T-001 修改 / T-002 文档)
 **测试状态总览**:**2/2 = 不适用**(纯文档任务,仓库无测试框架 — REQ-00009 守卫判定"不可测")
