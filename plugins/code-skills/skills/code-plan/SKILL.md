@@ -590,9 +590,9 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 > **适用场景**:用户已通过 `code-fix` 登记了一个 `BUG-NNN`,现在要为该缺陷制定修复方案。
 > **关键简化**:
 > - 缺陷已有明确的"问题描述"(`fix/<BUG-NNN>/RESULT.md`),无需再做需求分析
-> - 修复方案的规模通常远小于一个完整需求,故 `RESULT.md` 简化为 `fix-plan.md`(单文件)
-> - 不需要拆分为多个 `PLAN.md` 任务;如果修复确实需要多步,可在 `fix-plan.md` 中以"步骤"形式列出
-> - 任务编号可省略;若一定要用任务系统跟踪,可注册 1 个 `BUG-NNN-001` 任务到 `plan/BUG-NNN-001/PLAN.md`,但更常见的做法是 `code-it BUG-NNN` 直接读 `fix-plan.md` 实施
+> - 修复方案的规模通常远小于一个完整需求,故产出物升级为 `RESULT.md` + `PLAN.md` + 7 份过程文档(`materials-index.md` / `module-details.md` / `interface-specs.md` / `data-changes.md` / `risk-analysis.md` / `rule-compliance.md` / `design-notes.md` + 可选 `clarifications.md`),与 REQ 模式完全同构,**仅**参考来源不同(REQ 模式读 `require/<REQ>/RESULT.md` + `design/<REQ>/RESULT.md`,BUG 模式读 `fix/<BUG-NNN>/RESULT.md`)
+> - 若修复跨多步,可在 `PLAN.md` 任务总览中拆分为多个 `TASK-BUG-NNNNN-NNNNN` 任务(从 `TASK-BUG-NNNNN-00001` 起递增);`code-it` 通过任务清单区段读取 BUG 任务
+> - BUG 任务沿用既有 `TASK-...` 编号体系,新格式 `TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,沿用 `encoding-conventions §规则 1/3`);`code-it` 步骤 17 同步改为读 `PLAN.md` + `RESULT.md` 而非 `fix-plan.md`(本需求后**不**再生成 `fix-plan.md`;`templates/fix-plan.md` 留作历史不删)
 
 ### 步骤 19 — 定位 / 创建工作目录
 1. 检查 `./assistants/<版本号>/fix/<缺陷编号>/` 是否存在
@@ -626,6 +626,20 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
   - 读 `fix-plan.md` 现有内容
   - 了解已规划的方案,识别本轮需要调整的地方
 
+### 步骤 23+ — 步骤 23 修订 E-1 边界(本需求 REQ-00019 新增,2026-06-06 起生效)
+
+> 本步骤是 BUG-00001 历史 `fix-plan.md` 的兼容检测(仅 BUG-00001 受影响;本需求后**不**再生成 `fix-plan.md`)。
+
+- **触发**:`fix-plan.md` 存在(仅 BUG-00001 历史)
+- **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md" && echo "EXISTS" || echo "NOT_EXISTS"`
+- **处理**:
+  - 文件**存在** → 屏显 `⚠ 检测到历史 fix-plan.md,本需求已不再生成该文件;是否继续以本缺陷的 fix-plan.md 为参考?` + `AskUserQuestion` 3 选 1:
+    - **A. 继续**(以本缺陷的 fix-plan.md 为参考,继续按 fix-plan.md 内'步骤'列表实施 — 仅 BUG-00001)
+    - **B. 手动迁移**(用户先手动调用 `code-plan BUG-NNN` 产出 `RESULT.md` + `PLAN.md` + 7 份过程文档,沿用本需求后新流程)
+    - **C. 中止**(本轮不产出修复方案,用户稍后决策)
+  - 文件**不存在** → 正常进入步骤 24A(首次规划,本需求后默认路径)
+- **依据规范**:`./assistants/rules/module-conventions §规则 1`(`templates/fix-plan.md` 留作历史不删,但不再被引用)
+
 ### 步骤 24A — 首次规划:根因定位 + 修复方案
 **任务**:
 1. **根因定位**:
@@ -643,13 +657,35 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 4. **风险与回退**:
    - 修复的潜在副作用
    - 出问题时的回退方式
-5. **若修复跨多步**,在 `fix-plan.md` 中以"步骤"形式列出每一步(类似任务拆分的简化版):
-   ```
-   步骤 1:<一句话>
-     涉及文件:<文件路径>
-     关键变更:<一句话>
-   步骤 2:...
-   ```
+5. **任务拆分**:
+   - 若修复跨多步,在 `PLAN.md` 任务总览中拆分为多个 `TASK-BUG-NNNNN-NNNNN` 任务(从 `TASK-BUG-NNNNN-00001` 起递增,5+5 位嵌套式沿用 `encoding-conventions §规则 1/3`)
+   - 任务编号分配沿用步骤 9B 既有逻辑(找最大序号 N+1)
+   - 任务总览"触发/来源"列 = `缺陷修复`(沿用既有 13 枚举)
+   - 任务总览"需求"列 = `BUG-NNN`(3 位)
+   - 任务总览"关联任务"列 = `BUG-NNN`(自查)
+
+### 步骤 24A+1 — 产出 9 份文档同构于 REQ 模式(本需求 REQ-00019 新增,2026-06-06 起生效)
+
+> 本步骤是 BUG 模式产出物从单文件 `fix-plan.md` 升级为 9 份文档的核心。沿用 `code-plan` REQ 路径的 `templates/plan.md` + `templates/task-plan.md` 作为 BUG 路径模板。
+
+- **任务**(执行 9 份文档产出):
+  1. 撰写 `fix/<BUG-NNN>/RESULT.md`(14 章节,沿用 `templates/plan.md`)
+  2. 撰写 `fix/<BUG-NNN>/PLAN.md`(8 章节,沿用 `templates/task-plan.md`)
+  3. 撰写 7 份过程文档:
+     - `materials-index.md`(项目级规范 + 上游需求 + 项目现状)
+     - `module-details.md`(模块详细化,对应 §4 模块)
+     - `interface-specs.md`(接口详细规格,对应 §6 接口)
+     - `data-changes.md`(数据结构完整变更,对应 §5 数据)
+     - `risk-analysis.md`(异常处理 + 安全 + 性能 + 回退 + 测试要点)
+     - `rule-compliance.md`(13 份规范自检结论)
+     - `design-notes.md`(关键设计问题 + 决策 + 候选否决)
+     - (可选)`clarifications.md`(与用户澄清记录)
+  4. 关键决策旁标注"依据规范:`encoding-conventions §规则 1/3`"等
+- **任务编号分配**(沿用步骤 9B 既有逻辑):
+  - 找到 `PLAN.md` 中当前最大的任务序号 N
+  - 新任务从 N+1 开始递增
+  - 任务编号格式:`TASK-BUG-NNNNN-NNNNN`
+- **依据规范**:`./assistants/rules/encoding-conventions §规则 1/3`
 
 ### 步骤 25A — 与用户对齐(可选但推荐)
 修复方案可能涉及权衡(性能 vs 简洁、范围 vs 风险),建议在落地前与用户对齐:
@@ -657,22 +693,22 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - 选定方案是否可接受
 - 是否有遗漏的边界条件
 
-### 步骤 26A — 撰写 fix-plan.md
-按 `templates/fix-plan.md` 的章节结构生成,覆盖:
-1. 缺陷摘要(链接到 `fix/<BUG-NNN>/RESULT.md`,只列关键信息:编号/标题/严重度/当前状态)
-2. 根因定位(具体到文件:行号)
-3. 修复方案(选定 + 候选 + 理由)
-4. 涉及文件与变更
-5. 测试方案(回归用例 + 验证步骤)
-6. 风险与回退
-7. 修复步骤(若跨多步,列出顺序)
-8. 规范遵循
-9. 待澄清/未决项
-10. 变更记录(首条)
+### 步骤 26A — 撰写 9 份文档
+按 `templates/plan.md`(14 章节)+ `templates/task-plan.md`(8 章节)的章节结构生成,**与 REQ 路径完全同构**;覆盖:
+1. `RESULT.md` 14 章节(概述 / 上游引用 / 规范遵循 / 模块详细化 / 算法与逻辑 / 数据结构 / 接口细节 / 异常处理 / 安全 / 状态机 / 性能 / 测试要点 / 关联 / 待澄清 / 变更记录)— 沿用 `templates/plan.md`
+2. `PLAN.md` 8 章节(计划概述 / 任务总览 / 任务详情 / 任务依赖图 / 里程碑 / 状态管理规则 / 关联计划 / 变更记录)— 沿用 `templates/task-plan.md`
+3. 7 份过程文档(详 §步骤 24A+1)
+
+**关键差异**(vs REQ 模式):
+- `RESULT.md` §2 上游引用:`fix/<BUG-NNN>/RESULT.md`(缺陷详情) + `fix/<BUG-NNN>/investigation.md`(若有) + 项目级规范
+- `PLAN.md` 任务总览"触发/来源"列 = `缺陷修复`(沿用既有 13 枚举之一,**不**新增)
+- `PLAN.md` 任务总览"需求"列 = `BUG-NNN`(3 位)
+- `PLAN.md` 任务总览"关联任务"列 = `BUG-NNN`(自查)
+- `PLAN.md` 任务总览"任务编号"列 = `TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,新格式)
 
 **注意**:
-- `fix-plan.md` 是缺陷修复的**唯一**详细设计文档
-- 长度可远小于 `plan/<req-id>/RESULT.md`(因为 bug 通常聚焦)
+- `fix-plan.md` **不**再生成(本需求后);`templates/fix-plan.md` 留作历史不删
+- 长度可与 `plan/<req-id>/RESULT.md` 相当(因同构)
 - 不重写稳定章节(增量更新时尤其重要)
 
 ### 步骤 27A — 同步 fix/<BUG-NNN>/RESULT.md 与 fix/RESULT.md(强制)
@@ -704,6 +740,34 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    YYYY-MM-DD HH:mm  缺陷状态  <缺陷编号> 状态"<旧>"→"修复规划中"  <缺陷编号>
    ```
 4. 更新文档头"最近更新"
+
+### 步骤 28A+1 — 同步版本看板'任务清单'区段(本需求 REQ-00019 新增,2026-06-06 起生效)
+
+> 本步骤是 BUG 任务进入看板"任务清单"区段的核心同步。沿用既有 12 列字段,**不**新增字段/枚举/区段(0 触发 `dashboard-conventions §规则 1` 三同步)。
+
+1. `Read "./assistants/<版本号>/RESULT.md"`,定位"任务清单"区段(沿用 `dashboard-conventions §规则 1` 锚点 `^## 任务清单$`)
+2. 读 `fix/<BUG-NNN>/PLAN.md` 任务总览(从 §步骤 24A+1 产出)
+3. 在"任务清单"区段**追加** N 行(每条 BUG 任务一行,沿用既有 12 列字段填法):
+   - **任务编号**:`TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,新格式)
+   - **需求**:`BUG-NNN`(3 位)
+   - **类型**:`修复`(沿用既有 6 枚举之一)
+   - **触发/来源**:`缺陷修复`(沿用既有 13 枚举之一)
+   - **标题**:沿用 REQ-00013 标题解析(`formatTaskTitle` + `truncateTitle`,字符数 ≤ 30,中点 `·`)
+   - **开发状态**:`待开始`(初值)
+   - **测试状态**:`不适用`(纯文档型任务)或 `未编写`(代码类任务)
+   - **涉及文件**:留空(`code-it` 完成时填入)
+   - **完成时间**:留空(`code-it` 完成时填入)
+   - **提交哈希**:留空(`code-it` 完成时填入)
+   - **关联任务**:`BUG-NNN`(自查)
+4. 同步失败 → 屏显 `⚠` 警告(沿用既有);不阻断 `code-plan`
+5. 屏显:`已同步 V0.0.2/RESULT.md 任务清单 +N 行(BUG 任务)`
+6. 关键约束(0 触发 §规则 1):
+   - **不**新增表格列(沿用既有 12 列)
+   - **不**新增枚举值(沿用既有 6 类型 + 13 触发/来源)
+   - **不**修改区段名称
+   - **不**改字段语义
+
+**幂等性**:增量更新时(`code-plan BUG-NNN` 多次执行),既有 BUG 任务行**不**重复登记(沿用 REQ 路径强约束)。
 
 ### 步骤 24B — 增量更新:识别变更源
 1. **缺陷侧变更**:

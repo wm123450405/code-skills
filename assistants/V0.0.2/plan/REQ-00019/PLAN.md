@@ -25,7 +25,7 @@
 
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件/模块 | 前置任务 | 估算 | 责任人 | 关联任务 | 对应设计章节 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00019-00001 | 修改 | 需求新增 | `[修改] 增量追加 code-plan/SKILL.md(锚点 A:步骤 19-22 微调 + 锚点 B:步骤 23 E-1 边界 + 锚点 C:步骤 24A 重写 + 锚点 D:步骤 26A 改模板引用 + 锚点 E:步骤 28A+1 同步任务清单区段)` | 待开始 | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` §"缺陷分支"(L588-735)+ 新增步骤 28A+1 | — | 1.0d | wangmiao | — | RESULT.md §4 模块 1 / §6 接口 1 |
+| TASK-REQ-00019-00001 | 修改 | 需求新增 | `[修改] 增量追加 code-plan/SKILL.md(锚点 A:步骤 19-22 微调 + 锚点 B:步骤 23 E-1 边界 + 锚点 C:步骤 24A 重写 + 锚点 D:步骤 26A 改模板引用 + 锚点 E:步骤 28A+1 同步任务清单区段)` | **已完成** | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` §"缺陷分支"(L588-735)+ 新增步骤 28A+1(实际 +88/-24 净 +64 行) | — | 1.0d | wangmiao | — | RESULT.md §4 模块 1 / §6 接口 1 |
 | TASK-REQ-00019-00002 | 修改 | 需求新增 | `[修改] 增量追加 code-it/SKILL.md(锚点 F:frontmatter L5 修订 + 锚点 G:步骤 17 改读 PLAN.md/RESULT.md + E-7 边界 + 锚点 H:步骤 22-25 过程文档去 fix- 前缀 + 锚点 I:步骤 24 不再写 fix-plan.md + E-11 边界 + 锚点 J:步骤 25 汇报字段同步 + E-9 边界)` | 待开始 | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` frontmatter L5 + §"缺陷分支"(L638-800) | T-001 | 0.8d | wangmiao | — | RESULT.md §4 模块 2 / §6 接口 2-3 |
 
 **字段说明**:
