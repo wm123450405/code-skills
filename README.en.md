@@ -14,7 +14,7 @@
    ```
 2. Install the plugin:
    ```
-   claude plugin install code-skills@code-skills
+   claude plugin install code-skills@code-skills-marketplace
    ```
 3. Invoke the first skill in your project:
    ```

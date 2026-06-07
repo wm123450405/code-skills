@@ -14,7 +14,7 @@
    ```
 2. 安装插件:
    ```
-   claude plugin install code-skills@code-skills
+   claude plugin install code-skills@code-skills-marketplace
    ```
 3. 在项目中调用首个技能:
    ```
