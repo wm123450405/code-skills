@@ -55,10 +55,11 @@
 | REQ-00020 | 优化 code-design / code-plan,架构设计目标重新归位 + 新增 3 维度 + 步骤归并 | 已完成 | 2026-06-06 | 2026-06-06 | [REQ-00020/RESULT.md](./require/REQ-00020/RESULT.md) | [REQ-00020/RESULT.md](./design/REQ-00020/RESULT.md) | [REQ-00020/RESULT.md](./plan/REQ-00020/RESULT.md) |
 | REQ-00021 | 优化 3 技能 --result / --plan 模板参数,按用户模板格式输出填充后文档 | 已完成 | 2026-06-06 | 2026-06-06 | [REQ-00021/RESULT.md](./require/REQ-00021/RESULT.md) | [REQ-00021/RESULT.md](./design/REQ-00021/RESULT.md) | — |
 | REQ-00022 | 修改 /code-review 技能名称为 /code-check | 已完成 | 2026-06-07 | 2026-06-07 | [REQ-00022/RESULT.md](./require/REQ-00022/RESULT.md) | — | — |
+| REQ-00023 | 简化 /code-dashboard 输出:总开发进度 + 5 类状态占比 + 后续操作建议 | 已完成 | 2026-06-07 | 2026-06-07 | [REQ-00023/RESULT.md](./require/REQ-00023/RESULT.md) | — | — |
 
 **统计**:
-- 总数:3
-- 已完成:3
+- 总数:4
+- 已完成:4
 - 进行中:0
 - 待开始:0
 - 已取消:0
@@ -235,6 +236,7 @@
 | 2026-06-07 | 计划更新 | REQ-00022 详细设计与编码计划完成(共 10 个任务,全部开发=已完成,测试=不适用);`code-check` 行为与 `code-review` 完全一致;0 派生"更新看板"任务(沿用 REQ-00017 强约束) | REQ-00022 |
 | 2026-06-07 | 任务完成 | TASK-REQ-00022-00001 ~ 00010 · 10 任务全部完成(重命名 + JSON 同步 + 11 SKILL.md 同步 + 4 README + CLAUDE.md + 13 规范 + 6 模板 + 当前看板 + 校验) | TASK-REQ-00022-00001 ~ 00010 |
 | 2026-06-07 | 评审发现 | REQ-00022 评审完成(共 0 条"必须改" / 0 条"建议改" / 0 条"可选";10 任务全部通过;`code-check` 行为与 `code-review` 完全一致;`code-check` 第 1 轮无"必须改" → 派生循环空 → 进入完成分支) | REQ-00022 |
+| 2026-06-07 | 需求新增 | REQ-00023 需求分析完成(6 FR / 9 NFR / 8 AC / 9 INV / 3 待澄清 Q),简化 /code-dashboard 总览模式为 4 段(总开发进度 + 5 类状态占比 + 高优缺陷 + 后续操作建议 ≤ 5 条);NFR-6 严守:仅改 1 个 SKILL.md,其他 12 个 code-* 技能 frontmatter 字节级保留;需求模式输出不变 | REQ-00023 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
