@@ -143,12 +143,12 @@
 | TASK-BUG-00001-00002 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-design 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §不要做的事 | 2026-06-07 17:35 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00003 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-plan 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §不要做的事 | 2026-06-07 17:41 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00004 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-fix 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §不要做的事 | 2026-06-07 17:47 | (本会话) | BUG-00001 |
-| TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | — | — | BUG-00001 |
+| TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | 2026-06-07 17:54 | (本会话) | BUG-00001 |
 
 **统计**:
 - 总任务数:35
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):34
-- 开发已完成 / 未完成:34 / 1
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):35
+- 开发已完成 / 未完成:35 / 0
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 35 / 0
 
 ---
@@ -268,6 +268,7 @@
 | 2026-06-07 | 任务完成 | TASK-BUG-00001-00002 · [修改] code-design 加"不修改 SKILL.md"硬约束(开发状态:已完成;INV-11/INV-16 全通过) | TASK-BUG-00001-00002 |
 | 2026-06-07 | 任务完成 | TASK-BUG-00001-00003 · [修改] code-plan 加"不修改 SKILL.md"硬约束(开发状态:已完成;INV-12/INV-16 全通过) | TASK-BUG-00001-00003 |
 | 2026-06-07 | 任务完成 | TASK-BUG-00001-00004 · [修改] code-fix 加"不修改 SKILL.md"硬约束(开发状态:已完成;INV-13/INV-16 全通过) | TASK-BUG-00001-00004 |
+| 2026-06-07 | 任务完成 | TASK-BUG-00001-00005 · [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界(开发状态:已完成;INV-14/INV-15/INV-16 全通过;BUG-00001 5 任务全部完成,待 code-fix 推进状态) | TASK-BUG-00001-00005 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
