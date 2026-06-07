@@ -6,7 +6,7 @@ description: 需求分析(版本感知)。要求用户提供"需求编码",**所
 # code-require — 需求分析(版本感知)
 
 ## 目标
-把零散、异构的需求材料(文档/设计稿/视频/录音/聊天记录等)合并为一份**详尽、可执行、可追溯**的需求提示词文档 `RESULT.md`,作为后续 `code-design` / `code-plan` / `code-it` / `code-unit` / `code-review` 的共同基线。
+把零散、异构的需求材料(文档/设计稿/视频/录音/聊天记录等)合并为一份**详尽、可执行、可追溯**的需求提示词文档 `RESULT.md`,作为后续 `code-design` / `code-plan` / `code-it` / `code-unit` / `code-check` 的共同基线。
 
 ## 适用场景
 - 新功能、新模块、新产品的首次需求澄清

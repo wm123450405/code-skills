@@ -78,7 +78,7 @@
 
 ## 变更记录
 
-> 写入方:`code-fix`(登记/状态推进)、`code-plan`(规划完成)、`code-it`(实施完成)、`code-review`(评审)
+> 写入方:`code-fix`(登记/状态推进)、`code-plan`(规划完成)、`code-it`(实施完成)、`code-check`(评审)
 > 格式:`YYYY-MM-DD HH:mm  <变更类型>  <摘要>  <关联缺陷>`
 
 | 时间 | 变更类型 | 变更摘要 | 关联缺陷 |
@@ -95,6 +95,6 @@
 - `状态推进`:BUG-NNN 状态变化
 - `修复完成`:code-it 完成修复
 - `修复规划`:code-plan 完成 fix-plan
-- `评审发现`:code-review 产出
+- `评审发现`:code-check 产出
 - `关闭`:BUG-NNN 进入"已关闭"终态
 - `其他`

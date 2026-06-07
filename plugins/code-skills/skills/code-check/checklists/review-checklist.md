@@ -1,6 +1,6 @@
 # 代码评审清单(内置兜底)
 
-> 由 `code-review` 技能引用。**项目级评审清单应在 `./assistants/rules/review-checklist.md` 中提供**,
+> 由 `code-check` 技能引用。**项目级评审清单应在 `./assistants/rules/review-checklist.md` 中提供**,
 > 本文件只放通用的兜底清单,供项目级不存在时使用。
 
 ## 应用方式

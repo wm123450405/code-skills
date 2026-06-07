@@ -101,7 +101,7 @@
 ## 9. 关联任务
 - 前置任务:<T-XXX>(code-it 的同任务)
 - 后置任务:<T-XXX>(其他依赖本测试的任务)
-- 关联 code-review 链接(若已发起):<PR/MR URL 或 commit>
+- 关联 code-check 链接(若已发起):<PR/MR URL 或 commit>
 
 ## 10. 变更记录
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |

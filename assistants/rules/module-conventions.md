@@ -38,7 +38,7 @@
 
 ### 正面示例
 ```
-plugins/code-skills/skills/code-review/
+plugins/code-skills/skills/code-check/
 ├── SKILL.md
 ├── checklists/
 │   └── review-checklist.md     # ✅ 在固定子目录
@@ -50,7 +50,7 @@ plugins/code-skills/skills/code-review/
 
 ### 反面示例
 ```
-plugins/code-skills/skills/code-review/
+plugins/code-skills/skills/code-check/
 ├── SKILL.md
 ├── my-checklist.md              # ❌ 散落在技能根目录(应在 checklists/)
 ├── docs/

@@ -31,25 +31,25 @@ claude plugin install code-skills@code-skills-marketplace
 | [`code-require`](skills/code-require/SKILL.md) | 需求分析(Requirements Analysis) | 用户材料 + `assistants/rules/` | `assistants/<版本号>/require/<需求编码>/RESULT.md` | code-design |
 | [`code-design`](skills/code-design/SKILL.md) | 概要设计(High-level Design) | `requirements.md` + `assistants/rules/` | `design.md` | code-plan |
 | [`code-plan`](skills/code-plan/SKILL.md) | 详细设计 / 实施计划— 接收"需求编码"或"缺陷编号" | `requirements.md` + `design.md` 或 `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` 或 `fix/<BUG>/fix-plan.md` | code-it |
-| [`code-it`](skills/code-it/SKILL.md) | 开发编码— 接收"任务编码"或"缺陷编号" | `plan.md` 或 `fix-plan.md` + `assistants/rules/` | 源码 + 任务级 `RESULT.md` 或 `fix/<BUG>/fix-*.md` | code-unit / code-review |
-| [`code-unit`](skills/code-unit/SKILL.md) | 单元测试(Unit Testing) | `plan.md` + `code/RESULT.md` + `assistants/rules/` | 测试代码 + 任务级 `RESULT.md` | code-review |
+| [`code-it`](skills/code-it/SKILL.md) | 开发编码— 接收"任务编码"或"缺陷编号" | `plan.md` 或 `fix-plan.md` + `assistants/rules/` | 源码 + 任务级 `RESULT.md` 或 `fix/<BUG>/fix-*.md` | code-unit / code-check |
+| [`code-unit`](skills/code-unit/SKILL.md) | 单元测试(Unit Testing) | `plan.md` + `code/RESULT.md` + `assistants/rules/` | 测试代码 + 任务级 `RESULT.md` | code-check |
 | [`code-fix`](skills/code-fix/SKILL.md) | 缺陷登记与跟踪— 维护 `fix/RESULT.md` 与各 `BUG-NNN/RESULT.md` | 用户描述或既有 `fix/` 文件 | `assistants/<版本号>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
-| [`code-review`](skills/code-review/SKILL.md) | 代码评审(Code Review) | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | 整体 `REVIEW-REPORT.md` + 派生改修任务 | code-it(改修任务) |
+| [`code-check`](skills/code-check/SKILL.md) | 代码评审(Code Review) | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | 整体 `REVIEW-REPORT.md` + 派生改修任务 | code-it(改修任务) |
 | [`code-publish`](skills/code-publish/SKILL.md) | 发布部署(Release & Deployment)— 接收可选"版本号";先做发布前置检查(看板 3 区段全检查最严);通过后在 `<版本号>/publish/` 生成 `DEPLOY.md` + `UPDATE.md`(基线跳过) + `Q&A.md`(从 `qanda/` 聚合);3 份手册为通用骨架 + placeholder + 默认示例,用户手动补全;**(首次调用时)在项目级创建 `assistants/qanda/` 目录(若已存在则跳过)** | `.current-version` + `<版本号>/RESULT.md` 3 区段 + `qanda/*.md` + 5 份模板 | `qanda/README.md`(顺带)+ `<版本号>/publish/{DEPLOY,UPDATE,Q&A}.md` | (运维 / 现场支持 — 部署后查阅手册) |
 | [`code-dashboard`](skills/code-dashboard/SKILL.md) | 开发看板(只读)— 展示当前版本需求/任务/缺陷进度 + 最多 5 条下一步建议 | `.current-version` + `<版本>/RESULT.md`(+ 需求模式:`require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (屏幕输出,无文件) | (引导用户调 `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-version`) |
-| [`code-auto`](skills/code-auto/SKILL.md) | 自动开发编排— 接收 1 个需求内容,按 `code-require` → `code-design` → `code-plan` → `code-it`(+ `code-unit` 条件)→ `code-review` 循环的固定顺序,串行驱动 6 个子技能完成完整开发周期;`code-review` 派生任务自动驱动 `code-it` / `code-unit` 完成,复评至"无必须改"为止;所有 `AskUserQuestion` 自动选推荐项(完全无人确认);支持 `Ctrl+C` 中止 + 异常立即中断 + 完成时输出报告到 `auto-report.md` | (用户输入 1 个需求内容) | `<版本>/require/<REQ>/auto-report.md`(完成时) | (一键从需求到代码 + 单测 + 评审全自动跑通) |
+| [`code-auto`](skills/code-auto/SKILL.md) | 自动开发编排— 接收 1 个需求内容,按 `code-require` → `code-design` → `code-plan` → `code-it`(+ `code-unit` 条件)→ `code-check` 循环的固定顺序,串行驱动 6 个子技能完成完整开发周期;`code-check` 派生任务自动驱动 `code-it` / `code-unit` 完成,复评至"无必须改"为止;所有 `AskUserQuestion` 自动选推荐项(完全无人确认);支持 `Ctrl+C` 中止 + 异常立即中断 + 完成时输出报告到 `auto-report.md` | (用户输入 1 个需求内容) | `<版本>/require/<REQ>/auto-report.md`(完成时) | (一键从需求到代码 + 单测 + 评审全自动跑通) |
 | [`code-merge`](skills/code-merge/SKILL.md) | Worktree 模式自动合并— 仅在 git worktree 中运行;`git rev-parse --git-common-dir ≠ --git-dir` 自动识别;串行执行 8 FR:worktree 识别 + dirty commit → `git fetch origin` + `git merge <target> --no-ff` → LLM 智能解决冲突(看板数据保留双方 + 按时间戳排序 + 统计行重新计算;代码/配置/文档智能合并;二进制留 unmerged)→ 看板 5 区段自检(只读不修复)→ `git merge <worktree-branch> --no-ff` 合回 main;**不**产生过程/结果文件;**不**自动 `git push` / `git worktree remove`;**不**调任何子技能;worktree 强约束(无 `--no-worktree` 开关) | (worktree 内 dirty 文件) | (屏幕输出,无文件) | (把 worktree 内开发合回 main,`code-auto` 完成后**不**自动调本技能) |
 
 ## 工作流管道
 
 ```
-code-version → code-require → code-design → code-plan → code-it → code-unit → code-review
+code-version → code-require → code-design → code-plan → code-it → code-unit → code-check
    版本管理       需求分析       概要设计      详细计划    开发编码    单元测试      代码评审
 ```
 
 `code-version` 是其他所有 `code-*` 技能的**前置门**:在调用任何下游技能前,必须先有一个激活的版本工作空间(`./assistants/<版本号>/`)。
 
-`code-rule` **不**在主流程管道中 — 它是独立的"规范基建"技能,负责维护 `./assistants/rules/` 下的项目级共享规范。**所有**其他 `code-*` 技能(从 `code-require` 到 `code-review`)在执行时都会读取 `rules/` 作为只读强约束。建议在项目初期先调 `code-rule` 建立规范,再进入主流程;主流程进行中也可随时调 `code-rule` 追加新规范。
+`code-rule` **不**在主流程管道中 — 它是独立的"规范基建"技能,负责维护 `./assistants/rules/` 下的项目级共享规范。**所有**其他 `code-*` 技能(从 `code-require` 到 `code-check`)在执行时都会读取 `rules/` 作为只读强约束。建议在项目初期先调 `code-rule` 建立规范,再进入主流程;主流程进行中也可随时调 `code-rule` 追加新规范。
 
 `code-init` **是项目的"一次性引导"**,**不**在主流程管道中:
 - 在新项目接入时跑一次:扫描现有代码、生成 `INIT-REPORT.md`、把所有现有功能登记为 `require/EXISTING-NNN/`,创建基线版本
@@ -129,7 +129,7 @@ code-skills/                          ← marketplace 仓库根
             │       ├── bug.md
             │       ├── fix-registry.md
             │       └── assistants-layout.md
-            └── code-review/          # 代码评审
+            └── code-check/          # 代码评审
                 ├── SKILL.md
                 ├── checklists/review-checklist.md
                 └── templates/
@@ -193,7 +193,7 @@ assistants/
 4. **详细计划**:调 `code-plan`,产出详细设计与任务计划
 5. **开发**:逐任务调 `code-it`,每条任务改完代码后推进状态
 6. **测试**:调 `code-unit`,补齐/编写单元测试
-7. **评审**:调 `code-review`,产出整体评审报告与派生改修任务
+7. **评审**:调 `code-check`,产出整体评审报告与派生改修任务
 8. **缺陷修复**(任一阶段):
     - 登记:调 `code-fix "<bug 描述>"` 或 `code-fix BUG-NNN`
     - 规划:调 `code-plan BUG-NNN` 产出 `fix-plan.md`
@@ -229,7 +229,7 @@ flowchart TD
         F --> G["code-plan<br/>(详细设计 + 任务计划)"]
         G --> H["code-it<br/>(开发编码,逐任务)"]
         H --> I["code-unit<br/>(单元测试)"]
-        I --> J["code-review<br/>(代码评审)"]
+        I --> J["code-check<br/>(代码评审)"]
         J -->|"派生改修任务"| H
     end
 
@@ -269,7 +269,7 @@ flowchart TD
      ↓ code/<task>/RESULT.md (开发=已完成)
 8. code-unit <REQ-YYYY-NNNN-001>  ← 给该任务补/跑单测
      ↓ test/<task>/RESULT.md (测试=已运行-通过)
-9. code-review <REQ-YYYY-NNNN>    ← 整需求评审
+9. code-check <REQ-YYYY-NNNN>    ← 整需求评审
      ↓ review/<req>/REVIEW-REPORT.md
      ├─ 无问题 → 跳到 10
      └─ 有问题 → 派生"审查改修"任务,跳回 7
@@ -354,7 +354,7 @@ flowchart TD
 - 启动新版本(产品发版、独立功能包、季度迭代)
 - 在多个并行版本之间切换
 - 归档/回看历史版本
-- **任何 `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-review` 调用前**
+- **任何 `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-check` 调用前**
 
 **不适用**:
 - 想对单个项目做初始化 → 用 `code-init`
@@ -549,7 +549,7 @@ flowchart TD
 - 任何按 `PLAN.md` 单条任务执行的编码工作
 - 重构或特性开发的具体落地
 - Bug 修复的具体落地
-- `code-review` 派生的"审查改修"任务的执行
+- `code-check` 派生的"审查改修"任务的执行
 - `code-fix` 支线下,实施缺陷修复
 
 **不适用**:
@@ -578,7 +578,7 @@ flowchart TD
 **示例**:
 - `code-it TASK-REQ-00001-00001`(主流程:第 1 个任务)
 - `code-it BUG-00001`(缺陷修复)
-- `code-it TASK-REQ-00001-00005`(如果该任务是从 `code-review` 派生的"审查改修")
+- `code-it TASK-REQ-00001-00005`(如果该任务是从 `code-check` 派生的"审查改修")
 
 **关键约束**:
 - **必须确保软件可正常编译、可启动运行**,出现错误时迭代修复直到消除
@@ -594,7 +594,7 @@ flowchart TD
 **下一步**:
 - 主流程 → 调 `code-unit <任务编码>` 跑单测
 - 缺陷分支 → 跑测试,确认通过后调 `code-fix <BUG-NNN>` 推进状态
-- 全部任务完成 → 调 `code-review <需求编码>` 评审
+- 全部任务完成 → 调 `code-check <需求编码>` 评审
 
 ---
 
@@ -624,12 +624,12 @@ flowchart TD
 - 同步到版本看板"任务清单"(测试状态)/ "变更记录"
 
 **下一步**:
-- 测试通过 → 下一任务 `code-it` / 整体 `code-review`
+- 测试通过 → 下一任务 `code-it` / 整体 `code-check`
 - 测试失败 → 回 `code-it` 修代码 / 登记新 bug `code-fix`
 
 ---
 
-#### `code-review` — 代码评审
+#### `code-check` — 代码评审
 
 **适用场景**:
 - 一组相关任务(同一需求)完成后做整体评审
@@ -647,7 +647,7 @@ flowchart TD
 | 需求编码 | 是 | 格式 `REQ-YYYY-NNNN` |
 
 **示例**:
-- `code-review REQ-00001`
+- `code-check REQ-00001`
 
 **输出**:
 - `./assistants/<版本号>/review/<需求编码>/REVIEW-REPORT.md`
@@ -672,7 +672,7 @@ flowchart TD
 
 **不适用**:
 - 想**实施**代码修复(那是 `code-plan BUG-NNN` + `code-it BUG-NNN` 的事)
-- 想**评审**已修复的 bug(那是 `code-review` 的事)
+- 想**评审**已修复的 bug(那是 `code-check` 的事)
 - 想**主动**规划某项需求(那是 `code-plan` 的事)
 
 **参数**:
@@ -740,7 +740,7 @@ flowchart TD
    → 拆出 5 个任务
 7. 依次调 code-it TASK-REQ-00001-00001 ... 005
    → 每个任务完成后调 code-unit <任务>
-8. 调 code-review REQ-00001
+8. 调 code-check REQ-00001
    → 通过 → 准备发布
 ```
 
@@ -761,7 +761,7 @@ flowchart TD
    → ... 走主流程
 5. (若发现 bug)调 code-fix "用户报告:..." → BUG-00001
    → code-plan BUG-00001 → code-it BUG-00001
-6. 调 code-review REQ-00001
+6. 调 code-check REQ-00001
 ```
 
 ---
@@ -855,7 +855,7 @@ flowchart TD
 | 给需求拆任务 | `code-plan <REQ-YYYY-NNNN>` |
 | 实施一个任务 | `code-it <REQ-YYYY-NNNN-NNN>` |
 | 给任务补/跑单测 | `code-unit <REQ-YYYY-NNNN-NNN>` |
-| 评审一个需求 | `code-review <REQ-YYYY-NNNN>` |
+| 评审一个需求 | `code-check <REQ-YYYY-NNNN>` |
 | 登记一个新 bug | `code-fix "<bug 描述>"` |
 | 推进/查看 bug 状态 | `code-fix <BUG-NNN>` |
 | 规划 bug 修复 | `code-plan <BUG-NNN>` |
@@ -863,10 +863,10 @@ flowchart TD
 
 | 我看到的状态... | 意味着... | 下一步 |
 | --- | --- | --- |
-| 任务"开发=已完成,测试=已运行-通过" | 该任务真正可发布 | 进下一任务或 `code-review` |
+| 任务"开发=已完成,测试=已运行-通过" | 该任务真正可发布 | 进下一任务或 `code-check` |
 | 任务"开发=已完成,测试=已运行-失败" | 出现回归 | 回 `code-it` 修或登记新 `code-fix` |
 | Bug 状态"已修复-待验证" | 代码已改完,等测试/人工确认 | 跑测试,确认通过后 `code-fix` 推进 |
-| 需求"已完成"且有概要/详细设计 | 整需求走完主流程 | `code-review` |
+| 需求"已完成"且有概要/详细设计 | 整需求走完主流程 | `code-check` |
 
 ---
 
@@ -883,5 +883,5 @@ flowchart TD
 - [`code-it/SKILL.md`](skills/code-it/SKILL.md)
 - [`code-unit/SKILL.md`](skills/code-unit/SKILL.md)
 - [`code-fix/SKILL.md`](skills/code-fix/SKILL.md)
-- [`code-review/SKILL.md`](skills/code-review/SKILL.md)
+- [`code-check/SKILL.md`](skills/code-check/SKILL.md)
 

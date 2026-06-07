@@ -32,7 +32,7 @@
 | `code-plan` | Detailed design + task breakdown |
 | `code-it` | Task coding |
 | `code-unit` | Unit tests |
-| `code-review` | Code review |
+| `code-check` | Code review |
 | `code-dashboard` | Dev dashboard |
 | `code-publish` | Release deployment |
 | `code-auto` | Automated development (orchestrator) |

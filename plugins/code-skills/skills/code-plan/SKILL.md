@@ -434,7 +434,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
   - `触发/来源=需求撤回` → 任务标"已取消",无输入
 - **填写规则**:
   - `code-plan` 首次拆分时:为每条新任务标注"是什么触发的"
-  - `code-review` 派生新任务时:必须填 `审查改修`,并在"关联任务"指向被修正的原任务
+  - `code-check` 派生新任务时:必须填 `审查改修`,并在"关联任务"指向被修正的原任务
   - 增量更新时:可改,但要写明理由(写到变更记录)
 
 #### 按"## 设计目标"小节调整任务粒度(FR-4,本需求 REQ-00011 新增,本需求 REQ-00020 扩展为 7 维度)
@@ -1077,7 +1077,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **下游**:
   - 需求分支:`code-it` 按 `PLAN.md` 的任务执行,逐任务更新状态
   - 缺陷分支:`code-it <BUG-NNN>` 读 `fix-plan.md` 实施修复,产出 `fix-work-log.md` 等
-- **下游(次级)**:`code-unit` 与 `code-review` 在 `code-it` 内对单任务展开
+- **下游(次级)**:`code-unit` 与 `code-check` 在 `code-it` 内对单任务展开
 - **上游**:
   - 需求分支:`code-version`(必须有激活版本);`code-require` 的 `RESULT.md`、`code-design` 的 `RESULT.md`、项目级规范
   - 缺陷分支:`code-version`(必须有激活版本);`code-fix` 的 `fix/<BUG-NNN>/RESULT.md`、项目级规范

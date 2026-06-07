@@ -7,7 +7,7 @@
 `code-skills` 是一套用于走完完整软件开发生命周期的 Claude Code 技能集合,内置**版本感知工作空间管理**:
 
 ```
-code-version → code-require → code-design → code-plan → code-it → code-unit → code-review
+code-version → code-require → code-design → code-plan → code-it → code-unit → code-check
    版本管理      需求分析        概要设计      详细计划     开发编码    单元测试      代码评审
 
    code-init  (项目级一次性引导)— 扫描现有代码,登记为基线
@@ -48,7 +48,7 @@ code-skills/                          ← marketplace 仓库根
             ├── code-it/              # 开发编码(任务路径)+ 缺陷修复实施(缺陷路径)
             ├── code-unit/            # 单元测试
             ├── code-fix/             # 缺陷登记与跟踪
-            └── code-review/          # 代码评审
+            └── code-check/          # 代码评审
 ```
 
 ## 需与用户确认的约定
@@ -67,7 +67,7 @@ code-skills/                          ← marketplace 仓库根
 
 ## 版本感知工作空间约定
 
-主流程中的技能(`code-require` 到 `code-review`)在版本层之下运作:
+主流程中的技能(`code-require` 到 `code-check`)在版本层之下运作:
 
 ```
 assistants/
@@ -108,7 +108,7 @@ assistants/
   - `code-it`(缺陷路径)→ 缺陷清单, 执行的开发命令记录, 变更记录
   - `code-unit` → 任务清单(测试状态), 缺陷清单, 执行的开发命令记录, 变更记录
   - `code-fix` → 缺陷清单, 变更记录
-  - `code-review` → 评审发现汇总, 派生任务记录, 缺陷清单, 任务清单(派生任务), 变更记录
+  - `code-check` → 评审发现汇总, 派生任务记录, 缺陷清单, 任务清单(派生任务), 变更记录
 
 ## 双状态任务模型
 

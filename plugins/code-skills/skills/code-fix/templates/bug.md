@@ -134,7 +134,7 @@
 
 ## 变更记录
 
-> 写入方:`code-fix`(状态推进)、`code-plan`(规划完成)、`code-it`(实施完成)、`code-review`(评审)
+> 写入方:`code-fix`(状态推进)、`code-plan`(规划完成)、`code-it`(实施完成)、`code-check`(评审)
 > 格式:`YYYY-MM-DD HH:mm  <变更类型>  <摘要>  <关联任务/需求>`
 
 | 时间 | 变更类型 | 变更摘要 | 关联项 |

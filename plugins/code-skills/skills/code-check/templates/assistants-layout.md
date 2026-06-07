@@ -1,6 +1,6 @@
-# 工作目录布局参考 — code-review(版本感知)
+# 工作目录布局参考 — code-check(版本感知)
 
-> `code-review` 技能强制约定。**本技能产生两类输出目录**:
+> `code-check` 技能强制约定。**本技能产生两类输出目录**:
 > - 需求级(整体评审报告):`assistants/<版本号>/review/<需求编号>/`
 > - 任务级(每个派生的"审查改修"任务):`assistants/<版本号>/review/<新任务编码>/`
 >
@@ -54,9 +54,9 @@
 | code-plan | 需求级 | `<版本号>/plan/<需求编号>/` |
 | code-it | 任务级 | `<版本号>/code/<任务编码>/` |
 | code-unit | 任务级 | `<版本号>/test/<任务编码>/` |
-| **code-review** | **需求级 + 任务级** | **`<版本号>/review/<需求编号>/` + `<版本号>/review/<新任务编码>/`** |
+| **code-check** | **需求级 + 任务级** | **`<版本号>/review/<需求编号>/` + `<版本号>/review/<新任务编码>/`** |
 
-> code-review 独特:它**既在需求级产出一个整体报告,又在任务级为每个派生的改修任务产出 input 文件**。
+> code-check 独特:它**既在需求级产出一个整体报告,又在任务级为每个派生的改修任务产出 input 文件**。
 > 后者是**给 code-it 直接消费的输入**,不是给人阅读的总结。
 > 所有输出都在版本工作空间内,版本切换时一起归档/加载。
 
@@ -64,8 +64,8 @@
 
 ```mermaid
 graph LR
-  code-review -- "派生新任务 T-XXX 到 PLAN.md" --> plan[plan/<需求>/PLAN.md]
-  code-review -- "为 T-XXX 写改修要求" --> review_fix[review/<任务>/RESULT.md]
+  code-check -- "派生新任务 T-XXX 到 PLAN.md" --> plan[plan/<需求>/PLAN.md]
+  code-check -- "为 T-XXX 写改修要求" --> review_fix[review/<任务>/RESULT.md]
   code-it -- "读取 T-XXX 时" --> review_fix
   code-it -- "同时仍按惯例读" --> plan_md[plan/<需求>/PLAN.md]
   code-it -- "但不读!" --> plan_result[plan/<需求>/RESULT.md]

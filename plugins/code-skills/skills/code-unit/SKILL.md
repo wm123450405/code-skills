@@ -1,6 +1,6 @@
 ---
 name: code-unit
-description: 单元测试(版本感知)。要求用户提供"任务编码"(格式 `<需求编号>-<任务序号>`),**所有产出物写入 `./assistants/<版本号>/test/<任务编码>/`**(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。从 `./assistants/<版本号>/plan/.../RESULT.md` 读详细设计,`PLAN.md` 读任务详情,`./assistants/<版本号>/code/<任务编码>/RESULT.md` 读代码改修正文,`./assistants/rules/` 读跨版本编码规范,编写或补充本任务涉及功能的单元测试。**必须运行本任务与相关联模块的单元测试**,迭代修复直到全部通过(或明确标"不适用")。将"改修"总结保存到 `RESULT.md`,并把 `PLAN.md` 中该任务的**测试状态**推进(已编写 → 已运行-通过/失败 / 不适用 / 阻塞)。同步更新版本看板的"任务清单"测试状态、"缺陷清单"(若发现代码 bug)与"变更记录"区段。通常在 `code-it` 完成后、`code-review` 之前使用,也可独立重跑以补齐测试。
+description: 单元测试(版本感知)。要求用户提供"任务编码"(格式 `<需求编号>-<任务序号>`),**所有产出物写入 `./assistants/<版本号>/test/<任务编码>/`**(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。从 `./assistants/<版本号>/plan/.../RESULT.md` 读详细设计,`PLAN.md` 读任务详情,`./assistants/<版本号>/code/<任务编码>/RESULT.md` 读代码改修正文,`./assistants/rules/` 读跨版本编码规范,编写或补充本任务涉及功能的单元测试。**必须运行本任务与相关联模块的单元测试**,迭代修复直到全部通过(或明确标"不适用")。将"改修"总结保存到 `RESULT.md`,并把 `PLAN.md` 中该任务的**测试状态**推进(已编写 → 已运行-通过/失败 / 不适用 / 阻塞)。同步更新版本看板的"任务清单"测试状态、"缺陷清单"(若发现代码 bug)与"变更记录"区段。通常在 `code-it` 完成后、`code-check` 之前使用,也可独立重跑以补齐测试。
 ---
 
 # code-unit — 单元测试(版本感知)
@@ -451,7 +451,7 @@ loop:
   - 覆盖率(整体 / 本任务)
   - 发现的代码 bug(若步骤 11 触发了)
   - **版本看板同步情况**
-  - 下一步建议(继续 `code-review` / 回到 `code-it` 修 bug / 继续下一个任务)
+  - 下一步建议(继续 `code-check` / 回到 `code-it` 修 bug / 继续下一个任务)
 
 #### 边界 E-2(新增,REQ-0009):守卫不通过(项目不可测)
 
@@ -608,7 +608,7 @@ loop:
 ## 衔接
 - **上游**:`code-version`(必须);`code-it` 的 `RESULT.md`(代码改修正文);`code-plan` 的 `PLAN.md` / `RESULT.md`;项目级规范
 - **下游**:
-  - `code-review` 消费本任务的测试代码与 `RESULT.md`
+  - `code-check` 消费本任务的测试代码与 `RESULT.md`
   - 后续任务的 `code-unit` 会复用本任务的测试模式
 - **横向**:`./assistants/<版本号>/test/<其他任务编码>/RESULT.md` 形成本次需求的所有测试工作档案
 - **与 code-it 的协作**:

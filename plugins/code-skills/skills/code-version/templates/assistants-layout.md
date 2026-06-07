@@ -40,7 +40,7 @@
 │   │   │   └── TASK-REQ-00001-00001/
 │   │   │       ├── RESULT.md
 │   │   │       └── ...
-│   │   └── review/                     ← code-review 产出
+│   │   └── review/                     ← code-check 产出
 │   │       ├── REQ-00001/
 │   │       │   ├── REVIEW-REPORT.md
 │   │       │   └── ...
@@ -103,7 +103,7 @@
 | code-plan | 需求级 | `assistants/<version>/plan/<需求编号>/` |
 | code-it | 任务级 | `assistants/<version>/code/<任务编码>/` |
 | code-unit | 任务级 | `assistants/<version>/test/<任务编码>/` |
-| code-review | 需求级 + 任务级 | `assistants/<version>/review/<需求编号>/` + `assistants/<version>/review/<任务编码>/` |
+| code-check | 需求级 + 任务级 | `assistants/<version>/review/<需求编号>/` + `assistants/<version>/review/<任务编码>/` |
 
 ## 多版本隔离
 
@@ -119,7 +119,7 @@
 - `code-plan` → 详细设计与任务计划汇总 + 任务清单(首次登记)
 - `code-it` → 任务清单(开发状态) + 缺陷清单(若发现)
 - `code-unit` → 任务清单(测试状态) + 缺陷清单(若发现)
-- `code-review` → 评审发现汇总 + 派生任务记录 + 缺陷清单(若发现)
+- `code-check` → 评审发现汇总 + 派生任务记录 + 缺陷清单(若发现)
 - 全部 → 变更记录(在自己的关键节点追加)
 
 **写入约束**:

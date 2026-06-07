@@ -50,7 +50,7 @@
 | code-plan | 需求级 | `assistants/<version>/plan/<需求编号>/` |
 | **code-it** | **任务级** | `assistants/<version>/code/<任务编码>/` |
 | code-unit | 任务级 | `assistants/<version>/test/<任务编码>/` |
-| code-review | 需求级 + 任务级 | `assistants/<version>/review/<需求编号>/` + `assistants/<version>/review/<任务编码>/` |
+| code-check | 需求级 + 任务级 | `assistants/<version>/review/<需求编号>/` + `assistants/<version>/review/<任务编码>/` |
 
 为什么 code-it 用任务级?
 - code-it 是流水线中**唯一实际改动生产代码的技能**

@@ -32,7 +32,7 @@
 | `code-plan` | 详细设计 + 任务拆分 |
 | `code-it` | 任务编码 |
 | `code-unit` | 单元测试 |
-| `code-review` | 代码评审 |
+| `code-check` | 代码评审 |
 | `code-dashboard` | 开发看板 |
 | `code-publish` | 发布部署 |
 | `code-auto` | 自动开发(编排) |

@@ -86,7 +86,7 @@
 ## 任务触发/来源(每条任务)
 13 个枚举值,决定 `code-it` 的输入源:
 - 大多数 → `./assistants/<版本号>/plan/<需求编号>/RESULT.md`
-- **`审查改修`** → `./assistants/<版本号>/review/<任务编码>/RESULT.md`(由 `code-review` 派生时使用)
+- **`审查改修`** → `./assistants/<版本号>/review/<任务编码>/RESULT.md`(由 `code-check` 派生时使用)
 - `需求撤回` → 任务标"已取消",无输入
 
 ## 用户 vs 技能产出

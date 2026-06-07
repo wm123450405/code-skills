@@ -1,13 +1,13 @@
 ---
 name: code-publish
-description: 发布部署(版本感知)。要求用户提供可选位置参数"版本号"(缺省时取 `./assistants/.current-version`);先做发布前置检查(全检查最严:需求状态=已完成 ∧ 任务 开发状态=已完成 ∧ 测试状态∈{已运行-通过, 不适用} ∧ 缺陷状态=已修复);通过后在 `./assistants/<版本号>/publish/` 下生成 `DEPLOY.md`(全新部署,始终生成) + `UPDATE.md`(从上一版升级,基线版本跳过) + `Q&A.md`(从 `assistants/qanda/` 聚合,空时为占位);3 份手册均为"通用发布部署骨架 + 最常见部署方式默认示例 + placeholder",用户**必须**手动补全 `<本版本号>` 之外的占位符才能按手册执行;本技能顺带在项目级创建 `assistants/qanda/` 目录与 `README.md`(供长期 Q&A 沉淀)。本技能**纯只读消费看板 + 不自动 commit + 不参与 REQ-00005 的"首步拉取+末步提交"**;在 `code-review` 完成后,长开发周期末使用;基线版本可直接调用归档。
+description: 发布部署(版本感知)。要求用户提供可选位置参数"版本号"(缺省时取 `./assistants/.current-version`);先做发布前置检查(全检查最严:需求状态=已完成 ∧ 任务 开发状态=已完成 ∧ 测试状态∈{已运行-通过, 不适用} ∧ 缺陷状态=已修复);通过后在 `./assistants/<版本号>/publish/` 下生成 `DEPLOY.md`(全新部署,始终生成) + `UPDATE.md`(从上一版升级,基线版本跳过) + `Q&A.md`(从 `assistants/qanda/` 聚合,空时为占位);3 份手册均为"通用发布部署骨架 + 最常见部署方式默认示例 + placeholder",用户**必须**手动补全 `<本版本号>` 之外的占位符才能按手册执行;本技能顺带在项目级创建 `assistants/qanda/` 目录与 `README.md`(供长期 Q&A 沉淀)。本技能**纯只读消费看板 + 不自动 commit + 不参与 REQ-00005 的"首步拉取+末步提交"**;在 `code-check` 完成后,长开发周期末使用;基线版本可直接调用归档。
 ---
 
 # code-publish — 发布部署(版本感知)
 
 ## 目标
 
-为 `code-skills` 7 个开发周期技能(`code-version` / `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-review`)补足"开发完成 → 部署上线"这**最后一步**:调用一次,即可知道"本版本是否可发布",并在通过时自动产出 3 份(基线版本 2 份)通用的发布/升级/Q&A 手册骨架到 `publish/`,供运维 / 现场支持按手册执行。**纯只读检查 + 不自动提交 + 通用性优先**(本仓库不绑定具体被发布的"软件",手册留给用户补全)。
+为 `code-skills` 7 个开发周期技能(`code-version` / `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-check`)补足"开发完成 → 部署上线"这**最后一步**:调用一次,即可知道"本版本是否可发布",并在通过时自动产出 3 份(基线版本 2 份)通用的发布/升级/Q&A 手册骨架到 `publish/`,供运维 / 现场支持按手册执行。**纯只读检查 + 不自动提交 + 通用性优先**(本仓库不绑定具体被发布的"软件",手册留给用户补全)。
 
 ## 适用场景
 
@@ -533,7 +533,7 @@ Glob: ./assistants/qanda/*.md
   - 用户(发布者):手动 `git add` + `git commit` 补全后的 3 份手册
 - **上游**:
   - `code-version`(必须先有激活版本)
-  - `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-review`(开发周期内全部完成 → 看板 3 区段全部"已解决")
+  - `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-check`(开发周期内全部完成 → 看板 3 区段全部"已解决")
   - 项目级规范 `./assistants/rules/`(本技能只读)
 - **横向**:
   - 与 `code-dashboard`(REQ-00004)共用看板 3 区段解析;用户可先 `code-dashboard` 看进度,再 `code-publish` 决定发布

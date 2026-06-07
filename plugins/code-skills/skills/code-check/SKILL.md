@@ -1,9 +1,9 @@
 ---
-name: code-review
-description: 代码评审(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/review/<需求编号>/`**(整体报告)与 **`./assistants/<version>/review/<任务编码>/`**(每个派生的"审查改修"任务)。(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 中本需求所有任务,逐任务按 `./assistants/rules/`(项目级评审清单) + `checklists/review-checklist.md` 评审,产出整体 `REVIEW-REPORT.md` 与派生的"审查改修"任务(每个任务的改修要求保存到 `review/<任务编码>/RESULT.md`,作为 `code-it` 的输入)。同时把派生任务追加到 `PLAN.md` 的"任务总览"(触发/来源=**审查改修**,关联任务=被修正原任务)。同步更新版本看板的"评审发现汇总" / "派生任务记录" / "缺陷清单" / "变更记录"区段。在 `code-unit` 完成后使用;也可在 `code-it` 完成后直接调用(单元测试缺失时评审会标注)。
+name: code-check
+description: 代码检查(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/review/<需求编号>/`**(整体报告)与 **`./assistants/<version>/review/<任务编码>/`**(每个派生的"审查改修"任务)。(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 中本需求所有任务,逐任务按 `./assistants/rules/`(项目级评审清单) + `checklists/review-checklist.md` 评审,产出整体 `REVIEW-REPORT.md` 与派生的"审查改修"任务(每个任务的改修要求保存到 `review/<任务编码>/RESULT.md`,作为 `code-it` 的输入)。同时把派生任务追加到 `PLAN.md` 的"任务总览"(触发/来源=**审查改修**,关联任务=被修正原任务)。同步更新版本看板的"评审发现汇总" / "派生任务记录" / "缺陷清单" / "变更记录"区段。在 `code-unit` 完成后使用;也可在 `code-it` 完成后直接调用(单元测试缺失时评审会标注)。
 ---
 
-# code-review — 代码评审(版本感知)
+# code-check — 代码检查(版本感知)
 
 ## 目标
 在代码合并前**系统化发现缺陷**,把可执行、可追溯、可派工的评审意见转交给 `code-it` 处理,使代码质量与设计/需求/规范保持一致。
@@ -187,7 +187,7 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 **触发条件**:步骤 1 完成(需求编码已收集)
 
 **逻辑(三态机)**:
-1. **无参**(`/code-review`)→ **整版本模式** → 跳转"步骤 2 整版本模式"
+1. **无参**(`/code-check`)→ **整版本模式** → 跳转"步骤 2 整版本模式"
 2. **`REQ-NNNNN`**(匹配 `^REQ-\d{5}$`)→ **单需求模式**(既有,字节级不变)→ 跳转既有"步骤 2 定位/创建工作目录"
 3. **其他无效参数** → 整版本模式 + 打印警告"⚠ 忽略参数: <invalid>"
 
@@ -465,21 +465,21 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 
 ### 与模式 1 关系
 
-- **模式 1**(`/code-review REQ-NNNNN`):单需求评审,既有,**字节级不变**(INV-1/4/11/12)
-- **模式 2**(`/code-review` 无参):整版本评审,本需求新增,**完全复用模式 1 步骤 4-15** 单需求评审逻辑
+- **模式 1**(`/code-check REQ-NNNNN`):单需求评审,既有,**字节级不变**(INV-1/4/11/12)
+- **模式 2**(`/code-check` 无参):整版本评审,本需求新增,**完全复用模式 1 步骤 4-15** 单需求评审逻辑
 - **互覆盖**:模式 2 包含模式 1 的所有产物(单需求 REVIEW-REPORT.md),并额外写 1 份聚合 REVIEW.md
 
 ### 不触发的区段
 
-- **看板 "评审发现汇总" 区段**:整版本模式**不**写入此区段(沿用模式 1 单需求评审时由 code-review 写入);聚合文件 `REVIEW.md` 已涵盖
+- **看板 "评审发现汇总" 区段**:整版本模式**不**写入此区段(沿用模式 1 单需求评审时由 code-check 写入);聚合文件 `REVIEW.md` 已涵盖
 - **看板 "派生任务记录" 区段**:整版本模式**不**写入此区段(派生任务仍追加到各 `PLAN.md` 的"任务总览"表,沿用模式 1 既有路径)
 - **新增区段**:0 触发(`dashboard-conventions §规则 1` 字段约定不扩展,INV-7 锁定)
 
 ### 待澄清未决项(留作 follow-up)
 
 - **Q-8.1**:用 `code-rule` 沉淀 `review-conventions.md`(整版本模式的检查清单)— **不阻塞**,留作 follow-up
-- **Q-8.2**:把 `code-review` 加入 REQ-00005 的"首步拉取+末步提交"改写范围 — **不阻塞**,留作 follow-up
-- **Q-8.3**:在 `code-review/templates/` 新增 `REVIEW-ALL.md` 模板 — **本设计倾向不新增**(D-1.B);若 T-001 实施后实际行数 > 150,触发 R-8 重新评估
+- **Q-8.2**:把 `code-check` 加入 REQ-00005 的"首步拉取+末步提交"改写范围 — **不阻塞**,留作 follow-up
+- **Q-8.3**:在 `code-check/templates/` 新增 `REVIEW-ALL.md` 模板 — **本设计倾向不新增**(D-1.B);若 T-001 实施后实际行数 > 150,触发 R-8 重新评估
 
 ---
 

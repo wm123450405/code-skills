@@ -32,7 +32,7 @@
 │   │   ├── plan/                       ← code-plan 产出
 │   │   ├── code/                       ← code-it 产出
 │   │   ├── test/                       ← code-unit 产出
-│   │   ├── review/                     ← code-review 产出
+│   │   ├── review/                     ← code-check 产出
 │   │   │
 │   │   └── publish/                    ★ 本技能产出(可写,见 FR-2)
 │   │       ├── DEPLOY.md                ← 全新部署手册骨架(始终生成)
@@ -164,7 +164,7 @@ assistants/qanda/
 - `code-plan` → 详细设计与任务计划汇总 + 任务清单(首次登记) + 变更记录
 - `code-it` → 任务清单(开发状态) + 缺陷清单 + 变更记录
 - `code-unit` → 任务清单(测试状态) + 缺陷清单 + 变更记录
-- `code-review` → 评审发现汇总 + 派生任务记录 + 缺陷清单 + 变更记录
+- `code-check` → 评审发现汇总 + 派生任务记录 + 缺陷清单 + 变更记录
 - `code-fix` → 缺陷清单 + 变更记录
 
 ## 多项目隔离

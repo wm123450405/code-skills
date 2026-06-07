@@ -20,7 +20,7 @@ description: 开发看板(版本感知,只读)。要求用户提供"需求编码
 - **会话开头总览**:每个工作日 / 每次会话开头,调一次 `/code-dashboard` 看到"还差什么"
 - **长会话中的"接下来做什么"**:在多次 `code-*` 调用之间,调一次 `/code-dashboard` 获得下一步建议
 - **需求粒度摸底**:想知道某条需求(`/code-dashboard REQ-00001`)的进度 + 其下任务 + 关联缺陷
-- **评审前快速摸底**:在做 `code-review` 前,先 `/code-dashboard` 看一下版本整体状态
+- **评审前快速摸底**:在做 `code-check` 前,先 `/code-dashboard` 看一下版本整体状态
 
 ## 不适用
 
@@ -297,7 +297,7 @@ description: 开发看板(版本感知,只读)。要求用户提供"需求编码
 - 但本技能**输出**的"下一步建议"会**引导**用户调其他技能(`/code-require` / `/code-design` / `/code-plan` / `/code-it` / `/code-unit` / `/code-fix` / `/code-version`)
 
 ### 横向
-- 与 `code-review` 行为对标(只读契约 + 工具集 `Read` / `Glob` / `Grep` + 多次执行幂等)
+- 与 `code-check` 行为对标(只读契约 + 工具集 `Read` / `Glob` / `Grep` + 多次执行幂等)
 - 与其他 9 个 `code-*` 技能正交(NFR-6 不修改)
 
 ---
@@ -307,7 +307,7 @@ description: 开发看板(版本感知,只读)。要求用户提供"需求编码
 - ❌ **不**调用 `Write` / `Edit` / `Bash` / `WebFetch` / `WebSearch` / `Task` / `Agent`(NFR-7 严守;FR-7 AC-7.1 `git status` clean)
 - ❌ **不**修改 `./assistants/rules/` 下的任何文件
 - ❌ **不**修改 `.current-version`(那是 `code-version` 责任)
-- ❌ **不**修改 `<版本号>/RESULT.md` 任何区段(那是 `code-require` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-review` 责任)
+- ❌ **不**修改 `<版本号>/RESULT.md` 任何区段(那是 `code-require` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-check` 责任)
 - ❌ **不**修改 `marketplace.json` / `plugin.json`(NFR-6 严守;走 Claude Code 技能自动发现协议)
 - ❌ **不**修改其他 10 个 `code-*` 技能 SKILL.md 的 frontmatter(NFR-6 严守)
 - ❌ **不**把任务编号 `REQ-00001-001`(旧格式)改写为 `TASK-REQ-00001-00001`(NFR-3 双格式兼容,旧字面透传)
