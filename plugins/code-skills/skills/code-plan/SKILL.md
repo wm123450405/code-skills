@@ -1084,6 +1084,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **横向**:通过 `materials-index.md` 与 `assistants/<版本号>/plan/` 下其他计划形成引用网(可选:跨版本);缺陷分支与同版本其他 `fix/<BUG-NNN>/` 互不干扰
 
 ## 不要做的事
+- 不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件(工程代码改动由 `code-it` 实施,本技能只写 `plan/<REQ>/RESULT.md` / `PLAN.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
 - 不读上游 `RESULT.md` / `fix-plan.md` / `./assistants/rules/` 就直接做规划
 - 在不读取现有 `RESULT.md` / `PLAN.md` / `fix-plan.md` 的情况下重写整个文件
