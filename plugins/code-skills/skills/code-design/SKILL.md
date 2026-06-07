@@ -588,6 +588,7 @@ description: 概要设计(版本感知)。要求用户提供"需求编码",**所
 - **横向**:通过 `related-designs.md` 与同版本下其他概要设计(可选:跨版本)形成引用网
 
 ## 不要做的事
+- 不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件(工程代码改动由 `code-it` 实施,本技能只写 `design/<REQ>/RESULT.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
 - 不读上游 `RESULT.md` 就直接做设计
 - 不读 `./assistants/rules/` 就直接做设计(在用户未授权跳过的情况下)

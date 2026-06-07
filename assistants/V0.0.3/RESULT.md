@@ -140,15 +140,15 @@
 | TASK-REQ-00023-00005 | REQ-00023 | 修改 | 详细设计 | [修改] 高优先级缺陷段保留 + 边界 E-1 ~ E-10 | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 步骤 4 段 3 + §边界与异常 | 2026-06-07 | (本会话) | — |
 | TASK-REQ-00023-00006 | REQ-00023 | 修改 | 详细设计 | [修改] 输出区段与衔接小节改造 + 变更记录 | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §输出 + §衔接 | 2026-06-07 | (本会话) | — |
 | TASK-BUG-00001-00001 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-require 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §不要做的事 | 2026-06-07 17:32 | (本会话) | BUG-00001 |
-| TASK-BUG-00001-00002 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-design 加"不修改 SKILL.md"硬约束 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §不要做的事 | — | — | BUG-00001 |
+| TASK-BUG-00001-00002 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-design 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §不要做的事 | 2026-06-07 17:35 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00003 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-plan 加"不修改 SKILL.md"硬约束 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §不要做的事 | — | — | BUG-00001 |
 | TASK-BUG-00001-00004 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-fix 加"不修改 SKILL.md"硬约束 | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §不要做的事 | — | — | BUG-00001 |
 | TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | — | — | BUG-00001 |
 
 **统计**:
 - 总任务数:35
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):31
-- 开发已完成 / 未完成:31 / 4
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):32
+- 开发已完成 / 未完成:32 / 3
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 35 / 0
 
 ---
@@ -265,6 +265,7 @@
 | 2026-06-07 | 缺陷状态 | BUG-00001 状态"调查中"→"修复规划中"(code-plan 完成 5 任务拆分 + 9 份文档产出;触发/来源=缺陷修复;测试状态=不适用) | BUG-00001 |
 | 2026-06-07 | 缺陷状态 | BUG-00001 状态"修复规划中"→"修复编码中"(code-it 开始实施 TASK-BUG-00001-00001) | BUG-00001 |
 | 2026-06-07 | 任务完成 | TASK-BUG-00001-00001 · [修改] code-require 加"不修改 SKILL.md"硬约束(开发状态:已完成;INV-10/INV-16 全通过) | TASK-BUG-00001-00001 |
+| 2026-06-07 | 任务完成 | TASK-BUG-00001-00002 · [修改] code-design 加"不修改 SKILL.md"硬约束(开发状态:已完成;INV-11/INV-16 全通过) | TASK-BUG-00001-00002 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
