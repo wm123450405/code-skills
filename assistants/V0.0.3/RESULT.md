@@ -148,12 +148,12 @@
 | TASK-BUG-00001-00003 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-plan 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §不要做的事 | 2026-06-07 17:41 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00004 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-fix 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §不要做的事 | 2026-06-07 17:47 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | 2026-06-07 17:54 | (本会话) | BUG-00001 |
-| TASK-REQ-00024-00001 | REQ-00024 | 修改 | 详细设计 | [修改] code-auto 步骤 1:用路径感知替代 from 关键字 | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入与输出 + §工作流步骤 步骤 1 + §边界与异常 | — | — | REQ-00024 |
+| TASK-REQ-00024-00001 | REQ-00024 | 修改 | 详细设计 | [修改] code-auto 步骤 1:用路径感知替代 from 关键字 | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入与输出 + §工作流步骤 步骤 1 + §边界与异常 | 2026-06-07 17:55 | (本会话) | REQ-00024 |
 
 **统计**:
 - 总任务数:36
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):35
-- 开发已完成 / 未完成:35 / 1
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):36
+- 开发已完成 / 未完成:36 / 0
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 36 / 0
 
 ---
@@ -278,6 +278,7 @@
 | 2026-06-07 | 需求新增 | REQ-00025 需求分析完成(8 FR / 7 NFR / 8 AC / 4 Q);软化编号正则约束,允许用户自定义编号格式(仅前缀固定 REQ-/BUG-/TASK-);0 破坏性变更,既有 5 位纯数字继续可用 | REQ-00025 |
 | 2026-06-07 | 设计新增 | REQ-00024 概要设计完成(14 章节;code-auto 上下文检测 DETECTED 采纳 --balanced 默认;9 FR / 6 NFR / 8 AC 全部满足;9 个其他 code-* 技能字节级 0 变化) | REQ-00024 |
 | 2026-06-07 | 计划完成 | code-plan 完成 REQ-00024 详细设计 + 1 任务拆分(`code-auto/SKILL.md` 改造);0 派生"更新看板"任务;6 步状态机不变;9 个其他 code-* 技能字节级 0 变化 | REQ-00024 |
+| 2026-06-07 | 任务完成 | TASK-REQ-00024-00001 · [修改] code-auto 步骤 1:用路径感知替代 from 关键字(开发状态:已完成;AC-1~8 全通过) | TASK-REQ-00024-00001 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间

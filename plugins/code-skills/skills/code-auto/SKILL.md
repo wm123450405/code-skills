@@ -59,38 +59,62 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 
 | 参数 | 类型 | 必填 | 约束 | 缺省行为 |
 | --- | --- | --- | --- | --- |
-| `<需求内容>` | string | 模式 A 必填 | 自然语言,无长度上限(由 Claude Code 模型层管理) | 无参数 → 提示用法示例 + 退出码 4 |
-| `from REQ-NNNNN` | string | 模式 B 必填 | 关键字 `from` + 单个空格 + 5 位数字编码,正则 `^from REQ-\d{5}$` | 见"模式识别"小节 |
-| `[追加材料...]` | string | 模式 B 可选 | 模式 B 下,`from REQ-NNNNN` 之后的全部 token(空格分隔) | 仅记录到屏幕日志,不影响流程 |
+| `<需求内容>` / `<需求编号>` / `<缺陷编号>` | string | 是 | 默认视为需求编号(最常见场景);若 `require/<input>/` 目录不存在,继续判 `fix/<input>/`;都不存在则视为需求内容 | 无参数 → 提示用法示例 + 退出码 4 |
 
-**两种调用模式**(互斥,由首个非空 token 判定):
-
-| 模式 | 触发条件 | 调用形式 | 跳过步骤 1? |
-| --- | --- | --- | --- |
-| **A:全流程** | 首个 token 不匹配 `^from REQ-\d{5}$` | `/code-auto "<需求内容>"` 或 `/code-auto arg1 arg2 ...` | 否,执行 `code-require` |
-| **B:从已有需求续跑** | 首个 token 匹配 `^from REQ-\d{5}$` | `/code-auto from REQ-NNNNN [追加材料...]` | **是**,沿用 `require/REQ-NNNNN/RESULT.md` |
-
-**模式识别**(在步骤 1 之前完成):
-1. 拼接所有参数 token 为单一字符串(空格分隔)
-2. 去除首尾空白
-3. 正则匹配 `^from REQ-\d{5}(\s+(.*))?$`:
-   - 命中 → **模式 B**,提取 `REQ-NNNNN` 与可选的"追加材料"
-   - 未命中 → **模式 A**,整串视为 `<需求内容>`
-
-调用形式(全流程,模式 A):
+**调用形式**(沿用既有 `/code-auto <input>` 单参数风格):
 ```
 /code-auto "添加用户登录功能,支持手机号+密码"
+/code-auto REQ-00020
+/code-auto BUG-00001
+/code-auto arg1 arg2 arg3 ...   # 多 token 拼接为单一字符串后参与路径判定
 ```
-或(多参数拼接):
-```
-/code-auto arg1 arg2 arg3 ...
-```
-→ 等价于 `/code-auto "arg1 arg2 arg3 ..."`(空格分隔)
+→ 等价于 `/code-auto "<input>"`(空格分隔,多 token 拼为单一字符串)
 
-调用形式(从已有需求续跑,模式 B):
+**4 种路径感知模式**(本需求 REQ-00024 改造,替代原"模式 A / 模式 B 关键字"):
+
+| 模式 | 触发条件(按 `test -d` 路径检测顺序) | 含义 | 跳过步骤 1? |
+| --- | --- | --- | --- |
+| **req-skip-require** | `require/<input>/` 存在 + `RESULT.md` 存在 | 需求已登记,可续跑 | 是(跳过 code-require,直接进步骤 2 概要设计) |
+| **req-run-require** | `require/<input>/` 存在 + `RESULT.md` 不存在 | 需求已分配编号但未完成需求设计 | 否(进入步骤 1 走 code-require) |
+| **fix-skip-require** | `require/<input>/` 不存在 + `fix/<input>/` 存在 | 缺陷已登记,可走缺陷修复详设 | 是(跳过 code-require,直接进 code-plan 走缺陷分支) |
+| **req-content** | `require/<input>/` 不存在 + `fix/<input>/` 不存在 | 视为需求内容(分配新编号) | 否(进入步骤 1 走 code-require) |
+
+**路径感知判定算法**(在步骤 1 之前完成,沿用既有"模式识别"流程位置):
+
 ```
-/code-auto from REQ-00017
-/code-auto from REQ-00017 补充:本期不实现短信验证码
+1. 拼接所有参数 token 为单一字符串(空格分隔)
+2. 去除首尾空白
+3. 检查 `require/<input>/` 目录(test -d):
+   - 存在 → 继续检查 `require/<input>/RESULT.md` 文件(test -f):
+     - 存在 → 模式:req-skip-require
+     - 不存在 → 模式:req-run-require
+4. 检查 `fix/<input>/` 目录(test -d):
+   - 存在 → 模式:fix-skip-require
+5. 既不是需求编号也不是缺陷编号 → 模式:req-content(视为需求内容,后续由 code-require 分配新编号)
+```
+
+**屏显契约**(沿用既有 3 行风格,新增 3 行"路径感知判定"前缀):
+```
+[code-auto] 步骤 1:路径感知判定
+[code-auto]   → 模式:<req-skip-require / req-run-require / fix-skip-require / req-content>
+[code-auto]   → 依据:require/<input>/ 存在/不存在;fix/<input>/ 存在/不存在
+```
+
+调用形式(需求续跑,模式 req-skip-require):
+```
+/code-auto REQ-00020
+/code-auto REQ-00020 补充:本期不实现短信验证码   # 追加材料仅 echo 到屏幕日志
+```
+
+调用形式(缺陷续跑,模式 fix-skip-require):
+```
+/code-auto BUG-00001
+```
+
+调用形式(全流程,模式 req-content 或 req-run-require):
+```
+/code-auto "添加用户登录功能,支持手机号+密码"
+/code-auto 添加 X 功能 Y  # 多 token 拼接
 ```
 
 ### 输出
@@ -143,7 +167,6 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 | 2 | 步骤 0a 失败 | `git pull` 冲突 / 网络 / 凭据(沿用 REQ-00005 错误码) |
 | 3 | 步骤 0 失败 | 无 `.current-version` |
 | 4 | 缺参数 | 无 `<需求内容>` 参数(模式 A 必填项缺失) |
-| 5 | 模式 B 校验失败 | `from REQ-NNNNN` 模式下 `require/REQ-NNNNN/RESULT.md` 不存在(见 E-15) |
 | 130 | 用户中止 | 收到 SIGINT (Ctrl+C) |
 
 ## 状态机总览
@@ -236,37 +259,57 @@ Bash: touch ./assistants/.code-auto-running
 - **失败处理**:`touch` 失败(权限/磁盘满)→ 屏幕输出 `⚠ 无法设置 code-auto 标记(./assistants/.code-auto-running),子技能可能仍会触发 AskUserQuestion,code-auto 完全无人确认约束可能受影响` + **不**中断主流程
 - **清理保证**:本步骤设置的标记在步骤 7 收尾(SIGINT / 异常 / 中断 / 完成 4 种路径)均会被清理(详 §"### 步骤 7 收尾 — 清理 code-auto 运行标记")
 
-### 步骤 1:code-require(条件化)
+### 步骤 1:code-require(条件化,本需求 REQ-00024 改造:沿用路径感知判定)
 
-#### 1A. 模式 A(全流程) — 正常执行 code-require
+#### 1A. 模式 req-skip-require(需求已登记续跑) — 跳过 code-require
+
+```
+1. 路径感知判定结果 = req-skip-require(本步骤 0 之前已完成)
+2. 屏幕日志:
+   [code-auto] 步骤 1/6:code-require(模式跳过,沿用 RESULT.md)
+   [code-auto]   → 校验通过:require/REQ-NNNNN/RESULT.md ✓
+3. 进入步骤 2(code-require 调用次数 = 0,内部计数 +0)
+```
+
+- **前置条件**:`.current-version` 已存在(步骤 0 已保证)
+- **强约束**:`RESULT.md` 必须存在才能跳过;目录存在但文件缺失视为"模式 req-run-require"(自动降级)
+- **不**对 `RESULT.md` 内容做合法性校验(下游 `code-design` 会校验,本技能职责单一)
+- **追加材料**(若输入含第二段非空):仅 echo 到屏幕日志,不影响后续流程(本技能不修改 `RESULT.md` 之外的 `code-require` 副作用)
+
+#### 1B. 模式 req-run-require(需求已分配编号但未完成需求设计) — 正常执行 code-require
 
 ```
 Skill: code-require
-Args: "<原需求内容>"
+Args: <原需求编号 REQ-NNNNN>  # 沿用本路径感知的"input"字面值
 ```
 
 - **期望产物**:`./assistants/<版本号>/require/REQ-NNNNN/RESULT.md`
 - **解析产物**:从子技能输出中提取 `REQ-NNNNN` 编码
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
-#### 1B. 模式 B(从已有需求续跑) — 校验后跳过
+#### 1C. 模式 fix-skip-require(缺陷已登记续跑) — 跳过 code-require,走缺陷修复详设
 
 ```
-1. 解析模式 B 必填参数:从 `from REQ-NNNNN` 提取需求编码
-2. 校验文件存在:
-   - Read: ./assistants/<版本号>/require/REQ-NNNNN/RESULT.md
-   - 缺失 → stderr 提示"未找到 require/REQ-NNNNN/RESULT.md,请先调 /code-require REQ-NNNNN 完成需求分析,或去除 from 关键字走全流程模式",退出(5)
-3. 通过校验:
-   - 屏幕日志:
-     [code-auto] 步骤 1/6:code-require(模式 B 跳过,沿用 RESULT.md)
-     [code-auto]   → 校验通过:require/REQ-NNNNN/RESULT.md ✓
-   - 进入步骤 2(code-require 调用次数 = 0,内部计数 +0)
+1. 路径感知判定结果 = fix-skip-require
+2. 屏幕日志:
+   [code-auto] 步骤 1/6:code-require(模式跳过,缺陷续跑)
+   [code-auto]   → 校验通过:fix/BUG-NNNNN/ 目录存在 ✓
+3. 进入步骤 2,但步骤 2 / 步骤 3 走缺陷分支(code-design 接受 BUG 路径 / code-plan 读 fix/BUG-NNNNN/PLAN.md)
 ```
 
-- **前置条件**:`.current-version` 已存在(步骤 0 已保证)
-- **强约束**(E-15):`RESULT.md` 必须存在才能跳过;目录存在但文件缺失仍视为缺失
-- **不**对 `RESULT.md` 内容做合法性校验(下游 `code-design` 会校验,本技能职责单一)
-- **追加材料**(若模式 B 第二段非空):仅 echo 到屏幕日志,不影响后续流程(本技能不修改 `RESULT.md` 之外的 `code-require` 副作用)
+- **校验要求**:`fix/BUG-NNNNN/` 目录存在(本步骤已通过 `test -d` 确认)
+- **缺 `RESULT.md` / `PLAN.md` 处理**:沿用 `code-plan` 缺陷分支既有"缺文件"错误处理(无需 `code-auto` 额外处理)
+
+#### 1D. 模式 req-content(视为需求内容) — 正常执行 code-require
+
+```
+Skill: code-require
+Args: <原需求内容整串>  # 整串视为自然语言需求
+```
+
+- **期望产物**:`./assistants/<版本号>/require/<新编号>/RESULT.md`(由 code-require 分配新编号)
+- **解析产物**:从子技能输出中提取 `REQ-NNNNN` 编码
+- **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
 ### 步骤 2:code-design
 
@@ -671,9 +714,11 @@ function parseFixTitle(fixPath: string): string {
 | **E-12** | `REVIEW-REPORT.md` 缺失 | 中断 + 报告 | FR-7 |
 | **E-13** | 缺参数 | 提示用法 + 退出(4) | FR-7 |
 | **E-14** | `git` 不可用 | 报错退出(2) | 沿用 REQ-00005 |
-| **E-15** | 模式 B 缺 `RESULT.md` | 提示先调 `code-require` 或去除 `from` 关键字,退出(5) | FR-新增 |
-| **E-16** | 模式 B 需求编码格式非法 | 首段匹配 `^from REQ-\d{5}$` 失败即被识别为模式 A,本异常场景不触发;但若 `REQ-NNNNN` 部分包含非数字需由正则拒绝(正则已限定 `\d{5}`,无此分支) | — |
-| **E-17** | 模式 B 模式识别歧义 | 不存在:`from` 是关键字、`REQ-\d{5}` 是强约束正则,任何不匹配即回落到模式 A;无需消歧 | — |
+| **E-15** | (本需求 REQ-00024 撤销)模式 B 缺 `RESULT.md` | — | 沿用 `req-run-require` 模式自动降级(目录存在 + RESULT.md 不存在 → 视为"未完成需求设计",进入 code-require) |
+| **E-16** | (本需求 REQ-00024 撤销)模式 B 需求编码格式非法 | — | 沿用"两个目录都不存在"路径,整串视为需求内容 |
+| **E-17** | (本需求 REQ-00024 撤销)模式 B 模式识别歧义 | — | 路径感知无歧义(只检测目录存在性) |
+| **E-18** | (本需求 REQ-00024 新增)无版本工作空间 | 屏显"未检测到激活的版本工作空间,先调 /code-version" + 退出码 3(沿用既有"步骤 0 失败"语义) | — |
+| **E-19** | (本需求 REQ-00024 新增)路径类型异常(`<input>` 是文件而非目录) | 屏显 `⚠ 路径类型异常:<path> 不是目录` + 按"两个目录都不存在"路径走(视为需求内容) | 提示用户检查 `<input>` 是否为目录名而非文件路径 |
 
 ## 上下游衔接
 
