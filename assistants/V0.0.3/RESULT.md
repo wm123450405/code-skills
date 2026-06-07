@@ -218,6 +218,7 @@
 | 2026-06-06 16:45 | 需求新增 | REQ-00020 需求分析完成(8 FR / 8 NFR / ~40 AC / 9 INV),并落地修改 3 个 SKILL.md(`code-design` 步骤 0b 简化为 1 维度;`code-plan` 步骤 0b 扩展为 7 维度 + 任务粒度表 +3 行;`code-plan` / `code-it` 步骤归并 4 处) | REQ-00020 |
 | 2026-06-06 17:05 | 需求新增 | REQ-00021 需求分析完成(7 FR / 6 NFR / ~30 AC / 9 INV),并落地修改 3 个 SKILL.md(新增 `--result` / `--plan` 可选参数 + 模板填充步骤 + 15 内置占位符;DESGIN 拼写沿用用户原文) | REQ-00021 |
 | 2026-06-07 | 计划更新 | REQ-00021 详细设计与编码计划完成(共 8 个任务,全部开发=已完成,测试=不适用);整体=`--extensible` + 7 维度优先级(功能性=高,扩展性=高,可复用性=高,健壮性=中,可维护性=中,可读性=中,封装性=不适用);0 派生"更新看板"任务(沿用 REQ-00017 强约束);回填式(本需求 8 任务已在 `d6be243` 落地) | REQ-00021 |
+| 2026-06-07 | 任务完成 | TASK-REQ-00021-00001 ~ 00008 · 8 任务回填式执行档案全部完成(code/<TASK>/RESULT.md + 4 份过程文档);SKILL.md 实际修改在 `d6be243`;code-it 仅生成执行档案(纯文档改动,无源码改动);0 测试需要 | TASK-REQ-00021-00001 ~ 00008 |
 | 2026-06-06 17:30 | 设计新增 | REQ-00020 概要设计完成(7 决策 + 9 不变量),整体=--extensible + 功能性=中(用户选);0 触发 §规则 1 三同步;0 派生"更新看板"任务 | REQ-00020 |
 | 2026-06-06 18:00 | 计划更新 | REQ-00020 详细设计与编码计划完成(共 6 个任务,全部开发=已完成,测试=不适用);7 维度优先级已确认(整体=--extensible / 扩展性=高 / 健壮性=高 / 可维护性=高 / 封装性=高 / 可复用性=高 / 可读性=不适用);0 派生"更新看板"任务(沿用 REQ-00017 强约束) | REQ-00020 |
 | 2026-06-06 21:35 | 任务完成 | TASK-REQ-00020-00001 · [修改] code-design 步骤 0b 简化为 1 维度(开发状态:已完成) | TASK-REQ-00020-00001 |
@@ -255,16 +256,24 @@
 
 > 写入方:各 `code-*` 技能创建/修改文件时追加(可选,但推荐)
 
-- 需求:`./assistants/V0.0.3/require/<需求编码>/RESULT.md` × 2
-- 概要设计:`./assistants/V0.0.3/design/<需求编码>/RESULT.md` × 1
-- 详细设计:`./assistants/V0.0.3/plan/<需求编码>/RESULT.md` × 1
-- 任务计划:`./assistants/V0.0.3/plan/<需求编号>/PLAN.md` × 1
+- 需求:`./assistants/V0.0.3/require/<需求编码>/RESULT.md` × 3
+- 概要设计:`./assistants/V0.0.3/design/<需求编码>/RESULT.md` × 2
+- 详细设计:`./assistants/V0.0.3/plan/<需求编码>/RESULT.md` × 3
+- 任务计划:`./assistants/V0.0.3/plan/<需求编号>/PLAN.md` × 3
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00001/RESULT.md` × 1
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00002/RESULT.md` × 1
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00003/RESULT.md` × 1
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00004/RESULT.md` × 1
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00005/RESULT.md` × 1
 - 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00020-00006/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00001/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00002/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00003/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00004/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00005/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00006/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00007/RESULT.md` × 1
+- 代码改修正文:`./assistants/V0.0.3/code/TASK-REQ-00021-00008/RESULT.md` × 1
 - 测试改修正文:`./assistants/V0.0.3/test/<任务编码>/RESULT.md` × 0
 - 评审报告:`./assistants/V0.0.3/review/REQ-00020/REVIEW-REPORT.md` × 1
 - 审查改修任务:`./assistants/V0.0.3/review/TASK-REQ-00020-00007/RESULT.md` × 1
