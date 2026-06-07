@@ -3,7 +3,7 @@
 - 缺陷编号:BUG-00001
 - 缺陷标题:code-require/code-design/code-plan/code-fix 不能实际修改代码(职责混淆)
 - 严重度:**P0**(架构职责分离违反,影响主流程"谁可以改代码"的核心契约)
-- 状态:**修复规划中**(本轮 code-plan 完成后从"调查中"推进)
+- 状态:**修复编码中**(本轮 code-it 实施 TASK-BUG-00001-00001,从"修复规划中"推进)
 - 报告人:wangmiao
 - 报告时间:2026-06-06 22:41
 - 当前负责人:wangmiao
@@ -287,6 +287,7 @@
 | 2026-06-06 22:41 | 登记 | wangmiao 报告缺陷:code-require/code-design/code-plan/code-fix 不能实际修改代码(职责混淆) |
 | 2026-06-07 | 状态推进 | 状态"报告"→"调查中":补充根因假设 4 / 5(commit 模式特征 + 审计可观察性);确认涉及文件 = `code-require` / `code-design` / `code-plan` / `code-fix` / `code-it` / `code-unit` 6 个 SKILL.md + `./assistants/rules/`(可选新增 skill-responsibility.md);确认根因正式定稿留待 `code-plan BUG-00001` 阶段 |
 | 2026-06-07 | 修复规划 | code-plan 完成详细设计 + 5 任务拆分(RESULT.md 14 章节 + PLAN.md 任务总览 + 7 份过程文档);状态推进"调查中"→"修复规划中";5 任务全部为纯文档型(测试状态=不适用) |
+| 2026-06-07 | 修复开始 | code-it 开始实施 TASK-BUG-00001-00001(`code-require` 加硬约束);状态推进"修复规划中"→"修复编码中" |
 
 ---
 
@@ -297,3 +298,4 @@
 | 2026-06-06 22:41 | 缺陷登记 | code-fix 创建缺陷 BUG-00001(严重度 P0,状态 报告) | BUG-00001 |
 | 2026-06-07 | 状态推进 | BUG-00001 状态"报告"→"调查中"(补充根因假设 4/5,确认根因正式定稿留待 code-plan) | BUG-00001 |
 | 2026-06-07 | 计划完成 | code-plan 完成 BUG-00001 详细设计 + 5 个任务拆分(整体=--balanced, 可维护性=高, 封装性/可读性=不适用);产出 9 份文档(RESULT.md / PLAN.md / 7 份过程文档) | BUG-00001 |
+| 2026-06-07 | 状态推进 | BUG-00001 状态"修复规划中"→"修复编码中"(code-it 开始实施 TASK-BUG-00001-00001) | BUG-00001 |
