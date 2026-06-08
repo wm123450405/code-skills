@@ -15,7 +15,7 @@
 | TASK-REQ-00026-00002 | REQ-00026 | 修改 | 详细设计 | [修改] code-rule/SKILL.md 描述段 + L336 CLAUDE.md 字面替换 | 已完成 | 不适用 | plugins/code-skills/skills/code-rule/SKILL.md §Type B 子流程(AI 工作指引追加)(L336) | 2026-06-08 13:20 | e8f3303 | — |
 | TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 已完成 | 不适用 | plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md §头部(L3) / L133 | 2026-06-08 13:28 | 8035c0c | — |
 | TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 已完成 | 不适用 | plugins/code-skills/skills/code-init/templates/INIT-REPORT.md L3 / L8 | 2026-06-08 13:35 | 5185ee2 | — |
-| TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | `assistants/V0.0.3/RESULT.md` |
+| TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §变更记录 | 2026-06-08 13:42 | — | — |
 
 **统计**:
 - 总任务数:5
@@ -199,3 +199,4 @@ graph TD
 | 2026-06-08 13:20 | 状态更新 | TASK-REQ-00026-00002 状态"待开始"→"已完成",提交 e8f3303 |
 | 2026-06-08 13:28 | 状态更新 | TASK-REQ-00026-00003 状态"待开始"→"已完成",提交 8035c0c |
 | 2026-06-08 13:35 | 状态更新 | TASK-REQ-00026-00004 状态"待开始"→"已完成",提交 5185ee2 |
+| 2026-06-08 13:42 | 状态更新 | TASK-REQ-00026-00005 状态"待开始"→"已完成"(无提交,纯看板同步收尾) |
