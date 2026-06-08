@@ -216,6 +216,17 @@ graph TD
 **附加约束**(注入到子技能 prompt 模板,FR-6 + D-2 选定 A):
 > 在执行本任务时,若 Claude Code 触发 `AskUserQuestion` 询问用户,**总选第一项 / 标注 (推荐) 的项**;不向用户提问
 
+**BUG 路径子技能调用表**(本轮 REQ-00027 新增,触发:`fix-skip-require` 模式):
+| 步骤 | 子技能 | 输入参数 | 期望产物 | 失败处理 |
+| --- | --- | --- | --- | --- |
+| 1 | `code-plan` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-plan.md` | 中断 + 报告(1) |
+| 2 | `code-it` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-work-log.md` 等 | 中断 + 报告(1) |
+| 3 | `code-unit` | `<BUG-NNN>`(条件触发) | `fix/<BUG-NNN>/fix-test-results.md` | 中断 + 报告(1) |
+| 4 | `code-check` | `<BUG-NNN>` | `fix/<BUG-NNN>/REVIEW-REPORT.md` | 中断 + 报告(1) |
+| 5 | 解析"必须改"列表 | — | (派生任务清单) | — |
+| 6 | 派生任务循环(若有) | — | (回归) | — |
+| 7 | 完成报告 | — | `fix/<BUG-NNN>/auto-report.md` | 警告不中断 |
+
 **不向子技能传任何特殊参数**(D-5 选定 A:无显式契约,子技能不感知被编排)。
 **D-5 修订(BUG-00001 生效,2026-06-06)**:本技能**不**向子技能传 prompt 参数(**状态文件除外**) — 详见步骤 0b(设置 code-auto 运行标记文件)。
 
@@ -404,7 +415,9 @@ Args: REQ-NNNNN
 status = "完成"
 1. 拼装完成报告(含执行摘要 + 最终状态 + 后续建议)
 2. 屏幕输出(stdout)
-3. Write: require/REQ-NNNNN/auto-report.md
+3. Write(按模式):
+   - 需求路径:`require/REQ-NNNNN/auto-report.md`
+   - BUG 路径(本轮 REQ-00027 新增):`fix/<BUG-NNN>/auto-report.md`
    - 失败 → stderr 警告"⚠ auto-report.md 写入失败(<原因>),报告仅输出在屏幕",不中断
 4. exit 0
 ```
@@ -719,6 +732,9 @@ function parseFixTitle(fixPath: string): string {
 | **E-17** | (本需求 REQ-00024 撤销)模式 B 模式识别歧义 | — | 路径感知无歧义(只检测目录存在性) |
 | **E-18** | (本需求 REQ-00024 新增)无版本工作空间 | 屏显"未检测到激活的版本工作空间,先调 /code-version" + 退出码 3(沿用既有"步骤 0 失败"语义) | — |
 | **E-19** | (本需求 REQ-00024 新增)路径类型异常(`<input>` 是文件而非目录) | 屏显 `⚠ 路径类型异常:<path> 不是目录` + 按"两个目录都不存在"路径走(视为需求内容) | 提示用户检查 `<input>` 是否为目录名而非文件路径 |
+| **E-20** | (本需求 REQ-00027 新增)BUG 路径模式 C 错配(例如 args 含 `BUG-00001-00001` 而非 `BUG-00001`) | 屏显 `⚠ BUG 路径模式 C 错配:<input> 不是合法 BUG 编号` + 提示格式 `^BUG-\d{5}$` | 用户需重新调 `/code-auto BUG-NNNNN` |
+| **E-21** | (本需求 REQ-00027 新增)`code-check` SKILL.md 缺失或与 `code-review` 不一致 | 沿用既有"`fix/<BUG-NNN>/RESULT.md` 缺失 → 提示先调 `code-fix`" 模式 | BUG 路径步骤 4 退化 |
+| **E-22** | (本需求 REQ-00027 新增)BUG 路径中断恢复 | 沿用 `code-auto` 既有"无增量恢复"约定;用户可 `Ctrl+C` 后重跑 `/code-auto <BUG-NNN>` 从步骤 1 重启 | 中断前已写入的 `fix/<BUG-NNN>/{RESULT,fix-plan,fix-work-log}.md` 保留 |
 
 ## 上下游衔接
 
@@ -772,6 +788,7 @@ constraints:
 - 不要并发调子技能(NFR-2 + Q-7 锁定)
 - 不要向子技能传任何特殊参数(零修改契约)
 - 不要修改 9 个子技能 SKILL.md(FR-8.AC-8.1)
+- 不要修改 `code-plan` / `code-it` / `code-unit` / `code-check` 的核心工作流(BUG 路径仅扩展子技能调用流程,不修改既有子技能 SKILL.md)
 - 不要在异常/中止时写 `auto-report.md`(NFR-7)
 - 不要在 `code-auto` 完成时自动调 `code-publish`(职责分离)
 - 不要在用户中止时尝试 flush `auto-report.md`(避免半成品)
