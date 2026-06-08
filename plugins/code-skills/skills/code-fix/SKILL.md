@@ -354,8 +354,7 @@ function parseFixTitle(fixPath: string): string {
 | 修复编码中 | (由 `code-it <BUG-NNN>` 推进) |
 | 已修复-待验证 | (由 `code-it` 推进) |
 | 已修复-已验证 | (由 `code-check <BUG-NNN>` 推进) |
-| 已关闭-不修复 | (由 `code-check` 推进) |
-| 已关闭 | (终态) |
+| 已关闭-不修复 | (终态;由 `code-check` 推进) |
 | 阻塞 | 解决阻塞后调 `code-fix` 解除 |
 
 > **典型修复流程**(本技能不参与,仅在用户复跑时确认状态):
