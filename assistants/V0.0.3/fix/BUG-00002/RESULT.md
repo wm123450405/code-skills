@@ -5,11 +5,11 @@
 - 严重度:P0(阻断 — 让本项目"通用开发技能集"定位被弱化为"SKILL 专用"或"特定语言/特定项目专用",违背项目自我定位)
 - 报告人:wangmiao
 - 报告时间:2026-06-08 14:00
-- 状态:修复编码中
+- 状态:已修复-待验证
 - 当前负责人:wangmiao
-- 修复时间:—
-- 修复人:—
-- 修复提交:—
+- 修复时间:2026-06-08 14:40
+- 修复人:wangmiao
+- 修复提交:678e602
 
 ## 缺陷描述
 
@@ -45,11 +45,12 @@
 本项目"通用开发技能集"定位未在所有 SKILL.md 描述中显式遵守。`code-it` L16 的"唯一被允许修改 `<本仓库>/skills/*/SKILL.md`"虽是描述本项目自身管理 SKILL.md 的硬约束(应保留),但其字面是"`skills/*/SKILL.md`"(特定文件类型),**也应**泛化。
 
 ## 修复方案
-[fix-plan.md](./fix-plan.md)(原 4 步骤 + 补充 5 处不变量字面 → 9 处)
+[fix-plan.md](./fix-plan.md)(原 4 步骤 + 补充 5 处不变量字面 → 9 处,全部完成)
 
 ## 修复实施
-- commit `82d476c`(已修复):4 文件 4 处 Edit(code-it L16 / code-unit L13/L318 / code-init L229)
-- 补充 commit:5 处不变量字面 code-require L530 / code-design L594 / code-plan L1093 / code-fix L433 / code-unit L13 后半段
+- commit `82d476c`(首轮):4 文件 4 处 Edit(code-it L16 / code-unit L13/L318 / code-init L229)
+- commit `678e602`(补修):5 文件 5 处 Edit(code-require L530 / code-design L594 / code-plan L1093 / code-fix L433 / code-unit L13 后半段)
+- 共 9 文件 9 处 Edit
 - 0 改 frontmatter
 - `marketplace.json` / `plugin.json` / 4 个 README / `CLAUDE.md` 0 diff
 
@@ -65,6 +66,7 @@
 - 2026-06-08 14:25  修复开始  code-it 开始实施修复(4 文件 4 处 Edit)
 - 2026-06-08 14:30  修复完成  code-it 完成修复,提交 82d476c,等待验证
 - 2026-06-08 14:35  补修发现  wangmiao 指出 5 处不变量字面不应保留,回退到"修复编码中"补修
+- 2026-06-08 14:40  补修完成  code-it 补修 5 处不变量字面,提交 678e602,等待验证
 
 ## 变更记录
 - 2026-06-08 14:00  缺陷登记  code-fix 创建缺陷 BUG-00002(严重度 P0)  BUG-00002
