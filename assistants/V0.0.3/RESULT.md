@@ -41,6 +41,8 @@
 | M1-REQ-00020 | REQ-00020 全部 6 任务(T-1 ~ T-6) | 6 任务开发状态=已完成 ∧ 测试状态=不适用 | 已完成 | 2026-06-06 | 2026-06-06 |
 | M1-REQ-00021 | REQ-00021 全部 8 任务(T-1 ~ T-8) | 8 任务开发状态=已完成 ∧ 测试状态=不适用 | 已完成 | 2026-06-06 | 2026-06-06 |
 | M1-REQ-00023 | REQ-00023 全部 6 任务(T-1 ~ T-6) | 6 任务开发状态=已完成 ∧ 测试状态=不适用 | 已完成 | 2026-06-07 | 2026-06-07 |
+| M1-REQ-00025 | REQ-00025 全部 9 任务(T-1 ~ T-9) | 9 任务开发状态=已完成 ∧ 测试状态=不适用 | 待开始 | 2026-06-08 | — |
+| M2-REQ-00025 | (无新增任务,仅手动验证 U-1~U-10) | 既有 5 位纯数字 + 新格式编号均可解析;U-1~U-10 全部通过 | 待开始 | 2026-06-08 | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -97,8 +99,11 @@
 | REQ-00022 | 修改 /code-check 技能名称为 /code-check | 已完成 | 10 | 10 | 0(不适用) | 2026-06-07 | [REQ-00022/PLAN.md](./plan/REQ-00022/PLAN.md) |
 | REQ-00023 | 简化 /code-dashboard 输出为 4 段(总开发进度 + 5 类状态占比 + 高优缺陷 + ≤5 条建议) | 已完成 | 6 | 6 | 0(不适用) | 2026-06-07 | [REQ-00023/PLAN.md](./plan/REQ-00023/PLAN.md) |
 | REQ-00024 | code-auto 步骤 1 改造:用路径感知替代 from 关键字 | 已完成 | 1 | 1 | 0(不适用) | 2026-06-07 | [REQ-00024/PLAN.md](./plan/REQ-00024/PLAN.md) |
+| REQ-00025 | 软化编号正则约束,允许用户自定义编号格式(仅前缀固定) | 已完成 | 9 | 0 | 0(不适用) | 2026-06-08 | [REQ-00025/PLAN.md](./plan/REQ-00025/PLAN.md) |
 
-**统计**:4 个计划 / 共 25 个任务 / 开发完成 25 / 测试通过 0(不适用 25)
+**统计**:5 个计划 / 共 40 个任务 / 开发完成 31(0 不适用 + 9 不适用未启动) / 测试通过 0(不适用 31)
+
+(详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31)
 
 ---
 
@@ -150,12 +155,21 @@
 | TASK-BUG-00001-00004 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-fix 加"不修改 SKILL.md"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §不要做的事 | 2026-06-07 17:47 | (本会话) | BUG-00001 |
 | TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | 2026-06-07 17:54 | (本会话) | BUG-00001 |
 | TASK-REQ-00024-00001 | REQ-00024 | 修改 | 详细设计 | [修改] code-auto 步骤 1:用路径感知替代 from 关键字 | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入与输出 + §工作流步骤 步骤 1 + §边界与异常 | 2026-06-07 17:55 | (本会话) | REQ-00024 |
+| TASK-REQ-00025-00001 | REQ-00025 | 修改 | 详细设计 | [修改] encoding-conventions §规则 1/2/4 软化 + 新增 §规则 1.5 | 待开始 | 不适用 | ./assistants/rules/encoding-conventions.md §规则 1 §条款 表 + §规则 2 §条款 + §规则 4 §条款 + §规则 1.5(新) | — | — | — |
+| TASK-REQ-00025-00002 | REQ-00025 | 修改 | 详细设计 | [修改] code-require §输入 + §工具使用约定 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-require/SKILL.md §输入 > 需求编码格式 + §工具使用约定 > 标题解析 > parseResultTitle | — | — | — |
+| TASK-REQ-00025-00003 | REQ-00025 | 修改 | 详细设计 | [修改] code-design §输入 + §工作目录约定 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-design/SKILL.md §输入 > 需求编码格式 + §工作目录约定 > 本技能的目录粒度 | — | — | — |
+| TASK-REQ-00025-00004 | REQ-00025 | 修改 | 详细设计 | [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-plan/SKILL.md §输入 + §工作流程 > 步骤 10A > 任务编号 + §工作流程 > 步骤 9B > 任务编号分配 | — | — | — |
+| TASK-REQ-00025-00005 | REQ-00025 | 修改 | 详细设计 | [修改] code-it §输入 + §步骤 1 + §步骤 7 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-it/SKILL.md §输入 > 任务编码格式 + §工作流程 > 步骤 1 解析任务编码 + §工作流程 > 步骤 7 写入 RESULT.md | — | — | — |
+| TASK-REQ-00025-00006 | REQ-00025 | 修改 | 详细设计 | [修改] code-unit §输入 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-unit/SKILL.md §输入 > 任务编码格式 | — | — | — |
+| TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | — | — | — |
+| TASK-REQ-00025-00008 | REQ-00025 | 修改 | 详细设计 | [修改] code-fix §输入 + §步骤 1 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-fix/SKILL.md §输入 > 缺陷编号格式 + §工作流程 > 步骤 1 收集输入 ID 并判定路径 | — | — | — |
+| TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 待开始 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | — | — | — |
 
 **统计**:
-- 总任务数:36
+- 总任务数:45
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):36
-- 开发已完成 / 未完成:36 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 36 / 0
+- 开发已完成 / 未完成:36 / 9
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 36 / 9
 
 ---
 
@@ -284,6 +298,7 @@
 | 2026-06-07 | 评审发现 | REQ-00024 评审完成(0 必须改 / 0 建议改 / 0 可选,派生 0 个"审查改修"任务;9 FR / 6 NFR / 8 AC 全部满足;8 项 INV 静态校验全通过) | REQ-00024 |
 | 2026-06-07 | 设计新增 | REQ-00025 概要设计完成(15 章节;code-auto 上下文检测 DETECTED 采纳 --balanced 默认;1 规范修订 + 8 SKILL.md 字面更新;8 FR / 7 NFR / 8 AC 全部满足) | REQ-00025 |
 | 2026-06-08 | 设计变更 | REQ-00025 概要设计增量更新(no-op 确认):需求侧 v1 未变;规范侧 13 份 0 变化(encoding-conventions.md 软化待 code-plan/code-it 落地);代码侧 8 个 in-scope SKILL.md 仍含旧 5 位正则(待 code-plan/code-it 落地);design/.../RESULT.md §15 追加 1 行,概要设计清单状态保持"已完成";0 字段扩展,0 §规则 1 三同步,0 派生"更新看板"任务 | REQ-00025 |
+| 2026-06-08 | 计划更新 | REQ-00025 详细设计与编码计划完成(共 9 个任务,1 规范 + 8 SKILL.md 字面更新;全部开发=待开始,测试=不适用;整体=`--balanced` + 功能性=中);0 派生"更新看板"任务(沿用 REQ-00017 强约束);2 里程碑(M1 软化上线 + M2 验证) | REQ-00025 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
@@ -329,3 +344,6 @@
 - 审查改修任务:`./assistants/V0.0.3/review/TASK-REQ-00020-00008/RESULT.md` × 1
 - 缺陷详情:`./assistants/V0.0.3/fix/BUG-00001/RESULT.md` × 1
 - 缺陷总览:`./assistants/V0.0.3/fix/RESULT.md` × 1
+- 详细设计:`./assistants/V0.0.3/plan/REQ-00025/RESULT.md` × 1
+- 任务计划:`./assistants/V0.0.3/plan/REQ-00025/PLAN.md` × 1
+- 过程文档:`./assistants/V0.0.3/plan/REQ-00025/{materials-index,module-details,interface-specs,data-changes,risk-analysis,rule-compliance,design-notes}.md` × 7
