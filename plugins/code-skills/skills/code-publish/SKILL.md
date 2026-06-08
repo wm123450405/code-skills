@@ -309,7 +309,7 @@ Bash: ls -1 ./assistants/<版本号>/publish/ 2>/dev/null | grep -E '(DEPLOY|UPD
 #### 2.3 写 DEPLOY.md(始终生成)
 
 ```bash
-Read: plugins/code-skills/skills/code-publish/templates/DEPLOY.md
+Read: <本仓库>/skills/code-publish/templates/DEPLOY.md
 Write: ./assistants/<版本号>/publish/DEPLOY.md
 ```
 
@@ -322,7 +322,7 @@ Write: ./assistants/<版本号>/publish/DEPLOY.md
 若步骤 2.0 判定"非基线":
 
 ```bash
-Read: plugins/code-skills/skills/code-publish/templates/UPDATE.md
+Read: <本仓库>/skills/code-publish/templates/UPDATE.md
 Write: ./assistants/<版本号>/publish/UPDATE.md
 ```
 
@@ -358,7 +358,7 @@ Bash: ls -la ./assistants/qanda/ 2>/dev/null
 
 ```bash
 Bash: mkdir -p ./assistants/qanda/
-Read: plugins/code-skills/skills/code-publish/templates/qanda-README.md
+Read: <本仓库>/skills/code-publish/templates/qanda-README.md
 Write: ./assistants/qanda/README.md
 ```
 
@@ -553,5 +553,5 @@ Glob: ./assistants/qanda/*.md
 - 不要把"基线识别"用规则 2 / 规则 3 替代规则 1(NFR-7 锁定)
 - 不要在前置检查通过前进入步骤 2(任何文件都不写)
 - 不要把本技能加入 `code-auto` 驱动的 6 技能链(Q-7 默认)
-- 不要追加 `plugins/code-skills/CLAUDE.md` "AI 工作约定"小节(Q-8 默认)
+- 不要追加 `<本仓库>/CLAUDE.md` "AI 工作约定"小节(Q-8 默认)
 - 不要把 qanda/ 创建失败当成致命错误(FR-7.AC-7.4)
