@@ -43,6 +43,8 @@
 | M1-REQ-00023 | REQ-00023 全部 6 任务(T-1 ~ T-6) | 6 任务开发状态=已完成 ∧ 测试状态=不适用 | 已完成 | 2026-06-07 | 2026-06-07 |
 | M1-REQ-00025 | REQ-00025 全部 9 任务(T-1 ~ T-9) | 9 任务开发状态=已完成 ∧ 测试状态=不适用 | 已完成 | 2026-06-08 | 2026-06-08 |
 | M2-REQ-00025 | (无新增任务,仅手动验证 U-1~U-10) | 既有 5 位纯数字 + 新格式编号均可解析;U-1~U-10 全部通过 | 待开始 | 2026-06-08 | — |
+| M1-REQ-00026 | REQ-00026 T-001 ~ T-004(14 目标文件) | `git diff --stat` 列出 14 文件;frontmatter 字节级一致;`git diff marketplace.json plugin.json README*.md CLAUDE.md` 0 diff | 待开始 | 2026-06-08 | — |
+| M2-REQ-00026 | REQ-00026 T-005(看板同步) | 5 任务开发=已完成 ∧ 测试=不适用 | 待开始 | 2026-06-08 | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -102,8 +104,9 @@
 | REQ-00023 | 简化 /code-dashboard 输出为 4 段(总开发进度 + 5 类状态占比 + 高优缺陷 + ≤5 条建议) | 已完成 | 6 | 6 | 0(不适用) | 2026-06-07 | [REQ-00023/PLAN.md](./plan/REQ-00023/PLAN.md) |
 | REQ-00024 | code-auto 步骤 1 改造:用路径感知替代 from 关键字 | 已完成 | 1 | 1 | 0(不适用) | 2026-06-07 | [REQ-00024/PLAN.md](./plan/REQ-00024/PLAN.md) |
 | REQ-00025 | 软化编号正则约束,允许用户自定义编号格式(仅前缀固定) | 已完成 | 9 | 9 | 0(不适用) | 2026-06-08 | [REQ-00025/PLAN.md](./plan/REQ-00025/PLAN.md) |
+| REQ-00026 | 技能描述通用化扫除(10 SKILL.md 描述性段落去 plugins/code-skills 强关联指代) | 已完成 | 5 | 5 | 0(不适用) | 2026-06-08 | [REQ-00026/PLAN.md](./plan/REQ-00026/PLAN.md) |
 
-**统计**:6 个计划 / 共 40 个任务 / 开发完成 40(9 不适用 + 31 不适用) / 测试通过 0(不适用 40)
+**统计**:7 个计划 / 共 45 个任务 / 开发完成 45 / 测试通过 0(不适用 45)
 
 (详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31)
 
@@ -166,12 +169,17 @@
 | TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | 2026-06-08 | fab832e | — |
 | TASK-REQ-00025-00008 | REQ-00025 | 修改 | 详细设计 | [修改] code-fix §输入 + §步骤 1 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-fix/SKILL.md §输入 > 缺陷编号格式 + §工作流程 > 步骤 1 收集输入 ID 并判定路径 | 2026-06-08 | 45a2aee | — |
 | TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 已完成 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | 2026-06-08 | b607d00 | — |
+| TASK-REQ-00026-00001 | REQ-00026 | 修改 | 详细设计 | [修改] 9 个 SKILL.md 描述段去专属化(占位符 `<本仓库>` + 概述段声明) | 待开始 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-plan,code-it,code-unit,code-check,code-fix,code-publish,code-init}/SKILL.md §YAML frontmatter description / §工作目录约定 / §工具使用约定 | — | — | — |
+| TASK-REQ-00026-00002 | REQ-00026 | 修改 | 详细设计 | [修改] code-rule/SKILL.md 描述段 + L336 CLAUDE.md 字面替换 | 待开始 | 不适用 | plugins/code-skills/skills/code-rule/SKILL.md §工作目录约定 / §工具使用约定 / L336 | — | — | — |
+| TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 待开始 | 不适用 | plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md §头部 / L133 | — | — | — |
+| TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 待开始 | 不适用 | plugins/code-skills/skills/code-init/templates/INIT-REPORT.md L3 / L8 | — | — | — |
+| TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §变更记录 | — | — | — |
 
 **统计**:
-- 总任务数:45
+- 总任务数:50
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):45
-- 开发已完成 / 未完成:45 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 45 / 0
+- 开发已完成 / 未完成:45 / 5
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 50 / 0
 
 ---
 
@@ -315,6 +323,7 @@
 | 2026-06-08 | 评审发现 | REQ-00025 评审完成(共 0 条发现,派生 0 个"审查改修"任务;9 任务全部通过;8 FR / 7 NFR / 8 AC 全部满足;INV-1~INV-16 全部严守;0 触及 SKILL.md frontmatter;0 引入新依赖;0 触发 §规则 1 三同步) | REQ-00025 |
 | 2026-06-08 12:00 | 需求新增 | REQ-00026 需求分析完成(共 5 FR / 4 NFR / 12 AC;波及 10 SKILL.md + 3 templates + 1 INIT-REPORT;`.assistants` 0 改;marketplace.json / plugin.json 0 改;旧需求档案 0 改);过程文件 4 + 结果文件 1 = 5 文件待提交 | REQ-00026 |
 | 2026-06-08 12:30 | 设计新增 | REQ-00026 概要设计完成(13 目标文件 + 0 新增模块 + 9 条 INV;`--balanced` 默认) | REQ-00026 |
+| 2026-06-08 12:45 | 计划更新 | REQ-00026 详细设计与编码计划完成(共 5 个任务,4 修改 + 1 文档;全部开发=待开始,测试=不适用;0 架构任务;M1-REQ-00026 + M2-REQ-00026) | REQ-00026 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
