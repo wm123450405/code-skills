@@ -336,7 +336,9 @@ Args: <原需求内容整串>  # 整串视为自然语言需求
 3. 进入步骤 3,步骤 3-7 走 BUG 路径子技能调用表(详 §"子技能调用表" 段 BUG 路径)
 ```
 
-### 步骤 2:code-design
+### 步骤 2:code-design(条件化)
+
+#### 2A. 默认(需求路径:req-skip-require / req-run-require / req-content)
 
 ```
 Skill: code-design
@@ -346,7 +348,18 @@ Args: REQ-NNNNN
 - **期望产物**:`./assistants/<版本号>/design/REQ-NNNNN/RESULT.md`
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
-### 步骤 3:code-plan
+#### 2B. 跳过(BUG 路径:bug-skip-require / fix-skip-require)
+
+- **屏幕日志**:
+  ```
+  [code-auto] 步骤 2/7:code-design(模式跳过,BUG 路径不调概要设计)
+  [code-auto]   → 跳过依据:模式 C / 缺陷已登记续跑 路径不调概要设计
+  ```
+- 不调任何子技能,直接进步骤 3
+
+### 步骤 3:code-plan(条件化)
+
+#### 3A. 默认(需求路径:req-skip-require / req-run-require / req-content)
 
 ```
 Skill: code-plan
@@ -354,6 +367,16 @@ Args: REQ-NNNNN
 ```
 
 - **期望产物**:`./assistants/<版本号>/plan/REQ-NNNNN/{RESULT,PLAN}.md`
+- **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
+
+#### 3B. 缺陷分支(BUG 路径:bug-skip-require / fix-skip-require)
+
+```
+Skill: code-plan
+Args: <BUG-NNN>
+```
+
+- **期望产物**:`./assistants/<版本号>/fix/<BUG-NNN>/fix-plan.md`
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
 ### 步骤 4:任务循环
