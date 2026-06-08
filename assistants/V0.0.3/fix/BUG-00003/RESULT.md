@@ -5,11 +5,11 @@
 - 严重度:P0(阻断 — plugin 安装后,SKILL.md 中出现的 `plugins/code-skills/...` 绝对路径无法定位,导致引用断裂)
 - 报告人:wangmiao
 - 报告时间:2026-06-08 14:10
-- 状态:修复规划中
+- 状态:已修复-待验证
 - 当前负责人:wangmiao
-- 修复时间:—
-- 修复人:—
-- 修复提交:—
+- 修复时间:2026-06-08 14:55
+- 修复人:wangmiao
+- 修复提交:75297dc
 - **与 BUG-00002 关联**:**修复工作合并**(同属"描述性段落去专属化",同一批 Edit)
 
 ## 缺陷描述
@@ -55,19 +55,23 @@ plugin 安装后,用户环境中 `plugins/code-skills/...` 路径不存在,SKILL
 本项目作为 plugin 发布时,SKILL.md 中的 `plugins/code-skills/...` 字面是"开发视角"的本仓库路径,**不是**"plugin 视角"的相对路径。修复方向:用"相对路径"或"泛用指代"代替,确保 plugin 安装后仍可定位。
 
 ## 修复方案
-(由 `code-plan BUG-00003` 产出 `fix-plan.md`;**与 BUG-00002 修复合并**)
+[fix-plan.md](./fix-plan.md)(4 步骤,全部完成)
 
 ## 修复实施
-(由 `code-it BUG-00003` 产出 `fix-work-log.md`;**与 BUG-00002 合并实施**)
+- commit `75297dc`:2 文件 5 处 Edit(code-publish L312/L325/L361/L556 + code-rule L363)
+- 0 改 frontmatter
+- `marketplace.json` / `plugin.json` / 4 个 README / `CLAUDE.md` 0 diff
 
 ## 验证结果
-(由 `code-it BUG-00003` 产出 `fix-test-results.md`)
+静态校验全部通过(本仓库纯文档,验证手段 = 0 diff 校验)
 
 ## 修复日志
 - 2026-06-08 14:10  登记  wangmiao 报告缺陷:SKILL.md 描述中"绝对路径"在 plugin 安装后断链
 - 2026-06-08 14:15  关联  本缺陷与 BUG-00002(特定文件类型)同属"描述性段落去专属化",修复工作合并
 - 2026-06-08 14:45  询问  本轮确认与 BUG-00002 修复合并,剩 5 处命令示例需补修;用户选"保持调查中,先调 code-plan BUG-00003"——状态暂不推进,等待 code-plan 产出 fix-plan.md 后再推进
 - 2026-06-08 14:50  修复规划  code-plan 已产出 fix-plan.md(4 步骤,与 BUG-00002 方案统一)
+- 2026-06-08 14:55  修复开始  code-it 开始实施修复(2 文件 5 处 Edit)
+- 2026-06-08 14:55  修复完成  code-it 完成修复,提交 75297dc,等待验证
 
 ## 变更记录
 - 2026-06-08 14:10  缺陷登记  code-fix 创建缺陷 BUG-00003(严重度 P0)  BUG-00003
