@@ -3,60 +3,54 @@ name: code-fix
 description: 缺陷登记与跟踪(版本感知)。要求用户提供"缺陷编号"(如 `BUG-00001`)或"缺陷描述"。
 - **若用户提供缺陷编号**:读取 `./assistants/<版本号>/fix/<缺陷编号>/` 下的所有文件,生成/更新该缺陷的 `RESULT.md`(详细描述缺陷信息并跟踪缺陷修改状态);同时维护 `./assistants/<版本号>/fix/RESULT.md` 缺陷登记表(若已存在则增量追加,否则新建);同步更新版本看板 `./assistants/<版本号>/RESULT.md` 的"缺陷清单"区段。
 - **若用户提供缺陷描述**:自动生成下一个可用的 `BUG-NNNNN` 编号,创建 `./assistants/<版本号>/fix/<缺陷编号>/` 目录与 `RESULT.md`(含用户原始描述 + 初始登记),并维护缺陷登记表与看板。
-- 本技能**不**实际修改代码(那是 `code-plan` + `code-it` 的职责,二者已支持传入缺陷编号);本技能只负责**登记、跟踪、状态推进**整个缺陷的生命周期。
-- 一个缺陷被登记后,典型流程:`code-plan <BUG-NNN>`(规划修复方案) → `code-it <BUG-NNN>`(实施修复) → `code-fix <BUG-NNN>`(将状态推进为"已修复-已验证"或"已关闭")。
+- 本技能**纯登记型**:仅产出 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `fix-plan.md`、`fix-work-log.md`、`fix-test-results.md` 等下游文件;**不**实施代码改动(那是 `code-plan` + `code-it` 的职责);**不**推进"修复规划中"及之后状态(由 `code-plan` / `code-it` / `code-check` 推进)。
+- 一个缺陷被登记后,典型流程:`code-plan <BUG-NNN>`(规划修复方案并产出 `fix-plan.md`) → `code-it <BUG-NNN>`(实施修复并产出 `fix-work-log.md`) → `code-unit <BUG-NNN>`(补单元测试) → `code-check <BUG-NNN>`(修复检查并推进状态到"已修复-已验证" / "已关闭")。
 ---
 
 # code-fix — 缺陷登记与跟踪(版本感知)
 
 ## 目标
-提供**缺陷从登记到关闭的全生命周期跟踪**,作为 `code-require → code-design → code-plan → code-it → code-unit → code-check` 主流程之外的**支线流程入口**:
+提供**缺陷登记与跟踪**(纯登记型),作为 `code-require → code-design → code-plan → code-it → code-unit → code-check` 主流程之外的**支线流程入口**:
 - **登记**:把"用户报告的缺陷"转化为结构化、可追踪的 `BUG-NNN/RESULT.md`
 - **跟踪**:在 `fix/RESULT.md` 与版本看板的"缺陷清单"区段实时反映每个缺陷的状态
-- **推进**:每次重跑 `code-fix <BUG-NNN>` 都会刷新文档,把状态往前推(报告 → 调查中 → 修复规划中 → 修复编码中 → 已修复-待验证 → 已修复-已验证 → 已关闭)
-- **不实施修复**:本技能不写代码,只跟踪状态;实际修复由 `code-plan` + `code-it` 完成
+- **不实施修复**:本技能不写代码,只跟踪状态;实际修复由 `code-plan` + `code-it` + `code-unit` + `code-check` 完成
+- **不推进"修复规划中"及之后状态**:本技能只推进"报告 / 调查中 / 修复规划中"(前 3 段);后续状态由 `code-plan` / `code-it` / `code-check` 推进
 
 ## 适用场景
 - 用户报告了一个 bug,需要登记跟踪
-- bug 修复过程中,需要刷新状态(报告 → 修复中 → 已修复)
-- bug 已修复,需要确认验证或关闭
+- bug 登记后,需要调 `code-plan` / `code-it` / `code-check` 推进后续状态(本技能**不**推进"修复规划中"及之后状态)
 - 用户想查看当前所有 bug 的清单与状态
 
 ## 不适用
 - 当前**没有激活的版本工作空间**(请先调 `code-version`)
 - 想**主动**为某项需求做计划(那是 `code-plan` 的事)
-- 想**实施**代码修复(那是 `code-it` 的事)
-- 想**评审**已经写完的修复(那是 `code-check` 或 `code-unit` 的事)
+- 想**实施**代码修复(那是 `code-it` 的事;`code-fix` 不产出 `fix-plan.md` / `fix-work-log.md`)
+- 想**评审**已经写完的修复(那是 `code-check` 的事;本技能不实施)
+- 想**直接关闭**缺陷 —— 本技能不直接关闭;由 `code-check` 推进"已修复-已验证" / "已关闭-不修复",`code-fix` 复跑时直接确认
 
 ## 工作目录约定(强制)
 
 **版本工作空间**:`./assistants/<版本号>/`(由 `./assistants/.current-version` 决定)。
-本技能操作新增的 `fix/` 子目录:
+本技能操作新增的 `fix/` 子目录(纯登记型,本技能**只**产出 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `fix-plan.md` / `fix-work-log.md` 等下游文件):
 ```
 ./assistants/
 ├── rules/                                  # 跨版本规范,本技能只读
 └── <版本号>/
     ├── RESULT.md                           # 版本看板(本技能追加"缺陷清单" / "变更记录"区段)
-    └── fix/                                # ★ 本技能维护的缺陷工作空间
+    └── fix/                                # ★ 本技能维护的缺陷工作空间(纯登记型)
         ├── RESULT.md                       # ★ 缺陷总览(本技能创建/追加)
         ├── BUG-00001/                      # 第一个缺陷
-        │   ├── RESULT.md                   # ★ 缺陷详情 + 修复状态(本技能创建/更新)
-        │   ├── investigation.md            # 调查笔记(可选)
-        │   ├── fix-plan.md                 # 修复方案(由 code-plan 写入)
-        │   ├── fix-work-log.md             # 修复实施日志(由 code-it 写入)
-        │   ├── fix-compile-and-run.md      # 编译/运行验证(由 code-it 写入)
-        │   ├── fix-test-results.md         # 测试结果(由 code-it 写入)
-        │   └── deviations.md               # 偏离记录(由 code-it 写入)
+        │   └── RESULT.md                   # ★ 缺陷详情 + 修复状态(本技能创建/更新)
         ├── BUG-00002/
         │   └── ...
         └── ...
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
-- 本技能**只**创建/修改 `./assistants/<版本号>/fix/` 下的文件
+- 本技能**只**创建/修改 `./assistants/<版本号>/fix/` 下的 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md` 两个文件
 - 本技能**只**修改 `./assistants/<版本号>/RESULT.md` 的"缺陷清单" / "变更记录"区段
 - 本技能**不**触碰 `./assistants/rules/`、其他版本工作空间、`require/`、`design/`、`plan/`、`code/`、`test/`、`review/` 下的任何文件
-- 实际代码修改由 `code-plan` + `code-it` 完成,本技能**不**调用它们(由用户自行串联)
+- 实际代码修改由 `code-plan` + `code-it` + `code-unit` + `code-check` 完成,本技能**不**调用它们(由用户自行串联)
 
 ## 输入
 - **缺陷编号**(`BUG-NNN`,N 从 001 起,3 位补零)或**缺陷描述**(自然语言,任意长度)
@@ -246,36 +240,35 @@ function parseFixTitle(fixPath: string): string {
 
 **新建分支跳过此步**。
 
-### 步骤 4 — 询问本轮状态推进
+### 步骤 4 — 询问本轮状态推进(纯登记型)
 
-> 本步骤是本技能的核心:**每次重跑都把状态往前推一格**。
+> 本技能是**纯登记型**:本步骤是本技能的核心,但候选目标状态已收敛为"登记/分析类"。本技能**只**推进"报告 / 调查中 / 修复规划中"(前 3 段);"修复编码中"及之后由 `code-plan` / `code-it` / `code-check` 推进。
 
 用 `AskUserQuestion` 让用户选择本轮要推进到的目标状态:
 
 | 当前状态 | 候选目标状态 |
 | --- | --- |
 | (新建) | 报告 / 调查中 |
-| 报告 | 调查中 / 修复规划中 / 已关闭-非缺陷 / 已取消 |
-| 调查中 | 修复规划中 / 已关闭-非缺陷 / 阻塞 / 已取消 |
-| 修复规划中 | 修复编码中 / 阻塞 / 已取消 |
-| 修复编码中 | 已修复-待验证 / 阻塞 / 已取消 |
-| 已修复-待验证 | 已修复-已验证 / 验证失败回退到修复编码中 / 已关闭-不修复 |
-| 已修复-已验证 | 已关闭(归档) |
+| 报告 | 调查中 / 已关闭-非缺陷 / 已取消 |
+| 调查中 | 已关闭-非缺陷 / 阻塞 / 已取消 |
+| 修复规划中 | (由 `code-plan` 推进;本技能不推进此状态之后) |
+| 修复编码中 | (由 `code-it` 推进) |
+| 已修复-待验证 | (由 `code-it` 推进) |
+| 已修复-已验证 | (由 `code-check` 推进) |
 | 已关闭-非缺陷 | (终态) |
 | 已关闭-不修复 | (终态) |
 | 已取消 | (终态) |
 | 阻塞 | 解除阻塞(回到报告中合适状态) / 已取消 |
 
-**状态语义**:
+**状态语义**(本技能维护的"登记/分析类"状态):
 - `报告`:刚被登记,尚未开始调查
 - `调查中`:正在分析根因,可能在写 `investigation.md`
-- `修复规划中`:用户已调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`
-- `修复编码中`:用户已调 `code-it <BUG-NNN>` 开始改代码
-- `已修复-待验证`:代码已改完,等待运行测试 / 人工验证
-- `已修复-已验证`:测试通过 / 人工确认修复
-- `已关闭-非缺陷`:调查后确认不是 bug(误报、用户误操作等)
-- `已关闭-不修复`:确认是 bug 但决定不修(成本太高/优先级低/不再适用)
-- `已取消`:与"不修复"类似但理由更模糊
+- `修复规划中`:用户已调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`(本技能**校验但不主动推进**;实际推进由 `code-plan`)
+
+> **超出本技能范围**(由其他子技能推进,本技能不参与):
+> - `修复编码中` / `已修复-待验证` —— 由 `code-it` 推进
+> - `已修复-已验证` / `已关闭-不修复` —— 由 `code-check` 推进
+> - `已关闭` —— 由 `code-check` 推进(终态)
 - `阻塞`:等待外部因素(等用户答复、等依赖版本升级、等权限开通等)
 
 ### 步骤 5 — 补充本轮信息
@@ -284,12 +277,15 @@ function parseFixTitle(fixPath: string): string {
 
 - **任意推进**:询问"本轮主要做了哪些工作?"(2-3 句话,写入 `RESULT.md` 的"修复日志"区段)
 - **`→ 调查中`**:询问"初步根因假设是什么?涉及哪些文件?"(可写 `investigation.md`)
-- **`→ 修复规划中`**:确认 `fix-plan.md` 是否已存在(由 `code-plan` 生成);若不存在,提示用户"请先调 `code-plan <BUG-NNN>`"
-- **`→ 修复编码中`**:确认 `fix-work-log.md` 是否已存在(由 `code-it` 生成);若不存在,提示用户"请先调 `code-it <BUG-NNN>`"
-- **`→ 已修复-待验证`**:确认 `fix-test-results.md` 是否存在(由 `code-it` 写入);若不存在,提示用户"请先运行测试"
-- **`→ 已修复-已验证`**:询问"验证方式(测试用例/手动验证)?验证时间?验证人?"
 - **`→ 已关闭-*`**:询问"关闭理由"
 - **`→ 阻塞`**:询问"阻塞原因 / 解除条件"
+
+> **注**:本技能**不**再推进"修复规划中 / 修复编码中 / 已修复-待验证 / 已修复-已验证"等状态。
+> 若需推进上述状态,请按以下顺序调:
+> 1. `code-plan <BUG-NNN>` —— 产出 `fix-plan.md`,推进"修复规划中"
+> 2. `code-it <BUG-NNN>` —— 产出 `fix-work-log.md`,推进"修复编码中" / "已修复-待验证"
+> 3. `code-unit <BUG-NNN>`(条件触发)—— 产出 `fix-test-results.md`
+> 4. `code-check <BUG-NNN>` —— 产出 `REVIEW-REPORT.md`,推进"已修复-已验证" / "已关闭"
 
 ### 步骤 6 — 写缺陷详情 `RESULT.md`
 
@@ -356,20 +352,29 @@ function parseFixTitle(fixPath: string): string {
    YYYY-MM-DD HH:mm  缺陷状态  <缺陷编号> 状态"<旧状态>"→"<新状态>"  <缺陷编号>
    ```
 
-### 步骤 9 — 引导下一步
+### 步骤 9 — 引导下一步(纯登记型,引导调其他子技能)
 
 根据当前推进到的目标状态,给用户建议:
 
 | 当前状态 | 下一步建议 |
 | --- | --- |
 | 报告 | 调 `code-fix <BUG-NNN>` 进入"调查中",补充根因 |
-| 调查中 | 调 `code-fix <BUG-NNN>` 进入"修复规划中";若已规划,调 `code-plan <BUG-NNN>` |
-| 修复规划中 | 调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`,完成后调 `code-fix` 推进 |
-| 修复编码中 | 调 `code-it <BUG-NNN>` 实施修复,完成后调 `code-fix` 推进 |
-| 已修复-待验证 | 跑测试,确认通过后调 `code-fix` 推进到"已修复-已验证" |
-| 已修复-已验证 | 调 `code-fix` 关闭,或调 `code-check` 做正式评审 |
-| 已关闭-* | (终态,无需操作) |
+| 调查中 | 调 `code-fix <BUG-NNN>` 进入"修复规划中";若已规划,调 `code-plan <BUG-NNN>` 产出 `fix-plan.md` |
+| 修复规划中 | (由 `code-plan` 推进;本技能不主动推进此状态之后) |
+| 修复编码中 | (由 `code-it <BUG-NNN>` 推进) |
+| 已修复-待验证 | (由 `code-it` 推进) |
+| 已修复-已验证 | (由 `code-check <BUG-NNN>` 推进) |
+| 已关闭-不修复 | (由 `code-check` 推进) |
+| 已关闭 | (终态) |
 | 阻塞 | 解决阻塞后调 `code-fix` 解除 |
+
+> **典型修复流程**(本技能不参与,仅在用户复跑时确认状态):
+> 1. `code-fix "用户报告:..."` → 登记 BUG,产出 `fix/<BUG-NNN>/RESULT.md`(本技能)
+> 2. `code-fix BUG-NNN` → 推进到"调查中" → "修复规划中"(本技能前 3 段)
+> 3. `code-plan BUG-NNN` → 产出 `fix-plan.md`,状态推进到"修复规划中"后由 `code-plan` 接管
+> 4. `code-it BUG-NNN` → 产出 `fix-work-log.md`,状态推进到"已修复-待验证"
+> 5. `code-unit BUG-NNN`(条件) → 产出 `fix-test-results.md`
+> 6. `code-check BUG-NNN` → 产出 `REVIEW-REPORT.md`,状态推进到"已修复-已验证" / "已关闭"
 
 ### 步骤 10 — 完善过程文档与汇报
 
@@ -382,10 +387,12 @@ function parseFixTitle(fixPath: string): string {
 
 ---
 
-## 过程文档格式
+## 过程文档格式(纯登记型)
 
 ### fix/<BUG-NNN>/RESULT.md
-见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(链接 fix-plan.md)/ 修复实施(链接 fix-work-log.md)/ 验证结果(链接 fix-test-results.md)/ 修复日志(本轮工作记录)/ 变更记录。
+见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(若已调 `code-plan`,链接 `fix-plan.md`,否则标注"待 `code-plan` 补充")/ 修复日志(本轮工作记录)/ 变更记录。
+
+> **本技能不产出**:`fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-plan` / `code-it` / `code-check` 产出)。
 
 ### fix/RESULT.md(缺陷总览)
 见 `templates/fix-registry.md`,核心区段:文档头 / 缺陷清单(表格)/ 统计 / 变更记录。
@@ -405,8 +412,9 @@ function parseFixTitle(fixPath: string): string {
 | --- | --- |
 | `code-plan` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 读,产出 `fix/<BUG-NNN>/fix-plan.md`,**也**回写 `fix/RESULT.md` 与看板 |
 | `code-it` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 与 `fix-plan.md` 读,实施代码修改,产出 `fix-work-log.md` 等,**也**回写 `fix/RESULT.md` 与看板 |
+| `code-unit` | 接收 `BUG-NNN` 时,补单元测试,产出 `fix-test-results.md` |
+| `code-check` | 接收 `BUG-NNN` 时,对已修复的 bug 走评审,产出 `fix/<BUG-NNN>/REVIEW-REPORT.md`,推进状态到"已修复-已验证" / "已关闭" |
 | `code-require` / `code-design` | 与本技能无直接关系(本技能在主流程之外) |
-| `code-check` | 可对已修复的 bug 走评审,产出 `review/<BUG-NNN>/REVIEW-REPORT.md` |
 | `code-unit` | 修复完成后,可调 `code-unit` 补/验证单测 |
 | `code-version` | 不同版本的缺陷独立登记;切换版本后,新版本从空开始 |
 
@@ -434,8 +442,11 @@ function parseFixTitle(fixPath: string): string {
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
 - 不要直接修改项目源代码(那是 `code-it` 的事)
 - 不要跳过"询问本轮状态推进"(步骤 4)直接写文件(状态推进是本技能的核心,必须显式确认)
-- 不要在 `fix/RESULT.md` 中维护"已完成"以外的终态(都已关闭 / 已取消是终态,不应再变)
 - 不要把 `BUG-NNN` 的编号搞乱(一旦分配稳定不变,即使关闭了也不复用)
-- 不要重写 `RESULT.md` 的稳定章节(缺陷描述、根因、修复方案);只追加/更新状态字段
+- 不要重写 `RESULT.md` 的稳定章节(缺陷描述、根因);只追加/更新状态字段
 - 不要在 `fix/<BUG-NNN>/RESULT.md` 中维护"详细修复方案"或"详细代码改动"(那些在 `fix-plan.md` / `fix-work-log.md`,本文件只链接)
-- 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的文件 + 版本看板的"缺陷清单"/"变更记录")
+- 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的 `RESULT.md` 与版本看板的"缺陷清单"/"变更记录")
+- **不**产出 `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-plan` / `code-it` / `code-check` 产出)
+- **不**实施代码改动(由 `code-it` 实施)
+- **不**推进"修复规划中 / 修复编码中 / 已修复-待验证 / 已修复-已验证"等状态(由 `code-plan` / `code-it` / `code-check` 推进)
+- **不**直接关闭缺陷(终态由 `code-check` 推进)
