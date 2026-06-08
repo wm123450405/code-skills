@@ -527,7 +527,7 @@ function parseResultTitle(filePath: string): string {
 - **横向**:通过 `related-requirements.md` 与同版本下其他需求(可选:跨版本)形成引用网
 
 ## 不要做的事
-- 不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件(工程代码改动由 `code-it` 实施,本技能只写 `require/<REQ>/RESULT.md` 等工作空间文档)
+- 不修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件(工程代码改动由 `code-it` 实施,本技能只写 `require/<REQ>/RESULT.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行(必须先调 `code-version`)
 - 不要在不读取现有 `RESULT.md` 的情况下重写整个文件
 - 不要在材料不足以佐证时臆造具体细节

@@ -430,7 +430,7 @@ function parseFixTitle(fixPath: string): string {
 - **横向**:与同版本其他 BUG-NNN 互不干扰(各自独立目录)
 
 ## 不要做的事
-- 不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件(工程代码改动由 `code-it` 实施,本技能只写 `fix/<BUG-NNN>/RESULT.md` 等工作空间文档)
+- 不修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件(工程代码改动由 `code-it` 实施,本技能只写 `fix/<BUG-NNN>/RESULT.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
 - 不要直接修改项目源代码(那是 `code-it` 的事)
 - 不要跳过"询问本轮状态推进"(步骤 4)直接写文件(状态推进是本技能的核心,必须显式确认)
