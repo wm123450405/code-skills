@@ -170,15 +170,15 @@
 | TASK-REQ-00025-00008 | REQ-00025 | 修改 | 详细设计 | [修改] code-fix §输入 + §步骤 1 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-fix/SKILL.md §输入 > 缺陷编号格式 + §工作流程 > 步骤 1 收集输入 ID 并判定路径 | 2026-06-08 | 45a2aee | — |
 | TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 已完成 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | 2026-06-08 | b607d00 | — |
 | TASK-REQ-00026-00001 | REQ-00026 | 修改 | 详细设计 | [修改] 9 个 SKILL.md 描述段去专属化(占位符 `<本仓库>` + 概述段声明) | 已完成 | 不适用 | plugins/code-skills/skills/{code-it,code-publish}/SKILL.md §唯一允许的生产代码改动场景 / §模板 | 2026-06-08 13:10 | 0818d2a | — |
-| TASK-REQ-00026-00002 | REQ-00026 | 修改 | 详细设计 | [修改] code-rule/SKILL.md 描述段 + L336 CLAUDE.md 字面替换 | 待开始 | 不适用 | plugins/code-skills/skills/code-rule/SKILL.md §工作目录约定 / §工具使用约定 / L336 | — | — | — |
+| TASK-REQ-00026-00002 | REQ-00026 | 修改 | 详细设计 | [修改] code-rule/SKILL.md 描述段 + L336 CLAUDE.md 字面替换 | 已完成 | 不适用 | plugins/code-skills/skills/code-rule/SKILL.md §工作目录约定 / §工具使用约定 / L336 | 2026-06-08 13:20 | e8f3303 | — |
 | TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 待开始 | 不适用 | plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md §头部 / L133 | — | — | — |
 | TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 待开始 | 不适用 | plugins/code-skills/skills/code-init/templates/INIT-REPORT.md L3 / L8 | — | — | — |
 | TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §变更记录 | — | — | — |
 
 **统计**:
 - 总任务数:50
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):46
-- 开发已完成 / 未完成:46 / 4
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):47
+- 开发已完成 / 未完成:47 / 3
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 50 / 0
 
 ---
@@ -325,6 +325,7 @@
 | 2026-06-08 12:30 | 设计新增 | REQ-00026 概要设计完成(13 目标文件 + 0 新增模块 + 9 条 INV;`--balanced` 默认) | REQ-00026 |
 | 2026-06-08 12:45 | 计划更新 | REQ-00026 详细设计与编码计划完成(共 5 个任务,4 修改 + 1 文档;全部开发=待开始,测试=不适用;0 架构任务;M1-REQ-00026 + M2-REQ-00026) | REQ-00026 |
 | 2026-06-08 13:10 | 任务完成 | TASK-REQ-00026-00001 · [修改] 9 个 SKILL.md 描述段去专属化(占位符 `<本仓库>`)(开发状态:已完成;实际 2 文件 Edit:`code-it/SKILL.md` L16 + `code-publish/SKILL.md` L67-71;7 文件命中为不变量保留;0 改 frontmatter) | TASK-REQ-00026-00001 |
+| 2026-06-08 13:20 | 任务完成 | TASK-REQ-00026-00002 · [修改] code-rule L336 CLAUDE.md 字面替换(开发状态:已完成;1 文件 1 行 Edit:L336 "追加 AI 行为指令到 `<本仓库>/CLAUDE.md`";L363 命令保留;L370 已泛用不改) | TASK-REQ-00026-00002 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
