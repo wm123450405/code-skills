@@ -245,7 +245,7 @@ P1 待修复: ░ 0
 #### 段 4:后续操作建议(总览模式,本需求 REQ-00023 改造)
 
 - **核心规则**(沿用 FR-5 + AC-4):**每类状态 1 条推荐**,共 ≤ 5 条
-- **算法 4**:`buildSuggestions(items, allTasks): Suggestion[]`(沿用 plan/REQ-00023/RESULT.md §4.4)
+- **算法 4**:`parseTaskId(raw): {format, type, parentNum, taskNum, displayId} | null`(双正则兼容,新规则 REQ-00025;详 §附录 A)
 - **5 类状态映射**(AC-4.5 严格按既有 10 个 `code-*` SKILL.md frontmatter 真实语法):
   | 状态(需求路径) | 命令 | 状态(缺陷路径) | 命令 |
   | --- | --- | --- | --- |
@@ -399,24 +399,24 @@ P1 待修复: ░ 0
 
 ---
 
-## 附录 A:任务编号解析(算法 4)
+## 附录 A:任务编号解析(算法 4,本需求 REQ-00025 双正则兼容)
 
 ```
 parseTaskId(raw):
-  // 新格式优先
-  m = match(/^TASK-(REQ|BUG)-(\d{5})-(\d{5})$/, raw)
+  // 宽松正则优先(沿用 encoding-conventions §规则 1 接收端,后缀自由)
+  m = match(/^TASK-(REQ|BUG)-([A-Za-z0-9.\-_]+)-([A-Za-z0-9.\-_]+)$/, raw)
   if m:
     return { format: "new", type: m[1], parentNum: m[2], taskNum: m[3], displayId: raw }
-  // 旧格式透传
-  m = match(/^(REQ|BUG)-(\d{5})-(\d{5})$/, raw)
+  // 旧格式透传(同上游放宽)
+  m = match(/^(REQ|BUG)-([A-Za-z0-9.\-_]+)-([A-Za-z0-9.\-_]+)$/, raw)
   if m:
     return { format: "old", type: m[1], parentNum: m[2], taskNum: m[3], displayId: raw }
   // 解析失败
   return null
 ```
 
-- **新格式**:`TASK-REQ-00001-00001` / `TASK-BUG-00001-00001`(严格按 `encoding-conventions §规则 1/3`)
-- **旧格式**:`REQ-00001-00001` / `BUG-00001-00001`(V0.0.1 REQ-00001 起的字面,本技能**只读**不重命名)
+- **新格式**:`TASK-REQ-00001-00001` / `TASK-BUG-00001-00001`(默认 5 位纯数字;沿用 `encoding-conventions §规则 1/3`);**接收端放宽**为 `[A-Za-z0-9.\-_]+`(后缀自由,新规则 REQ-00025)
+- **旧格式**:`REQ-00001-00001` / `BUG-00001-00001`(V0.0.1 REQ-00001 起的字面,本技能**只读**不重命名);同样放宽
 - 解析失败 → `null` → 调用方按字面显示(NFR-2 L2 退化)
 
 ## 附录 B:ASCII 比例条(算法 5)
