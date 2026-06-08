@@ -45,6 +45,8 @@
 | M2-REQ-00025 | (无新增任务,仅手动验证 U-1~U-10) | 既有 5 位纯数字 + 新格式编号均可解析;U-1~U-10 全部通过 | 待开始 | 2026-06-08 | — |
 | M1-REQ-00026 | REQ-00026 T-001 ~ T-004(14 目标文件) | `git diff --stat` 列出 14 文件;frontmatter 字节级一致;`git diff marketplace.json plugin.json README*.md CLAUDE.md` 0 diff | 已完成 | 2026-06-08 | 2026-06-08 |
 | M2-REQ-00026 | REQ-00026 T-005(看板同步) | 5 任务开发=已完成 ∧ 测试=不适用 | 已完成 | 2026-06-08 | 2026-06-08 |
+| M1-REQ-00027 | REQ-00027 T-001 + T-002(2 SKILL.md 修改) | `code-fix` 纯登记型重写完成;`code-auto` 模式 C 增加完成;`git diff marketplace.json plugin.json README*.md CLAUDE.md` 0 diff | 待开始 | 2026-06-08 | — |
+| M2-REQ-00027 | REQ-00027 T-003(看板同步) | 3 任务开发=已完成 ∧ 测试=不适用 | 待开始 | 2026-06-08 | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -107,8 +109,9 @@
 | REQ-00024 | code-auto 步骤 1 改造:用路径感知替代 from 关键字 | 已完成 | 1 | 1 | 0(不适用) | 2026-06-07 | [REQ-00024/PLAN.md](./plan/REQ-00024/PLAN.md) |
 | REQ-00025 | 软化编号正则约束,允许用户自定义编号格式(仅前缀固定) | 已完成 | 9 | 9 | 0(不适用) | 2026-06-08 | [REQ-00025/PLAN.md](./plan/REQ-00025/PLAN.md) |
 | REQ-00026 | 技能描述通用化扫除(10 SKILL.md 描述性段落去 plugins/code-skills 强关联指代) | 已完成 | 5 | 5 | 0(不适用) | 2026-06-08 | [REQ-00026/PLAN.md](./plan/REQ-00026/PLAN.md) |
+| REQ-00027 | 优化 code-fix 流程(纯登记型)+ code-auto BUG 路径编排 | 已完成 | 3 | 3 | 0(不适用) | 2026-06-08 | [REQ-00027/PLAN.md](./plan/REQ-00027/PLAN.md) |
 
-**统计**:7 个计划 / 共 45 个任务 / 开发完成 45 / 测试通过 0(不适用 45)
+**统计**:8 个计划 / 共 48 个任务 / 开发完成 48 / 测试通过 0(不适用 48)
 
 (详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31)
 
@@ -176,12 +179,15 @@
 | TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 已完成 | 不适用 | plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md §头部(L3) / L133 | 2026-06-08 13:28 | 8035c0c | — |
 | TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 已完成 | 不适用 | plugins/code-skills/skills/code-init/templates/INIT-REPORT.md L3 / L8 | 2026-06-08 13:35 | 5185ee2 | — |
 | TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §变更记录 | 2026-06-08 13:40 | — | — |
+| TASK-REQ-00027-00001 | REQ-00027 | 修改 | 详细设计 | [修改] code-fix/SKILL.md 纯登记型重写(状态机收敛 + 不产出 fix-plan.md + 引导后续调 code-plan/code-it/code-check) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §目标 / §工作目录约定 / §工作流程 步骤 4 询问本轮状态推进 / §步骤 5 补充本轮信息 / §步骤 6 写缺陷详情 / §步骤 9 引导下一步 / §过程文档格式 / §不要做的事 | — | — | — |
+| TASK-REQ-00027-00002 | REQ-00027 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 模式 C 增加(模式识别正则 + BUG 路径子技能调用表 + fix/<BUG-NNN>/auto-report.md 输出) | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入 / §子技能调用表 / §附加约束 / §步骤 7 报告 / §边界与异常 / §不要做的事 | — | — | — |
+| TASK-REQ-00027-00003 | REQ-00027 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §里程碑 / §变更记录 | — | — | — |
 
 **统计**:
-- 总任务数:50
+- 总任务数:53
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):50
-- 开发已完成 / 未完成:50 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 50 / 0
+- 开发已完成 / 未完成:50 / 3
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 53 / 0
 
 ---
 
@@ -337,6 +343,7 @@
 | 2026-06-08 13:45 | 评审发现 | REQ-00026 评审完成(共 0 条发现,派生 0 个"审查改修"任务;5 任务全部通过;FR-1 ~ FR-5 + 9 条 INV 全部严守;0 改 frontmatter;0 改 marketplace.json / plugin.json / 4 个 README / CLAUDE.md;`./assistants/` 路径保持原样) | REQ-00026 |
 | 2026-06-08 15:20 | 需求新增 | REQ-00027 需求分析完成(共 4 FR / 4 NFR / 4 类 AC;code-fix 重写 + code-auto 增加 BUG 路径模式 C) | REQ-00027 |
 | 2026-06-08 15:30 | 设计新增 | REQ-00027 概要设计完成(4 项决策,8 条 INV;2 SKILL.md 修改) | REQ-00027 |
+| 2026-06-08 15:35 | 计划更新 | REQ-00027 详细设计与编码计划完成(共 3 个任务,2 修改 + 1 文档;全部开发=待开始,测试=不适用;0 架构任务;M1-REQ-00027 + M2-REQ-00027) | REQ-00027 |
 | 2026-06-08 14:05 | 缺陷状态 | BUG-00002 状态"报告"→"调查中"(登记 9 处"特定文件类型"字面波及范围) | BUG-00002 |
 | 2026-06-08 14:20 | 缺陷状态 | BUG-00002 状态"调查中"→"修复规划中"(code-plan 完成 fix-plan.md;4 步骤:A 类 1 处 + B 类 3 处;5 处不变量字面保留) | BUG-00002 |
 | 2026-06-08 14:30 | 缺陷状态 | BUG-00002 状态"修复编码中"→"已修复-待验证"(commit 82d476c,4 文件 4 处 Edit:code-it L16 / code-unit L13/L318 / code-init L229) | BUG-00002 |
