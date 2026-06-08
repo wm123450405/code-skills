@@ -179,14 +179,14 @@
 | TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 已完成 | 不适用 | plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md §头部(L3) / L133 | 2026-06-08 13:28 | 8035c0c | — |
 | TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 已完成 | 不适用 | plugins/code-skills/skills/code-init/templates/INIT-REPORT.md L3 / L8 | 2026-06-08 13:35 | 5185ee2 | — |
 | TASK-REQ-00026-00005 | REQ-00026 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §变更记录 | 2026-06-08 13:40 | — | — |
-| TASK-REQ-00027-00001 | REQ-00027 | 修改 | 详细设计 | [修改] code-fix/SKILL.md 纯登记型重写(状态机收敛 + 不产出 fix-plan.md + 引导后续调 code-plan/code-it/code-check) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §目标 / §工作目录约定 / §工作流程 步骤 4 询问本轮状态推进 / §步骤 5 补充本轮信息 / §步骤 6 写缺陷详情 / §步骤 9 引导下一步 / §过程文档格式 / §不要做的事 | — | — | — |
+| TASK-REQ-00027-00001 | REQ-00027 | 修改 | 详细设计 | [修改] code-fix/SKILL.md 纯登记型重写(状态机收敛 + 不产出 fix-plan.md + 引导后续调 code-plan/code-it/code-check) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md §目标 / §工作目录约定 / §工作流程 步骤 4 询问本轮状态推进 / §步骤 5 补充本轮信息 / §步骤 6 写缺陷详情 / §步骤 9 引导下一步 / §过程文档格式 / §不要做的事 | 2026-06-08 15:40 | e860b0b | — |
 | TASK-REQ-00027-00002 | REQ-00027 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 模式 C 增加(模式识别正则 + BUG 路径子技能调用表 + fix/<BUG-NNN>/auto-report.md 输出) | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入 / §子技能调用表 / §附加约束 / §步骤 7 报告 / §边界与异常 / §不要做的事 | — | — | — |
 | TASK-REQ-00027-00003 | REQ-00027 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §里程碑 / §变更记录 | — | — | — |
 
 **统计**:
 - 总任务数:53
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):50
-- 开发已完成 / 未完成:50 / 3
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):51
+- 开发已完成 / 未完成:51 / 2
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 53 / 0
 
 ---
@@ -344,6 +344,7 @@
 | 2026-06-08 15:20 | 需求新增 | REQ-00027 需求分析完成(共 4 FR / 4 NFR / 4 类 AC;code-fix 重写 + code-auto 增加 BUG 路径模式 C) | REQ-00027 |
 | 2026-06-08 15:30 | 设计新增 | REQ-00027 概要设计完成(4 项决策,8 条 INV;2 SKILL.md 修改) | REQ-00027 |
 | 2026-06-08 15:35 | 计划更新 | REQ-00027 详细设计与编码计划完成(共 3 个任务,2 修改 + 1 文档;全部开发=待开始,测试=不适用;0 架构任务;M1-REQ-00027 + M2-REQ-00027) | REQ-00027 |
+| 2026-06-08 15:40 | 任务完成 | TASK-REQ-00027-00001 · [修改] code-fix/SKILL.md 纯登记型重写(开发状态:已完成;9 个区段 Edit;0 改 frontmatter) | TASK-REQ-00027-00001 |
 | 2026-06-08 14:05 | 缺陷状态 | BUG-00002 状态"报告"→"调查中"(登记 9 处"特定文件类型"字面波及范围) | BUG-00002 |
 | 2026-06-08 14:20 | 缺陷状态 | BUG-00002 状态"调查中"→"修复规划中"(code-plan 完成 fix-plan.md;4 步骤:A 类 1 处 + B 类 3 处;5 处不变量字面保留) | BUG-00002 |
 | 2026-06-08 14:30 | 缺陷状态 | BUG-00002 状态"修复编码中"→"已修复-待验证"(commit 82d476c,4 文件 4 处 Edit:code-it L16 / code-unit L13/L318 / code-init L229) | BUG-00002 |

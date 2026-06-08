@@ -11,7 +11,7 @@
 
 | 任务编码 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00027-00001 | REQ-00027 | 修改 | 详细设计 | [修改] code-fix/SKILL.md 纯登记型重写(状态机收敛 + 不产出 fix-plan.md + 引导后续调 code-plan/code-it/code-check) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md |
+| TASK-REQ-00027-00001 | REQ-00027 | 修改 | 详细设计 | [修改] code-fix/SKILL.md 纯登记型重写(状态机收敛 + 不产出 fix-plan.md + 引导后续调 code-plan/code-it/code-check) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md | 2026-06-08 15:40 | e860b0b | — |
 | TASK-REQ-00027-00002 | REQ-00027 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 模式 C 增加(模式识别正则 + BUG 路径子技能调用表 + fix/<BUG-NNN>/auto-report.md 输出) | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md |
 | TASK-REQ-00027-00003 | REQ-00027 | 文档 | 详细设计 | [文档] 同步版本看板"详细设计与任务计划汇总" + "任务清单" + "里程碑" + "变更记录"(`code-it` 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md |
 
@@ -166,3 +166,4 @@ T-001 / T-002 互相无依赖;T-003 依赖 T-001 / T-002。
 | 时间 | 变更 | 关联 |
 | --- | --- | --- |
 | 2026-06-08 15:35 | 计划新增 | REQ-00027 详细设计与编码计划完成(共 3 个任务;M1-REQ-00027) |
+| 2026-06-08 15:40 | 状态更新 | TASK-REQ-00027-00001 状态"待开始"→"已完成",提交 e860b0b |
