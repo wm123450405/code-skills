@@ -5,11 +5,11 @@
 - 严重度:P0(阻断 — 让本项目"通用开发技能集"定位被弱化为"SKILL 专用"或"特定语言/特定项目专用",违背项目自我定位)
 - 报告人:wangmiao
 - 报告时间:2026-06-08 14:00
-- 状态:已修复-待验证
+- 状态:修复编码中
 - 当前负责人:wangmiao
-- 修复时间:2026-06-08 14:30
-- 修复人:wangmiao
-- 修复提交:82d476c
+- 修复时间:—
+- 修复人:—
+- 修复提交:—
 
 ## 缺陷描述
 
@@ -45,12 +45,12 @@
 本项目"通用开发技能集"定位未在所有 SKILL.md 描述中显式遵守。`code-it` L16 的"唯一被允许修改 `<本仓库>/skills/*/SKILL.md`"虽是描述本项目自身管理 SKILL.md 的硬约束(应保留),但其字面是"`skills/*/SKILL.md`"(特定文件类型),**也应**泛化。
 
 ## 修复方案
-[fix-plan.md](./fix-plan.md)(4 步骤:code-it L16 + code-unit L13/L318 + code-init L229 + 静态校验)
+[fix-plan.md](./fix-plan.md)(原 4 步骤 + 补充 5 处不变量字面 → 9 处)
 
 ## 修复实施
-- commit `82d476c`:`code-it/SKILL.md` L16 + `code-unit/SKILL.md` L13/L318 + `code-init/SKILL.md` L229 共 4 处 Edit
-- 5 处不变量字面(`code-require` L530 / `code-design` L594 / `code-plan` L1093 / `code-fix` L433 + `code-unit` L13 后半段)字节级保留
-- 10 SKILL.md frontmatter 0 改
+- commit `82d476c`(已修复):4 文件 4 处 Edit(code-it L16 / code-unit L13/L318 / code-init L229)
+- 补充 commit:5 处不变量字面 code-require L530 / code-design L594 / code-plan L1093 / code-fix L433 / code-unit L13 后半段
+- 0 改 frontmatter
 - `marketplace.json` / `plugin.json` / 4 个 README / `CLAUDE.md` 0 diff
 
 ## 修复实施
@@ -64,6 +64,7 @@
 - 2026-06-08 14:20  修复规划  code-plan 已产出 fix-plan.md(4 步骤;A 类 1 处 + B 类 3 处;5 处不变量字面保留)
 - 2026-06-08 14:25  修复开始  code-it 开始实施修复(4 文件 4 处 Edit)
 - 2026-06-08 14:30  修复完成  code-it 完成修复,提交 82d476c,等待验证
+- 2026-06-08 14:35  补修发现  wangmiao 指出 5 处不变量字面不应保留,回退到"修复编码中"补修
 
 ## 变更记录
 - 2026-06-08 14:00  缺陷登记  code-fix 创建缺陷 BUG-00002(严重度 P0)  BUG-00002
@@ -71,6 +72,7 @@
 - 2026-06-08 14:20  计划完成  code-plan 完成 BUG-00002 修复方案(4 步骤,fix-plan.md);状态推进"调查中"→"修复规划中"  BUG-00002
 - 2026-06-08 14:25  状态推进  BUG-00002 状态"修复规划中"→"修复编码中"(code-it 开始实施)  BUG-00002
 - 2026-06-08 14:30  状态推进  BUG-00002 状态"修复编码中"→"已修复-待验证"(commit 82d476c,4 文件 4 处 Edit)  BUG-00002
+- 2026-06-08 14:35  状态推进  BUG-00002 状态"已修复-待验证"→"修复编码中"(补修 5 处不变量字面)  BUG-00002
 
 ## 不做边界
 - **不**修改 `code-require` L530 / `code-design` L594 / `code-plan` L1093 / `code-fix` L433 中的"不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件"——这 4 处是**不变量字面**,描述的是"本项目自身管理 skills/ 目录"的硬约束,本项目是"开发技能库"必然管理 skills/ 目录;**保留字面**。
