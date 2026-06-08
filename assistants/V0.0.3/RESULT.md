@@ -160,8 +160,8 @@
 | TASK-REQ-00025-00003 | REQ-00025 | 修改 | 详细设计 | [修改] code-design §输入 + §工作目录约定 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-design/SKILL.md §输入 > 需求编码格式 + §工作目录约定 > 本技能的目录粒度 | 2026-06-08 | 826eb06 | — |
 | TASK-REQ-00025-00004 | REQ-00025 | 修改 | 详细设计 | [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-plan/SKILL.md §输入 + §工作流程 > 步骤 10A > 任务编号 + §工作流程 > 步骤 9B > 任务编号分配 | 2026-06-08 | a65c766 | — |
 | TASK-REQ-00025-00005 | REQ-00025 | 修改 | 详细设计 | [修改] code-it §输入 + §步骤 1 + §步骤 7 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-it/SKILL.md §输入 > 任务编码格式 + §工作流程 > 步骤 1 解析任务编码 + §工作流程 > 步骤 7 写入 RESULT.md | 2026-06-08 | fde785c | — |
-| TASK-REQ-00025-00006 | REQ-00025 | 修改 | 详细设计 | [修改] code-unit §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-unit/SKILL.md §输入 > 任务编码格式 | 2026-06-08 | (T-6 commit) | — |
-| TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | — | — | — |
+| TASK-REQ-00025-00006 | REQ-00025 | 修改 | 详细设计 | [修改] code-unit §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-unit/SKILL.md §输入 > 任务编码格式 | 2026-06-08 | 0020f8f | — |
+| TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | 2026-06-08 | (T-7 commit) | — |
 | TASK-REQ-00025-00008 | REQ-00025 | 修改 | 详细设计 | [修改] code-fix §输入 + §步骤 1 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-fix/SKILL.md §输入 > 缺陷编号格式 + §工作流程 > 步骤 1 收集输入 ID 并判定路径 | — | — | — |
 | TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 待开始 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | — | — | — |
 
@@ -305,6 +305,7 @@
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00004 · [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新(开发状态:已完成;§输入 追加 5 行;§步骤 10A 任务编号放宽;§步骤 9B 任务编号分配加注) | TASK-REQ-00025-00004 |
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00005 · [修改] code-it §输入 + §步骤 1 + §步骤 7 字面更新(开发状态:已完成;§输入 追加 2 子项;§步骤 1 解析正则放宽;§步骤 7 末尾加注路径生成语义) | TASK-REQ-00025-00005 |
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00006 · [修改] code-unit §输入 字面更新(开发状态:已完成;§输入 任务编码 追加 2 子项(生成端 5 位 + 接收端放宽)) | TASK-REQ-00025-00006 |
+| 2026-06-08 | 任务完成 | TASK-REQ-00025-00007 · [修改] code-check §输入 字面更新(开发状态:已完成;§输入 需求编码 追加 2 子项;新增 任务编码 项 2 子项) | TASK-REQ-00025-00007 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
