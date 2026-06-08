@@ -1,1 +1,3 @@
 /code-skills:code-require 优化 `/code-require`、`/code-design`、`/code-plan`、`/code-it`、`/code-unit`、`/code-check`、`/code-fix` 这些技能，在最后兜底代码提交环节默认自动提交，无需用户确认，提交时确保所有修改的文件、过程文件、结果文件都被包含在提交记录中，不要有遗漏。
+
+/code-skills:code-require 优化 `/code-fix` 技能，该技能只登记并分析缺陷（类似`/code-require`技能），不进行直接修复。被登记的缺陷需要经过 `/code-plan` 技能进行比编码详细设计，在经过 `/code-it` 技能进行实际的编码修复和 `/code-unit` 技能补充单元测试，最后通过 `/code-check` 技能进行修复检查更新修复状态。再优化 `/code-auto` 技能，若检测到是缺陷修复任务，应该通过 `/code-plan`->`/code-it`->`/code-unit`->`/code-check`（可以直接复用原来针对 `/code-require` 创建需求的后续逻辑） 技能进行修复，并提交。
