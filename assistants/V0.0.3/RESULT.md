@@ -157,8 +157,8 @@
 | TASK-REQ-00024-00001 | REQ-00024 | 修改 | 详细设计 | [修改] code-auto 步骤 1:用路径感知替代 from 关键字 | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入与输出 + §工作流步骤 步骤 1 + §边界与异常 | 2026-06-07 17:55 | (本会话) | REQ-00024 |
 | TASK-REQ-00025-00001 | REQ-00025 | 修改 | 详细设计 | [修改] encoding-conventions §规则 1/2/4 软化 + 新增 §规则 1.5 | 已完成 | 不适用 | ./assistants/rules/encoding-conventions.md §规则 1 §条款 表 + §规则 2 §条款 + §规则 4 §条款 + §规则 1.5(新) | 2026-06-08 | 8fe535d | — |
 | TASK-REQ-00025-00002 | REQ-00025 | 修改 | 详细设计 | [修改] code-require §输入 + §工具使用约定 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-require/SKILL.md §输入 > 需求编码格式 + §工具使用约定 > 标题解析 > parseResultTitle | 2026-06-08 | 7af6525 | — |
-| TASK-REQ-00025-00003 | REQ-00025 | 修改 | 详细设计 | [修改] code-design §输入 + §工作目录约定 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-design/SKILL.md §输入 > 需求编码格式 + §工作目录约定 > 本技能的目录粒度 | 2026-06-08 | (T-3 commit) | — |
-| TASK-REQ-00025-00004 | REQ-00025 | 修改 | 详细设计 | [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-plan/SKILL.md §输入 + §工作流程 > 步骤 10A > 任务编号 + §工作流程 > 步骤 9B > 任务编号分配 | — | — | — |
+| TASK-REQ-00025-00003 | REQ-00025 | 修改 | 详细设计 | [修改] code-design §输入 + §工作目录约定 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-design/SKILL.md §输入 > 需求编码格式 + §工作目录约定 > 本技能的目录粒度 | 2026-06-08 | 826eb06 | — |
+| TASK-REQ-00025-00004 | REQ-00025 | 修改 | 详细设计 | [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-plan/SKILL.md §输入 + §工作流程 > 步骤 10A > 任务编号 + §工作流程 > 步骤 9B > 任务编号分配 | 2026-06-08 | (T-4 commit) | — |
 | TASK-REQ-00025-00005 | REQ-00025 | 修改 | 详细设计 | [修改] code-it §输入 + §步骤 1 + §步骤 7 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-it/SKILL.md §输入 > 任务编码格式 + §工作流程 > 步骤 1 解析任务编码 + §工作流程 > 步骤 7 写入 RESULT.md | — | — | — |
 | TASK-REQ-00025-00006 | REQ-00025 | 修改 | 详细设计 | [修改] code-unit §输入 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-unit/SKILL.md §输入 > 任务编码格式 | — | — | — |
 | TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | — | — | — |
@@ -302,6 +302,7 @@
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00001 · [修改] encoding-conventions §规则 1/2/4 软化 + 新增 §规则 1.5(开发状态:已完成;53 insertions, 5 deletions;权威源软化升级) | TASK-REQ-00025-00001 |
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00002 · [修改] code-require §输入 + §工具使用约定 字面更新(开发状态:已完成;§输入 展开为 4 行;parseResultTitle 注释段追加 2 行;下游 SKILL.md 字面更新开始) | TASK-REQ-00025-00002 |
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00003 · [修改] code-design §输入 + §工作目录约定 字面更新(开发状态:已完成;§输入 追加 2 子项;§工作目录约定 追加 1 项) | TASK-REQ-00025-00003 |
+| 2026-06-08 | 任务完成 | TASK-REQ-00025-00004 · [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新(开发状态:已完成;§输入 追加 5 行;§步骤 10A 任务编号放宽;§步骤 9B 任务编号分配加注) | TASK-REQ-00025-00004 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
