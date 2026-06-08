@@ -11,7 +11,7 @@
 
 | 任务编码 | 需求 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00026-00001 | REQ-00026 | 修改 | 详细设计 | [修改] 9 个 SKILL.md 描述段去专属化(占位符 `<本仓库>` + 概述段声明) | 待开始 | 不适用 | `plugins/code-skills/skills/{code-require,code-design,code-plan,code-it,code-unit,code-check,code-fix,code-publish,code-init}/SKILL.md` |
+| TASK-REQ-00026-00001 | REQ-00026 | 修改 | 详细设计 | [修改] 9 个 SKILL.md 描述段去专属化(占位符 `<本仓库>` + 概述段声明) | 已完成 | 不适用 | plugins/code-skills/skills/{code-it,code-publish}/SKILL.md §唯一允许的生产代码改动场景 / §模板 | 2026-06-08 13:10 | 0818d2a | — |
 | TASK-REQ-00026-00002 | REQ-00026 | 修改 | 详细设计 | [修改] code-rule/SKILL.md 描述段 + L336/363/370 三处 CLAUDE.md 字面替换 | 待开始 | 不适用 | `plugins/code-skills/skills/code-rule/SKILL.md` |
 | TASK-REQ-00026-00003 | REQ-00026 | 修改 | 详细设计 | [修改] code-publish/templates/(DEPLOY.md / UPDATE.md / qanda-README.md) 字面替换 | 待开始 | 不适用 | `plugins/code-skills/skills/code-publish/templates/{DEPLOY,UPDATE,qanda-README}.md` |
 | TASK-REQ-00026-00004 | REQ-00026 | 修改 | 详细设计 | [修改] code-init/templates/INIT-REPORT.md 字面替换(L3/L8) | 待开始 | 不适用 | `plugins/code-skills/skills/code-init/templates/INIT-REPORT.md` |
@@ -195,3 +195,4 @@ graph TD
 | 时间 | 变更类型 | 摘要 |
 | --- | --- | --- |
 | 2026-06-08 12:45 | 计划新增 | REQ-00026 详细设计与编码计划完成(5 个任务;M1 + M2) |
+| 2026-06-08 13:10 | 状态更新 | TASK-REQ-00026-00001 状态"待开始"→"已完成",提交 0818d2a |
