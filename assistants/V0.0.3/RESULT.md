@@ -156,7 +156,7 @@
 | TASK-BUG-00001-00005 | BUG-00001 | 修改 | 缺陷修复 | [修改] code-it 加"唯一可改"声明 + code-unit 加"可改测试代码"边界 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §目标 段后 + plugins/code-skills/skills/code-unit/SKILL.md §目标 段后 | 2026-06-07 17:54 | (本会话) | BUG-00001 |
 | TASK-REQ-00024-00001 | REQ-00024 | 修改 | 详细设计 | [修改] code-auto 步骤 1:用路径感知替代 from 关键字 | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入与输出 + §工作流步骤 步骤 1 + §边界与异常 | 2026-06-07 17:55 | (本会话) | REQ-00024 |
 | TASK-REQ-00025-00001 | REQ-00025 | 修改 | 详细设计 | [修改] encoding-conventions §规则 1/2/4 软化 + 新增 §规则 1.5 | 已完成 | 不适用 | ./assistants/rules/encoding-conventions.md §规则 1 §条款 表 + §规则 2 §条款 + §规则 4 §条款 + §规则 1.5(新) | 2026-06-08 | 8fe535d | — |
-| TASK-REQ-00025-00002 | REQ-00025 | 修改 | 详细设计 | [修改] code-require §输入 + §工具使用约定 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-require/SKILL.md §输入 > 需求编码格式 + §工具使用约定 > 标题解析 > parseResultTitle | — | — | — |
+| TASK-REQ-00025-00002 | REQ-00025 | 修改 | 详细设计 | [修改] code-require §输入 + §工具使用约定 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-require/SKILL.md §输入 > 需求编码格式 + §工具使用约定 > 标题解析 > parseResultTitle | 2026-06-08 | (T-2 commit) | — |
 | TASK-REQ-00025-00003 | REQ-00025 | 修改 | 详细设计 | [修改] code-design §输入 + §工作目录约定 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-design/SKILL.md §输入 > 需求编码格式 + §工作目录约定 > 本技能的目录粒度 | — | — | — |
 | TASK-REQ-00025-00004 | REQ-00025 | 修改 | 详细设计 | [修改] code-plan §输入 + §步骤 10A + §步骤 9B 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-plan/SKILL.md §输入 + §工作流程 > 步骤 10A > 任务编号 + §工作流程 > 步骤 9B > 任务编号分配 | — | — | — |
 | TASK-REQ-00025-00005 | REQ-00025 | 修改 | 详细设计 | [修改] code-it §输入 + §步骤 1 + §步骤 7 字面更新 | 待开始 | 不适用 | ./plugins/code-skills/skills/code-it/SKILL.md §输入 > 任务编码格式 + §工作流程 > 步骤 1 解析任务编码 + §工作流程 > 步骤 7 写入 RESULT.md | — | — | — |
@@ -300,6 +300,7 @@
 | 2026-06-08 | 设计变更 | REQ-00025 概要设计增量更新(no-op 确认):需求侧 v1 未变;规范侧 13 份 0 变化(encoding-conventions.md 软化待 code-plan/code-it 落地);代码侧 8 个 in-scope SKILL.md 仍含旧 5 位正则(待 code-plan/code-it 落地);design/.../RESULT.md §15 追加 1 行,概要设计清单状态保持"已完成";0 字段扩展,0 §规则 1 三同步,0 派生"更新看板"任务 | REQ-00025 |
 | 2026-06-08 | 计划更新 | REQ-00025 详细设计与编码计划完成(共 9 个任务,1 规范 + 8 SKILL.md 字面更新;全部开发=待开始,测试=不适用;整体=`--balanced` + 功能性=中);0 派生"更新看板"任务(沿用 REQ-00017 强约束);2 里程碑(M1 软化上线 + M2 验证) | REQ-00025 |
 | 2026-06-08 | 任务完成 | TASK-REQ-00025-00001 · [修改] encoding-conventions §规则 1/2/4 软化 + 新增 §规则 1.5(开发状态:已完成;53 insertions, 5 deletions;权威源软化升级) | TASK-REQ-00025-00001 |
+| 2026-06-08 | 任务完成 | TASK-REQ-00025-00002 · [修改] code-require §输入 + §工具使用约定 字面更新(开发状态:已完成;§输入 展开为 4 行;parseResultTitle 注释段追加 2 行;下游 SKILL.md 字面更新开始) | TASK-REQ-00025-00002 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
