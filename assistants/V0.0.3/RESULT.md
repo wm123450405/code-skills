@@ -163,7 +163,7 @@
 | TASK-REQ-00025-00006 | REQ-00025 | 修改 | 详细设计 | [修改] code-unit §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-unit/SKILL.md §输入 > 任务编码格式 | 2026-06-08 | 0020f8f | — |
 | TASK-REQ-00025-00007 | REQ-00025 | 修改 | 详细设计 | [修改] code-check §输入 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-check/SKILL.md §输入 > 需求编号 / 任务编码 | 2026-06-08 | fab832e | — |
 | TASK-REQ-00025-00008 | REQ-00025 | 修改 | 详细设计 | [修改] code-fix §输入 + §步骤 1 字面更新 | 已完成 | 不适用 | ./plugins/code-skills/skills/code-fix/SKILL.md §输入 > 缺陷编号格式 + §工作流程 > 步骤 1 收集输入 ID 并判定路径 | 2026-06-08 | 45a2aee | — |
-| TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 已完成 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | 2026-06-08 | (T-9 commit) | — |
+| TASK-REQ-00025-00009 | REQ-00025 | 修改 | 详细设计 | [修改] code-dashboard 算法 4 字面更新(双正则兼容) | 已完成 | 不适用 | ./plugins/code-skills/skills/code-dashboard/SKILL.md §工作流程 > 算法 4 解析任务编号 | 2026-06-08 | b607d00 | — |
 
 **统计**:
 - 总任务数:45
