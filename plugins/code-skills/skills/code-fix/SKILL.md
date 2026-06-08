@@ -232,7 +232,7 @@ function parseFixTitle(fixPath: string): string {
 **仅更新分支需要**:
 1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"` —— 了解当前状态
 2. `Read` 该缺陷目录下所有其他 `*.md` 文件(若有):
-   - `investigation.md`:调查笔记
+   - `investigation.md`:调查笔记(由 `code-it` 写入,本技能只读)
    - `fix-plan.md`:修复方案(由 `code-plan` 写入)
    - `fix-work-log.md`:实施日志(由 `code-it` 写入)
    - 其他
@@ -266,7 +266,7 @@ function parseFixTitle(fixPath: string): string {
 根据用户在步骤 4 选择的目标状态,询问/记录本轮新增信息:
 
 - **任意推进**:询问"本轮主要做了哪些工作?"(2-3 句话,写入 `RESULT.md` 的"修复日志"区段)
-- **`→ 调查中`**:询问"初步根因假设是什么?涉及哪些文件?"(可写 `investigation.md`)
+- **`→ 调查中`**:询问"初步根因假设是什么?涉及哪些文件?"(可由 `code-it` 写 `investigation.md`,本技能不写)
 - **`→ 已关闭-*`**:询问"关闭理由"
 - **`→ 阻塞`**:询问"阻塞原因 / 解除条件"
 
@@ -367,7 +367,7 @@ function parseFixTitle(fixPath: string): string {
 
 ### 步骤 10 — 完善过程文档与汇报
 
-- 收尾 `investigation.md`(若有)
+- 读 `investigation.md`(若有,本技能不创建)
 - 向用户汇报:
   - 本轮做了什么
   - 缺陷状态从 X → Y
@@ -381,13 +381,13 @@ function parseFixTitle(fixPath: string): string {
 ### fix/<BUG-NNN>/RESULT.md
 见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(若已调 `code-plan`,链接 `fix-plan.md`,否则标注"待 `code-plan` 补充")/ 修复日志(本轮工作记录)/ 变更记录。
 
-> **本技能不产出**:`fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-plan` / `code-it` / `code-check` 产出)。
+> **本技能不产出**:`investigation.md` / `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-it` / `code-plan` / `code-check` 产出)。
 
 ### fix/RESULT.md(缺陷总览)
 见 `templates/fix-registry.md`,核心区段:文档头 / 缺陷清单(表格)/ 统计 / 变更记录。
 
-### investigation.md(可选)
-自由形式,记录调查过程的笔记:
+### investigation.md(由 `code-it` 写入,本技能只读)
+自由形式,记录调查过程的笔记(由 `code-it` 在 BUG 路径下产出,本技能不创建;复跑时只读):
 - 根因假设与验证
 - 涉及的代码位置
 - 类似历史问题
@@ -435,7 +435,7 @@ function parseFixTitle(fixPath: string): string {
 - 不要重写 `RESULT.md` 的稳定章节(缺陷描述、根因);只追加/更新状态字段
 - 不要在 `fix/<BUG-NNN>/RESULT.md` 中维护"详细修复方案"或"详细代码改动"(那些在 `fix-plan.md` / `fix-work-log.md`,本文件只链接)
 - 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的 `RESULT.md` 与版本看板的"缺陷清单"/"变更记录")
-- **不**产出 `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-plan` / `code-it` / `code-check` 产出)
+- **不**产出 `investigation.md` / `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-it` / `code-plan` / `code-check` 产出)
 - **不**实施代码改动(由 `code-it` 实施)
 - **不**推进"修复规划中 / 修复编码中 / 已修复-待验证 / 已修复-已验证"等状态(由 `code-plan` / `code-it` / `code-check` 推进)
 - **不**直接关闭缺陷(终态由 `code-check` 推进)
