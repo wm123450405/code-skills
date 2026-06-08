@@ -70,13 +70,14 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 ```
 → 等价于 `/code-auto "<input>"`(空格分隔,多 token 拼为单一字符串)
 
-**4 种路径感知模式**(本需求 REQ-00024 改造,替代原"模式 A / 模式 B 关键字"):
+**5 种路径感知模式**(本需求 REQ-00024 改造 + REQ-00027 新增模式 C,替代原"模式 A / 模式 B 关键字"):
 
-| 模式 | 触发条件(按 `test -d` 路径检测顺序) | 含义 | 跳过步骤 1? |
+| 模式 | 触发条件(正则优先于目录检测) | 含义 | 跳过步骤 1? |
 | --- | --- | --- | --- |
 | **req-skip-require** | `require/<input>/` 存在 + `RESULT.md` 存在 | 需求已登记,可续跑 | 是(跳过 code-require,直接进步骤 2 概要设计) |
 | **req-run-require** | `require/<input>/` 存在 + `RESULT.md` 不存在 | 需求已分配编号但未完成需求设计 | 否(进入步骤 1 走 code-require) |
 | **fix-skip-require** | `require/<input>/` 不存在 + `fix/<input>/` 存在 | 缺陷已登记,可走缺陷修复详设 | 是(跳过 code-require,直接进 code-plan 走缺陷分支) |
+| **bug-skip-require** | 首段匹配 `^BUG-\d{5}$`(模式 C,本轮 REQ-00027 新增) | 缺陷已登记,走 BUG 路径子技能调用表 | 是(跳过 code-require + code-design,直接进 code-plan 走 BUG 路径) |
 | **req-content** | `require/<input>/` 不存在 + `fix/<input>/` 不存在 | 视为需求内容(分配新编号) | 否(进入步骤 1 走 code-require) |
 
 **路径感知判定算法**(在步骤 1 之前完成,沿用既有"模式识别"流程位置):
@@ -84,20 +85,22 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 ```
 1. 拼接所有参数 token 为单一字符串(空格分隔)
 2. 去除首尾空白
-3. 检查 `require/<input>/` 目录(test -d):
+3. 正则检测(优先于目录检测):
+   - 首段匹配 `^BUG-\d{5}$` → 模式:bug-skip-require(模式 C,本轮 REQ-00027 新增)
+4. 检查 `require/<input>/` 目录(test -d):
    - 存在 → 继续检查 `require/<input>/RESULT.md` 文件(test -f):
      - 存在 → 模式:req-skip-require
      - 不存在 → 模式:req-run-require
-4. 检查 `fix/<input>/` 目录(test -d):
+5. 检查 `fix/<input>/` 目录(test -d):
    - 存在 → 模式:fix-skip-require
-5. 既不是需求编号也不是缺陷编号 → 模式:req-content(视为需求内容,后续由 code-require 分配新编号)
+6. 既不是需求编号也不是缺陷编号 → 模式:req-content(视为需求内容,后续由 code-require 分配新编号)
 ```
 
 **屏显契约**(沿用既有 3 行风格,新增 3 行"路径感知判定"前缀):
 ```
 [code-auto] 步骤 1:路径感知判定
-[code-auto]   → 模式:<req-skip-require / req-run-require / fix-skip-require / req-content>
-[code-auto]   → 依据:require/<input>/ 存在/不存在;fix/<input>/ 存在/不存在
+[code-auto]   → 模式:<req-skip-require / req-run-require / fix-skip-require / bug-skip-require / req-content>
+[code-auto]   → 依据:首段正则 / require/<input>/ 存在/不存在;fix/<input>/ 存在/不存在
 ```
 
 调用形式(需求续跑,模式 req-skip-require):
@@ -321,6 +324,17 @@ Args: <原需求内容整串>  # 整串视为自然语言需求
 - **期望产物**:`./assistants/<版本号>/require/<新编号>/RESULT.md`(由 code-require 分配新编号)
 - **解析产物**:从子技能输出中提取 `REQ-NNNNN` 编码
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
+
+#### 1E. 模式 bug-skip-require(缺陷 BUG 路径,本轮 REQ-00027 新增) — 跳过 code-require + code-design,直接进 code-plan 走 BUG 路径
+
+```
+1. 路径感知判定结果 = bug-skip-require(本步骤 0 之前已完成,正则匹配 `^BUG-\d{5}$`)
+2. 屏幕日志:
+   [code-auto] 步骤 1/7:code-require(模式跳过,BUG 路径)
+   [code-auto]   → 校验通过:fix/BUG-NNNNN/ 目录存在 ✓
+   [code-auto] 步骤 2/7:code-design(模式跳过,BUG 路径不调概要设计)
+3. 进入步骤 3,步骤 3-7 走 BUG 路径子技能调用表(详 §"子技能调用表" 段 BUG 路径)
+```
 
 ### 步骤 2:code-design
 
