@@ -624,9 +624,6 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 ### 步骤 11C — 汇报
 说明本轮未做 `RESULT.md` 修改,只补出 `PLAN.md` 与版本看板的"任务清单"登记。
 
-### 步骤 7D — 仅补 RESULT.md(PLAN.md 已存在)
-基于现有 `PLAN.md` 反推详细设计(尽量贴近),对不一致的地方在 `design-notes.md` 标注,完成后执行步骤 16A 的"同步版本看板"。
-
 ---
 
 ## 缺陷分支(从步骤 1.2 判定为 BUG-NNN 时走)
