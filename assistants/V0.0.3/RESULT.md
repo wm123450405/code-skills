@@ -48,7 +48,7 @@
 | M1-REQ-00027 | REQ-00027 T-001 + T-002(2 SKILL.md 修改) | `code-fix` 纯登记型重写完成;`code-auto` 模式 C 增加完成;`git diff marketplace.json plugin.json README*.md CLAUDE.md` 0 diff | 已完成 | 2026-06-08 | 2026-06-08 |
 | M2-REQ-00027 | REQ-00027 T-003(看板同步) | 3 任务开发=已完成 ∧ 测试=不适用 | 已完成 | 2026-06-08 | 2026-06-08 |
 | M3-REQ-00027 | REQ-00027 T-004 ~ T-010(7 个审查改修) | 7 任务开发=已完成 ∧ 测试=不适用;code-fix 步骤 4 状态表 5 候选字面满足;code-auto §"路径感知模式"含 5 种;步骤 1 子分支 1A-1E;步骤 2 拆 2A/2B;步骤 3 拆 3A/3B;investigation.md 角色统一 | 已完成 | 2026-06-08 | 2026-06-08 |
-| M1-REQ-00028 | REQ-00028 T-001(1 SKILL.md 新增) | 1 任务开发=已完成 ∧ 测试=不适用 | 待开始 | 2026-06-10 | — |
+| M1-REQ-00028 | REQ-00028 T-001(1 SKILL.md 新增) | 1 任务开发=已完成 ∧ 测试=不适用 | 已完成 | 2026-06-10 | 2026-06-10 |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -193,7 +193,7 @@
 | TASK-REQ-00027-00008 | REQ-00027 | 修改 | 审查改修 | [修改] code-auto 步骤 1 新增"模式 C"识别(首段匹配 `^BUG-\d{5}$`),独立于 fix-skip-require | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §子技能调用表 BUG 路径子表标题 | 2026-06-08 17:43 | 26c228a | TASK-REQ-00027-00002 |
 | TASK-REQ-00027-00009 | REQ-00027 | 修改 | 审查改修 | [修改] code-auto §"路径感知模式"扩展为 5 种(新增"模式 C"),§"步骤 1 子分支"扩展为 1A-1E | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §输入 / §工作流步骤 步骤 1 子分支 | 2026-06-08 17:45 | bf9955d | TASK-REQ-00027-00002 |
 | TASK-REQ-00027-00010 | REQ-00027 | 修改 | 审查改修 | [修改] code-auto 步骤 2/3 适配 BUG 路径(`code-design` BUG 跳过 / `code-plan` BUG 路径入参) | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §工作流步骤 步骤 2 / 步骤 3 | 2026-06-08 17:47 | 9342318 | TASK-REQ-00027-00002 |
-| TASK-REQ-00028-00001 | REQ-00028 | 文档 | 详细设计 | [新增] code-answer SKILL.md(只读功能查询) | 待开始 | 不适用 | — | — | — | — |
+| TASK-REQ-00028-00001 | REQ-00028 | 文档 | 详细设计 | [新增] code-answer SKILL.md(只读功能查询) | 已完成 | 不适用 | plugins/code-skills/skills/code-answer/SKILL.md | 2026-06-10 11:00 | — | — |
 
 **统计**:
 - 总任务数:61
@@ -397,6 +397,7 @@
 | 2026-06-10 11:00 | 需求新增 | REQ-00028 需求分析完成(7 FR / 6 AC / 3 待澄清);新增 `code-answer` 技能(只读功能查询:精确编号 + 关键字模糊匹配 + 源码补足),跨全版本需求 + 屏显报告,严禁 Write/Edit/Bash;过程文档 3 份(`materials-index.md` / `related-requirements.md` / `clarifications.md` / `analysis-notes.md`)+ 1 份 `RESULT.md`,仅本仓库文档改动,无代码改动 | REQ-00028 |
 | 2026-06-10 11:00 | 设计新增 | REQ-00028 概要设计完成(5 决策 / 5 不变量 / 1 新增模块:`code-answer` SKILL.md);--balanced;沿用 `code-dashboard` 工具集范式 | REQ-00028 |
 | 2026-06-10 11:00 | 计划更新 | REQ-00028 详细设计与编码计划完成(共 1 任务,文档型,测试=不适用);0 派生"更新看板"任务(沿用 REQ-00017 强约束);0 触发 §规则 1 三同步;看板"任务清单"追加 1 行(T-001 待开始);新增里程碑 M1-REQ-00028 | REQ-00028 |
+| 2026-06-10 11:00 | 任务完成 | TASK-REQ-00028-00001 · [新增] code-answer SKILL.md(开发状态:已完成;新增 `plugins/code-skills/skills/code-answer/SKILL.md` ~310 行;YAML frontmatter 字节级正确 `name: code-answer`;纯文档任务无源码改动) | TASK-REQ-00028-00001 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
