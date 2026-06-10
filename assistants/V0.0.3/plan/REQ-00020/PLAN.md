@@ -50,7 +50,7 @@
 | TASK-REQ-00020-00004 | REQ-00020 | 重构 | 详细设计 | [重构] 步骤归并 M-1 调用上下文检测引用 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 0b.0 | 2026-06-06 16:30 | e69a58a | — |
 | TASK-REQ-00020-00005 | REQ-00020 | 重构 | 详细设计 | [重构] 步骤归并 M-2/M-3 公共子步骤引用 | 已完成 | 不适用 | code-plan/SKILL.md §3/5/21/22 + code-it/SKILL.md §23 | 2026-06-06 16:30 | e69a58a | — |
 | TASK-REQ-00020-00006 | REQ-00020 | 重构 | 详细设计 | [重构] 步骤归并 M-4 删除多余逻辑分支 | 已完成 | 不适用 | code-plan/SKILL.md §步骤 6 + code-it/SKILL.md §步骤 0a.7 | 2026-06-06 16:30 | e69a58a | — |
-| TASK-REQ-00020-00007 | REQ-00020 | 修改 | 审查改修 | [修改] 修复任务粒度调整规则表 4 列与 3... | 待开始 | 未编写 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 10A 末尾 | — | — | TASK-REQ-00020-00003 |
+| TASK-REQ-00020-00007 | REQ-00020 | 修改 | 审查改修 | [修改] 修复任务粒度调整规则表 4 列与 3... | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 10A 末尾 表格 L450-451 | 2026-06-10 11:00 | — | TASK-REQ-00020-00003 |
 | TASK-REQ-00020-00008 | REQ-00020 | 修改 | 审查改修 | [修改] 清理 §步骤 7D 段,与 §步骤 6 ... | 待开始 | 未编写 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 7D | — | — | TASK-REQ-00020-00006 |
 
 **统计**:
