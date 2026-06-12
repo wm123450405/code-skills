@@ -385,8 +385,14 @@ Args: <BUG-NNN>
 1. 读 plan/REQ-NNNNN/PLAN.md,解析"任务总览"区段
 2. 对每个任务编码(按表行顺序):
    a. Skill: code-it <任务编码>
-   b. 若 code-it 输出含 "测试需要=Y" → Skill: code-unit <任务编码>
-       否则 → 跳过 code-unit
+   b. code-unit 步骤(本需求 REQ-00031 FR-6 修订,2026-06-12 起生效):**永不触发**
+      - 原因:`code-plan` 不再产出单元测试任务(任务"测试状态"统一收窄为 `不适用`),本步骤**恒等跳过**
+      - 屏幕日志:`[code-auto]   → 1/N:code-unit TASK-... · <任务标题> ✓ (跳过,无需测试)`(格式字节级保留 INV-10)
+      - 副作用:每条任务循环都**额外**打印 1 行 `code-unit` 跳过日志(视觉冗余,可接受)
+      - 字节级还原能力(留作 follow-up,本需求不主动还原):若未来 `code-plan` 重新启用测试规划,本步骤 4.b 可改回:
+        #   if code-it 输出含 "测试需要=Y" → Skill: code-unit <任务编码>
+        #   else → 跳过 code-unit
+        # 屏幕日志格式 `(跳过,无需测试)` 字节级保留
 ```
 
 - **解析锚点**(PLAN.md):
