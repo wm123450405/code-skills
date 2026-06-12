@@ -23,7 +23,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00031-00001 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:任务粒度原则内化编译/运行 + 移除测试类型 + 收窄测试状态枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 10A |
 | TASK-REQ-00031-00002 | 修改 | 详细设计 | [修改] code-it/SKILL.md:文档头 ## 目标 追加"不含单元测试"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md ## 目标 |
-| TASK-REQ-00031-00003 | 修改 | 详细设计 | [修改] code-unit/SKILL.md:文档头 ## 目标 追加"独立、可选"职责声明 | 待开始 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md ## 目标 |
+| TASK-REQ-00031-00003 | 修改 | 详细设计 | [修改] code-unit/SKILL.md:文档头 ## 目标 追加"独立、可选"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md ## 目标 |
 | TASK-REQ-00031-00004 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 |
 | TASK-REQ-00031-00005 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md |
 
