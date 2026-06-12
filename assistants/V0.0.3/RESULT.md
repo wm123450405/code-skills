@@ -204,7 +204,7 @@
 | TASK-REQ-00027-00010 | REQ-00027 | 修改 | 审查改修 | [修改] code-auto 步骤 2/3 适配 BUG 路径(`code-design` BUG 跳过 / `code-plan` BUG 路径入参) | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §工作流步骤 步骤 2 / 步骤 3 | 2026-06-08 17:47 | 9342318 | TASK-REQ-00027-00002 |
 | TASK-REQ-00028-00001 | REQ-00028 | 文档 | 详细设计 | [新增] code-answer SKILL.md(只读功能查询) | 已完成 | 不适用 | plugins/code-skills/skills/code-answer/SKILL.md | 2026-06-10 11:00 | — | — |
 | TASK-REQ-00029-00001 | REQ-00029 | 修改 | 详细设计 | [修改] code-dashboard 渲染层瘦身(总览 ≤ 8 / 需求 ≤ 15 行) | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §输出 + §工作流程 步骤 4 段 1 ~ 段 5 | 2026-06-10 12:00 | — | — |
-| TASK-REQ-00030-00001 | REQ-00030 | 修改 | 详细设计 | [修改] code-design/SKILL.md:步骤 0b 收敛 + 9A/10A/11A 输出深度收窄 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §步骤 0b + §步骤 9A/10A/11A | — | — | — |
+| TASK-REQ-00030-00001 | REQ-00030 | 修改 | 详细设计 | [修改] code-design/SKILL.md:步骤 0b 收敛 + 9A/10A/11A 输出深度收窄 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §步骤 0b + §步骤 9A/10A/11A | 2026-06-12 14:45 | <待 commit> | — |
 | TASK-REQ-00030-00002 | REQ-00030 | 修改 | 详细设计 | [修改] templates/design.md:§7/§8/§9/§10 章节重写 + §7.5/§8.5/§9.5 新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/templates/design.md §7-§10 + 顶部注释 | — | — | — |
 | TASK-REQ-00030-00003 | REQ-00030 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:步骤 7A 补做强约束 + 步骤 10A 架构骨架触发收紧 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 7A + §步骤 10A | — | — | — |
 | TASK-REQ-00030-00004 | REQ-00030 | 修改 | 详细设计 | [修改] templates/plan.md:§4-§10 章节由"建议"改"必填" | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md §4-§12 | — | — | — |
