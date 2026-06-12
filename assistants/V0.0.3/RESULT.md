@@ -218,7 +218,7 @@
 | TASK-REQ-00031-00002 | REQ-00031 | 修改 | 详细设计 | [修改] code-it/SKILL.md:文档头 ## 目标 追加"不含单元测试"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md ## 目标 | 2026-06-12 15:44 | — | — |
 | TASK-REQ-00031-00003 | REQ-00031 | 修改 | 详细设计 | [修改] code-unit/SKILL.md:文档头 ## 目标 追加"独立、可选"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md ## 目标 | 2026-06-12 15:46 | — | — |
 | TASK-REQ-00031-00004 | REQ-00031 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 | 2026-06-12 15:48 | — | — |
-| TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | — | — | — |
+| TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | 2026-06-12 15:50 | — | — |
 
 **统计**:
 - 总任务数:73

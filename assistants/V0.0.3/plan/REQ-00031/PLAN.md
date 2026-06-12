@@ -25,7 +25,7 @@
 | TASK-REQ-00031-00002 | 修改 | 详细设计 | [修改] code-it/SKILL.md:文档头 ## 目标 追加"不含单元测试"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md ## 目标 |
 | TASK-REQ-00031-00003 | 修改 | 详细设计 | [修改] code-unit/SKILL.md:文档头 ## 目标 追加"独立、可选"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md ## 目标 |
 | TASK-REQ-00031-00004 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 |
-| TASK-REQ-00031-00005 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md |
+| TASK-REQ-00031-00005 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md |
 
 **统计**:5 个任务 / 0 派生"更新看板"任务(沿用 REQ-00017 强约束) / 0 单元测试任务(本需求主动外移) / 0 独立"编译运行检测"任务(本就是冗余)
 
