@@ -215,7 +215,7 @@
 | TASK-REQ-00030-00005 | REQ-00030 | 修改 | 详细设计 | [修改] code-check/SKILL.md:评审清单追加 3 校验点(详设完整性 / 概设越界 / 行数比例) | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md §步骤 6 评审清单 | 2026-06-12 15:10 | 65fdbc1 | — |
 | TASK-REQ-00030-00006 | REQ-00030 | 文档 | 详细设计 | [文档] 行数收敛观测:落地后 3 个新需求验证 NFR-1 | 已完成(占位) | 不适用 | (无文件修改,纯人工观测) | 2026-06-12 15:15 | — | — |
 | TASK-REQ-00031-00001 | REQ-00031 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:任务粒度原则内化编译/运行 + 移除测试类型 + 收窄测试状态枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 10A | 2026-06-12 15:40 | — | — |
-| TASK-REQ-00031-00002 | REQ-00031 | 修改 | 详细设计 | [修改] code-it/SKILL.md:文档头 ## 目标 追加"不含单元测试"职责声明 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md ## 目标 | — | — | — |
+| TASK-REQ-00031-00002 | REQ-00031 | 修改 | 详细设计 | [修改] code-it/SKILL.md:文档头 ## 目标 追加"不含单元测试"职责声明 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md ## 目标 | 2026-06-12 15:44 | — | — |
 | TASK-REQ-00031-00003 | REQ-00031 | 修改 | 详细设计 | [修改] code-unit/SKILL.md:文档头 ## 目标 追加"独立、可选"职责声明 | 待开始 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md ## 目标 | — | — | — |
 | TASK-REQ-00031-00004 | REQ-00031 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 | — | — | — |
 | TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | — | — | — |
