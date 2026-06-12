@@ -21,7 +21,7 @@
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 |
 | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00030-00001 | 修改 | 详细设计 | [修改] code-design/SKILL.md:步骤 0b 收敛 + 9A/10A/11A 输出深度收窄 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §步骤 0b + §步骤 9A/10A/11A |
-| TASK-REQ-00030-00002 | 修改 | 详细设计 | [修改] templates/design.md:§7/§8/§9/§10 章节重写 + §7.5/§8.5/§9.5 新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/templates/design.md §7-§10 + 顶部注释 |
+| TASK-REQ-00030-00002 | 修改 | 详细设计 | [修改] templates/design.md:§7/§8/§9/§10 章节重写 + §7.5/§8.5/§9.5 新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/templates/design.md §7-§10 + 顶部注释 |
 | TASK-REQ-00030-00003 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:步骤 7A 补做强约束 + 步骤 10A 架构骨架触发收紧 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 7A + §步骤 10A |
 | TASK-REQ-00030-00004 | 修改 | 详细设计 | [修改] templates/plan.md:§4-§10 章节由"建议"改"必填" | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md §4-§12 |
 | TASK-REQ-00030-00005 | 修改 | 详细设计 | [修改] code-check/SKILL.md:评审清单追加 3 校验点(详设完整性 / 概设越界 / 行数比例) | 待开始 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md §步骤 6 评审清单 |
