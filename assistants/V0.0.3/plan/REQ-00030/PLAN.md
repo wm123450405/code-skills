@@ -25,7 +25,7 @@
 | TASK-REQ-00030-00003 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:步骤 7A 补做强约束 + 步骤 10A 架构骨架触发收紧 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 7A + §步骤 10A |
 | TASK-REQ-00030-00004 | 修改 | 详细设计 | [修改] templates/plan.md:§4-§10 章节由"建议"改"必填" | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md §4-§12 |
 | TASK-REQ-00030-00005 | 修改 | 详细设计 | [修改] code-check/SKILL.md:评审清单追加 3 校验点(详设完整性 / 概设越界 / 行数比例) | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md §步骤 6 评审清单 |
-| TASK-REQ-00030-00006 | 文档 | 详细设计 | [文档] 行数收敛观测:落地后 3 个新需求验证 NFR-1 | 待开始 | 不适用 | (无文件修改,纯人工观测) |
+| TASK-REQ-00030-00006 | 文档 | 详细设计 | [文档] 行数收敛观测:落地后 3 个新需求验证 NFR-1 | 已完成(占位) | 不适用 | (无文件修改,纯人工观测) |
 
 **统计**:6 个任务 / 0 派生"更新看板"任务(沿用 REQ-00017 强约束) / 0 真实代码任务(全部为技能定义/模板/观测类)
 
