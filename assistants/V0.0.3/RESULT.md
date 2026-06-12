@@ -204,7 +204,7 @@
 | TASK-REQ-00027-00010 | REQ-00027 | 修改 | 审查改修 | [修改] code-auto 步骤 2/3 适配 BUG 路径(`code-design` BUG 跳过 / `code-plan` BUG 路径入参) | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §工作流步骤 步骤 2 / 步骤 3 | 2026-06-08 17:47 | 9342318 | TASK-REQ-00027-00002 |
 | TASK-REQ-00028-00001 | REQ-00028 | 文档 | 详细设计 | [新增] code-answer SKILL.md(只读功能查询) | 已完成 | 不适用 | plugins/code-skills/skills/code-answer/SKILL.md | 2026-06-10 11:00 | — | — |
 | TASK-REQ-00029-00001 | REQ-00029 | 修改 | 详细设计 | [修改] code-dashboard 渲染层瘦身(总览 ≤ 8 / 需求 ≤ 15 行) | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §输出 + §工作流程 步骤 4 段 1 ~ 段 5 | 2026-06-10 12:00 | — | — |
-| TASK-REQ-00030-00001 | REQ-00030 | 修改 | 详细设计 | [修改] code-design/SKILL.md:步骤 0b 收敛 + 9A/10A/11A 输出深度收窄 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §步骤 0b + §步骤 9A/10A/11A | 2026-06-12 14:45 | <待 commit> | — |
+| TASK-REQ-00030-00001 | REQ-00030 | 修改 | 详细设计 | [修改] code-design/SKILL.md:步骤 0b 收敛 + 9A/10A/11A 输出深度收窄 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md §步骤 0b + §步骤 9A/10A/11A | 2026-06-12 14:45 | e203023 | — |
 | TASK-REQ-00030-00002 | REQ-00030 | 修改 | 详细设计 | [修改] templates/design.md:§7/§8/§9/§10 章节重写 + §7.5/§8.5/§9.5 新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/templates/design.md §7-§10 + 顶部注释 | — | — | — |
 | TASK-REQ-00030-00003 | REQ-00030 | 修改 | 详细设计 | [修改] code-plan/SKILL.md:步骤 7A 补做强约束 + 步骤 10A 架构骨架触发收紧 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md §步骤 7A + §步骤 10A | — | — | — |
 | TASK-REQ-00030-00004 | REQ-00030 | 修改 | 详细设计 | [修改] templates/plan.md:§4-§10 章节由"建议"改"必填" | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md §4-§12 | — | — | — |
@@ -213,8 +213,8 @@
 
 **统计**:
 - 总任务数:68
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):61
-- 开发已完成 / 未完成:61 / 7
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):62
+- 开发已完成 / 未完成:62 / 6
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 68 / 0
 
 ---
@@ -428,6 +428,7 @@
 | 2026-06-10 12:00 | 评审发现 | REQ-00029 评审完成(共 2 条发现:F-031 / F-032 全部 建议改,0 必须改;0 派生"审查改修"任务;8 AC 全部满足,7 条 INV 全部通过;整体结论:可合并) | REQ-00029 |
 | 2026-06-12 14:25 | 设计新增 | REQ-00030 概要设计完成;5 个被改文件(2 SKILL.md + 2 templates + 1 code-check SKILL.md) + 0 新增;8 关键设计点对应上游 8 FR;9 条 INV(INV-1~INV-9,字节级保留约束 + 0 改约束);整体=--extensible(用户主动选);0 触发 dashboard-conventions 三方同步 | REQ-00030 |
 | 2026-06-12 14:31 | 设计新增 | REQ-00030 详细设计与编码计划完成(共 6 个任务);5 个被改文件各 1 任务 + 1 个验证任务(T-001 ~ T-006);整体=--extensible + 功能性=高 + 扩展性=高(用户主动选);架构骨架作为 T-001 子项(--extensible 触发);2 里程碑 M1-REQ-00030(5 任务实施完成)+ M2-REQ-00030(3 个新 REQ 行数收敛观测) | REQ-00030 |
+| 2026-06-12 14:45 | 任务完成 | TASK-REQ-00030-00001 开发状态"待开始"→"已完成";提交 e203023;code-design/SKILL.md 步骤 0b / 9A / 10A / 11A 已修订;INV-1 / INV-2 / INV-3 字节级保留校验通过 | TASK-REQ-00030-00001 |
 | 2026-06-12 14:11 | 需求新增 | REQ-00030 需求分析完成(8 FR / 6 NFR / 9 AC / 3 待澄清 / 3 关联需求沿用);关键设计决策:小需求(1 任务)概设 0 问默认;扩展性触发 = 新增三方依赖 OR 跨 ≥3 模块 OR 对接多套实现;概设 §7/§8/§9 深度收窄(模块表 5 列 / 接口 4 项 / 实体 4 项);详设 §4-§10 全展开 + 4 份过程文档由可选改必选;code-check 新增 3 个校验点(详设完整性 / 概设越界 / 行数比例) | REQ-00030 |
 
 **变更类型枚举**:
