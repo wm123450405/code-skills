@@ -70,13 +70,14 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 ```
 → 等价于 `/code-auto "<input>"`(空格分隔,多 token 拼为单一字符串)
 
-**4 种路径感知模式**(本需求 REQ-00024 改造,替代原"模式 A / 模式 B 关键字"):
+**5 种路径感知模式**(本需求 REQ-00024 改造 + REQ-00027 新增模式 C,替代原"模式 A / 模式 B 关键字"):
 
-| 模式 | 触发条件(按 `test -d` 路径检测顺序) | 含义 | 跳过步骤 1? |
+| 模式 | 触发条件(正则优先于目录检测) | 含义 | 跳过步骤 1? |
 | --- | --- | --- | --- |
 | **req-skip-require** | `require/<input>/` 存在 + `RESULT.md` 存在 | 需求已登记,可续跑 | 是(跳过 code-require,直接进步骤 2 概要设计) |
 | **req-run-require** | `require/<input>/` 存在 + `RESULT.md` 不存在 | 需求已分配编号但未完成需求设计 | 否(进入步骤 1 走 code-require) |
 | **fix-skip-require** | `require/<input>/` 不存在 + `fix/<input>/` 存在 | 缺陷已登记,可走缺陷修复详设 | 是(跳过 code-require,直接进 code-plan 走缺陷分支) |
+| **bug-skip-require** | 首段匹配 `^BUG-\d{5}$`(模式 C,本轮 REQ-00027 新增) | 缺陷已登记,走 BUG 路径子技能调用表 | 是(跳过 code-require + code-design,直接进 code-plan 走 BUG 路径) |
 | **req-content** | `require/<input>/` 不存在 + `fix/<input>/` 不存在 | 视为需求内容(分配新编号) | 否(进入步骤 1 走 code-require) |
 
 **路径感知判定算法**(在步骤 1 之前完成,沿用既有"模式识别"流程位置):
@@ -84,20 +85,22 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
 ```
 1. 拼接所有参数 token 为单一字符串(空格分隔)
 2. 去除首尾空白
-3. 检查 `require/<input>/` 目录(test -d):
+3. 正则检测(优先于目录检测):
+   - 首段匹配 `^BUG-\d{5}$` → 模式:bug-skip-require(模式 C,本轮 REQ-00027 新增)
+4. 检查 `require/<input>/` 目录(test -d):
    - 存在 → 继续检查 `require/<input>/RESULT.md` 文件(test -f):
      - 存在 → 模式:req-skip-require
      - 不存在 → 模式:req-run-require
-4. 检查 `fix/<input>/` 目录(test -d):
+5. 检查 `fix/<input>/` 目录(test -d):
    - 存在 → 模式:fix-skip-require
-5. 既不是需求编号也不是缺陷编号 → 模式:req-content(视为需求内容,后续由 code-require 分配新编号)
+6. 既不是需求编号也不是缺陷编号 → 模式:req-content(视为需求内容,后续由 code-require 分配新编号)
 ```
 
 **屏显契约**(沿用既有 3 行风格,新增 3 行"路径感知判定"前缀):
 ```
 [code-auto] 步骤 1:路径感知判定
-[code-auto]   → 模式:<req-skip-require / req-run-require / fix-skip-require / req-content>
-[code-auto]   → 依据:require/<input>/ 存在/不存在;fix/<input>/ 存在/不存在
+[code-auto]   → 模式:<req-skip-require / req-run-require / fix-skip-require / bug-skip-require / req-content>
+[code-auto]   → 依据:首段正则 / require/<input>/ 存在/不存在;fix/<input>/ 存在/不存在
 ```
 
 调用形式(需求续跑,模式 req-skip-require):
@@ -216,6 +219,17 @@ graph TD
 **附加约束**(注入到子技能 prompt 模板,FR-6 + D-2 选定 A):
 > 在执行本任务时,若 Claude Code 触发 `AskUserQuestion` 询问用户,**总选第一项 / 标注 (推荐) 的项**;不向用户提问
 
+**BUG 路径子技能调用表**(本轮 REQ-00027 新增,触发:模式 C,首段匹配 `^BUG-\d{5}$`):
+| 步骤 | 子技能 | 输入参数 | 期望产物 | 失败处理 |
+| --- | --- | --- | --- | --- |
+| 1 | `code-plan` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-plan.md` | 中断 + 报告(1) |
+| 2 | `code-it` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-work-log.md` 等 | 中断 + 报告(1) |
+| 3 | `code-unit` | `<BUG-NNN>`(条件触发) | `fix/<BUG-NNN>/fix-test-results.md` | 中断 + 报告(1) |
+| 4 | `code-check` | `<BUG-NNN>` | `fix/<BUG-NNN>/REVIEW-REPORT.md` | 中断 + 报告(1) |
+| 5 | 解析"必须改"列表 | — | (派生任务清单) | — |
+| 6 | 派生任务循环(若有) | — | (回归) | — |
+| 7 | 完成报告 | — | `fix/<BUG-NNN>/auto-report.md` | 警告不中断 |
+
 **不向子技能传任何特殊参数**(D-5 选定 A:无显式契约,子技能不感知被编排)。
 **D-5 修订(BUG-00001 生效,2026-06-06)**:本技能**不**向子技能传 prompt 参数(**状态文件除外**) — 详见步骤 0b(设置 code-auto 运行标记文件)。
 
@@ -311,7 +325,20 @@ Args: <原需求内容整串>  # 整串视为自然语言需求
 - **解析产物**:从子技能输出中提取 `REQ-NNNNN` 编码
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
-### 步骤 2:code-design
+#### 1E. 模式 bug-skip-require(缺陷 BUG 路径,本轮 REQ-00027 新增) — 跳过 code-require + code-design,直接进 code-plan 走 BUG 路径
+
+```
+1. 路径感知判定结果 = bug-skip-require(本步骤 0 之前已完成,正则匹配 `^BUG-\d{5}$`)
+2. 屏幕日志:
+   [code-auto] 步骤 1/7:code-require(模式跳过,BUG 路径)
+   [code-auto]   → 校验通过:fix/BUG-NNNNN/ 目录存在 ✓
+   [code-auto] 步骤 2/7:code-design(模式跳过,BUG 路径不调概要设计)
+3. 进入步骤 3,步骤 3-7 走 BUG 路径子技能调用表(详 §"子技能调用表" 段 BUG 路径)
+```
+
+### 步骤 2:code-design(条件化)
+
+#### 2A. 默认(需求路径:req-skip-require / req-run-require / req-content)
 
 ```
 Skill: code-design
@@ -321,7 +348,18 @@ Args: REQ-NNNNN
 - **期望产物**:`./assistants/<版本号>/design/REQ-NNNNN/RESULT.md`
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
-### 步骤 3:code-plan
+#### 2B. 跳过(BUG 路径:bug-skip-require / fix-skip-require)
+
+- **屏幕日志**:
+  ```
+  [code-auto] 步骤 2/7:code-design(模式跳过,BUG 路径不调概要设计)
+  [code-auto]   → 跳过依据:模式 C / 缺陷已登记续跑 路径不调概要设计
+  ```
+- 不调任何子技能,直接进步骤 3
+
+### 步骤 3:code-plan(条件化)
+
+#### 3A. 默认(需求路径:req-skip-require / req-run-require / req-content)
 
 ```
 Skill: code-plan
@@ -331,14 +369,30 @@ Args: REQ-NNNNN
 - **期望产物**:`./assistants/<版本号>/plan/REQ-NNNNN/{RESULT,PLAN}.md`
 - **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
 
+#### 3B. 缺陷分支(BUG 路径:bug-skip-require / fix-skip-require)
+
+```
+Skill: code-plan
+Args: <BUG-NNN>
+```
+
+- **期望产物**:`./assistants/<版本号>/fix/<BUG-NNN>/fix-plan.md`
+- **失败处理**:子技能退出码 ≠ 0 → 中断 + 报告(退出 1)
+
 ### 步骤 4:任务循环
 
 ```
 1. 读 plan/REQ-NNNNN/PLAN.md,解析"任务总览"区段
 2. 对每个任务编码(按表行顺序):
    a. Skill: code-it <任务编码>
-   b. 若 code-it 输出含 "测试需要=Y" → Skill: code-unit <任务编码>
-       否则 → 跳过 code-unit
+   b. code-unit 步骤(本需求 REQ-00031 FR-6 修订,2026-06-12 起生效):**永不触发**
+      - 原因:`code-plan` 不再产出单元测试任务(任务"测试状态"统一收窄为 `不适用`),本步骤**恒等跳过**
+      - 屏幕日志:`[code-auto]   → 1/N:code-unit TASK-... · <任务标题> ✓ (跳过,无需测试)`(格式字节级保留 INV-10)
+      - 副作用:每条任务循环都**额外**打印 1 行 `code-unit` 跳过日志(视觉冗余,可接受)
+      - 字节级还原能力(留作 follow-up,本需求不主动还原):若未来 `code-plan` 重新启用测试规划,本步骤 4.b 可改回:
+        #   if code-it 输出含 "测试需要=Y" → Skill: code-unit <任务编码>
+        #   else → 跳过 code-unit
+        # 屏幕日志格式 `(跳过,无需测试)` 字节级保留
 ```
 
 - **解析锚点**(PLAN.md):
@@ -404,7 +458,9 @@ Args: REQ-NNNNN
 status = "完成"
 1. 拼装完成报告(含执行摘要 + 最终状态 + 后续建议)
 2. 屏幕输出(stdout)
-3. Write: require/REQ-NNNNN/auto-report.md
+3. Write(按模式):
+   - 需求路径:`require/REQ-NNNNN/auto-report.md`
+   - BUG 路径(本轮 REQ-00027 新增):`fix/<BUG-NNN>/auto-report.md`
    - 失败 → stderr 警告"⚠ auto-report.md 写入失败(<原因>),报告仅输出在屏幕",不中断
 4. exit 0
 ```
@@ -719,6 +775,9 @@ function parseFixTitle(fixPath: string): string {
 | **E-17** | (本需求 REQ-00024 撤销)模式 B 模式识别歧义 | — | 路径感知无歧义(只检测目录存在性) |
 | **E-18** | (本需求 REQ-00024 新增)无版本工作空间 | 屏显"未检测到激活的版本工作空间,先调 /code-version" + 退出码 3(沿用既有"步骤 0 失败"语义) | — |
 | **E-19** | (本需求 REQ-00024 新增)路径类型异常(`<input>` 是文件而非目录) | 屏显 `⚠ 路径类型异常:<path> 不是目录` + 按"两个目录都不存在"路径走(视为需求内容) | 提示用户检查 `<input>` 是否为目录名而非文件路径 |
+| **E-20** | (本需求 REQ-00027 新增)BUG 路径模式 C 错配(例如 args 含 `BUG-00001-00001` 而非 `BUG-00001`) | 屏显 `⚠ BUG 路径模式 C 错配:<input> 不是合法 BUG 编号` + 提示格式 `^BUG-\d{5}$` | 用户需重新调 `/code-auto BUG-NNNNN` |
+| **E-21** | (本需求 REQ-00027 新增)`code-check` SKILL.md 缺失或与 `code-review` 不一致 | 沿用既有"`fix/<BUG-NNN>/RESULT.md` 缺失 → 提示先调 `code-fix`" 模式 | BUG 路径步骤 4 退化 |
+| **E-22** | (本需求 REQ-00027 新增)BUG 路径中断恢复 | 沿用 `code-auto` 既有"无增量恢复"约定;用户可 `Ctrl+C` 后重跑 `/code-auto <BUG-NNN>` 从步骤 1 重启 | 中断前已写入的 `fix/<BUG-NNN>/{RESULT,fix-plan,fix-work-log}.md` 保留 |
 
 ## 上下游衔接
 
@@ -772,6 +831,7 @@ constraints:
 - 不要并发调子技能(NFR-2 + Q-7 锁定)
 - 不要向子技能传任何特殊参数(零修改契约)
 - 不要修改 9 个子技能 SKILL.md(FR-8.AC-8.1)
+- 不要修改 `code-plan` / `code-it` / `code-unit` / `code-check` 的核心工作流(BUG 路径仅扩展子技能调用流程,不修改既有子技能 SKILL.md)
 - 不要在异常/中止时写 `auto-report.md`(NFR-7)
 - 不要在 `code-auto` 完成时自动调 `code-publish`(职责分离)
 - 不要在用户中止时尝试 flush `auto-report.md`(避免半成品)

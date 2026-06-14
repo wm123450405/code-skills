@@ -42,6 +42,9 @@ description: 需求分析(版本感知)。要求用户提供"需求编码",**所
 
 ## 输入
 - **需求编码**(必填):用户口头或文本指定,例如 `REQ-00001`
+  - **默认**格式:5 位纯数字 `^REQ-\d{5}$`(本仓库主动产出)
+  - **接收**可放宽:`^REQ-[A-Za-z0-9.\-_]+$`(前缀 `REQ-` + 后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则)
+  - **不**追溯:既有的 5 位纯数字编号继续有效,本字段同时支持接收第三方平台前缀(已通过 `code-rule` 登记的 `JIRA-` 等,见 `encoding-conventions §规则 1.5`)
 - **需求材料**:由用户预先放在 `./assistants/<版本号>/require/<需求编码>/` 目录下的:
   - 需求文档(.md / .docx / .pdf)
   - 设计稿(.png / .jpg / .figma 链接)
@@ -101,6 +104,8 @@ function parseResultTitle(filePath: string): string {
   return match ? match[1] : ''  // E-3 退化:返回空字符串
 }
 ```
+
+> **解析语义**(REQ-00025 字面更新):按前缀 + 后缀两段式解析(`reqNum` 完整保留);屏显保留**完整编号**(`REQ-NNNNN` 或 `REQ-<扩展后缀>`,**不**截断 30 字符);30 字符限制**只**针对**标题字段**(即 `truncateTitle` 的入参)
 
 **屏幕输出格式契约**:
 
@@ -323,6 +328,24 @@ function parseResultTitle(filePath: string): string {
 - 收尾 `materials-index.md` / `clarifications.md` / `related-requirements.md` / `analysis-notes.md`
 - 向用户汇报:本次新增了哪些 FR/AC、哪些被列为待澄清、关联了哪些需求、版本看板的更新点
 
+### 下一步建议(本需求 REQ-00032 新增,2026-06-12 起生效)
+
+> **本段职能**(FR-3 强约束,2026-06-12 起生效):在 code-require 完成需求分析(首次/增量)后,屏幕输出"下一步建议",引导用户选择后续路径:
+> - 微小需求(AI 自主判定) → 直接执行 `/code-auto`(跳过独立的概设/详设,直接进入自动流水线)
+> - 其他需求 → 先执行 `/code-design`(沿用既有主流程)
+>
+> **判定启发式**(FR-1 推荐判据,非强制阈值):
+> 1. 需求材料数量 ≤ 1
+> 2. FR(功能需求)数量 ≤ 2
+> 3. AC(验收标准)数量 ≤ 5
+> 同时满足 → `isTiny = true`,否则 `isTiny = false`;AI 可基于上下文调整;失败降级 → `isTiny = false`
+>
+> **屏幕输出契约**(FR-3.1 / FR-3.2,字符数 ≤ 80 字/行,行数 ≤ 2):
+> - FR-3.1(微小):`→ 下一步建议:本需求判定为"微小需求",建议直接执行 \`/code-auto\` 完成开发任务` + `提示:code-auto 会自动跳过独立的概设/详设步骤,直接进入编码+评审流水线`
+> - FR-3.2(其他):`→ 下一步建议:本需求判定为"非微小需求",建议先执行 \`/code-design\` 概设` + `提示:概设完成后,code-plan → code-it → code-check 仍按既有主流程推进`
+>
+> **不修改**:`require/<REQ>/RESULT.md` 文档结构(FR-2);`templates/requirements.md` 模板(NFR-2);`isTiny` 不持久化(FR-2)
+
 ### 步骤 N — 末尾兜底提交(强制收尾,新增)
 **所有其他步骤执行完毕后的最后一步,覆盖"过程文件 + 结果文件"。**
 
@@ -402,6 +425,24 @@ function parseResultTitle(filePath: string): string {
 - **未变**的内容(简述)
 - **新增的待澄清项**
 - **版本看板的同步情况**
+
+### 下一步建议(本需求 REQ-00032 新增,2026-06-12 起生效)
+
+> **本段职能**(FR-3 强约束,2026-06-12 起生效):在 code-require 完成需求分析(首次/增量)后,屏幕输出"下一步建议",引导用户选择后续路径:
+> - 微小需求(AI 自主判定) → 直接执行 `/code-auto`(跳过独立的概设/详设,直接进入自动流水线)
+> - 其他需求 → 先执行 `/code-design`(沿用既有主流程)
+>
+> **判定启发式**(FR-1 推荐判据,非强制阈值):
+> 1. 需求材料数量 ≤ 1
+> 2. FR(功能需求)数量 ≤ 2
+> 3. AC(验收标准)数量 ≤ 5
+> 同时满足 → `isTiny = true`,否则 `isTiny = false`;AI 可基于上下文调整;失败降级 → `isTiny = false`
+>
+> **屏幕输出契约**(FR-3.1 / FR-3.2,字符数 ≤ 80 字/行,行数 ≤ 2):
+> - FR-3.1(微小):`→ 下一步建议:本需求判定为"微小需求",建议直接执行 \`/code-auto\` 完成开发任务` + `提示:code-auto 会自动跳过独立的概设/详设步骤,直接进入编码+评审流水线`
+> - FR-3.2(其他):`→ 下一步建议:本需求判定为"非微小需求",建议先执行 \`/code-design\` 概设` + `提示:概设完成后,code-plan → code-it → code-check 仍按既有主流程推进`
+>
+> **不修改**:`require/<REQ>/RESULT.md` 文档结构(FR-2);`templates/requirements.md` 模板(NFR-2);`isTiny` 不持久化(FR-2)
 
 ---
 
@@ -522,7 +563,7 @@ function parseResultTitle(filePath: string): string {
 - **横向**:通过 `related-requirements.md` 与同版本下其他需求(可选:跨版本)形成引用网
 
 ## 不要做的事
-- 不修改 `plugins/code-skills/skills/*/SKILL.md` 任何文件(工程代码改动由 `code-it` 实施,本技能只写 `require/<REQ>/RESULT.md` 等工作空间文档)
+- 不修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件(工程代码改动由 `code-it` 实施,本技能只写 `require/<REQ>/RESULT.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行(必须先调 `code-version`)
 - 不要在不读取现有 `RESULT.md` 的情况下重写整个文件
 - 不要在材料不足以佐证时臆造具体细节

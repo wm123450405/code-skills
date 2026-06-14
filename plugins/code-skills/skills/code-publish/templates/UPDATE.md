@@ -1,6 +1,6 @@
 # 升级部署手册 — 从 <源版本> 升级到 <本版本号>
 
-> ⚠ **本手册为通用升级部署骨架**,由 `code-publish` 技能从 `plugins/code-skills/skills/code-publish/templates/UPDATE.md` 复制生成(**仅当本版本非基线**)。
+> ⚠ **本手册为通用升级部署骨架**,由 `code-publish` 技能从 `<本仓库>/skills/code-publish/templates/UPDATE.md` 复制生成(**仅当本版本非基线**)。
 >
 > **请先手动补全所有 `<placeholder>`(除 `<本版本号>` / `<源版本>` 外),再按本手册的步骤执行升级。**
 >

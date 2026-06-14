@@ -1,6 +1,6 @@
 # 发布部署手册 — <本版本号>
 
-> ⚠ **本手册为通用发布部署骨架**,由 `code-publish` 技能从 `plugins/code-skills/skills/code-publish/templates/DEPLOY.md` 复制生成。
+> ⚠ **本手册为通用发布部署骨架**,由 `code-publish` 技能从 `<本仓库>/skills/code-publish/templates/DEPLOY.md` 复制生成。
 >
 > **请先手动补全所有 `<placeholder>`(除 `<本版本号>` 外),再按本手册的步骤执行部署。**
 >
