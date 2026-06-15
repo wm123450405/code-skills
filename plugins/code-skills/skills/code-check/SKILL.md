@@ -1,6 +1,6 @@
 ---
 name: code-check
-description: 代码检查(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/review/<需求编号>/`**(整体报告)与 **`./assistants/<version>/review/<任务编码>/`**(每个派生的"审查改修"任务)。(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 中本需求所有任务,逐任务按 `./assistants/rules/`(项目级评审清单) + `checklists/review-checklist.md` 评审,产出整体 `REVIEW-REPORT.md` 与派生的"审查改修"任务(每个任务的改修要求保存到 `review/<任务编码>/RESULT.md`,作为 `code-it` 的输入)。同时把派生任务追加到 `PLAN.md` 的"任务总览"(触发/来源=**审查改修**,关联任务=被修正原任务)。同步更新版本看板的"评审发现汇总" / "派生任务记录" / "缺陷清单" / "变更记录"区段。在 `code-unit` 完成后使用;也可在 `code-it` 完成后直接调用(单元测试缺失时评审会标注)。
+description: 代码检查(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/review/<需求编号>/`**(整体报告)与 **`./assistants/<version>/review/<任务编码>/`**(每个派生的"审查改修"任务)。(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 中本需求所有任务,逐任务按 `./assistants/rules/`(项目级评审清单) + `checklists/review-checklist.md` 评审,产出整体 `REVIEW-REPORT.md` 与派生的"审查改修"任务(每个任务的改修要求保存到 `review/<任务编码>/RESULT.md`,作为 `code-it` 的输入)。同时把派生任务追加到 `PLAN.md` 的"任务总览"(触发/来源=**审查改修**,关联任务=被修正原任务)。同步更新版本看板的"评审发现汇总" / "派生任务记录" / "缺陷清单" / "变更记录"区段。在 `code-it` 完成后直接调用;也可在 `code-check` 自含的"按需写单测"评审时联动(`code-unit` 已于本需求 REQ-00034 退场;若单元测试缺失时评审会标注"由 code-it 步骤 8.5 接管")。
 ---
 
 # code-check — 代码检查(版本感知)
@@ -38,7 +38,7 @@ description: 代码检查(版本感知)。要求用户提供"需求编码",**所
     │   └── <任务编码>/                     # code-it 产出(只读,作为评审上下文)
     │       └── RESULT.md
     ├── test/
-    │   └── <任务编码>/                     # code-unit 产出(只读,作为评审上下文)
+    │   └── <任务编码>/                     # code-it 自含的 unit-test-results.md(沿用本需求 REQ-00034 FR-2/FR-3,原 code-unit 产出已退场)
     │       └── RESULT.md
     └── review/
         ├── <需求编号>/                     # 本技能整体评审产物,可写
@@ -53,7 +53,7 @@ description: 代码检查(版本感知)。要求用户提供"需求编码",**所
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
-- **本技能不修改** `./assistants/rules/`、`<版本号>/require/`、`<版本号>/design/`、`<版本号>/plan/RESULT.md`、`<版本号>/code/`、`<版本号>/test/` 下的任何内容
+- **本技能不修改** `./assistants/rules/`、`<版本号>/require/`、`<版本号>/design/`、`<版本号>/plan/RESULT.md`、`<版本号>/code/`、`<版本号>/test/` 下的任何内容;`<版本号>/test/` 目录在 `code-unit` 退场后**仅保留** V0.0.2 / V0.0.3 既有历史档案(字节级保留,沿用本需求 REQ-00034 NFR-2)
 - **本技能会修改** `<版本号>/plan/<需求编号>/PLAN.md`:**仅追加**新的"审查改修"任务(不改其他任务、不改结构)
 - **本技能会创建** `<版本号>/review/<需求编号>/` 与 `<版本号>/review/<新任务编码>/` 下的文档
 
@@ -69,7 +69,7 @@ description: 代码检查(版本感知)。要求用户提供"需求编码",**所
 - **上游详细设计**:`./assistants/<版本号>/plan/<需求编号>/RESULT.md`(必须存在,作为详细基准)
 - **上游任务计划**:`./assistants/<版本号>/plan/<需求编号>/PLAN.md`(必须存在,作为评审范围)
 - **代码改修正文**:`./assistants/<版本号>/code/<任务编码>/RESULT.md`(每个任务,作为评审对象)
-- **测试总结(可选)**:`./assistants/<版本号>/test/<任务编码>/RESULT.md`(每个任务,辅助评审)
+- **测试总结(可选,仅历史档案)**:`./assistants/<版本号>/test/<任务编码>/RESULT.md`(V0.0.2 / V0.0.3 既有 `code-unit` 产出,字节级保留,沿用本需求 REQ-00034 NFR-2;新任务**不**产此文件,由 `code-it` 步骤 8.5 自含的 `code/<任务>/unit-test-results.md` 替代)
 - **项目级规范**:`./assistants/rules/` 下所有文件(建议存在)
 - **当前项目代码**:CWD 下的源文件(实际评审对象)
 
@@ -93,7 +93,7 @@ description: 代码检查(版本感知)。要求用户提供"需求编码",**所
 
 ## 工具使用约定
 - 读激活版本:`Read "./assistants/.current-version"`
-- 读所有上游:`Read` 读取 `<版本号>/require/` / `design/` / `plan/` / `code/` / `test/` 下的相关文档
+- 读所有上游:`Read` 读取 `<版本号>/require/` / `design/` / `plan/` / `code/` / `test/` 下的相关文档;`test/` **仅**读 V0.0.2 / V0.0.3 既有 `code-unit` 历史档案(字节级保留);新任务的单测数据读 `<版本号>/code/<任务>/unit-test-results.md`(沿用本需求 REQ-00034 FR-2/FR-3)
 - 读规范:`Glob "./assistants/rules/**/*"` + `Read`
 - **读源码**:`Glob` / `Grep` / `Read` 读 CWD 下的实际代码
 - 写文档:`Write` / `Edit`
@@ -148,7 +148,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 ```ts
 // 在派生任务写入 PLAN.md 任务总览"标题"列时,显式截断
 const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle(taskTitle)} | ... |`
-// 下游消费方(code-it / code-unit / code-auto)零感知截断
+// 下游消费方(code-it / code-auto)零感知截断(`code-unit` 已于本需求 REQ-00034 退场)
 ```
 
 **屏幕输出格式契约**:
@@ -278,7 +278,7 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 ### 步骤 6 — 读取每个任务的代码改修正文
 对每个待评审任务:
 1. `Read "./assistants/<版本号>/code/<任务编码>/RESULT.md"` —— 实际改了什么、关键决策、已知问题
-2. `Read "./assistants/<版本号>/test/<任务编码>/RESULT.md"`(若存在)—— 测试覆盖、覆盖率、发现的代码 bug
+2. `Read "./assistants/<版本号>/code/<任务编码>/unit-test-results.md"`(由 `code-it` 步骤 8.5 自含;**不**读 `./assistants/<版本号>/test/<任务编码>/RESULT.md` —— `code-unit` 已退场;`test/` 目录**仅**保留 V0.0.2 / V0.0.3 既有 `code-unit` 历史档案,字节级保留)
 3. 根据 `code/RESULT.md` 的"详细改动"部分,`Read` CWD 下的实际源码文件
 
 把"读了哪些文件"记入 `work-log.md`。
@@ -605,14 +605,14 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 - **下游**:
   - `code-it` 消费 `./assistants/<版本号>/review/<新任务编码>/RESULT.md` 执行每个"审查改修"任务
   - 评审通过后:合并 → 部署
-- **上游**:`code-version`(必须);`code-it` / `code-unit` 的产出 + 需求/设计/计划文档
+- **上游**:`code-version`(必须);`code-it` 的产出 + 需求/设计/计划文档(`code-unit` 已于本需求 REQ-00034 退场,产出**不**再含)
 - **横向**:可能与 `code-require` / `code-design` 联动 —— 若评审发现需求/设计本身有错,记录到 REVIEW-REPORT.md 的"超出本次评审范围",建议用户回到对应上游
 
 ## 不要做的事
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
 - 不读上游文档就直接评审
 - 评审时改 CWD 下的源码(那是 code-it 的工作)
-- 评审时改 `<版本号>/plan/RESULT.md` / `<版本号>/code/RESULT.md` / `<版本号>/test/RESULT.md`
+- 评审时改 `<版本号>/plan/RESULT.md` / `<版本号>/code/RESULT.md`;`<版本号>/test/RESULT.md` **不**写(本需求后 `code-unit` 退场,新任务**不**产此文件)
 - 把发现的"建议改"全部强派生为任务(询问用户)
 - 在 PLAN.md 中修改除"追加新任务"之外的任何内容
 - 跳过 `./assistants/rules/review-checklist.md`(若存在)而只用内置清单
