@@ -79,7 +79,7 @@
 | REQ-00030 | 优化 /code-design 与 /code-plan 职责分离(概设只做概设,详设开始做详设;扩展性三阶段下沉) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00030/RESULT.md](./require/REQ-00030/RESULT.md) | — | — |
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00031/RESULT.md](./require/REQ-00031/RESULT.md) | — | — |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00032/RESULT.md](./require/REQ-00032/RESULT.md) | — | — |
-| REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 草稿 | 2026-06-15 | — | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | — | — |
+| REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | [REQ-00033/RESULT.md](./design/REQ-00033/RESULT.md) | — |
 | REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 草稿 | 2026-06-15 | — | [REQ-00034/RESULT.md](./require/REQ-00034/RESULT.md) | — | — |
 
 **统计**:
@@ -463,6 +463,7 @@
 | 2026-06-12 17:10 | 任务完成 | TASK-REQ-00032-00001 · [修改] code-require 步骤 10A/10B 末尾追加下一步建议段(开发状态:已完成) | TASK-REQ-00032-00001 |
 | 2026-06-12 17:18 | 评审发现 | REQ-00032 评审完成(0 条发现,0 个派生任务;12 维度(8.1-8.12)全通过;INV-1~INV-10 全部满足;§8.10 0 命中 + §8.11 5 正则 0 命中 + §8.12 design/plan ratio=1.08 ≤ 1.2 通过;M1-REQ-00032 里程碑可关闭;整体=可合并) | REQ-00032 |
 | 2026-06-15 11:10 | 需求新增 | REQ-00033 需求分析完成(共 4 FR / 11 NFR / 23 AC);本需求唯一改造对象 = `code-require/SKILL.md` §"不要做的事" 小节追加 1 条硬约束(不涉及技术选型 / 技术栈 / 技术方案);0 改 frontmatter / templates / 其他 11 个 SKILL.md / 既有 12 个 REQ / 7 项目级规范 / 4 README / CLAUDE.md;0 派生"更新看板"任务;1 项用户授权偏离(NFR-8 不收集"本项目是否需要技术选型"偏好) | REQ-00033 |
+| 2026-06-15 12:20 | 设计新增 | REQ-00033 概要设计完成(5 决策 / 9 不变量 / 0 模块 / 0 接口 / 0 数据结构 / 0 依赖);整体=--balanced,功能性=低,0 触发扩展性,0 冲突,0 问路(code-auto 上下文检测到,采纳 --balanced 默认 0 问) | REQ-00033 |
 | 2026-06-15 12:00 | 需求新增 | REQ-00034 需求分析完成(共 12 FR / 12 NFR / 8 大类共 50+ AC);本需求唯一硬删除对象 = `code-unit/SKILL.md` (635 行) + `code-unit/templates/` 整体;`code-it` 接管守卫 7 项(字节级沿用 `code-unit` 步骤 0a)+ 按需写单测(自动判定);`code-plan` / `code-auto` / `code-check` 适配;2 JSON + 4 README + CLAUDE.md + 7 项目级规范 + 11 技能描述段字面改写;0 改既有 12 个 REQ / 0 改 frontmatter / 0 改工程代码;0 派生"更新看板"任务;1 项用户授权(NFR-2 历史档案字节级保留) | REQ-00034 |
 
 **变更类型枚举**:
