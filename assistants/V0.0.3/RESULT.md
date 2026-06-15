@@ -238,7 +238,7 @@
 | TASK-REQ-00034-00007 | REQ-00034 | 修改 | 详细设计 | [修改] 4 README + CLAUDE.md 字面改写(去 `code-unit` 引用) | 已完成 | 不适用 | README.md + README.en.md + plugins/code-skills/README.md + plugins/code-skills/README.en.md + CLAUDE.md 描述段 | 2026-06-15 17:30 | 4f4e448 | — |
 | TASK-REQ-00034-00008 | REQ-00034 | 修改 | 详细设计 | [修改] 7 项目级规范字面改写(去 `code-unit` 引用) | 已完成 | 不适用 | assistants/rules/encoding-conventions.md + review-checklist.md + skill-conventions.md + module-conventions.md + dashboard-conventions.md + plugin-conventions.md + migration-mapping.md 描述段 | 2026-06-15 17:45 | 839b78e | — |
 | TASK-REQ-00034-00009 | REQ-00034 | 修改 | 详细设计 | [修改] 11 技能 SKILL.md 描述段去 `code-unit` 引用(`code-it` 改写为"含按需写单测") | 已完成 | 不适用 | plugins/code-skills/skills/{code-require, code-design, code-plan, code-fix, code-init, code-publish, code-version, code-rule, code-merge, code-answer, code-dashboard, code-auto, code-it}/SKILL.md frontmatter description 字段 | 2026-06-15 18:00 | 3222843 | — |
-| TASK-REQ-00034-00010 | REQ-00034 | 删除 | 详细设计 | [删除] code-unit 整体(SKILL.md 635 行 + templates/ 目录) | 待开始 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md 整体 + plugins/code-skills/skills/code-unit/templates/ 整体 | — | — | — |
+| TASK-REQ-00034-00010 | REQ-00034 | 删除 | 详细设计 | [删除] code-unit 整体(SKILL.md 635 行 + templates/ 目录) | 已完成 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md 整体 + plugins/code-skills/skills/code-unit/templates/ 整体 | 2026-06-15 18:15 | b9c9d6c | — |
 
 **统计**:
 - 总任务数:74
