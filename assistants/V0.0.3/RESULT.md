@@ -80,7 +80,7 @@
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00031/RESULT.md](./require/REQ-00031/RESULT.md) | — | — |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00032/RESULT.md](./require/REQ-00032/RESULT.md) | — | — |
 | REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | [REQ-00033/RESULT.md](./design/REQ-00033/RESULT.md) | [REQ-00033/PLAN.md](./plan/REQ-00033/PLAN.md) |
-| REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00034/RESULT.md](./require/REQ-00034/RESULT.md) | [REQ-00034/RESULT.md](./design/REQ-00034/RESULT.md) | — |
+| REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00034/RESULT.md](./require/REQ-00034/RESULT.md) | [REQ-00034/RESULT.md](./design/REQ-00034/RESULT.md) | [REQ-00034/PLAN.md](./plan/REQ-00034/PLAN.md) |
 
 **统计**:
 - 总数:14
@@ -134,8 +134,9 @@
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 5 | 0 | 0(不适用) | 2026-06-12 | [REQ-00031/PLAN.md](./plan/REQ-00031/PLAN.md) |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 1 | 0 | 0(不适用) | 2026-06-12 | [REQ-00032/PLAN.md](./plan/REQ-00032/PLAN.md) |
 | REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 1 | 0 | 0(不适用) | 2026-06-15 | [REQ-00033/PLAN.md](./plan/REQ-00033/PLAN.md) |
+| REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 已完成 | 10 | 0 | 0(不适用) | 2026-06-15 | [REQ-00034/PLAN.md](./plan/REQ-00034/PLAN.md) |
 
-**统计**:13 个计划 / 共 62 个任务 / 开发完成 50 / 测试通过 0(不适用 62)
+**统计**:15 个计划 / 共 82 个任务 / 开发完成 51 / 测试通过 0(不适用 82)
 
 (详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31)
 
@@ -228,6 +229,16 @@
 | TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | 2026-06-12 15:50 | — | — |
 | TASK-REQ-00032-00001 | REQ-00032 | 修改 | 详细设计 | [修改] code-require 步骤 10A/10B 末尾追加下一步建议段 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 10A 段内文末 / §步骤 10B 段内文末 | 2026-06-12 17:10 | 0d40251 | — |
 | TASK-REQ-00033-00001 | REQ-00033 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §"不要做的事" 小节末尾 | 2026-06-15 12:45 | 26698e8 | — |
+| TASK-REQ-00034-00001 | REQ-00034 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫 + 步骤 8.5 按需写单测接管 + 文档头/L18/L795/L907-908 字面改写 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §"## 步骤 8"之后新增"## 步骤 8a / 8.5" + 文档头 + L18 + L795 + L907-908 | — | — | — |
+| TASK-REQ-00034-00002 | REQ-00034 | 修改 | 详细设计 | [修改] code-it 模板新增"## 单元测试"小节 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md 既有章节追加 1 小节 | — | — | — |
+| TASK-REQ-00034-00003 | REQ-00034 | 修改 | 详细设计 | [修改] code-plan/SKILL.md L368/431/445/454/1105 字面改写(由 `code-unit` 另起流程 → 由 `code-it` 内化) | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md L368 / L431 / L445 / L454 / L1105 | — | — | — |
+| TASK-REQ-00034-00004 | REQ-00034 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 步骤 4.b 整段删除 + 10 处字面改写 | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md L45 + L213-227 + L388-411 + L432-433 + L449 + L624-625 + L672 + L692 + L711 + L741 + L797 + L806 + L834 | — | — | — |
+| TASK-REQ-00034-00005 | REQ-00034 | 修改 | 详细设计 | [修改] code-check/SKILL.md 10 处 test/<TASK-...>/ 引用改写 | 待开始 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md L3 + L21 + L40-41 + L56 + L72 + L96 + L151 + L281 + L608 + L615 | — | — | — |
+| TASK-REQ-00034-00006 | REQ-00034 | 修改 | 详细设计 | [修改] plugin.json + marketplace.json 注册项删除(3 处字面) | 待开始 | 不适用 | plugins/code-skills/.claude-plugin/plugin.json L15 + .claude-plugin/marketplace.json L24 / L39 | — | — | — |
+| TASK-REQ-00034-00007 | REQ-00034 | 修改 | 详细设计 | [修改] 4 README + CLAUDE.md 字面改写(去 `code-unit` 引用) | 待开始 | 不适用 | README.md + README.en.md + plugins/code-skills/README.md + plugins/code-skills/README.en.md + CLAUDE.md 描述段 | — | — | — |
+| TASK-REQ-00034-00008 | REQ-00034 | 修改 | 详细设计 | [修改] 7 项目级规范字面改写(去 `code-unit` 引用) | 待开始 | 不适用 | assistants/rules/encoding-conventions.md + review-checklist.md + skill-conventions.md + module-conventions.md + dashboard-conventions.md + plugin-conventions.md + migration-mapping.md 描述段 | — | — | — |
+| TASK-REQ-00034-00009 | REQ-00034 | 修改 | 详细设计 | [修改] 11 技能 SKILL.md 描述段去 `code-unit` 引用(`code-it` 改写为"含按需写单测") | 待开始 | 不适用 | plugins/code-skills/skills/{code-require, code-design, code-plan, code-fix, code-init, code-publish, code-version, code-rule, code-merge, code-answer, code-dashboard, code-auto, code-it}/SKILL.md frontmatter description 字段 | — | — | — |
+| TASK-REQ-00034-00010 | REQ-00034 | 删除 | 详细设计 | [删除] code-unit 整体(SKILL.md 635 行 + templates/ 目录) | 待开始 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md 整体 + plugins/code-skills/skills/code-unit/templates/ 整体 | — | — | — |
 
 **统计**:
 - 总任务数:74
@@ -472,6 +483,7 @@
 | 2026-06-15 13:10 | 评审发现 | REQ-00033 评审完成(共 0 条发现,派生 0 个"审查改修"任务);12 维度全过(8.1-8.9 + 8.10 详设完整性 + 8.11 概设越界 + 8.12 行数比例);8.10/8.11/8.12 三个新增校验点全部通过;净增 +1 行(在 NFR-3 锁定 +2~+4 范围内);整体=✅ 通过,可合并 | REQ-00033 |
 | 2026-06-15 12:00 | 需求新增 | REQ-00034 需求分析完成(共 12 FR / 12 NFR / 8 大类共 50+ AC);本需求唯一硬删除对象 = `code-unit/SKILL.md` (635 行) + `code-unit/templates/` 整体;`code-it` 接管守卫 7 项(字节级沿用 `code-unit` 步骤 0a)+ 按需写单测(自动判定);`code-plan` / `code-auto` / `code-check` 适配;2 JSON + 4 README + CLAUDE.md + 7 项目级规范 + 11 技能描述段字面改写;0 改既有 12 个 REQ / 0 改 frontmatter / 0 改工程代码;0 派生"更新看板"任务;1 项用户授权(NFR-2 历史档案字节级保留) | REQ-00034 |
 | 2026-06-15 13:30 | 设计新增 | REQ-00034 概要设计完成(15 决策 / 12 不变量 / 0 新增模块 / 1 新增接口类 / 0 数据结构 / 0 依赖);整体=--extensible,功能性=中(触发条件 2:29 个文件 ≥ 3);0 触发扩展性问路(code-auto 上下文 0 问);0 冲突;候选 14 任务(由 code-plan 阶段细化) | REQ-00034 |
+| 2026-06-15 14:00 | 计划更新 | REQ-00034 详细设计与编码计划完成(共 10 任务,候选 14 合并;5 SKILL.md 改造 + 2 JSON 字面 + 4 README 字面 + 7 规范字面 + 11 描述段字面 + 1 目录删除;净变化约 -600 ~ -800 行);整体=--extensible,功能性=中;0 模块/0 接口/0 数据结构/0 依赖;0 派生"更新看板"任务(沿用 REQ-00017 强约束);1 里程碑 M1-REQ-00034;code-auto 上下文 0 问沿用 design | REQ-00034 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
