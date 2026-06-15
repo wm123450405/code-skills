@@ -227,7 +227,7 @@
 | TASK-REQ-00031-00004 | REQ-00031 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 | 2026-06-12 15:48 | — | — |
 | TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | 2026-06-12 15:50 | — | — |
 | TASK-REQ-00032-00001 | REQ-00032 | 修改 | 详细设计 | [修改] code-require 步骤 10A/10B 末尾追加下一步建议段 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 10A 段内文末 / §步骤 10B 段内文末 | 2026-06-12 17:10 | 0d40251 | — |
-| TASK-REQ-00033-00001 | REQ-00033 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 待开始 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §"不要做的事" 小节末尾 | — | — | — |
+| TASK-REQ-00033-00001 | REQ-00033 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §"不要做的事" 小节末尾 | 2026-06-15 12:45 | 26698e8 | — |
 
 **统计**:
 - 总任务数:74
@@ -467,6 +467,7 @@
 | 2026-06-15 11:10 | 需求新增 | REQ-00033 需求分析完成(共 4 FR / 11 NFR / 23 AC);本需求唯一改造对象 = `code-require/SKILL.md` §"不要做的事" 小节追加 1 条硬约束(不涉及技术选型 / 技术栈 / 技术方案);0 改 frontmatter / templates / 其他 11 个 SKILL.md / 既有 12 个 REQ / 7 项目级规范 / 4 README / CLAUDE.md;0 派生"更新看板"任务;1 项用户授权偏离(NFR-8 不收集"本项目是否需要技术选型"偏好) | REQ-00033 |
 | 2026-06-15 12:20 | 设计新增 | REQ-00033 概要设计完成(5 决策 / 9 不变量 / 0 模块 / 0 接口 / 0 数据结构 / 0 依赖);整体=--balanced,功能性=低,0 触发扩展性,0 冲突,0 问路(code-auto 上下文检测到,采纳 --balanced 默认 0 问) | REQ-00033 |
 | 2026-06-15 12:30 | 计划更新 | REQ-00033 详细设计与编码计划完成(共 1 任务,1 修改类,1 个被改文件 = `code-require/SKILL.md` §"不要做的事" 小节末尾);整体=--balanced,功能性=低;0 模块/0 接口/0 数据结构/0 依赖;0 派生"更新看板"任务(沿用 REQ-00017 强约束);1 里程碑 M1-REQ-00033;code-auto 上下文 0 问沿用 design | REQ-00033 |
+| 2026-06-15 12:45 | 任务完成 | TASK-REQ-00033-00001 · [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束(开发状态:已完成);净增 +1 行(在 NFR-3 锁定 +2~+4 范围内,实际更紧);frontmatter L1-3 字节级保留;§"工作流程" 既有段 0 改;3 个语义子句全包含(AC-2.1 满足);提交 26698e8 | TASK-REQ-00033-00001 |
 | 2026-06-15 12:00 | 需求新增 | REQ-00034 需求分析完成(共 12 FR / 12 NFR / 8 大类共 50+ AC);本需求唯一硬删除对象 = `code-unit/SKILL.md` (635 行) + `code-unit/templates/` 整体;`code-it` 接管守卫 7 项(字节级沿用 `code-unit` 步骤 0a)+ 按需写单测(自动判定);`code-plan` / `code-auto` / `code-check` 适配;2 JSON + 4 README + CLAUDE.md + 7 项目级规范 + 11 技能描述段字面改写;0 改既有 12 个 REQ / 0 改 frontmatter / 0 改工程代码;0 派生"更新看板"任务;1 项用户授权(NFR-2 历史档案字节级保留) | REQ-00034 |
 
 **变更类型枚举**:
