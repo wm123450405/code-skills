@@ -1,6 +1,6 @@
 ---
 name: code-rule
-description: 编码规范管理(项目级共享,非版本感知)。允许用户用自然语言描述一条编码规范,本技能通过 `AskUserQuestion` 主动澄清模糊点后,把规范丰富整理为结构化文档,保存到 `./assistants/rules/<分类>.md`。**所有其他 `code-*` 技能(`code-require` / `code-design` / `code-plan` / `code-it` / `code-check`)在执行时都会读取 `./assistants/rules/` 下的规范作为强制约束**(只读)。本技能操作 `./assistants/rules/`,**不**操作 `./assistants/<版本号>/`,也**不**读写 `.current-version`,因此可以在 `code-version` 之前或之后随时调用。建议在新项目初期优先建立规范。
+description: 编码规范管理。用自然语言讲一条规范(命名/错误处理/安全/性能/...),本技能会主动追问模糊点,把它整理成结构化条款并归档,让后续所有开发类 `code-*` 技能都按它来。本技能操作项目级共享的规范库,跟具体版本无关,可在任何时候调用,建议新项目初期优先建立。
 ---
 
 # code-rule — 编码规范管理

@@ -1,6 +1,6 @@
 ---
 name: code-check
-description: 代码检查(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/review/<需求编号>/`**(整体报告)与 **`./assistants/<version>/review/<任务编码>/`**(每个派生的"审查改修"任务)。(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md` 中本需求所有任务,逐任务按 `./assistants/rules/`(项目级评审清单) + `checklists/review-checklist.md` 评审,产出整体 `REVIEW-REPORT.md` 与派生的"审查改修"任务(每个任务的改修要求保存到 `review/<任务编码>/RESULT.md`,作为 `code-it` 的输入)。同时把派生任务追加到 `PLAN.md` 的"任务总览"(触发/来源=**审查改修**,关联任务=被修正原任务)。同步更新版本看板的"评审发现汇总" / "派生任务记录" / "缺陷清单" / "变更记录"区段。在 `code-it` 完成后直接调用;也可在 `code-check` 自含的"按需写单测"评审时联动(单测由 `code-it` 步骤 8.5 接管;若单元测试缺失时评审会标注"由 code-it 步骤 8.5 接管")。
+description: 代码检查与评审。系统化扫一遍某个需求(或缺陷)下的所有任务,对照需求、设计、编码规范发现缺陷,给出"必须改 / 建议改 / 可选"三档意见,并把必须改的拆成可派工的"审查改修"任务交给 `code-it` 去修。也可以接"缺陷编号"对单次缺陷修复做收尾检查。在 `code-it` 之后调用,常用于合入主干前的最后一道关卡。
 ---
 
 # code-check — 代码检查(版本感知)

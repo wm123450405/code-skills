@@ -1,6 +1,6 @@
 ---
 name: code-require
-description: 需求分析(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/require/<需求编码>/`**(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。从该目录读取所有需求材料,分析并产出 `RESULT.md` 需求提示词文档。若 RESULT.md 已存在则做增量更新。同步追加/更新版本看板的"需求清单"与"变更记录"区段。在 `code-version` 之后、其他 `code-*` 之前使用。
+description: 需求分析。给一段需求描述(零散材料/对话/设计稿都行),本技能把它整理成一份完整、可追溯的需求文档,作为后续设计、编码、评审的共同基线;已存在的需求文档支持追加新材料做增量更新。需要在 `code-version` 之后、其他开发类 `code-*` 之前调用。
 ---
 
 # code-require — 需求分析(版本感知)

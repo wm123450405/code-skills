@@ -1,6 +1,6 @@
 ---
 name: code-merge
-description: 在 git worktree 模式下自动合并(版本感知)。要求当前在 git worktree 中(`git rev-parse --git-common-dir ≠ --git-dir` 自动识别),串行执行 8 步:FR-1 worktree 识别 + dirty 检查 → FR-2 自动 commit 全部未提交文件(`chore(<scope>): merge worktree into <target>`) → FR-3 拉取并合并主干(默认 `origin/main`,可用 `<branch>` 参数覆盖) → FR-4 冲突解决(看板数据保留双方 + 按时间戳排序 + 统计行重新计算;代码/配置/文档 LLM 智能合并;二进制留 unmerged + 提示用户) → FR-5 再次确认所有文件已提交 → FR-6 看板 5 区段自检(复用既有字段,**不修复**不一致) → FR-7 切回 main 分支执行 `git merge <worktree-branch> --no-ff`(走 git 默认 merge commit 消息) → FR-8 输出完成报告并退出。整个执行过程**不**产生任何过程文件 / 结果文件(**不自动** `git push`、**不自动** `git worktree remove`、**不**调任何子技能)。`Ctrl+C` 中止时已 commit 不回滚(commit 是 git 原子的)。退出码:0 = 全部成功(含非阻塞警告)/ 非 0 = 致命错误(E-M1 不在 worktree / E-M2 main dirty / E-M3 worktree 路径无效 / E-M4 主干分支不存在 / E-M5 pre-commit hook 失败 / E-M8 参数错 / E-M10 git 不可用 / E-M12 worktree 已被 prune)/ 130 = SIGINT。在 `code-version` 之后、用户需把 worktree 内开发合回 main 时使用;`code-auto` 完成后**不**自动调本技能(职责分离)。
+description: Worktree 模式自动合并。在 git worktree 里开发完,本技能一键帮你把改动合回主干:提交未提交文件、拉取主干、LLM 智能解冲突(代码/文档/配置智能合并,看板数据按时间合并,二进制留给你处理)、看板上 5 区段自检,最后用 `git merge --no-ff` 合回 main 并出报告。不自动 push,也不清理 worktree,出问题用 Ctrl+C 中止时已 commit 不回滚。
 ---
 
 # code-merge — Worktree 模式自动合并

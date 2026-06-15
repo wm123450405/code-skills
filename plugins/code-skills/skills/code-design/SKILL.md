@@ -1,6 +1,6 @@
 ---
 name: code-design
-description: 概要设计(版本感知)。要求用户提供"需求编码",**所有产出物写入 `./assistants/<版本号>/design/<需求编码>/`**(由 `./assistants/.current-version` 决定版本号,若未设置则提示先调 `code-version`)。先读取 `./assistants/rules/` 下的项目级规范(跨版本共享),再从 `./assistants/<版本号>/require/<需求编码>/RESULT.md` 读取需求分析结果,结合项目结构与已有代码,产出符合编码规范的概要设计。若 RESULT.md 已存在则做增量更新。同步追加/更新版本看板的"概要设计清单"与"变更记录"区段。在 `code-require` 之后、`code-plan` 之前使用。
+description: 概要设计。在需求文档的基础上,结合项目实际情况和编码规范,给出系统级的架构方案(模块划分、接口形态、关键流程、方案选型),作为后续拆任务、编码的依据;已存在概要设计时支持增量更新。需要在 `code-version` 之后、`code-plan` 之前调用,上游是 `code-require` 的产出。
 ---
 
 # code-design — 概要设计(版本感知)

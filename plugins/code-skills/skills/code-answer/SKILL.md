@@ -1,6 +1,6 @@
 ---
 name: code-answer
-description: 只读功能查询(Read-Only Function Query,版本感知降级)。要求用户提供"功能关键字 / 需求编码 / EXISTING-NNN 编号"作为查询,**全版本**(`code-init` 创建的基线 + `code-require` 登记的开发需求)扫描 `./assistants/*/require/*/RESULT.md`,按相关度排序(标题 > 概述 > FR)返回前 5 条命中,并以**屏显报告**呈现"主要功能 + 关键逻辑 + 历史变迁 + 参考引用";若需求未登记或描述过简,自动扫描常见源码目录(`src/` `lib/` `app/` `pkg/` `cmd/` `internal/` `packages/` `modules/` `core/`)补足。**不**写任何结果文件、**不**写任何过程文件、**严禁**调用 `Write` / `Edit` / `Bash` / `WebFetch` / `WebSearch` / `Task` / `Agent`,完全无副作用,可随时调用、多次执行幂等。在长会话中需要"回看某条需求 / 某个功能怎么定义的"或"跨版本演进摸底"时使用。
+description: 只读功能查询。给一个关键词、需求编号或 EXISTING 编号,本技能跨所有版本扫一遍历史需求,按相关度返回该功能的定义、关键逻辑和历史变迁;如果历史没登记清楚,会自动扫源码补足。完全无副作用,适合在长会话里"回看某条需求怎么定义的"或"跨版本摸底"时随时调用。
 ---
 
 # code-answer — 只读功能查询

@@ -1,10 +1,6 @@
 ---
 name: code-fix
-description: 缺陷登记与跟踪(版本感知)。要求用户提供"缺陷编号"(如 `BUG-00001`)或"缺陷描述"。
-- **若用户提供缺陷编号**:读取 `./assistants/<版本号>/fix/<缺陷编号>/` 下的所有文件,生成/更新该缺陷的 `RESULT.md`(详细描述缺陷信息并跟踪缺陷修改状态);同时维护 `./assistants/<版本号>/fix/RESULT.md` 缺陷登记表(若已存在则增量追加,否则新建);同步更新版本看板 `./assistants/<版本号>/RESULT.md` 的"缺陷清单"区段。
-- **若用户提供缺陷描述**:自动生成下一个可用的 `BUG-NNNNN` 编号,创建 `./assistants/<版本号>/fix/<缺陷编号>/` 目录与 `RESULT.md`(含用户原始描述 + 初始登记),并维护缺陷登记表与看板。
-- 本技能**纯登记型**:仅产出 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `fix-plan.md`、`fix-work-log.md`、`fix-test-results.md` 等下游文件;**不**实施代码改动(那是 `code-plan` + `code-it` 的职责);**不**推进"修复规划中"及之后状态(由 `code-plan` / `code-it` / `code-check` 推进)。
-- 一个缺陷被登记后,典型流程:`code-plan <BUG-NNN>`(规划修复方案并产出 `fix-plan.md`) → `code-it <BUG-NNN>`(实施修复并产出 `fix-work-log.md`,步骤 8.5 自含按需写单测) → `code-check <BUG-NNN>`(修复检查并推进状态到"已修复-已验证" / "已关闭")。
+description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编号),本技能把它登记成一条带状态的结构化记录,纳入版本看板统一追踪;本身只登记、不修代码,后续交给 `code-plan` 规划、`code-it` 实施、`code-check` 收尾。是 `code-require` 主流程之外的支线入口。
 ---
 
 # code-fix — 缺陷登记与跟踪(版本感知)

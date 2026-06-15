@@ -1,9 +1,6 @@
 ---
 name: code-it
-description: 开发编码(版本感知)。要求用户提供"任务编码"或"缺陷编号":
-- **任务编码**(格式 `TASK-REQ-NNNNN-NNNNN` 或 `TASK-BUG-NNNNN-NNNNN`,如 `TASK-REQ-00001-00001`):所有产出物写入 `./assistants/<版本号>/code/<任务编码>/`,从 `PLAN.md` 找到本任务并读其**触发/来源**字段;大多数任务从 `./assistants/<版本号>/plan/<需求编号>/RESULT.md` 读取详细设计;**触发/来源=审查改修 的任务**从 `./assistants/<版本号>/review/<任务编码>/RESULT.md` 读取改修要求
-- **缺陷编号**(格式 `BUG-NNNNN`,如 `BUG-00001`):所有产出物写入 `./assistants/<版本号>/fix/<缺陷编号>/`(主详细设计 `RESULT.md` + 任务列表 `PLAN.md`,沿用 REQ 路径同构产出),从 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` 读取缺陷详情,从 `./assistants/<版本号>/fix/<缺陷编号>/PLAN.md` 读取修复任务列表
-两者都遵循 `./assistants/rules/` 编码规范,完成实际代码开发,**开发完成时必须确保软件可正常编译、可启动运行,出现错误时迭代修复直到消除**。缺陷路径在编码完成后同步修改 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md`、`./assistants/<版本号>/fix/RESULT.md` 与版本看板"缺陷清单"中的缺陷登记状态;任务路径同步修改 `PLAN.md` 中本任务开发状态、版本看板"任务清单"开发状态与"缺陷清单"(若发现)。在 `code-plan` 完成后、`code-unit`/`code-check` 之前使用;**code-check 派生的"审查改修"任务**也由本技能执行。
+description: 开发编码。按任务编码取一条任务,读它的详细设计并按规范写代码,保证软件能编译、能启动运行;项目可测时按需写并跑通单元测试。也支持接"缺陷编号"走缺陷修复实施路径,把缺陷从"修复规划中"推进到"修复完成"。在 `code-plan` 之后、`code-check` 之前调用;`code-check` 派生的"审查改修"任务也由本技能执行。
 ---
 
 # code-it — 开发编码(版本感知)
