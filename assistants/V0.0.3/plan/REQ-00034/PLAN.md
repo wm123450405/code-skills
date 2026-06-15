@@ -32,7 +32,7 @@
 
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00034-00001 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫 + 步骤 8.5 按需写单测接管 + 文档头/L18/L795/L907-908 字面改写 | 待开始 | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` §"## 步骤 8"之后新增"## 步骤 8a / 8.5" + 文档头 + L18 + L795 + L907-908 | — |
+| TASK-REQ-00034-00001 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫 + 步骤 8.5 按需写单测接管 + 文档头/L18/L795/L907-908 字面改写 | 已完成 | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` §"## 步骤 8"之后新增"## 步骤 8a / 8.5" + 文档头 + L18 + L795 + L907-908 | — |
 | TASK-REQ-00034-00002 | 修改 | 详细设计 | [修改] code-it 模板新增"## 单元测试"小节 | 待开始 | 不适用 | `plugins/code-skills/skills/code-it/templates/RESULT.md` 既有章节追加 1 小节 | — |
 | TASK-REQ-00034-00003 | 修改 | 详细设计 | [修改] code-plan/SKILL.md L368/431/445/454/1105 字面改写(由 `code-unit` 另起流程 → 由 `code-it` 内化) | 待开始 | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` § L368 / L431 / L445 / L454 / L1105 | — |
 | TASK-REQ-00034-00004 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 步骤 4.b 整段删除 + 10 处字面改写 | 待开始 | 不适用 | `plugins/code-skills/skills/code-auto/SKILL.md` L45 + L213-227 + L388-411 + L432-433 + L449 + L624-625 + L672 + L692 + L711 + L741 + L797 + L806 + L834 | — |
