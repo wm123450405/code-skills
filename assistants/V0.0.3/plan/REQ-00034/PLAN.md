@@ -34,18 +34,18 @@
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00034-00001 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫 + 步骤 8.5 按需写单测接管 + 文档头/L18/L795/L907-908 字面改写 | 已完成 | 不适用 | `plugins/code-skills/skills/code-it/SKILL.md` §"## 步骤 8"之后新增"## 步骤 8a / 8.5" + 文档头 + L18 + L795 + L907-908 | — |
 | TASK-REQ-00034-00002 | 修改 | 详细设计 | [修改] code-it 模板新增"## 单元测试"小节 | 已完成 | 不适用 | `plugins/code-skills/skills/code-it/templates/RESULT.md` 既有章节追加 1 小节 | — |
-| TASK-REQ-00034-00003 | 修改 | 详细设计 | [修改] code-plan/SKILL.md L368/431/445/454/1105 字面改写(由 `code-unit` 另起流程 → 由 `code-it` 内化) | 待开始 | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` § L368 / L431 / L445 / L454 / L1105 | — |
-| TASK-REQ-00034-00004 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 步骤 4.b 整段删除 + 10 处字面改写 | 待开始 | 不适用 | `plugins/code-skills/skills/code-auto/SKILL.md` L45 + L213-227 + L388-411 + L432-433 + L449 + L624-625 + L672 + L692 + L711 + L741 + L797 + L806 + L834 | — |
-| TASK-REQ-00034-00005 | 修改 | 详细设计 | [修改] code-check/SKILL.md 10 处 test/<TASK-...>/ 引用改写 | 待开始 | 不适用 | `plugins/code-skills/skills/code-check/SKILL.md` L3 + L21 + L40-41 + L56 + L72 + L96 + L151 + L281 + L608 + L615 | — |
+| TASK-REQ-00034-00003 | 修改 | 详细设计 | [修改] code-plan/SKILL.md L368/431/445/454/1105 字面改写(由 `code-unit` 另起流程 → 由 `code-it` 内化) | 已完成 | 不适用 | `plugins/code-skills/skills/code-plan/SKILL.md` § L368 / L431 / L445 / L454 / L1105 | — |
+| TASK-REQ-00034-00004 | 修改 | 详细设计 | [修改] code-auto/SKILL.md 步骤 4.b 整段删除 + 10 处字面改写 | 已完成 | 不适用 | `plugins/code-skills/skills/code-auto/SKILL.md` L45 + L213-227 + L388-411 + L432-433 + L449 + L624-625 + L672 + L692 + L711 + L741 + L797 + L806 + L834 | — |
+| TASK-REQ-00034-00005 | 修改 | 详细设计 | [修改] code-check/SKILL.md 10 处 test/<TASK-...>/ 引用改写 | 已完成 | 不适用 | `plugins/code-skills/skills/code-check/SKILL.md` L3 + L21 + L40-41 + L56 + L72 + L96 + L151 + L281 + L608 + L615 | — |
 | TASK-REQ-00034-00006 | 修改 | 详细设计 | [修改] plugin.json + marketplace.json 注册项删除(3 处字面) | 已完成 | 不适用 | `plugins/code-skills/.claude-plugin/plugin.json` L15 + `.claude-plugin/marketplace.json` L24 / L39 | — |
-| TASK-REQ-00034-00007 | 修改 | 详细设计 | [修改] 4 README + CLAUDE.md 字面改写(去 `code-unit` 引用) | 待开始 | 不适用 | `README.md` + `README.en.md` + `plugins/code-skills/README.md` + `plugins/code-skills/README.en.md` + `CLAUDE.md` 描述段 | — |
-| TASK-REQ-00034-00008 | 修改 | 详细设计 | [修改] 7 项目级规范字面改写(去 `code-unit` 引用) | 待开始 | 不适用 | `assistants/rules/encoding-conventions.md` + `review-checklist.md` + `skill-conventions.md` + `module-conventions.md` + `dashboard-conventions.md` + `plugin-conventions.md` + `migration-mapping.md` 描述段 | — |
+| TASK-REQ-00034-00007 | 修改 | 详细设计 | [修改] 4 README + CLAUDE.md 字面改写(去 `code-unit` 引用) | 已完成 | 不适用 | `README.md` + `README.en.md` + `plugins/code-skills/README.md` + `plugins/code-skills/README.en.md` + `CLAUDE.md` 描述段 | — |
+| TASK-REQ-00034-00008 | 修改 | 详细设计 | [修改] 7 项目级规范字面改写(去 `code-unit` 引用) | 已完成 | 不适用 | `assistants/rules/encoding-conventions.md` + `review-checklist.md` + `skill-conventions.md` + `module-conventions.md` + `dashboard-conventions.md` + `plugin-conventions.md` + `migration-mapping.md` 描述段 | — |
 | TASK-REQ-00034-00009 | 修改 | 详细设计 | [修改] 11 技能 SKILL.md 描述段去 `code-unit` 引用(`code-it` 改写为"含按需写单测") | 已完成 | 不适用 | `plugins/code-skills/skills/{code-require, code-design, code-plan, code-fix, code-init, code-publish, code-version, code-rule, code-merge, code-answer, code-dashboard, code-auto, code-it}/SKILL.md` frontmatter description 字段 | — |
 | TASK-REQ-00034-00010 | 删除 | 详细设计 | [删除] code-unit 整体(SKILL.md 635 行 + templates/ 目录) | 已完成 | 不适用 | `plugins/code-skills/skills/code-unit/SKILL.md` 整体 + `plugins/code-skills/skills/code-unit/templates/` 整体 | — |
 
 **统计**:
 - 任务总数:10
-- 开发=待开始:10
+- 开发=已完成:10
 - 测试=不适用:10
 - 完成定义:任务开发=已完成 ∧ 测试∈{已运行-通过, 不适用}(沿用 REQ-00031 FR-3)
 - 里程碑:M1-REQ-00034(10 任务全部开发=已完成 ∧ 测试=不适用)
