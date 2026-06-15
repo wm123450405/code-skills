@@ -213,6 +213,14 @@ graph TD
 | 5 | `code-check` | `REQ-NNNNN` | `review/REQ-NNNNN/REVIEW-REPORT.md` | 中断 + 报告(1) |
 | 6 | `code-it` | `<派生任务编码>` | `code/.../RESULT.md` | 中断 + 报告(1) |
 
+**子技能自适应备注**(本需求 REQ-00035 新增,2026-06-15 起生效):
+
+- 上述所有子技能(`code-require` / `code-design` / `code-plan` / `code-it` / `code-check`)均已纳入"过程文档自适应生成"机制:
+  - 启动时按 §6 准则自适应判定本轮是否生成对应过程文档
+  - 仅当有"不生成"判定时才写 `process-doc-decisions.md`
+  - 不向上屏蔽;沿用零修改契约(子技能不感知被编排)
+- **本编排表 5 列结构字节级保留**(沿用 NFR-7 强约束;备注不进入表格列,仅在表外追加)
+
 **附加约束**(注入到子技能 prompt 模板,FR-6 + D-2 选定 A):
 > 在执行本任务时,若 Claude Code 触发 `AskUserQuestion` 询问用户,**总选第一项 / 标注 (推荐) 的项**;不向用户提问
 
