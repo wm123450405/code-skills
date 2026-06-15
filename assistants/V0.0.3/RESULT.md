@@ -79,7 +79,7 @@
 | REQ-00030 | 优化 /code-design 与 /code-plan 职责分离(概设只做概设,详设开始做详设;扩展性三阶段下沉) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00030/RESULT.md](./require/REQ-00030/RESULT.md) | — | — |
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00031/RESULT.md](./require/REQ-00031/RESULT.md) | — | — |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00032/RESULT.md](./require/REQ-00032/RESULT.md) | — | — |
-| REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | [REQ-00033/RESULT.md](./design/REQ-00033/RESULT.md) | — |
+| REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | [REQ-00033/RESULT.md](./design/REQ-00033/RESULT.md) | [REQ-00033/PLAN.md](./plan/REQ-00033/PLAN.md) |
 | REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 草稿 | 2026-06-15 | — | [REQ-00034/RESULT.md](./require/REQ-00034/RESULT.md) | — | — |
 
 **统计**:
@@ -133,8 +133,9 @@
 | REQ-00030 | 优化 /code-design 与 /code-plan 职责分离(概设只做概设,详设开始做详设;扩展性三阶段下沉) | 已完成 | 6 | 0 | 0(不适用) | 2026-06-12 | [REQ-00030/PLAN.md](./plan/REQ-00030/PLAN.md) |
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 5 | 0 | 0(不适用) | 2026-06-12 | [REQ-00031/PLAN.md](./plan/REQ-00031/PLAN.md) |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 1 | 0 | 0(不适用) | 2026-06-12 | [REQ-00032/PLAN.md](./plan/REQ-00032/PLAN.md) |
+| REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 1 | 0 | 0(不适用) | 2026-06-15 | [REQ-00033/PLAN.md](./plan/REQ-00033/PLAN.md) |
 
-**统计**:12 个计划 / 共 61 个任务 / 开发完成 50 / 测试通过 0(不适用 61)
+**统计**:13 个计划 / 共 62 个任务 / 开发完成 50 / 测试通过 0(不适用 62)
 
 (详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31)
 
@@ -226,6 +227,7 @@
 | TASK-REQ-00031-00004 | REQ-00031 | 修改 | 详细设计 | [修改] code-auto/SKILL.md:任务循环步骤 4.b 改为"恒等跳过" | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §步骤 4 任务循环 | 2026-06-12 15:48 | — | — |
 | TASK-REQ-00031-00005 | REQ-00031 | 修改 | 详细设计 | [修改] templates/plan.md:任务类型移除 测试 + 测试状态字段收窄为 2 枚举 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/templates/plan.md ## 任务总览 | 2026-06-12 15:50 | — | — |
 | TASK-REQ-00032-00001 | REQ-00032 | 修改 | 详细设计 | [修改] code-require 步骤 10A/10B 末尾追加下一步建议段 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 10A 段内文末 / §步骤 10B 段内文末 | 2026-06-12 17:10 | 0d40251 | — |
+| TASK-REQ-00033-00001 | REQ-00033 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 待开始 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §"不要做的事" 小节末尾 | — | — | — |
 
 **统计**:
 - 总任务数:74
@@ -464,6 +466,7 @@
 | 2026-06-12 17:18 | 评审发现 | REQ-00032 评审完成(0 条发现,0 个派生任务;12 维度(8.1-8.12)全通过;INV-1~INV-10 全部满足;§8.10 0 命中 + §8.11 5 正则 0 命中 + §8.12 design/plan ratio=1.08 ≤ 1.2 通过;M1-REQ-00032 里程碑可关闭;整体=可合并) | REQ-00032 |
 | 2026-06-15 11:10 | 需求新增 | REQ-00033 需求分析完成(共 4 FR / 11 NFR / 23 AC);本需求唯一改造对象 = `code-require/SKILL.md` §"不要做的事" 小节追加 1 条硬约束(不涉及技术选型 / 技术栈 / 技术方案);0 改 frontmatter / templates / 其他 11 个 SKILL.md / 既有 12 个 REQ / 7 项目级规范 / 4 README / CLAUDE.md;0 派生"更新看板"任务;1 项用户授权偏离(NFR-8 不收集"本项目是否需要技术选型"偏好) | REQ-00033 |
 | 2026-06-15 12:20 | 设计新增 | REQ-00033 概要设计完成(5 决策 / 9 不变量 / 0 模块 / 0 接口 / 0 数据结构 / 0 依赖);整体=--balanced,功能性=低,0 触发扩展性,0 冲突,0 问路(code-auto 上下文检测到,采纳 --balanced 默认 0 问) | REQ-00033 |
+| 2026-06-15 12:30 | 计划更新 | REQ-00033 详细设计与编码计划完成(共 1 任务,1 修改类,1 个被改文件 = `code-require/SKILL.md` §"不要做的事" 小节末尾);整体=--balanced,功能性=低;0 模块/0 接口/0 数据结构/0 依赖;0 派生"更新看板"任务(沿用 REQ-00017 强约束);1 里程碑 M1-REQ-00033;code-auto 上下文 0 问沿用 design | REQ-00033 |
 | 2026-06-15 12:00 | 需求新增 | REQ-00034 需求分析完成(共 12 FR / 12 NFR / 8 大类共 50+ AC);本需求唯一硬删除对象 = `code-unit/SKILL.md` (635 行) + `code-unit/templates/` 整体;`code-it` 接管守卫 7 项(字节级沿用 `code-unit` 步骤 0a)+ 按需写单测(自动判定);`code-plan` / `code-auto` / `code-check` 适配;2 JSON + 4 README + CLAUDE.md + 7 项目级规范 + 11 技能描述段字面改写;0 改既有 12 个 REQ / 0 改 frontmatter / 0 改工程代码;0 派生"更新看板"任务;1 项用户授权(NFR-2 历史档案字节级保留) | REQ-00034 |
 
 **变更类型枚举**:
