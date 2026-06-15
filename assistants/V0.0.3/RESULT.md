@@ -243,17 +243,17 @@
 | TASK-REQ-00034-00009 | REQ-00034 | 修改 | 详细设计 | [修改] 11 技能 SKILL.md 描述段去 `code-unit` 引用(`code-it` 改写为"含按需写单测") | 已完成 | 不适用 | plugins/code-skills/skills/{code-require, code-design, code-plan, code-fix, code-init, code-publish, code-version, code-rule, code-merge, code-answer, code-dashboard, code-auto, code-it}/SKILL.md frontmatter description 字段 | 2026-06-15 18:00 | 3222843 | — |
 | TASK-REQ-00034-00010 | REQ-00034 | 删除 | 详细设计 | [删除] code-unit 整体(SKILL.md 635 行 + templates/ 目录) | 已完成 | 不适用 | plugins/code-skills/skills/code-unit/SKILL.md 整体 + plugins/code-skills/skills/code-unit/templates/ 整体 | 2026-06-15 18:15 | b9c9d6c | — |
 | TASK-REQ-00035-00001 | REQ-00035 | 修改 | 详细设计 | [修改] code-require 步骤 0a 过程文档判定 + 模板新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md(锚点追加) + plugins/code-skills/skills/code-require/templates/process-doc-decisions.md(新文件) | 2026-06-15 19:30 | 6be9a13 | — |
-| TASK-REQ-00035-00002 | REQ-00035 | 修改 | 详细设计 | [修改] code-design 步骤 0a.5 过程文档判定 + 模板新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md(锚点追加) + plugins/code-skills/skills/code-design/templates/process-doc-decisions.md(新文件) | — | — | — |
-| TASK-REQ-00035-00003 | REQ-00035 | 修改 | 详细设计 | [修改] code-plan 步骤 0a.5 过程文档判定 + 模板新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md(锚点追加) + plugins/code-skills/skills/code-plan/templates/process-doc-decisions.md(新文件) | — | — | — |
-| TASK-REQ-00035-00004 | REQ-00035 | 修改 | 详细设计 | [修改] code-it 步骤 0a 任务级过程文档判定 + 模板新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md(锚点追加) + plugins/code-skills/skills/code-it/templates/process-doc-decisions.md(新文件) | — | — | — |
-| TASK-REQ-00035-00005 | REQ-00035 | 修改 | 详细设计 | [修改] code-check 步骤 0a + 8.13 评审维度 + 模板新增 | 待开始 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md(2 锚点追加) + plugins/code-skills/skills/code-check/templates/process-doc-decisions.md(新文件) | — | — | — |
-| TASK-REQ-00035-00006 | REQ-00035 | 修改 | 详细设计 | [修改] code-auto 编排同步(子技能调用表备注列) | 待开始 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §子技能调用表 | — | — | — |
-| TASK-REQ-00035-00007 | REQ-00035 | 修改 | 详细设计 | [修改] code-dashboard 解析兼容(变更记录行数自适应) | 待开始 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §解析锚点 | — | — | — |
+| TASK-REQ-00035-00002 | REQ-00035 | 修改 | 详细设计 | [修改] code-design 步骤 0a.5 过程文档判定 + 模板新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-design/SKILL.md(锚点追加) + plugins/code-skills/skills/code-design/templates/process-doc-decisions.md(新文件) | 2026-06-15 20:00 | 48335d7 | — |
+| TASK-REQ-00035-00003 | REQ-00035 | 修改 | 详细设计 | [修改] code-plan 步骤 0a.5 过程文档判定 + 模板新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-plan/SKILL.md(锚点追加) + plugins/code-skills/skills/code-plan/templates/process-doc-decisions.md(新文件) | 2026-06-15 20:00 | 48335d7 | — |
+| TASK-REQ-00035-00004 | REQ-00035 | 修改 | 详细设计 | [修改] code-it 步骤 0a 任务级过程文档判定 + 模板新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md(锚点追加) + plugins/code-skills/skills/code-it/templates/process-doc-decisions.md(新文件) | 2026-06-15 20:00 | 48335d7 | — |
+| TASK-REQ-00035-00005 | REQ-00035 | 修改 | 详细设计 | [修改] code-check 步骤 0a + 8.13 评审维度 + 模板新增 | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md(2 锚点追加) + plugins/code-skills/skills/code-check/templates/process-doc-decisions.md(新文件) | 2026-06-15 20:00 | 48335d7 | — |
+| TASK-REQ-00035-00006 | REQ-00035 | 修改 | 详细设计 | [修改] code-auto 编排同步(子技能调用表备注列) | 已完成 | 不适用 | plugins/code-skills/skills/code-auto/SKILL.md §子技能调用表 | 2026-06-15 20:00 | 48335d7 | — |
+| TASK-REQ-00035-00007 | REQ-00035 | 修改 | 详细设计 | [修改] code-dashboard 解析兼容(变更记录行数自适应) | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §解析锚点 | 2026-06-15 20:00 | 48335d7 | — |
 
 **统计**:
 - 总任务数:81
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):68
-- 开发已完成 / 未完成:68 / 13
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):75
+- 开发已完成 / 未完成:75 / 6
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 80 / 0
 
 ---
@@ -500,6 +500,7 @@
 | 2026-06-15 19:10 | 设计新增 | REQ-00035 概要设计完成(4 决策 / 0 不变量 / 0 新增模块(纯改既有)/ 0 新增接口 / 0 数据结构 / 0 依赖);整体=--balanced,功能性=中,扩展性=不触发;7 个改写点(5 主流程 SKILL.md + 1 编排 + 1 dashboard);5 模板新增(`process-doc-decisions.md` × 5);0 触发扩展性问路;0 冲突;本轮过程文档决策:`dependencies.md` / `clarifications.md` 不生成(§6.2 准则) | REQ-00035 |
 | 2026-06-15 19:20 | 计划更新 | REQ-00035 详细设计与编码计划完成(共 7 任务,合并 5 模板新增到 T-001~T-005;整体=--balanced,功能性=中;0 模块/0 接口/0 数据结构/0 依赖;0 派生"更新看板"任务,沿用 REQ-00017 强约束;1 里程碑 M1-REQ-00035;code-auto 上下文 0 问;看板追加 7 行;本轮过程文档决策:`interface-specs.md` / `data-changes.md` / `clarifications.md` 不生成(§6.3 准则)) | REQ-00035 |
 | 2026-06-15 19:30 | 任务完成 | TASK-REQ-00035-00001 · [修改] code-require 步骤 0a 过程文档判定 + 模板新增(开发状态:已完成);SKILL.md 锚点追加 45 行(在 `## 工具使用约定` 段后新增 `## 过程文档自适应判定` 小节);模板 `process-doc-decisions.md` 新增 50 行;0 必须改;提交 6be9a13 | TASK-REQ-00035-00001 |
+| 2026-06-15 20:00 | 任务完成 | TASK-REQ-00035-00002~00007 · 6 任务批量完成(开发状态:已完成);code-design / code-plan / code-it / code-check SKILL.md 各 +45 行(锚点追加 `## 过程文档自适应判定` 小节);code-check +8.13 评审维度(派生"建议改"不阻断);code-auto 子技能调用表备注追加;code-dashboard 解析兼容;4 模板新增(`process-doc-decisions.md` × code-require/code-design/code-plan/code-it/code-check);0 必须改;提交 48335d7 | TASK-REQ-00035-00002 ~ 00007 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
