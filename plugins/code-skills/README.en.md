@@ -31,20 +31,19 @@ After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/cod
 | [`code-require`](skills/code-require/SKILL.md) | Requirements Analysis | User materials + `assistants/rules/` | `assistants/<version>/require/<req-id>/RESULT.md` | code-design |
 | [`code-design`](skills/code-design/SKILL.md) | High-level Design | `requirements.md` + `assistants/rules/` | `design.md` | code-plan |
 | [`code-plan`](skills/code-plan/SKILL.md) | Detailed Design & Implementation Plan — accepts a "requirement ID" or a "bug ID" | `requirements.md` + `design.md` or `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` or `fix/<BUG>/fix-plan.md` | code-it |
-| [`code-it`](skills/code-it/SKILL.md) | Implementation — accepts a "task ID" or a "bug ID" | `plan.md` or `fix-plan.md` + `assistants/rules/` | Source code + per-task `RESULT.md` or `fix/<BUG>/fix-*.md` | code-unit / code-check |
-| [`code-unit`](skills/code-unit/SKILL.md) | Unit Testing | `plan.md` + `code/RESULT.md` + `assistants/rules/` | Test code + per-task `RESULT.md` | code-check |
+| [`code-it`](skills/code-it/SKILL.md) | Implementation — accepts a "task ID" or a "bug ID" (includes on-demand unit testing: step 8a project-testability guard + step 8.5 on-demand write-tests) | `plan.md` or `fix-plan.md` + `assistants/rules/` | Source code + per-task `RESULT.md` or `fix/<BUG>/fix-*.md` | code-check |
 | [`code-fix`](skills/code-fix/SKILL.md) | Bug Registration & Tracking — maintains `fix/RESULT.md` and each `BUG-NNN/RESULT.md` | User description or existing `fix/` files | `assistants/<version>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
-| [`code-check`](skills/code-check/SKILL.md) | Code Review | `code/RESULT.md` + `test/RESULT.md` + `assistants/rules/` | Overall `REVIEW-REPORT.md` + derived fix tasks | code-it (fix tasks) |
+| [`code-check`](skills/code-check/SKILL.md) | Code Review | `code/RESULT.md` + `code/<task>/unit-test-results.md` + `assistants/rules/` | Overall `REVIEW-REPORT.md` + derived fix tasks | code-it (fix tasks) |
 | [`code-publish`](skills/code-publish/SKILL.md) | Release & Deployment — accepts an optional "version ID"; performs a preflight check (all-check strictest: requirements = done ∧ tasks dev = done ∧ test ∈ {passed, N/A} ∧ bugs = fixed); on pass, generates `DEPLOY.md` + `UPDATE.md` (baseline skipped) + `Q&A.md` (aggregated from `qanda/`) under `<version>/publish/`; all 3 manuals are generic skeletons with placeholders and default examples that users must complete; **(on first call) creates the project-level `assistants/qanda/` directory if it does not yet exist** | `.current-version` + `<version>/RESULT.md` (3 sections) + `qanda/*.md` + 5 templates | `qanda/README.md` (alongside) + `<version>/publish/{DEPLOY,UPDATE,Q&A}.md` | (Ops / on-call support — consult manuals after release) |
-| [`code-dashboard`](skills/code-dashboard/SKILL.md) | Dev Dashboard (read-only) — shows current version's req/task/bug progress + up to 5 next-step suggestions | `.current-version` + `<version>/RESULT.md` (+ requirement mode: `require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (screen output, no files) | (guides user to call `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-version`) |
-| [`code-auto`](skills/code-auto/SKILL.md) | Automated Dev Orchestration — accepts 1 requirement; serially drives 6 sub-skills (`code-require` → `code-design` → `code-plan` → `code-it` (+ `code-unit` conditional) → `code-check` loop) to complete the full development cycle; `code-check` derived tasks are auto-completed by `code-it` / `code-unit` and re-reviewed until "no must-fix" remains; all `AskUserQuestion` prompts auto-pick the recommended option (fully non-interactive); supports `Ctrl+C` abort + immediate interrupt on sub-skill failure + writes `auto-report.md` on completion | (user input: 1 requirement description) | `<version>/require/<REQ>/auto-report.md` (on completion) | (one-shot: requirement → code + tests + review passed) |
+| [`code-dashboard`](skills/code-dashboard/SKILL.md) | Dev Dashboard (read-only) — shows current version's req/task/bug progress + up to 5 next-step suggestions | `.current-version` + `<version>/RESULT.md` (+ requirement mode: `require/<REQ>/RESULT.md` + `plan/<REQ>/PLAN.md`) | (screen output, no files) | (guides user to call `code-require` / `code-design` / `code-plan` / `code-it` / `code-fix` / `code-version`) |
+| [`code-auto`](skills/code-auto/SKILL.md) | Automated Dev Orchestration — accepts 1 requirement; serially drives 5 sub-skills (`code-require` → `code-design` → `code-plan` → `code-it` (step 8.5 self-contained on-demand write-tests) → `code-check` loop) to complete the full development cycle; `code-check` derived tasks are auto-completed by `code-it` and re-reviewed until "no must-fix" remains; all `AskUserQuestion` prompts auto-pick the recommended option (fully non-interactive); supports `Ctrl+C` abort + immediate interrupt on sub-skill failure + writes `auto-report.md` on completion | (user input: 1 requirement description) | `<version>/require/<REQ>/auto-report.md` (on completion) | (one-shot: requirement → code + tests + review passed) |
 | [`code-merge`](skills/code-merge/SKILL.md) | Worktree-mode auto-merge — runs only inside a git worktree (`git rev-parse --git-common-dir ≠ --git-dir`); serially executes 8 FR: worktree detection + dirty commit → `git fetch origin` + `git merge <target> --no-ff` → LLM-smart conflict resolution (dashboard data: keep both sides + sort by timestamp + recompute stats; code/config/docs: smart merge; binary: leave unmerged) → dashboard 5-section self-check (read-only, never fix) → `git merge <worktree-branch> --no-ff` back to main; **never** produces process/result files; **never** auto-`git push` / `git worktree remove`; **never** invokes any sub-skill; worktree is a strict constraint (no `--no-worktree` switch) | (dirty files inside worktree) | (stdout report, no files) | (merge worktree development back to main; `code-auto` does **not** auto-invoke this skill) |
 
 ## Pipeline
 
 ```
-code-version → code-require → code-design → code-plan → code-it → code-unit → code-check
-Version Mgmt   Requirements   High-level   Detailed    Implement   Unit Tests   Code Review
+code-version → code-require → code-design → code-plan → code-it → code-check
+Version Mgmt   Requirements   High-level   Detailed    Implement   Code Review
                             Design        Plan
 ```
 
@@ -118,7 +117,7 @@ code-skills/                          ← marketplace repo root
             │   └── templates/
             │       ├── RESULT.md
             │       └── assistants-layout.md
-            ├── code-unit/            # Unit testing
+            ├── code-it/              # Implementation
             │   ├── SKILL.md
             │   └── templates/
             │       ├── RESULT.md
@@ -193,7 +192,7 @@ Every task has a `Trigger/Source` field that determines the input source for `co
 3. **High-level Design**: Call `code-design`, produce the high-level design based on the requirement
 4. **Detailed Plan**: Call `code-plan`, produce the detailed design and task plan
 5. **Development**: Call `code-it` task by task, advance status after each task's code change
-6. **Testing**: Call `code-unit`, complete/write unit tests
+6. **Development**: Call `code-it` task by task; `code-it` step 8.5 self-contained on-demand write-tests (when project is testable: write tests + run them passing; otherwise skip)
 7. **Review**: Call `code-check`, produce the overall review report and derived fix tasks
 8. **Bug Fix** (any stage):
     - Register: Call `code-fix "<bug description>"` or `code-fix BUG-NNN`
@@ -229,9 +228,8 @@ flowchart TD
         E --> F["code-design<br/>(high-level design)"]
         F --> G["code-plan<br/>(detailed design + task plan)"]
         G --> H["code-it<br/>(implementation, task by task)"]
-        H --> I["code-unit<br/>(unit testing)"]
-        I --> J["code-check<br/>(code review)"]
-        J -->|"derive fix tasks"| H
+        H --> I["code-check<br/>(code review)"]
+        I -->|"derive fix tasks"| H
     end
 
     subgraph SideFlow[Side Flow - Bug Fix]
@@ -266,15 +264,13 @@ Connect the following in order, each step only cares about the previous step's o
      ↓ design/<req>/RESULT.md
 6. code-plan <REQ-YYYY-NNNN>      ← Detailed design + task breakdown
      ↓ plan/<req>/{RESULT.md, PLAN.md}
-7. code-it <REQ-YYYY-NNNN-001>    ← Implement the 1st task
-     ↓ code/<task>/RESULT.md (Dev=Completed)
-8. code-unit <REQ-YYYY-NNNN-001>  ← Add/run unit tests for this task
-     ↓ test/<task>/RESULT.md (Test=Run-Passed)
-9. code-check <REQ-YYYY-NNNN>    ← Review the entire requirement
+7. code-it <REQ-YYYY-NNNN-001>    ← Implement the 1st task (`code-it` step 8.5 self-contained on-demand write-tests)
+     ↓ code/<task>/RESULT.md (Dev=Completed) + code/<task>/unit-test-results.md (if project is testable)
+8. code-check <REQ-YYYY-NNNN>    ← Review the entire requirement
      ↓ review/<req>/REVIEW-REPORT.md
-     ├─ No issues → Jump to 10
+     ├─ No issues → Jump to 9
      └─ Issues → Derive "Review Fix" tasks, jump back to 7
-10. Mark milestone M3=Shippable
+9. Mark milestone M3=Shippable
 ```
 
 ### Standard Bug-Fix Flow (Triggered at Any Stage)
@@ -355,7 +351,7 @@ Connect the following in order, each step only cares about the previous step's o
 - Start a new version (product release, independent feature package, quarterly iteration)
 - Switch between multiple parallel versions
 - Archive/look back at historical versions
-- **Before any call to `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-check`**
+- **Before any call to `code-require` / `code-design` / `code-plan` / `code-it` / `code-fix` / `code-check`**
 
 **Not Applicable**:
 - Want to initialize a single project → use `code-init`
@@ -593,40 +589,9 @@ Connect the following in order, each step only cares about the previous step's o
 - Synced to version dashboard "Task List" / "Bug List" / "Executed Dev Command Log" / "Change Log"
 
 **Next**:
-- Main flow → call `code-unit <task-id>` to run unit tests
+- Main flow → `code-it` step 8.5 self-contained on-demand write-tests (when project is testable: write tests + run them passing; otherwise skip)
 - Bug branch → run tests, after passing call `code-fix <BUG-NNN>` to advance status
 - All tasks done → call `code-check <req-id>` to review
-
----
-
-#### `code-unit` — Unit Testing
-
-**Applicable Scenarios**:
-- Complete unit tests for a task
-- Verify tests pass
-- Improve coverage
-
-**Not Applicable**:
-- No active version
-- Task's development is not yet completed in `code-it`
-
-**Parameters**:
-
-| Parameter | Required | Description |
-| --- | --- | --- |
-| Task ID | Yes | Format `REQ-YYYY-NNNN-NNN` |
-
-**Examples**:
-- `code-unit TASK-REQ-00001-00001`
-
-**Output**:
-- Test code
-- `./assistants/<version>/test/<task-id>/RESULT.md`
-- Synced to version dashboard "Task List" (test status) / "Change Log"
-
-**Next**:
-- Tests pass → next task `code-it` / overall `code-check`
-- Tests fail → back to `code-it` to fix code / register a new bug `code-fix`
 
 ---
 
@@ -740,7 +705,7 @@ Any state → Blocked / Cancelled
 6. Call code-plan REQ-00001
    → Break into 5 tasks
 7. Sequentially call code-it TASK-REQ-00001-00001 ... 005
-   → After each task, call code-unit <task>
+   → `code-it` step 8.5 self-contained on-demand write-tests (when project is testable: write tests + run them passing)
 8. Call code-check REQ-00001
    → Pass → Prepare to release
 ```
@@ -854,8 +819,7 @@ Any state → Blocked / Cancelled
 | Create a requirement | `code-require <REQ-YYYY-NNNN>` |
 | High-level design for a requirement | `code-design <REQ-YYYY-NNNN>` |
 | Break a requirement into tasks | `code-plan <REQ-YYYY-NNNN>` |
-| Implement a task | `code-it <REQ-YYYY-NNNN-NNN>` |
-| Add/run unit tests for a task | `code-unit <REQ-YYYY-NNNN-NNN>` |
+| Implement a task | `code-it <REQ-YYYY-NNNN-NNN>` (includes on-demand write-tests) |
 | Review a requirement | `code-check <REQ-YYYY-NNNN>` |
 | Register a new bug | `code-fix "<bug description>"` |
 | Advance/view bug status | `code-fix <BUG-NNN>` |
@@ -882,6 +846,5 @@ Each skill has its own `SKILL.md` with the complete workflow, decision trees, te
 - [`code-design/SKILL.md`](skills/code-design/SKILL.md)
 - [`code-plan/SKILL.md`](skills/code-plan/SKILL.md)
 - [`code-it/SKILL.md`](skills/code-it/SKILL.md)
-- [`code-unit/SKILL.md`](skills/code-unit/SKILL.md)
 - [`code-fix/SKILL.md`](skills/code-fix/SKILL.md)
 - [`code-check/SKILL.md`](skills/code-check/SKILL.md)

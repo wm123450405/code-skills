@@ -31,7 +31,6 @@
 | `code-design` | 概要设计 |
 | `code-plan` | 详细设计 + 任务拆分 |
 | `code-it` | 任务编码 |
-| `code-unit` | 单元测试 |
 | `code-check` | 代码评审 |
 | `code-dashboard` | 开发看板 |
 | `code-publish` | 发布部署 |
