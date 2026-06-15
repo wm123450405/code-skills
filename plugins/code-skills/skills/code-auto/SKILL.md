@@ -1,13 +1,13 @@
 ---
 name: code-auto
-description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `code-require` → `code-design` → `code-plan` → `code-it`(+ `code-unit` 条件)→ `code-check` 循环(派生任务自动修复)的固定顺序,串行驱动 6 个子技能完成完整开发周期,过程中所有 `AskUserQuestion` 自动选推荐项,完全无需用户确认;支持 `Ctrl+C` 中止 + 异常立即中断 + 完成时输出报告到 `auto-report.md`。在 `code-version` 之后、其他 `code-*` 之前作为顶层入口使用;也可用作"从需求到代码 + 单测 + 评审全自动跑通"的一键命令。
+description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `code-require` → `code-design` → `code-plan` → `code-it`(步骤 8.5 自含按需写单测) → `code-check` 循环(派生任务自动修复)的固定顺序,串行驱动 5 个子技能完成完整开发周期,过程中所有 `AskUserQuestion` 自动选推荐项,完全无需用户确认;支持 `Ctrl+C` 中止 + 异常立即中断 + 完成时输出报告到 `auto-report.md`。在 `code-version` 之后、其他 `code-*` 之前作为顶层入口使用;也可用作"从需求到代码 + 单测 + 评审全自动跑通"的一键命令。
 ---
 
 # code-auto — 自动开发编排(版本感知)
 
 ## 目标
 
-为 `code-skills` 9 个开发周期技能(`code-version` / `code-require` / `code-design` / `code-plan` / `code-it` / `code-unit` / `code-check` / `code-dashboard` / `code-publish`)提供**编排者**角色:用户输入 1 个需求内容,本技能**串行**驱动 `code-require` → `code-design` → `code-plan` → 任务循环(`code-it` + `code-unit`)→ `code-check` 循环(派生任务自动修复)→ 完成报告,实现"从需求到代码 + 单测 + 评审无必须改"的全自动跑通。**完全无人确认**(所有 `AskUserQuestion` 自动选推荐项);**可中止**(`Ctrl+C` 输出报告);**异常立即中断**(任一子技能崩溃立即停止 + 报告)。
+为 `code-skills` 8 个开发周期技能(`code-version` / `code-require` / `code-design` / `code-plan` / `code-it` / `code-check` / `code-dashboard` / `code-publish`)提供**编排者**角色:用户输入 1 个需求内容,本技能**串行**驱动 `code-require` → `code-design` → `code-plan` → 任务循环(`code-it` 步骤 8.5 自含按需写单测,沿用本需求 REQ-00034 FR-2/FR-3)→ `code-check` 循环(派生任务自动修复)→ 完成报告,实现"从需求到代码 + 单测 + 评审无必须改"的全自动跑通。**完全无人确认**(所有 `AskUserQuestion` 自动选推荐项);**可中止**(`Ctrl+C` 输出报告);**异常立即中断**(任一子技能崩溃立即停止 + 报告)。
 
 ## 适用场景
 
@@ -42,7 +42,6 @@ description: 自动开发编排(版本感知)。接收 1 个需求内容,按 `co
     ├── design/<需求编码>/                # code-design 产物
     ├── plan/<需求编码>/                  # code-plan 产物(任务列表来源)
     ├── code/<任务编码>/                  # code-it 产物
-    ├── test/<任务编码>/                  # code-unit 产物
     ├── review/<需求编码>/                # code-check 产物(派生任务来源)
     └── require/<需求编码>/auto-report.md # 本技能产物(完成时一次性 Write)
 ```
@@ -211,10 +210,8 @@ graph TD
 | 2 | `code-design` | `REQ-NNNNN` | `design/REQ-NNNNN/RESULT.md` | 中断 + 报告(1) |
 | 3 | `code-plan` | `REQ-NNNNN` | `plan/REQ-NNNNN/{RESULT,PLAN}.md` | 中断 + 报告(1) |
 | 4 | `code-it` | `TASK-REQ-NNNNN-NNNNN`(或旧格式 `REQ-NNNNN-NNNNN`) | `code/TASK-.../RESULT.md` | 中断 + 报告(1) |
-| 4 | `code-unit` | 同上(条件触发) | `test/TASK-.../RESULT.md` | 中断 + 报告(1) |
 | 5 | `code-check` | `REQ-NNNNN` | `review/REQ-NNNNN/REVIEW-REPORT.md` | 中断 + 报告(1) |
 | 6 | `code-it` | `<派生任务编码>` | `code/.../RESULT.md` | 中断 + 报告(1) |
-| 6 | `code-unit` | `<派生任务编码>`(条件触发) | `test/.../RESULT.md` | 中断 + 报告(1) |
 
 **附加约束**(注入到子技能 prompt 模板,FR-6 + D-2 选定 A):
 > 在执行本任务时,若 Claude Code 触发 `AskUserQuestion` 询问用户,**总选第一项 / 标注 (推荐) 的项**;不向用户提问
@@ -224,8 +221,7 @@ graph TD
 | --- | --- | --- | --- | --- |
 | 1 | `code-plan` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-plan.md` | 中断 + 报告(1) |
 | 2 | `code-it` | `<BUG-NNN>` | `fix/<BUG-NNN>/fix-work-log.md` 等 | 中断 + 报告(1) |
-| 3 | `code-unit` | `<BUG-NNN>`(条件触发) | `fix/<BUG-NNN>/fix-test-results.md` | 中断 + 报告(1) |
-| 4 | `code-check` | `<BUG-NNN>` | `fix/<BUG-NNN>/REVIEW-REPORT.md` | 中断 + 报告(1) |
+| 3 | `code-check` | `<BUG-NNN>` | `fix/<BUG-NNN>/REVIEW-REPORT.md` | 中断 + 报告(1) |
 | 5 | 解析"必须改"列表 | — | (派生任务清单) | — |
 | 6 | 派生任务循环(若有) | — | (回归) | — |
 | 7 | 完成报告 | — | `fix/<BUG-NNN>/auto-report.md` | 警告不中断 |
@@ -385,14 +381,6 @@ Args: <BUG-NNN>
 1. 读 plan/REQ-NNNNN/PLAN.md,解析"任务总览"区段
 2. 对每个任务编码(按表行顺序):
    a. Skill: code-it <任务编码>
-   b. code-unit 步骤(本需求 REQ-00031 FR-6 修订,2026-06-12 起生效):**永不触发**
-      - 原因:`code-plan` 不再产出单元测试任务(任务"测试状态"统一收窄为 `不适用`),本步骤**恒等跳过**
-      - 屏幕日志:`[code-auto]   → 1/N:code-unit TASK-... · <任务标题> ✓ (跳过,无需测试)`(格式字节级保留 INV-10)
-      - 副作用:每条任务循环都**额外**打印 1 行 `code-unit` 跳过日志(视觉冗余,可接受)
-      - 字节级还原能力(留作 follow-up,本需求不主动还原):若未来 `code-plan` 重新启用测试规划,本步骤 4.b 可改回:
-        #   if code-it 输出含 "测试需要=Y" → Skill: code-unit <任务编码>
-        #   else → 跳过 code-unit
-        # 屏幕日志格式 `(跳过,无需测试)` 字节级保留
 ```
 
 - **解析锚点**(PLAN.md):
@@ -406,7 +394,6 @@ Args: <BUG-NNN>
   ```
   [code-auto] 步骤 4/6:任务循环(N 个)
   [code-auto]   → 1/N:code-it TASK-REQ-...-... ✓
-  [code-auto]   → 1/N:code-unit TASK-REQ-...-... ✓ (跳过,无需测试)
   [code-auto]   → 2/N:code-it TASK-REQ-...-... ✓
   ```
 
@@ -429,8 +416,8 @@ Args: REQ-NNNNN
 4. 若列表非空:
    a. 对每条派生任务:
       - Skill: code-it <派生任务编码>
-      - 若 code-it 输出含 "测试需要=Y" → Skill: code-unit <派生任务编码>
-          否则 → 跳过 code-unit
+      - 若 `code-it` 步骤 8.5 写单测跑通失败,触发 `code-it` 步骤 12 错误修复循环
+          否则 → 任务正常完成
    b. 回到步骤 5(无轮数上限,Q-1 锁定 A)
 ```
 
@@ -446,7 +433,7 @@ Args: REQ-NNNNN
   [code-auto]   → "必须改"任务 2 个
   [code-auto] 步骤 6/6:评审循环
   [code-auto]   → 1/2:code-it F-1 ✓
-  [code-auto]   → 2/2:code-it F-2 ✓ + code-unit F-2 ✓
+  [code-auto]   → 2/2:code-it F-2 ✓
   [code-auto]   → code-check 第 2 轮:无"必须改" → 结束
   ```
 
@@ -622,7 +609,7 @@ function parseFixTitle(fixPath: string): string {
 | 步骤 2 (`code-design`) | `[code-auto] 步骤 2/6:code-design REQ-NNNNN · <需求标题>` |
 | 步骤 3 (`code-plan`) | `[code-auto] 步骤 3/6:code-plan REQ-NNNNN · <需求标题>` |
 | 步骤 4 (任务循环) | `[code-auto]   → 1/N:code-it TASK-... · <任务标题> ✓` |
-| 步骤 4 (跳过) | `[code-auto]   → 1/N:code-unit TASK-... · <任务标题> ✓ (跳过,无需测试)` |
+| 步骤 4 (跳过) | `[code-auto]   → 1/N:code-it TASK-... · <任务标题> ✓` |
 | 步骤 5 (`code-check`) | `[code-auto] 步骤 5/6:code-check REQ-NNNNN · <需求标题>(第 1 轮)` |
 | 步骤 6 (派生循环) | `[code-auto]   → 1/2:code-it BUG-NNNNN · <缺陷标题> ✓` |
 | 完成 | `✓ code-auto 完成: REQ-NNNNN · <需求标题>` |
@@ -669,7 +656,7 @@ function parseFixTitle(fixPath: string): string {
   概要设计(code-design):1 次
   详细设计(code-plan):1 次
   代码实现(code-it):N1 次
-  单元测试(code-unit):N2 次
+  单元测试(由 code-it 步骤 8.5 内化):N2 次
   代码审查(code-check):N3 次
   总计:N 次子技能调用
 
@@ -708,7 +695,7 @@ function parseFixTitle(fixPath: string): string {
 ```
 ⏹ code-auto 用户中止
 
-中断位置:code-unit TASK-REQ-NNNNN-NNNNN
+中断位置:code-it TASK-REQ-NNNNN-NNNNN
 已完成子技能调用:N 次
 
 剩余工作:
@@ -738,7 +725,7 @@ function parseFixTitle(fixPath: string): string {
 | code-design | 1 |
 | code-plan | 1 |
 | code-it | N1 |
-| code-unit | N2 |
+| code-it 步骤 8.5(原 code-unit 接管) | N2 |
 | code-check | N3 |
 
 ## 最终状态
@@ -794,7 +781,7 @@ function parseFixTitle(fixPath: string): string {
 ### 横向(与既有技能的协同)
 
 - **`code-require` / `code-design` / `code-plan`**:被驱动(FR-3 步骤 1-3);沿用 REQ-00005 加的"首步拉取 + 末步提交"模式
-- **`code-it` / `code-unit`**:被驱动(FR-4 任务循环 + FR-5 派生任务循环)
+- **`code-it`**:被驱动(FR-4 任务循环 + FR-5 派生任务循环;`code-it` 步骤 8.5 自含按需写单测,沿用本需求 REQ-00034 FR-2/FR-3)
 - **`code-check`**:被驱动(FR-5 评审循环);解析其"必须改"列表作为派生任务来源
 - **`code-fix` / `code-init` / `code-rule`**:本技能**不调**(`code-fix` 由 `code-check` 派生;`code-init` 项目级一次性;`code-rule` 跨版本规范)
 
@@ -803,7 +790,7 @@ function parseFixTitle(fixPath: string): string {
 - **REQ-00004**(V0.0.2):`code-dashboard` 看板 3 区段解析锚点(本技能沿用)
 - **REQ-00005**(V0.0.2):`code-require` / `code-design` / `code-plan` "首步拉取 + 末步提交"模式(本技能沿用)
 - **REQ-00006**(V0.0.2):`code-publish` 前置检查与本技能 `auto-report.md` 数据源一致
-- **REQ-00009**(V0.0.2):`code-unit` 守卫"项目可测性"(本技能依赖其判断"是否调 code-unit")
+- **REQ-00009**(V0.0.2):`code-unit` 守卫"项目可测性"(本技能依赖其判断"是否调 code-unit";`code-unit` 已于本需求 REQ-00034 退场,守卫逻辑由 `code-it` 步骤 8a 接管)
 
 ## 工具使用约定
 
@@ -831,7 +818,7 @@ constraints:
 - 不要并发调子技能(NFR-2 + Q-7 锁定)
 - 不要向子技能传任何特殊参数(零修改契约)
 - 不要修改 9 个子技能 SKILL.md(FR-8.AC-8.1)
-- 不要修改 `code-plan` / `code-it` / `code-unit` / `code-check` 的核心工作流(BUG 路径仅扩展子技能调用流程,不修改既有子技能 SKILL.md)
+- 不要修改 `code-plan` / `code-it` / `code-check` 的核心工作流(BUG 路径仅扩展子技能调用流程,不修改既有子技能 SKILL.md;`code-unit` 已退场)
 - 不要在异常/中止时写 `auto-report.md`(NFR-7)
 - 不要在 `code-auto` 完成时自动调 `code-publish`(职责分离)
 - 不要在用户中止时尝试 flush `auto-report.md`(避免半成品)
