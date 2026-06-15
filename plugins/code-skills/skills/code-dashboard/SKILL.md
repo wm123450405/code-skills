@@ -238,7 +238,7 @@ REQ-00028 · 新增 code-answer 技能 [已完成] 概要: ✓ 详细: ✓
   | 待概要设计 | `/code-design <REQ>` | (缺陷不经过此状态) | — |
   | 待详细设计 | `/code-plan <REQ>` | 待详细设计 | `/code-plan <BUG>` |
   | 待代码开发 | `/code-it TASK-REQ-...-00001`(首个未完成) | 待代码开发 | `/code-it TASK-BUG-...-00001` |
-  | 待单元测试 | `/code-unit TASK-REQ-...-00001` | 待单元测试 | `/code-unit TASK-BUG-...-00001` |
+  | 待单元测试(守卫通过时) | `/code-it TASK-REQ-...-00001` 后由步骤 8.5 接管 | 待单元测试(守卫通过时) | `/code-it TASK-BUG-...-00001` 后由步骤 8.5 接管 |
   | 待代码评审 | `/code-check <REQ>` | 待代码评审 | `/code-check <REQ>`(缺陷评审关联"原需求") |
 - **展示规则**(AC-4.1 ~ AC-4.4):
   - 同状态需求 + 缺陷并存 → **只展示 1 条**(需求路径优先,AC-4.2 锁定)
@@ -274,7 +274,7 @@ REQ-00028 · 新增 code-answer 技能 [已完成] 概要: ✓ 详细: ✓
    - 任务"开发状态=待开始" → `建议: 执行 /code-it TASK-REQ-NNNNN-NNNNN` 或 `建议: 执行 /code-it REQ-NNNNN-NNNNN`(兼容旧格式,见算法 4)
    - 需求"概要设计=已完成 ∧ 详细设计=未开始" → `建议: 执行 /code-plan REQ-NNNNN`
 3. **P2 低**:
-   - 任务"测试状态=已编写" → `建议: 执行 /code-unit TASK-...`
+   - 任务"测试状态=已编写" → `建议: 由 /code-it 步骤 8.5 自含按需写单测(项目可测时)`
 4. **特殊**:
    - 全版本已完成(所有需求=已完成 ∧ 所有任务=已完成 ∧ 无 P0/P1 待修复缺陷)→ `建议: 执行 /code-version V0.0.x 创建下一个版本`
 
@@ -283,7 +283,7 @@ REQ-00028 · 新增 code-answer 技能 [已完成] 概要: ✓ 详细: ✓
 1. 需求"概要设计=未开始" → `建议: 执行 /code-design <REQ>`(高)
 2. 需求"详细设计=未开始" → `建议: 执行 /code-plan <REQ>`(中)
 3. 任务"开发状态=待开始" → `建议: 执行 /code-it <TASK>`(中)
-4. 任务"开发状态=已完成 ∧ 测试状态=未编写" → `建议: 执行 /code-unit <TASK>`(中)
+4. 任务"开发状态=已完成 ∧ 测试状态=未编写" → `建议: 由 /code-it 步骤 8.5 自含按需写单测(项目可测时)`(中)
 5. 需求全完成 → `该需求已全部完成,无需后续动作`(`—`)
 
 #### 取前 5 条 + 降序(AC-4.3)
@@ -359,12 +359,12 @@ REQ-00028 · 新增 code-answer 技能 [已完成] 概要: ✓ 详细: ✓
 - `code-require`:产出 `require/<REQ>/RESULT.md`(需求模式读)
 - `code-design`:产出 `design/<REQ>/RESULT.md`(**不读**;只读主看板)
 - `code-plan`:产出 `plan/<REQ>/PLAN.md`(需求模式读)
-- `code-it` / `code-unit` / `code-fix`:写入看板"任务清单" / "缺陷清单"区段(本技能只读)
+- `code-it`(步骤 8.5 自含按需写单测) / `code-fix`:写入看板"任务清单" / "缺陷清单"区段(本技能只读)
 - `rules/encoding-conventions.md`:任务编号正则权威(NFR-3 严格按此)
 
 ### 下游
 - 本技能**无下游**:`code-dashboard` 是"消费方",**不**被其他 `code-*` 技能调用
-- 但本技能**输出**的"下一步建议"会**引导**用户调其他技能(`/code-require` / `/code-design` / `/code-plan` / `/code-it` / `/code-unit` / `/code-fix` / `/code-version`)
+- 但本技能**输出**的"下一步建议"会**引导**用户调其他技能(`/code-require` / `/code-design` / `/code-plan` / `/code-it` / `/code-fix` / `/code-version`)
 - **本需求 REQ-00023 改造后**:总览模式 4 段已精简(总开发进度 + 5 类状态占比 + 高优缺陷 + ≤ 5 条建议);屏显总行数 ≤ 12 行(NFR-1 强约束)
 
 ### 横向
@@ -378,7 +378,7 @@ REQ-00028 · 新增 code-answer 技能 [已完成] 概要: ✓ 详细: ✓
 - ❌ **不**调用 `Write` / `Edit` / `Bash` / `WebFetch` / `WebSearch` / `Task` / `Agent`(NFR-7 严守;FR-7 AC-7.1 `git status` clean)
 - ❌ **不**修改 `./assistants/rules/` 下的任何文件
 - ❌ **不**修改 `.current-version`(那是 `code-version` 责任)
-- ❌ **不**修改 `<版本号>/RESULT.md` 任何区段(那是 `code-require` / `code-plan` / `code-it` / `code-unit` / `code-fix` / `code-check` 责任)
+- ❌ **不**修改 `<版本号>/RESULT.md` 任何区段(那是 `code-require` / `code-plan` / `code-it` / `code-fix` / `code-check` 责任)
 - ❌ **不**修改 `marketplace.json` / `plugin.json`(NFR-6 严守;走 Claude Code 技能自动发现协议)
 - ❌ **不**修改其他 10 个 `code-*` 技能 SKILL.md 的 frontmatter(NFR-6 严守)
 - ❌ **不**把任务编号 `REQ-00001-001`(旧格式)改写为 `TASK-REQ-00001-00001`(NFR-3 双格式兼容,旧字面透传)
@@ -438,6 +438,6 @@ Suggestion:
 - 无触发时显示"无后续动作" 段(AC-4.4)
 
 **5 类状态映射规则**(本需求 REQ-00023 改造):
-- 每类状态 1 条建议;严格按 `code-* / code-design / code-plan / code-it / code-unit / code-check / code-fix` 既有 SKILL.md frontmatter 真实语法
+- 每类状态 1 条建议;严格按 `code-* / code-design / code-plan / code-it / code-check / code-fix` 既有 SKILL.md frontmatter 真实语法
 - 同状态需求 + 缺陷并存 → 1 条(需求路径优先,AC-4.2)
 - 缺陷的"待代码评审"推荐命令走 `code-check <REQ>`(code-check 现有契约只接 REQ)

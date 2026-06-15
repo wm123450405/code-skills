@@ -474,7 +474,7 @@ function FR7_mergeToMain():
 - **REQ-00005**(首步拉取 + 末步提交):FR-2 / FR-5 commit 格式 `chore(<scope>): ...` 同源
 - **REQ-00006**(`/code-publish`):FR-6 自检**不**阻塞 publish 流程(同源"非阻塞警告"语义)
 - **REQ-00007**(`/code-auto`):`code-auto` **不**自动调本技能(职责分离 + Q-P7 锁定)
-- **REQ-00009**(`/code-unit`):本技能不调 `code-unit`(本仓库纯文档,无可测载体)
+- **REQ-00009**:本技能不调任何单测相关技能(本仓库纯文档,无可测载体)
 - **REQ-00010**(`/code-it`):本技能不调 `code-it`(本技能无任务编码概念,纯 CLI 操作)
 - **REQ-00013**(6 技能"编号+标题"显示):FR-6 看板自检**不**触发 `dashboard-conventions §规则 1` 3 处同步(严守 INV-5)
 - **REQ-00017**(拆任务约束):本 SKILL.md 是"功能级"文档,无任务编码概念,**不**触发 REQ-00017 拆任务约束
