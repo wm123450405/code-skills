@@ -21,7 +21,7 @@
 
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件 | 关联任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00033-00001 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 待开始 | 不适用 | `plugins/code-skills/skills/code-require/SKILL.md` §"不要做的事" 小节末尾 | — |
+| TASK-REQ-00033-00001 | 修改 | 详细设计 | [修改] code-require §"不要做的事" 小节追加"不涉及技术选型"硬约束 | 已完成 | 不适用 | `plugins/code-skills/skills/code-require/SKILL.md` §"不要做的事" 小节末尾 | — |
 
 **统计**:
 - 任务总数:1
