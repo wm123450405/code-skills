@@ -15,19 +15,19 @@
 1. **阅读格式规范**:`assistants/qanda/README.md` 说明了目录用途、文件命名建议、引用规范
 2. **创建 Q&A 文件**:在 `assistants/qanda/` 目录下新建 `<主题>.md`(例:`deploy-faq.md` / `db-init-faq.md` / `rollback-faq.md`)
 3. **写入 Q&A 内容**:每个文件用 Markdown 写 1 个或多个 Q&A,示例结构:
-   ```markdown
-   # <主题>常见问题
-   
-   ## Q: <问题 1>
-   A: <答案 1>
-   
-   ## Q: <问题 2>
-   A: <答案 2>
-   ```
+ ```markdown
+ # <主题>常见问题
+ 
+ ## Q: <问题 1>
+ A: <答案 1>
+ 
+ ## Q: <问题 2>
+ A: <答案 2>
+ ```
 4. **重跑 `code-publish`**:在 Claude Code 中调 `/code-publish`(或 `/code-publish <本版本号>`),`code-publish` 会自动:
-   - 读取 `assistants/qanda/*.md`(排除 `README.md`)
-   - 在本占位章节**之前**插入 N 个 `## <主题>(来源:qanda/<文件>)` 章节
-   - 内容为各文件的全文
+ - 读取 `assistants/qanda/*.md`(排除 `README.md`)
+ - 在本占位章节**之前**插入 N 个 `## <主题>(来源:qanda/<文件>)` 章节
+ - 内容为各文件的全文
 
 ### 完整生成结果示例(假设 qanda/ 有 2 个文件)
 

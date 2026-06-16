@@ -26,18 +26,18 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 ```
 ./assistants/
-├── rules/                          # 项目级规范(跨版本共享,本技能只读)
-├── .current-version                # 当前激活版本标记文件(本技能写)
-└── <版本号>/                        # 版本工作空间(本技能产出/切换)
-    ├── RESULT.md                   # 版本开发进度看板
-    ├── require/<需求编号>/
-    ├── design/<需求编号>/
-    ├── plan/<需求编号>/
-    ├── code/<任务编码>/
-    ├── test/<任务编码>/
-    └── review/
-        ├── <需求编号>/
-        └── <任务编码>/
+├── rules/ # 项目级规范(跨版本共享,本技能只读)
+├── .current-version # 当前激活版本标记文件(本技能写)
+└── <版本号>/ # 版本工作空间(本技能产出/切换)
+ ├── RESULT.md # 版本开发进度看板
+ ├── require/<需求编号>/
+ ├── design/<需求编号>/
+ ├── plan/<需求编号>/
+ ├── code/<任务编码>/
+ ├── test/<任务编码>/
+ └── review/
+ ├── <需求编号>/
+ └── <任务编码>/
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
@@ -48,9 +48,9 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 ## 输入
 - **版本号**(必填):用户口头或文本指定
-  - 格式不强求,推荐 `vMAJOR.MINOR.PATCH`(如 `v1.0.0`)或日期风格(`2026-Q2`、`2026-06`)
-  - **禁止**与现有版本号同名又不指定清理策略(下文会询问)
-  - 不允许包含路径分隔符(`/`、`\`)
+ - 格式不强求,推荐 `vMAJOR.MINOR.PATCH`(如 `v1.0.0`)或日期风格(`2026-Q2`、`2026-06`)
+ - **禁止**与现有版本号同名又不指定清理策略(下文会询问)
+ - 不允许包含路径分隔符(`/`、`\`)
 
 ## 输出
 主产出物:
@@ -73,25 +73,25 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 ### 步骤 1 — 收集版本号
 1. 若用户未提供,主动询问:
-   - 提示用户可输入版本号,或选择"列出已有版本"
+ - 提示用户可输入版本号,或选择"列出已有版本"
 2. 用户回复后:
-   - 校验:不能为空,不能含 `/` / `\`
-   - 格式不强求,但**记录用户实际使用的字符串**作为规范
+ - 校验:不能为空,不能含 `/` / `\`
+ - 格式不强求,但**记录用户实际使用的字符串**作为规范
 3. 若用户希望"列出已有版本":
-   - `Glob "./assistants/*"` 列出
-   - 过滤掉 `rules/` 和 `.current-version`
-   - `Read .current-version`(若存在)得知当前激活版本
-   - 用 `AskUserQuestion` 给出选项列表,让用户选择切换目标
-   - 用户选完后,把选中的版本号作为本技能的目标
+ - `Glob "./assistants/*"` 列出
+ - 过滤掉 `rules/` 和 `.current-version`
+ - `Read .current-version`(若存在)得知当前激活版本
+ - 用 `AskUserQuestion` 给出选项列表,让用户选择切换目标
+ - 用户选完后,把选中的版本号作为本技能的目标
 
 ### 步骤 2 — 检测版本工作空间
 1. 检查 `./assistants/<版本号>/` 是否存在
 2. 同时读取 `./assistants/.current-version`(若存在),得知当前激活版本
 3. **四种情形**:
-   - **A. 目标版本不存在 + 当前也无激活版本** → 首次创建
-   - **B. 目标版本不存在 + 当前已有激活版本** → 创建新版本(可能意味着版本切换 + 新建,或当前版本已交付)
-   - **C. 目标版本已存在 + 与当前激活版本不同** → 切换
-   - **D. 目标版本已存在 + 与当前激活版本相同** → 同版本再确认
+ - **A. 目标版本不存在 + 当前也无激活版本** → 首次创建
+ - **B. 目标版本不存在 + 当前已有激活版本** → 创建新版本(可能意味着版本切换 + 新建,或当前版本已交付)
+ - **C. 目标版本已存在 + 与当前激活版本不同** → 切换
+ - **D. 目标版本已存在 + 与当前激活版本相同** → 同版本再确认
 
 ### 步骤 3 — 询问/确认操作意图
 
@@ -103,38 +103,38 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 #### 情形 B:从已有版本切到新版本
 - 用 `AskUserQuestion` 询问:
-  > 检测到当前激活版本为 `<旧版本>`,你提供的是新版本 `<新版本>`。
-  > - A. 创建新版本 `<新版本>` 并切换(旧版本保留,可后续切换回去)
-  > - B. 我搞错了,旧版本是 `<旧版本>`,目标应是 `<旧版本>`,不切换
-  > - C. 取消
+ > 检测到当前激活版本为 `<旧版本>`,你提供的是新版本 `<新版本>`。
+ > - A. 创建新版本 `<新版本>` 并切换(旧版本保留,可后续切换回去)
+ > - B. 我搞错了,旧版本是 `<旧版本>`,目标应是 `<旧版本>`,不切换
+ > - C. 取消
 
 #### 情形 C:切换到已有版本
 - 用 `AskUserQuestion` 询问:
-  > 目标版本 `<版本号>` 已存在。当前激活版本: `<当前>`。
-  > - A. 切换到 `<版本号>`(后续 `code-*` 技能操作均落在此版本)
-  > - B. 我搞错了,应切换到 `<当前>`(不动)
-  > - C. 取消
+ > 目标版本 `<版本号>` 已存在。当前激活版本: `<当前>`。
+ > - A. 切换到 `<版本号>`(后续 `code-*` 技能操作均落在此版本)
+ > - B. 我搞错了,应切换到 `<当前>`(不动)
+ > - C. 取消
 
 #### 情形 D:同版本再确认
 - 用 `AskUserQuestion` 询问:
-  > 目标版本 `<版本号>` 已是当前激活版本。
-  > - A. 确认,继续在此版本工作(无需任何改动)
-  > - B. 我要重新初始化此版本的看板(会覆盖现有 `RESULT.md`,请提前备份)
-  > - C. 取消
+ > 目标版本 `<版本号>` 已是当前激活版本。
+ > - A. 确认,继续在此版本工作(无需任何改动)
+ > - B. 我要重新初始化此版本的看板(会覆盖现有 `RESULT.md`,请提前备份)
+ > - C. 取消
 
 ### 步骤 4A — 创建新版本工作空间
 1. `Bash: mkdir -p "./assistants/<版本号>/"`
 2. 检查 `./assistants/<版本号>/RESULT.md`:
-   - 不存在 → 基于 `templates/version-RESULT.md` 写入初版
-   - 已存在(理论上"新版本"不该有,除非是并发竞争) → 询问用户
+ - 不存在 → 基于 `templates/version-RESULT.md` 写入初版
+ - 已存在(理论上"新版本"不该有,除非是并发竞争) → 询问用户
 3. 在 `RESULT.md` 的"版本信息"区填入:
-   - 版本号
-   - 创建时间
-   - 创建人(待用户填写或暂记 `<unknown>`)
+ - 版本号
+ - 创建时间
+ - 创建人(待用户填写或暂记 `<unknown>`)
 4. 在"变更记录"中追加第一条:
-   ```
-   YYYY-MM-DD HH:mm  初始化  创建版本 <版本号> 工作空间
-   ```
+ ```
+ YYYY-MM-DD HH:mm 初始化 创建版本 <版本号> 工作空间
+ ```
 
 ### 步骤 4C — 切换到已有版本
 1. **不**触碰该版本目录下任何文件
@@ -146,21 +146,21 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 ### 步骤 5 — 更新当前激活版本标记
 - 无论 A/B/C/D 结果如何,只要决定激活此版本,都执行:
-  - `Write "./assistants/.current-version"`,内容 = `<版本号>\n`
-  - 若已存在 → **覆盖**(因为切换动作就是更新)
+ - `Write "./assistants/.current-version"`,内容 = `<版本号>\n`
+ - 若已存在 → **覆盖**(因为切换动作就是更新)
 
 ### 步骤 6 — 验证与汇报
 1. `Read "./assistants/.current-version"` 再次确认内容
 2. `Bash: ls "./assistants/<版本号>/"` 列出该版本下当前内容
 3. `Read "./assistants/<版本号>/RESULT.md"` 头部确认看板可读
 4. 向用户汇报:
-   - **当前激活版本**:`<版本号>`
-   - **工作空间根目录**:`./assistants/<版本号>/`
-   - **看板位置**:`./assistants/<版本号>/RESULT.md`
-   - **该版本下当前已有内容**:列出
-   - **下一步建议**:
-     - 创建首个需求 → 调 `code-require`
-     - 已有需求 → 调 `code-design` / `code-plan` / 等
+ - **当前激活版本**:`<版本号>`
+ - **工作空间根目录**:`./assistants/<版本号>/`
+ - **看板位置**:`./assistants/<版本号>/RESULT.md`
+ - **该版本下当前已有内容**:列出
+ - **下一步建议**:
+ - 创建首个需求 → 调 `code-require`
+ - 已有需求 → 调 `code-design` / `code-plan` / 等
 
 ---
 
@@ -181,115 +181,115 @@ description: 创建或切换开发版本。给一个版本号,本技能就会把
 
 - 步骤 3 决定激活此版本后(情形 A / B / C / D 任意一种,选 A / B / C 触发,选 C 取消时**不**触发)
 - 步骤 1-6 完整执行成功
-- **(v2 follow-up)** 用户可显式传 `--skip-cwd-sync` 跳过本步骤(本需求**不**实现,Q-7 采纳默认)
+- **(v2 follow-up)** 用户可显式传 `--skip-cwd-sync` 跳过本步骤(本需求**不**实现)
 
 ### 7.3 算法
 
 ```ts
 // 7 步伪代码(沿用概要设计 D-3:Read + Edit + 行匹配,0 新增依赖)
 function step7_syncCwdVersionFiles(newVersion: string, cwd: string): void {
-  // 步骤 7.1:解析 argv(本需求 0 CLI 参数,Q-7)
-  // (留作 v2 follow-up:`--skip-cwd-sync` / `--cwd` / `--version-string`)
+ // 步骤 7.1:解析 argv(本需求 0 CLI 参数,Q-7)
+ // (留作 v2 follow-up:`--skip-cwd-sync` / `--cwd` / `--version-string`)
 
-  // 步骤 7.2:Glob 6 类描述文件(优先级固定)
-  const descriptorFiles = [
-    'package.json',     // 1) Node.js / VSCode Extension / npm
-    'pom.xml',          // 2) Maven Java
-    'manifest.json',    // 3) Web App / PWA
-    'Cargo.toml',       // 4) Rust
-    'pyproject.toml',   // 5) Python
-    'go.mod',           // 6) Go(无版本号字段,仅跳过)
-  ]
-  const matched: string[] = descriptorFiles
-    .map(f => `${cwd}/${f}`)
-    .filter(p => fileExists(p))
+ // 步骤 7.2:Glob 6 类描述文件(优先级固定)
+ const descriptorFiles = [
+ 'package.json', // 1) Node.js / VSCode Extension / npm
+ 'pom.xml', // 2) Maven Java
+ 'manifest.json', // 3) Web App / PWA
+ 'Cargo.toml', // 4) Rust
+ 'pyproject.toml', // 5) Python
+ 'go.mod', // 6) Go(无版本号字段,仅跳过)
+ ]
+ const matched: string[] = descriptorFiles
+ .map(f => `${cwd}/${f}`)
+ .filter(p => fileExists(p))
 
-  // 步骤 7.3:0 命中处理
-  if (matched.length === 0) {
-    console.log('⚠ CWD 下未检测到任何已知工程类型描述文件,跳过同步')
-    return  // 不阻断
-  }
+ // 步骤 7.3:0 命中处理
+ if (matched.length === 0) {
+ console.log('⚠ CWD 下未检测到任何已知工程类型描述文件,跳过同步')
+ return // 不阻断
+ }
 
-  // 步骤 7.4:对每个命中文件处理
-  for (const filePath of matched) {
-    const filename = basename(filePath)
-    try {
-      // 7.4.1:go.mod 特殊处理(Go 用 git tag)
-      if (filename === 'go.mod') {
-        console.log(`⚠ ${filename} 无版本号字段(Go 用 git tag),跳过`)
-        continue
-      }
+ // 步骤 7.4:对每个命中文件处理
+ for (const filePath of matched) {
+ const filename = basename(filePath)
+ try {
+ // 7.4.1:go.mod 特殊处理(Go 用 git tag)
+ if (filename === 'go.mod') {
+ console.log(`⚠ ${filename} 无版本号字段(Go 用 git tag),跳过`)
+ continue
+ }
 
-      // 7.4.2:Read 内容
-      const content = readFile(filePath)
+ // 7.4.2:Read 内容
+ const content = readFile(filePath)
 
-      // 7.4.3:解析版本号(根据文件类型)
-      const oldVersion = parseVersionField(filename, content)
+ // 7.4.3:解析版本号(根据文件类型)
+ const oldVersion = parseVersionField(filename, content)
 
-      // 7.4.4:缺版本号字段
-      if (oldVersion === null) {
-        console.log(`⚠ ${filename} 未找到版本号字段,跳过`)
-        continue
-      }
+ // 7.4.4:缺版本号字段
+ if (oldVersion === null) {
+ console.log(`⚠ ${filename} 未找到版本号字段,跳过`)
+ continue
+ }
 
-      // 7.4.5:Edit 替换版本号
-      const newContent = replaceVersionField(filename, content, newVersion)
+ // 7.4.5:Edit 替换版本号
+ const newContent = replaceVersionField(filename, content, newVersion)
 
-      // 7.4.6:写回文件
-      writeFile(filePath, newContent)
+ // 7.4.6:写回文件
+ writeFile(filePath, newContent)
 
-      // 7.4.7:屏幕输出成功
-      console.log(`✓ CWD 描述文件同步:${filename}: ${oldVersion} → ${newVersion}`)
-    } catch (err) {
-      // 7.4.8:失败不阻断
-      console.log(`⚠ ${filename} 格式不可解析,跳过`)
-      continue
-    }
-  }
+ // 7.4.7:屏幕输出成功
+ console.log(`✓ CWD 描述文件同步:${filename}: ${oldVersion} → ${newVersion}`)
+ } catch (err) {
+ // 7.4.8:失败不阻断
+ console.log(`⚠ ${filename} 格式不可解析,跳过`)
+ continue
+ }
+ }
 }
 
 // 解析版本号字段(每类文件独立正则)
 function parseVersionField(filename: string, content: string): string | null {
-  switch (filename) {
-    case 'package.json':
-    case 'manifest.json':
-      // JSON: "version": "x.y.z"
-      const m1 = content.match(/"version"\s*:\s*"([^"]+)"/)
-      return m1 ? m1[1] : null
+ switch (filename) {
+ case 'package.json':
+ case 'manifest.json':
+ // JSON: "version": "x.y.z"
+ const m1 = content.match(/"version"\s*:\s*"([^"]+)"/)
+ return m1 ? m1[1] : null
 
-    case 'pom.xml':
-      // XML: <version>x.y.z</version>
-      const m2 = content.match(/<version>([^<]+)<\/version>/)
-      return m2 ? m2[1] : null
+ case 'pom.xml':
+ // XML: <version>x.y.z</version>
+ const m2 = content.match(/<version>([^<]+)<\/version>/)
+ return m2 ? m2[1] : null
 
-    case 'Cargo.toml':
-    case 'pyproject.toml':
-      // TOML: version = "x.y.z"
-      const m3 = content.match(/^version\s*=\s*"([^"]+)"/m)
-      return m3 ? m3[1] : null
+ case 'Cargo.toml':
+ case 'pyproject.toml':
+ // TOML: version = "x.y.z"
+ const m3 = content.match(/^version\s*=\s*"([^"]+)"/m)
+ return m3 ? m3[1] : null
 
-    default:
-      return null
-  }
+ default:
+ return null
+ }
 }
 
 // Edit 替换版本号
 function replaceVersionField(filename: string, content: string, newVersion: string): string {
-  switch (filename) {
-    case 'package.json':
-    case 'manifest.json':
-      return content.replace(/"version"\s*:\s*"[^"]+"/, `"version": "${newVersion}"`)
+ switch (filename) {
+ case 'package.json':
+ case 'manifest.json':
+ return content.replace(/"version"\s*:\s*"[^"]+"/, `"version": "${newVersion}"`)
 
-    case 'pom.xml':
-      return content.replace(/<version>[^<]+<\/version>/, `<version>${newVersion}</version>`)
+ case 'pom.xml':
+ return content.replace(/<version>[^<]+<\/version>/, `<version>${newVersion}</version>`)
 
-    case 'Cargo.toml':
-    case 'pyproject.toml':
-      return content.replace(/^version\s*=\s*"[^"]+"/m, `version = "${newVersion}"`)
+ case 'Cargo.toml':
+ case 'pyproject.toml':
+ return content.replace(/^version\s*=\s*"[^"]+"/m, `version = "${newVersion}"`)
 
-    default:
-      return content
-  }
+ default:
+ return content
+ }
 }
 ```
 
@@ -318,7 +318,7 @@ function replaceVersionField(filename: string, content: string, newVersion: stri
 | **E-2** | CWD 下找不到任何描述文件 | 屏幕打印 `⚠ CWD 下未检测到任何已知工程类型描述文件,跳过同步`,不报错 |
 | **E-3** | 描述文件存在但格式不可解析(非 JSON / 非标准 XML / 非标准 TOML) | 屏幕打印 `⚠ <filename> 格式不可解析,跳过`,继续处理其他文件 |
 | **E-4** | 描述文件存在但**无**"版本号"字段(如 `package.json` 缺 `"version"`) | 屏幕打印 `⚠ <filename> 未找到版本号字段,跳过`,继续处理其他文件 |
-| **E-5** | `--skip-cwd-sync` CLI 参数 | (本需求**不**实现,Q-7 采纳默认,留作 v2 follow-up) |
+| **E-5** | `--skip-cwd-sync` CLI 参数 | (本需求**不**实现,留作 v2 follow-up) |
 | **E-6** | `go.mod` 命中(Go 用 git tag) | 屏幕打印 `⚠ go.mod 无版本号字段(Go 用 git tag),跳过` |
 | **E-7** | 描述文件无写权限(只读) | 屏幕打印 `⚠ <filename> 无写权限,跳过`,继续处理其他文件 |
 | **E-8** | 描述文件被另一个进程修改(并发) | Edit 可能失败 → 屏幕打印 `⚠ <filename> Edit 失败(<错误>),跳过`,继续处理其他文件 |

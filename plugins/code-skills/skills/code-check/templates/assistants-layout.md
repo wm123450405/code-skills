@@ -10,38 +10,38 @@
 ```
 <项目根目录>/
 ├── assistants/
-│   ├── rules/                          ← 项目级规范(只读,跨版本共享)
-│   │   ├── review-checklist.md         ★ 优先采用(若存在)
-│   │   └── ...
-│   ├── .current-version                ← 当前激活版本标记
-│   └── <版本号>/                       ★ 版本工作空间
-│       ├── RESULT.md                   ← 版本开发进度看板(可写,本技能会更新评审相关区段)
-│       ├── require/<需求编号>/
-│       │   └── RESULT.md              ← 上游需求(只读)
-│       ├── design/<需求编号>/
-│       │   └── RESULT.md              ← 上游概要设计(只读)
-│       ├── plan/
-│       │   └── <需求编号>/
-│       │       ├── RESULT.md          ← 上游详细设计(只读)
-│       │       └── PLAN.md            ← 上游任务计划(只读,但本技能会追加"审查改修"任务)
-│       ├── code/
-│       │   └── <任务编码>/              ← code-it 产出(只读,作为评审对象)
-│       │       └── RESULT.md
-│       ├── test/
-│       │   └── <任务编码>/              ← code-unit 产出(只读,辅助评审)
-│       │       └── RESULT.md
-│       └── review/
-│           ├── <需求编号>/              ← 本技能整体评审产物,可写
-│           │   ├── REVIEW-REPORT.md   # 整体评审报告(主产出)
-│           │   ├── work-log.md        # 过程文档
-│           │   ├── review-checklist-applied.md
-│           │   └── findings-no-task.md
-│           └── <新任务编码>/            ← 每个派生的"审查改修"任务一个目录,可写
-│               ├── RESULT.md          # 改修要求(给 code-it 直接消费)
-│               ├── work-log.md        # 过程文档
-│               └── ...
-├── src/                                # 用户的项目源码(本技能只读,评审对象)
-├── tests/                              # 用户的测试代码(本技能只读)
+│ ├── rules/ ← 项目级规范(只读,跨版本共享)
+│ │ ├── review-checklist.md ★ 优先采用(若存在)
+│ │ └── ...
+│ ├── .current-version ← 当前激活版本标记
+│ └── <版本号>/ ★ 版本工作空间
+│ ├── RESULT.md ← 版本开发进度看板(可写,本技能会更新评审相关区段)
+│ ├── require/<需求编号>/
+│ │ └── RESULT.md ← 上游需求(只读)
+│ ├── design/<需求编号>/
+│ │ └── RESULT.md ← 上游概要设计(只读)
+│ ├── plan/
+│ │ └── <需求编号>/
+│ │ ├── RESULT.md ← 上游详细设计(只读)
+│ │ └── PLAN.md ← 上游任务计划(只读,但本技能会追加"审查改修"任务)
+│ ├── code/
+│ │ └── <任务编码>/ ← code-it 产出(只读,作为评审对象)
+│ │ └── RESULT.md
+│ ├── test/
+│ │ └── <任务编码>/ ← code-unit 产出(只读,辅助评审)
+│ │ └── RESULT.md
+│ └── review/
+│ ├── <需求编号>/ ← 本技能整体评审产物,可写
+│ │ ├── REVIEW-REPORT.md # 整体评审报告(主产出)
+│ │ ├── work-log.md # 过程文档
+│ │ ├── review-checklist-applied.md
+│ │ └── findings-no-task.md
+│ └── <新任务编码>/ ← 每个派生的"审查改修"任务一个目录,可写
+│ ├── RESULT.md # 改修要求(给 code-it 直接消费)
+│ ├── work-log.md # 过程文档
+│ └── ...
+├── src/ # 用户的项目源码(本技能只读,评审对象)
+├── tests/ # 用户的测试代码(本技能只读)
 └── ...
 ```
 
@@ -64,11 +64,11 @@
 
 ```mermaid
 graph LR
-  code-check -- "派生新任务 T-XXX 到 PLAN.md" --> plan[plan/<需求>/PLAN.md]
-  code-check -- "为 T-XXX 写改修要求" --> review_fix[review/<任务>/RESULT.md]
-  code-it -- "读取 T-XXX 时" --> review_fix
-  code-it -- "同时仍按惯例读" --> plan_md[plan/<需求>/PLAN.md]
-  code-it -- "但不读!" --> plan_result[plan/<需求>/RESULT.md]
+ code-check -- "派生新任务 T-XXX 到 PLAN.md" --> plan[plan/<需求>/PLAN.md]
+ code-check -- "为 T-XXX 写改修要求" --> review_fix[review/<任务>/RESULT.md]
+ code-it -- "读取 T-XXX 时" --> review_fix
+ code-it -- "同时仍按惯例读" --> plan_md[plan/<需求>/PLAN.md]
+ code-it -- "但不读!" --> plan_result[plan/<需求>/RESULT.md]
 ```
 
 `code-it` 看到任务的 `触发/来源=审查改修` 时:

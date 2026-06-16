@@ -1,0 +1,305 @@
+{
+  "hit": [],
+  "miss": [
+    {
+      "file": "plugins\\code-skills\\skills\\code-auto\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)→ `code-check` 循环(派生任务自动修复)→ 完成报告,实现\"从需求到代码 + 单测 + 评审无必须改\"的全自动跑通。**完全无人确认**(所有 `AskUserQuestion`",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-auto\\SKILL.md",
+      "text": "本需求 REQ-00024 改造:沿用路径感知判定)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-auto\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-auto\\SKILL.md",
+      "text": "本需求 REQ-00034 退场,守卫逻辑由 `code-it` 步骤 8a 接管)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3,",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 NFR-2)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 NFR-2;新任务**不**产此文件,由 `code-it` 步骤 8.5 自含的 `code/<任务>/unit-test-results.md` 替代)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 退场)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "text": "本需求 REQ-00034 退场,产出**不**再含)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 新增,本需求 REQ-00029 屏显瘦身)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 改造,本需求 REQ-00029 屏显瘦身)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 改造,本需求 REQ-00029 屏显瘦身)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 改造,本需求 REQ-00029 建议单行)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00029 屏显瘦身)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 新增边界(沿用概要设计 §6)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00023 改造后**:总览模式 4 段已精简(总开发进度 + 5 类状态占比 + 高优缺陷 + ≤ 5 条建议);屏显总行数 ≤ 12 行(NFR-1 强约束)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "text": "本需求 REQ-00025 双正则兼容)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-2 收紧):",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-3 收窄)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-3 收窄至 5 列**):",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-3 收窄)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-3 简化)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-3 收窄至 4 项 / 依赖**):",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3 改造**(",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00020 M-4 归并 E-1 / E-4 / E-8 / E-9 为职责归属表)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2;原 `code-unit` 步骤 0a + 0a.1 + 0a.2 + 0a.4 字节级保留。",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-3;原 `code-unit` 步骤 4 / 7 / 8 / 9 字节级保留。",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-4 `code-it/templates/RESULT.md` 模板新增\"## 单元测试\"小节)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-it\\templates\\RESULT.md",
+      "text": "本需求 REQ-00034 FR-4 新增,",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 M-1 归并为引用)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 M-1 归并**:`code-design` 步骤 0b.0 与本步骤**完全同构**(都检测 `.code-auto-running` 文件 + 24 小时超时 + 三种决策 + 约束)。本步骤不再重复 18 ",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 扩展**:`code-plan` 阶段问全 7 维度(原 4 维度沿用 REQ-00011 + 新增 3 维度):",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 FR-3 扩展 3 行**)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 M-2 定义段):`Glob ./assistants/rules/**/*` → 不存在/空则 `AskUserQuestion` 询问;存在则逐个 `Read` 归类到 8 类(功能架构/模块规划/接口定义/",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 M-2 定义段):不为\"探索架构\",只为\"详细设计提供实现约束\"——目标语言规范 / 既有相似功能实现风格 / 测试风格与覆盖度 / 可复用工具函数。写入 `materials-index.md` 的\"项目现状(",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00020 M-4 归并:原 4 种情形 → 3 种情形(移除\"PLAN.md 存在,RESULT.md 不存在\"分支 — 与\"都不存在\"分支语义重叠,合并到首次设计步骤 7A)。",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-6 收紧,",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-6 新增**):**满足 FR-1 扩展性触发条件**(新增三方依赖 OR 跨 ≥3 模块 OR 对接多套实现)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-6 新增**):**整体设计目标 = `--extensible`**(由 `code-design` 步骤 0b 判定并写入\"## 设计目标\"小节)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00030 FR-6 修订**):**任一不满足触发条件**即不插入架构任务,包括:",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-1)。",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00031 FR-3 收窄,",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-3,原 `code-unit` 流程独立承担 → `code-it` 接管),**不**在 `code-plan` 任务粒度中体现。**新拆分 REQ**(REQ-00031+)应用 2 选 1 规则;**",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-3,原 `code-unit` 另起流程 → `code-it` 步骤 8.5 产出 `code/<任务>/unit-test-results.md`),与 `code-plan` 任务粒度**正交**。",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00011 新增,本需求 REQ-00020 扩展为 7 维度)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00019 BUG 模式退场前表述,本需求后写 `fix/<BUG-NNN>/RESULT.md` 或 `materials-index.md`)",
+      "v1_hit": false,
+      "v2_hit": false
+    },
+    {
+      "file": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "text": "本需求 REQ-00034 FR-2/FR-3)",
+      "v1_hit": false,
+      "v2_hit": false
+    }
+  ]
+}

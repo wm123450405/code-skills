@@ -30,16 +30,16 @@ description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编
 本技能操作新增的 `fix/` 子目录(纯登记型,本技能**只**产出 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `fix-plan.md` / `fix-work-log.md` 等下游文件):
 ```
 ./assistants/
-├── rules/                                  # 跨版本规范,本技能只读
+├── rules/ # 跨版本规范,本技能只读
 └── <版本号>/
-    ├── RESULT.md                           # 版本看板(本技能追加"缺陷清单" / "变更记录"区段)
-    └── fix/                                # ★ 本技能维护的缺陷工作空间(纯登记型)
-        ├── RESULT.md                       # ★ 缺陷总览(本技能创建/追加)
-        ├── BUG-00001/                      # 第一个缺陷
-        │   └── RESULT.md                   # ★ 缺陷详情 + 修复状态(本技能创建/更新)
-        ├── BUG-00002/
-        │   └── ...
-        └── ...
+ ├── RESULT.md # 版本看板(本技能追加"缺陷清单" / "变更记录"区段)
+ └── fix/ # ★ 本技能维护的缺陷工作空间(纯登记型)
+ ├── RESULT.md # ★ 缺陷总览(本技能创建/追加)
+ ├── BUG-00001/ # 第一个缺陷
+ │ └── RESULT.md # ★ 缺陷详情 + 修复状态(本技能创建/更新)
+ ├── BUG-00002/
+ │ └── ...
+ └── ...
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
@@ -50,15 +50,15 @@ description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编
 
 ## 输入
 - **缺陷编号**(`BUG-NNN`,N 从 001 起,3 位补零)或**缺陷描述**(自然语言,任意长度)
-  - **默认**格式:5 位纯数字 `^BUG-\d{5}$`(本仓库主动产出)
-  - **接收**可放宽:`^BUG-[A-Za-z0-9.\-_]+$`(前缀 `BUG-` + 后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则,新规则 REQ-00025)
-  - 二选一,至少一个
+ - **默认**格式:5 位纯数字 `^BUG-\d{5}$`(本仓库主动产出)
+ - **接收**可放宽:`^BUG-[A-Za-z0-9.\-_]+$`(前缀 `BUG-` + 后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则,新规则 REQ-00025)
+ - 二选一,至少一个
 - **可选补充**:
-  - 严重度:`P0` / `P1` / `P2` / `P3`(缺省 `P2`)
-  - 报告人:<用户/姓名>(缺省 `<unknown>`)
-  - 模块/路径:缺陷涉及的代码位置
-  - 复现步骤:如何触发该 bug
-  - 期望行为 vs 实际行为
+ - 严重度:`P0` / `P1` / `P2` / `P3`(缺省 `P2`)
+ - 报告人:<用户/姓名>(缺省 `<unknown>`)
+ - 模块/路径:缺陷涉及的代码位置
+ - 复现步骤:如何触发该 bug
+ - 期望行为 vs 实际行为
 
 ## 输出
 主产出物:
@@ -88,12 +88,12 @@ description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编
 
 ```ts
 function truncateTitle(title: string, maxLen: number = 30): string {
-  if ([...title].length <= maxLen) return title
-  return [...title].slice(0, maxLen).join('') + '...'
+ if ([...title].length <= maxLen) return title
+ return [...title].slice(0, maxLen).join('') + '...'
 }
 
 function formatBugTitle(bugNum: string, title: string): string {
-  return `${bugNum} · ${truncateTitle(title)}`
+ return `${bugNum} · ${truncateTitle(title)}`
 }
 ```
 
@@ -101,10 +101,10 @@ function formatBugTitle(bugNum: string, title: string): string {
 
 ```ts
 function parseFixTitle(fixPath: string): string {
-  const content = require('fs').readFileSync(fixPath, 'utf-8')
-  // 匹配 "## 缺陷标题" 后第 1 行非空内容
-  const match = content.match(/^## 缺陷标题\s*\n+(.+?)$/m)
-  return match ? match[1] : ''  // E-3 / E-5 退化
+ const content = require('fs').readFileSync(fixPath, 'utf-8')
+ // 匹配 "## 缺陷标题" 后第 1 行非空内容
+ const match = content.match(/^## 缺陷标题\s*\n+(.+?)$/m)
+ return match ? match[1] : '' // E-3 / E-5 退化
 }
 ```
 
@@ -144,12 +144,12 @@ function parseFixTitle(fixPath: string): string {
 
 ```
 [/code-fix 步骤 1 末尾 — 缺陷标题生成子节]
-  1. 读取用户原始缺陷描述(从 args 或 stdin)
-  2. truncateTitle(描述, 30)  // 字符数 ≤ 30
-  3. 写入 fix/<BUG-NNN>/RESULT.md 顶部 "## 缺陷标题" 小节:
-       ## 缺陷标题
-       <截断后的标题>
-  4. 屏幕输出: 正在处理: BUG-NNNNN · <截断后的标题>
+ 1. 读取用户原始缺陷描述(从 args 或 stdin)
+ 2. truncateTitle(描述, 30) // 字符数 ≤ 30
+ 3. 写入 fix/<BUG-NNN>/RESULT.md 顶部 "## 缺陷标题" 小节:
+ ## 缺陷标题
+ <截断后的标题>
+ 4. 屏幕输出: 正在处理: BUG-NNNNN · <截断后的标题>
 ```
 
 **示例**:
@@ -158,8 +158,8 @@ function parseFixTitle(fixPath: string): string {
 用户输入: "用户报告:某 X 函数在传入 null 时崩溃,导致整个系统无法启动"
 截断后: "用户报告:某 X 函数在传入 null 时崩..."(30 字 + "...")
 写入文件: fix/BUG-00001/RESULT.md
-  ## 缺陷标题
-  用户报告:某 X 函数在传入 null 时崩...
+ ## 缺陷标题
+ 用户报告:某 X 函数在传入 null 时崩...
 ```
 
 **E-5 退化**(老缺陷无"## 缺陷标题" 小节):
@@ -186,28 +186,28 @@ function parseFixTitle(fixPath: string): string {
 - 若用户本轮消息里**明确给出**了 `BUG-NNNNN` 字符串 → 走"**已有编号**"分支(步骤 1.2)
 - 若用户本轮消息里**没有** `BUG-NNNNN` 字符串,只有缺陷描述 → 走"**新建缺陷**"分支(步骤 1.3)
 - 若用户什么都没给 → 主动询问:
-  > 请提供:
-  > - A. 已有缺陷编号(如 `BUG-00001`),我会把该缺陷的当前状态刷新
-  > - B. 缺陷描述(自然语言,1-2 句话即可),我会自动生成新编号并登记
+ > 请提供:
+ > - A. 已有缺陷编号(如 `BUG-00001`),我会把该缺陷的当前状态刷新
+ > - B. 缺陷描述(自然语言,1-2 句话即可),我会自动生成新编号并登记
 
 #### 1.2 已有编号分支
 1. 校验格式:`^BUG-[A-Za-z0-9.\-_]+$`(接收端宽松正则,后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端,新规则 REQ-00025)
 2. 读取 `./assistants/<版本号>/fix/RESULT.md`(若存在),检查该编号是否已登记
 3. **两种情形**:
-   - **已登记**(在 `fix/RESULT.md` 找到该编号) → 进入步骤 2 的"更新"分支
-   - **未登记**(目录可能存在也可能不存在) → 用 `AskUserQuestion` 询问:
-     > 检测到 `BUG-NNN` 尚未在 `fix/RESULT.md` 登记,但目录可能存在(可能为脏数据或孤儿目录)。
-     > - A. 视为新缺陷,补登记(请补充缺陷描述)
-     > - B. 我搞错了,应是另一个编号(请重答)
-     > - C. 取消
+ - **已登记**(在 `fix/RESULT.md` 找到该编号) → 进入步骤 2 的"更新"分支
+ - **未登记**(目录可能存在也可能不存在) → 用 `AskUserQuestion` 询问:
+ > 检测到 `BUG-NNN` 尚未在 `fix/RESULT.md` 登记,但目录可能存在(可能为脏数据或孤儿目录)。
+ > - A. 视为新缺陷,补登记(请补充缺陷描述)
+ > - B. 我搞错了,应是另一个编号(请重答)
+ > - C. 取消
 
 #### 1.3 新建缺陷分支
 1. 用 `AskUserQuestion` 收集必要信息:
-   - 严重度(`P0` / `P1` / `P2` / `P3`,缺省 `P2`)
-   - 模块/路径(可选,缺省"未指定")
+ - 严重度(`P0` / `P1` / `P2` / `P3`,缺省 `P2`)
+ - 模块/路径(可选,缺省"未指定")
 2. **生成下一个可用编号**:
-   - 若 `fix/RESULT.md` 不存在 → 编号 = `BUG-00001`
-   - 若存在 → 解析所有 `BUG-NNNNN`,取最大值 N,新编号 = `BUG-{N+1 零填充到 5 位}`
+ - 若 `fix/RESULT.md` 不存在 → 编号 = `BUG-00001`
+ - 若存在 → 解析所有 `BUG-NNNNN`,取最大值 N,新编号 = `BUG-{N+1 零填充到 5 位}`
 3. 进入步骤 2 的"新建"分支
 
 ### 步骤 2 — 定位 / 创建工作目录
@@ -228,10 +228,10 @@ function parseFixTitle(fixPath: string): string {
 **仅更新分支需要**:
 1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"` —— 了解当前状态
 2. `Read` 该缺陷目录下所有其他 `*.md` 文件(若有):
-   - `investigation.md`:调查笔记(由 `code-it` 写入,本技能只读)
-   - `fix-plan.md`:修复方案(由 `code-plan` 写入)
-   - `fix-work-log.md`:实施日志(由 `code-it` 写入)
-   - 其他
+ - `investigation.md`:调查笔记(由 `code-it` 写入,本技能只读)
+ - `fix-plan.md`:修复方案(由 `code-plan` 写入)
+ - `fix-work-log.md`:实施日志(由 `code-it` 写入)
+ - 其他
 3. 把所有材料汇总,在本技能内构成"缺陷当前完整画像"
 
 **新建分支跳过此步**。
@@ -278,27 +278,27 @@ function parseFixTitle(fixPath: string): string {
 **新建分支**:
 1. `Write "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"`,基于 `templates/bug.md` 模板
 2. 填写:
-   - 文档头:缺陷编号、严重度、报告人、报告时间、状态、当前负责人
-   - 缺陷描述:用户原始描述 + (若有补充)复现步骤/期望行为/实际行为
-   - 涉及文件/模块(若用户提供)
-   - 修复日志:首条
-     ```
-     YYYY-MM-DD HH:mm  登记  <报告人> 报告缺陷:<原始描述>
-     ```
-   - 变更记录:首条
-     ```
-     YYYY-MM-DD HH:mm  缺陷登记  code-fix 创建缺陷 <缺陷编号>(严重度 <P?>)  <缺陷编号>
-     ```
+ - 文档头:缺陷编号、严重度、报告人、报告时间、状态、当前负责人
+ - 缺陷描述:用户原始描述 + (若有补充)复现步骤/期望行为/实际行为
+ - 涉及文件/模块(若用户提供)
+ - 修复日志:首条
+ ```
+ YYYY-MM-DD HH:mm 登记 <报告人> 报告缺陷:<原始描述>
+ ```
+ - 变更记录:首条
+ ```
+ YYYY-MM-DD HH:mm 缺陷登记 code-fix 创建缺陷 <缺陷编号>(严重度 <P?>) <缺陷编号>
+ ```
 
 **更新分支**:
 1. `Read` 现有 `RESULT.md`
 2. 用 `Edit` 工具:
-   - 更新"状态"字段
-   - 在"修复日志"区段追加本轮记录
-   - 在"变更记录"区段追加本轮条目:
-     ```
-     YYYY-MM-DD HH:mm  状态推进  <缺陷编号> 状态"<旧状态>"→"<新状态>"  <缺陷编号>
-     ```
+ - 更新"状态"字段
+ - 在"修复日志"区段追加本轮记录
+ - 在"变更记录"区段追加本轮条目:
+ ```
+ YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
+ ```
 3. 若有 `fix-plan.md` / `fix-work-log.md` / `fix-test-results.md` 等下游文件,把它们的关键摘要链接到 `RESULT.md`
 
 **关键:不重写 `RESULT.md` 的稳定章节**(缺陷描述、根因、修复方案等)。只在必要位置追加/更新状态。
@@ -308,35 +308,35 @@ function parseFixTitle(fixPath: string): string {
 **若 `fix/RESULT.md` 不存在**:
 - `Write`,基于 `templates/fix-registry.md` 模板
 - 在"缺陷清单"表格追加本条:
-  ```
-  | 缺陷编号 | 严重度 | 标题 | 状态 | 报告时间 | 修复时间 | 修复人 | 关联需求 | 缺陷详情 |
-  ```
+ ```
+ | 缺陷编号 | 严重度 | 标题 | 状态 | 报告时间 | 修复时间 | 修复人 | 关联需求 | 缺陷详情 |
+ ```
 - 在"统计"区初始化(0/0/0/...)
 - 在"变更记录"首条记录本次登记
 
 **若 `fix/RESULT.md` 已存在**:
 - `Read` 后用 `Edit`:
-  - "缺陷清单"表追加本条(若是新建)或更新本条的状态/时间(若是更新)
-  - "统计"区更新总数
-  - "变更记录"追加:
-    ```
-    YYYY-MM-DD HH:mm  <变更类型>  <缺陷编号> 状态"<旧状态>"→"<新状态>"  <缺陷编号>
-    ```
+ - "缺陷清单"表追加本条(若是新建)或更新本条的状态/时间(若是更新)
+ - "统计"区更新总数
+ - "变更记录"追加:
+ ```
+ YYYY-MM-DD HH:mm <变更类型> <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
+ ```
 
 ### 步骤 8 — 同步版本看板(强制)
 
 1. `Read "./assistants/<版本号>/RESULT.md"`,定位"缺陷清单"区段
 2. 检查本条缺陷是否已在表中:
-   - **不存在** → 追加一行
-   - **已存在** → 更新"状态" / "修复时间" / "关联任务" / "修复提交" 列
+ - **不存在** → 追加一行
+ - **已存在** → 更新"状态" / "修复时间" / "关联任务" / "修复提交" 列
 3. 在"统计"区更新:
-   - 总数 N
-   - P0: N / P1: N / P2: N / P3: N
-   - 已修复 N / 待修复 N
+ - 总数 N
+ - P0: N / P1: N / P2: N / P3: N
+ - 已修复 N / 待修复 N
 4. 在"变更记录"区段追加:
-   ```
-   YYYY-MM-DD HH:mm  缺陷状态  <缺陷编号> 状态"<旧状态>"→"<新状态>"  <缺陷编号>
-   ```
+ ```
+ YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
+ ```
 
 ### 步骤 9 — 引导下一步(纯登记型,引导调其他子技能)
 
@@ -365,10 +365,10 @@ function parseFixTitle(fixPath: string): string {
 
 - 读 `investigation.md`(若有,本技能不创建)
 - 向用户汇报:
-  - 本轮做了什么
-  - 缺陷状态从 X → Y
-  - 哪个文件被更新:`fix/<BUG-NNN>/RESULT.md`、`fix/RESULT.md`、版本看板的"缺陷清单"
-  - 下一步建议
+ - 本轮做了什么
+ - 缺陷状态从 X → Y
+ - 哪个文件被更新:`fix/<BUG-NNN>/RESULT.md`、`fix/RESULT.md`、版本看板的"缺陷清单"
+ - 下一步建议
 
 ---
 
@@ -403,16 +403,16 @@ function parseFixTitle(fixPath: string): string {
 
 **典型完整流程**:
 ```
-1. code-fix "用户报告:登录页密码框不显示"   →  BUG-00001 / 报告
-2. code-fix BUG-00001 (→ 调查中)            →  补充根因
-3. code-plan BUG-00001                      →  fix-plan.md
-4. code-fix BUG-00001 (→ 修复规划中)        →  看板同步
-5. code-it BUG-00001                        →  实际改代码,产出 fix-work-log.md
-6. code-fix BUG-00001 (→ 修复编码中)        →  看板同步
-7. code-fix BUG-00001 (→ 已修复-待验证)     →  等待验证
+1. code-fix "用户报告:登录页密码框不显示" → BUG-00001 / 报告
+2. code-fix BUG-00001 (→ 调查中) → 补充根因
+3. code-plan BUG-00001 → fix-plan.md
+4. code-fix BUG-00001 (→ 修复规划中) → 看板同步
+5. code-it BUG-00001 → 实际改代码,产出 fix-work-log.md
+6. code-fix BUG-00001 (→ 修复编码中) → 看板同步
+7. code-fix BUG-00001 (→ 已修复-待验证) → 等待验证
 8. 跑测试
-9. code-fix BUG-00001 (→ 已修复-已验证)     →  记录验证信息
-10. code-fix BUG-00001 (→ 已关闭)           →  归档
+9. code-fix BUG-00001 (→ 已修复-已验证) → 记录验证信息
+10. code-fix BUG-00001 (→ 已关闭) → 归档
 ```
 
 ## 衔接

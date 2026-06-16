@@ -10,7 +10,7 @@ description: 开发编码。按任务编码取一条任务,读它的详细设计
 
 > **本技能职责范围**:本技能的职责是"编码 + 编译/运行成功 + **按需写单测**(项目可测性守卫 7 项 + 写单测 + 跑通);**不**弹 `AskUserQuestion`(沿用原 `code-unit` 步骤 0a 守卫逻辑,字节级沿用)。`code-it` 步骤 9-12 中的"测试"语义**收窄为"项目自身的集成/冒烟测试"**(可启动运行的检查),与"单元测试"无关。
 
-> **本需求 REQ-00034 FR-2/FR-3 改造**(
+> **改造**(
 > - **新增**步骤 8a — 项目可测性守卫(7 项检查):`package.json` 含 `scripts.test` / `pyproject.toml` 含 `[tool.pytest*]` / `Cargo.toml` / `go.mod` / `pom.xml` / `build.gradle` / `test/` 目录
 > - **新增**步骤 8.5 — 按需写单测(自动判定 3 类,无用户问路):函数级代码类任务 → 写单测 + 跑通;文档/配置/类型定义 → 写 `unit-test-results.md` 占位
 > - 步骤 12 错误修复循环**沿用**(最连续失败 5 次后必须停下询问用户)
@@ -37,23 +37,23 @@ description: 开发编码。按任务编码取一条任务,读它的详细设计
 本技能的目录粒度是**任务**:
 ```
 ./assistants/
-├── rules/                                  # 项目级规范(跨版本,只读)
+├── rules/ # 项目级规范(跨版本,只读)
 └── <版本号>/
-    ├── RESULT.md                           # 版本看板(本技能追加"任务清单" / "缺陷清单" / "变更记录")
-    ├── require/<需求编号>/RESULT.md        # 上游需求(只读)
-    ├── design/<需求编号>/RESULT.md         # 上游概要设计(只读)
-    ├── plan/
-    │   ├── <需求编号>/RESULT.md            # 上游详细设计(只读)
-    │   └── <需求编号>/PLAN.md              # 上游任务计划(只读,但本技能会更新本任务的开发状态字段)
-    ├── review/<任务编码>/                  # 触发/来源=审查改修 时输入源(只读)
-    │   └── RESULT.md
-    └── code/
-        └── <任务编码>/                     # 本技能产出,可写
-            ├── RESULT.md                   # 改修总结
-            ├── work-log.md
-            ├── compile-and-run.md
-            ├── deviations.md
-            └── test-results.md (若适用)
+ ├── RESULT.md # 版本看板(本技能追加"任务清单" / "缺陷清单" / "变更记录")
+ ├── require/<需求编号>/RESULT.md # 上游需求(只读)
+ ├── design/<需求编号>/RESULT.md # 上游概要设计(只读)
+ ├── plan/
+ │ ├── <需求编号>/RESULT.md # 上游详细设计(只读)
+ │ └── <需求编号>/PLAN.md # 上游任务计划(只读,但本技能会更新本任务的开发状态字段)
+ ├── review/<任务编码>/ # 触发/来源=审查改修 时输入源(只读)
+ │ └── RESULT.md
+ └── code/
+ └── <任务编码>/ # 本技能产出,可写
+ ├── RESULT.md # 改修总结
+ ├── work-log.md
+ ├── compile-and-run.md
+ ├── deviations.md
+ └── test-results.md (若适用)
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
@@ -63,8 +63,8 @@ description: 开发编码。按任务编码取一条任务,读它的详细设计
 
 ## 输入
 - **任务编码**(必填):格式 `<需求编号>-<任务序号>`
-  - **生成端**沿用 5 位纯数字格式:`^TASK-(REQ|BUG)-\d{5}-\d{5}$`(默认,本仓库主动产出)
-  - **接收端**放宽为:`^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`(后缀自由,字符集 `A-Za-z0-9.\-_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则)
+ - **生成端**沿用 5 位纯数字格式:`^TASK-(REQ|BUG)-\d{5}-\d{5}$`(默认,本仓库主动产出)
+ - **接收端**放宽为:`^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`(后缀自由,字符集 `A-Za-z0-9.\-_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则)
 - **上游详细设计**:`./assistants/<版本号>/plan/<需求编号>/RESULT.md`(必须存在;**触发/来源=审查改修 时不读**)
 - **上游任务计划**:`./assistants/<版本号>/plan/<需求编号>/PLAN.md`(必须存在,且包含本任务)
 - **审查改修输入**(仅当 `触发/来源=审查改修`):`./assistants/<版本号>/review/<任务编码>/RESULT.md`
@@ -143,18 +143,18 @@ description: 开发编码。按任务编码取一条任务,读它的详细设计
 为支持对同一文件的**并发开发**(多人/多任务/多会话可能同时编辑同一文件的不同位置),本技能在每次准备修改某个文件的指定位置时,**必须**遵循以下流程:
 
 1. **重读**:先 `Read` 该文件的**最新**完整内容
-   - 不复用本会话之前读过的内容
-   - 不依赖上游 `code-design` / `code-plan` 中的引用(那些只是定位锚点,不等于文件当前状态)
-   - 若该文件为新建(尚未存在),跳过此步
+ - 不复用本会话之前读过的内容
+ - 不依赖上游 `code-design` / `code-plan` 中的引用(那些只是定位锚点,不等于文件当前状态)
+ - 若该文件为新建(尚未存在),跳过此步
 2. **重新定位**:基于最新内容,确定上游给出的"结构化锚点"(段落/章节/类型/方法/函数/成员/分支/循环)在当前文件中**具体落在哪一段文本**
-   - 若结构化锚点已不存在(如上游设计后,其他任务已删除该方法)→ 停下,询问用户
-   - 若结构化锚点存在但匹配到多个位置 → 用 `Read` 上下文(类前后、方法签名、注释)消歧;若仍无法唯一定位,停下,询问用户
+ - 若结构化锚点已不存在(如上游设计后,其他任务已删除该方法)→ 停下,询问用户
+ - 若结构化锚点存在但匹配到多个位置 → 用 `Read` 上下文(类前后、方法签名、注释)消歧;若仍无法唯一定位,停下,询问用户
 3. **明确改动范围**:在 `Edit` / `Write` 调用前,本会话内部明确:
-   - `old_string` 的具体内容(从最新文件中复制,不要从记忆中复用)
-   - `new_string` 与 `old_string` 的差异
+ - `old_string` 的具体内容(从最新文件中复制,不要从记忆中复用)
+ - `new_string` 与 `old_string` 的差异
 4. **执行改动 + 校验**:
-   - 执行 `Edit` / `Write`
-   - 必要时 `Read` 改后的相关段落(尤其是连续多步改动同一文件时),确认改动落到了预期位置,未误改其他位置
+ - 执行 `Edit` / `Write`
+ - 必要时 `Read` 改后的相关段落(尤其是连续多步改动同一文件时),确认改动落到了预期位置,未误改其他位置
 
 **为什么**:同一文件可能被其他任务、其他会话、其他协作者修改;若直接按"记忆中的旧行号 / 旧文本片段"使用 `Edit`,极易:
 - 匹配到错误位置导致误改
@@ -179,16 +179,16 @@ description: 开发编码。按任务编码取一条任务,读它的详细设计
 
 ```ts
 function truncateTitle(title: string, maxLen: number = 30): string {
-  if ([...title].length <= maxLen) return title
-  return [...title].slice(0, maxLen).join('') + '...'
+ if ([...title].length <= maxLen) return title
+ return [...title].slice(0, maxLen).join('') + '...'
 }
 
 function formatTaskTitle(taskNum: string, title: string): string {
-  return `${taskNum} · ${truncateTitle(title)}`
+ return `${taskNum} · ${truncateTitle(title)}`
 }
 
 function formatReqTitle(reqNum: string, title: string): string {
-  return `${reqNum} · ${truncateTitle(title)}`
+ return `${reqNum} · ${truncateTitle(title)}`
 }
 ```
 
@@ -196,19 +196,19 @@ function formatReqTitle(reqNum: string, title: string): string {
 
 ```ts
 function parsePlanTaskTitle(planPath: string, taskNum: string): string {
-  const content = require('fs').readFileSync(planPath, 'utf-8')
-  const lines = content.split('\n').filter(l => l.startsWith('|') && l.includes(taskNum))
-  for (const line of lines) {
-    const cols = line.split('|').map(c => c.trim())
-    if (cols[1] === taskNum && cols[5]) return cols[5]
-  }
-  return ''  // E-3 退化
+ const content = require('fs').readFileSync(planPath, 'utf-8')
+ const lines = content.split('\n').filter(l => l.startsWith('|') && l.includes(taskNum))
+ for (const line of lines) {
+ const cols = line.split('|').map(c => c.trim())
+ if (cols[1] === taskNum && cols[5]) return cols[5]
+ }
+ return '' // E-3 退化
 }
 
 function parseResultTitle(filePath: string): string {
-  const content = require('fs').readFileSync(filePath, 'utf-8')
-  const match = content.match(/^# 需求提示词文档 — (.+)$/m)
-  return match ? match[1] : ''
+ const content = require('fs').readFileSync(filePath, 'utf-8')
+ const match = content.match(/^# 需求提示词文档 — (.+)$/m)
+ return match ? match[1] : ''
 }
 ```
 
@@ -229,9 +229,9 @@ function parseResultTitle(filePath: string): string {
 正在处理: REQ-NNNNN · <需求标题>(任务 TASK-... · <任务标题>)
 
 前置任务状态:
-  ✓ TASK-... · <任务标题>(开发状态=已完成)
-  ✗ TASK-... · <任务标题>(开发状态=待开始)← 未完成
-  ✗ TASK-... · <任务标题>(当前任务)
+ ✓ TASK-... · <任务标题>(开发状态=已完成)
+ ✗ TASK-... · <任务标题>(开发状态=待开始)← 未完成
+ ✗ TASK-... · <任务标题>(当前任务)
 
 推荐执行 /code-it TASK-... · <任务标题> 完成后,再执行 /code-it TASK-... · <任务标题>
 ```
@@ -274,43 +274,43 @@ function parseResultTitle(filePath: string): string {
 
 ```
 function preTaskGuard(taskNum, version):
-  // 1. 反推所属需求(taskNum 第 3 段为 reqNum 数字,5+5 位嵌套式)
-  //    格式: TASK-REQ-NNNNN-NNNNN → reqNum = NNNNN
-  if not taskNum.startsWith('TASK-REQ-'): return  // 缺陷分支守卫不触达
+ // 1. 反推所属需求(taskNum 第 3 段为 reqNum 数字,5+5 位嵌套式)
+ // 格式: TASK-REQ-NNNNN-NNNNN → reqNum = NNNNN
+ if not taskNum.startsWith('TASK-REQ-'): return // 缺陷分支守卫不触达
 
-  // 2. 读 PLAN.md(NFR-6 退化)
-  planPath = `./assistants/${version}/plan/${reqNum}/PLAN.md`
-  if not fileExists(planPath):
-    log('⚠ code-it 前置任务守卫:PLAN.md 不存在,守卫通过(退化)')
-    return
+ // 2. 读 PLAN.md(NFR-6 退化)
+ planPath = `./assistants/${version}/plan/${reqNum}/PLAN.md`
+ if not fileExists(planPath):
+ log('⚠ code-it 前置任务守卫:PLAN.md 不存在,守卫通过(退化)')
+ return
 
-  // 3. 解析任务总览区段(沿用 dashboard-conventions §规则 1 锚点)
-  //    锚点: ^## 任务总览$
-  //    行匹配: ^\| .* \|$  (表格行)
-  //    列锚点: 第 1 列 = 任务编号 / 第 5 列 = 标题 / 第 6 列 = 开发状态
-  tasks = parsePlanOverview(planPath)  // 按文件行序
+ // 3. 解析任务总览区段(沿用 dashboard-conventions §规则 1 锚点)
+ // 锚点: ^## 任务总览$
+ // 行匹配: ^\| .* \|$ (表格行)
+ // 列锚点: 第 1 列 = 任务编号 / 第 5 列 = 标题 / 第 6 列 = 开发状态
+ tasks = parsePlanOverview(planPath) // 按文件行序
 
-  // 4. 找到当前任务位置
-  idx = tasks.findIndex(t => t.num === taskNum)
-  if idx == -1: return  // 任务不在 PLAN.md — 由原步骤 2 报错
+ // 4. 找到当前任务位置
+ idx = tasks.findIndex(t => t.num === taskNum)
+ if idx == -1: return // 任务不在 PLAN.md — 由原步骤 2 报错
 
-  // 5. 前置任务 = 当前任务之前的所有任务(按文件行序)
-  preTasks = tasks.slice(0, idx)
-  if preTasks.length == 0:
-    log('✓ code-it 前置任务守卫通过(无前置任务)')
-    return
+ // 5. 前置任务 = 当前任务之前的所有任务(按文件行序)
+ preTasks = tasks.slice(0, idx)
+ if preTasks.length == 0:
+ log('✓ code-it 前置任务守卫通过(无前置任务)')
+ return
 
-  // 6. 判定每个前置任务的"开发状态"
-  //    "未完成"定义(沿用 
-  //    "已完成"定义:开发状态 = 已完成
-  unfinished = preTasks.filter(t => t.devStatus != '已完成')
-  if unfinished.length == 0:
-    log('✓ code-it 前置任务守卫通过(全部前置任务已完成)')
-    return
+ // 6. 判定每个前置任务的"开发状态"
+ // "未完成"定义(沿用 
+ // "已完成"定义:开发状态 = 已完成
+ unfinished = preTasks.filter(t => t.devStatus != '已完成')
+ if unfinished.length == 0:
+ log('✓ code-it 前置任务守卫通过(全部前置任务已完成)')
+ return
 
-  // 7. 守卫不通过 → 打印中止报告 + 推荐命令 + exit 1
-  logAbortReport(reqNum, taskNum, tasks, unfinished)
-  exit(1)
+ // 7. 守卫不通过 → 打印中止报告 + 推荐命令 + exit 1
+ logAbortReport(reqNum, taskNum, tasks, unfinished)
+ exit(1)
 ```
 
 ### 步骤 0a.4 通过条件
@@ -321,17 +321,17 @@ function preTaskGuard(taskNum, version):
 
 ```
 ✓ code-it 前置任务守卫通过(无前置任务)
-  任务:<任务编码> · <任务标题>(位于 PLAN.md 任务总览最前)
+ 任务:<任务编码> · <任务标题>(位于 PLAN.md 任务总览最前)
 ```
 
 ```
 ✓ code-it 前置任务守卫通过(全部前置任务已完成)
-  任务:<任务编码> · <任务标题>(前置 N 个,全部已完成)
+ 任务:<任务编码> · <任务标题>(前置 N 个,全部已完成)
 ```
 
 ```
 ⚠ code-it 前置任务守卫:PLAN.md 不存在,守卫通过(退化)
-  任务:<任务编码> · <任务标题>(无 PLAN.md,无法判定前置)
+ 任务:<任务编码> · <任务标题>(无 PLAN.md,无法判定前置)
 ```
 
 ### 步骤 0a.5 不通过处理
@@ -346,9 +346,9 @@ function preTaskGuard(taskNum, version):
 正在处理: REQ-NNNNN · <需求标题>(任务 TASK-...· · <任务标题>)
 
 前置任务状态:
-  ✓ TASK-...· · <任务标题>(开发状态=已完成)
-  ✗ TASK-...· · <任务标题>(开发状态=待开始)← 未完成
-  ✗ TASK-...· · <任务标题>(当前任务)
+ ✓ TASK-...· · <任务标题>(开发状态=已完成)
+ ✗ TASK-...· · <任务标题>(开发状态=待开始)← 未完成
+ ✗ TASK-...· · <任务标题>(当前任务)
 
 推荐执行 /code-it TASK-...· · <任务标题> 完成后,再执行 /code-it TASK-...· · <任务标题>
 ```
@@ -372,7 +372,7 @@ function preTaskGuard(taskNum, version):
 | `PLAN.md` 任务总览区段格式错乱(无 `^## 任务总览$` 锚点 / 表格行解析失败) | 视为"无法判定",守卫**通过** |
 | 当前任务不在 `PLAN.md` 任务总览中 | **不**视为退化,守卫不触达(由原 §"步骤 2 — 校验任务存在" 报错"任务编码不存在") |
 
-### 步骤 0a.7 边界与异常(本小节子节,本需求 REQ-00020 M-4 归并 E-1 / E-4 / E-8 / E-9 为职责归属表)
+### 步骤 0a.7 边界与异常(本小节子节,归并 E-1 / E-4 / E-8 / E-9 为职责归属表)
 
 #### 职责归属表
 
@@ -411,18 +411,18 @@ function preTaskGuard(taskNum, version):
 ### 步骤 0a.8 性能
 
 - **总耗时**:**< 1 秒**(NFR-8 强约束)
-  - 单 `PLAN.md` 解析:Read 一次(典型 5-50 KB,<< 1 秒)
-  - 任务总览表格行扫描:O(n),n = 任务数(典型 1-20)
-  - 任务比较:O(n)
-  - **实测**:**<< 1 秒**(实际 0.1 秒级)
+ - 单 `PLAN.md` 解析:Read 一次(典型 5-50 KB,<< 1 秒)
+ - 任务总览表格行扫描:O(n),n = 任务数(典型 1-20)
+ - 任务比较:O(n)
+ - **实测**:**<< 1 秒**(实际 0.1 秒级)
 
 ### 步骤 0a.9 与既有"步骤 7 处理任务前置依赖与状态"的协同
 
 - **既有"步骤 7"**(原行为,不修改):检查 `PLAN.md` 任务行"前置任务"**字段**(`关联任务` 列),显式字段判定
 - **本守卫"步骤 0a"**(新增):按 `PLAN.md` **文件行序**判定,**不**依赖任何字段
 - **职责正交**:两种机制覆盖不同场景
-  - 步骤 0a:兜底"PLAN.md 内所有任务按登记顺序串行"(FR-1 强约束)
-  - 步骤 7:兜底"PLAN.md 内任务有显式依赖字段"(如 BUG 任务的"关联任务",可选字段)
+ - 步骤 0a:兜底"PLAN.md 内所有任务按登记顺序串行"(FR-1 强约束)
+ - 步骤 7:兜底"PLAN.md 内任务有显式依赖字段"(如 BUG 任务的"关联任务",可选字段)
 - **并存**:不修改 §"步骤 7" 既有内容(FR-3.AC-3.1 + INV-2/3)
 - **冲突处理**:步骤 0a 先判定(更严格);若步骤 0a 通过,步骤 7 仍按原"显式字段"逻辑判定
 
@@ -446,19 +446,19 @@ function preTaskGuard(taskNum, version):
 ### 步骤 1 — 收集并解析输入 ID
 1. 若用户未提供,主动询问
 2. **判定输入类型**:
-   - 匹配 `^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`(接收端宽松正则;沿用 `encoding-conventions §规则 1` REQ-00025 软化)→ **任务分支**(走步骤 2-16)
-   - 匹配 `^BUG-[A-Za-z0-9.\-_]+$`(同上游放宽)→ **缺陷分支**(走步骤 17-25)
+ - 匹配 `^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`(接收端宽松正则;沿用 `encoding-conventions §规则 1` REQ-00025 软化)→ **任务分支**(走步骤 2-16)
+ - 匹配 `^BUG-[A-Za-z0-9.\-_]+$`(同上游放宽)→ **缺陷分支**(走步骤 17-25)
 3. **任务分支解析**:
-   - 需求编码 = 任务编码去掉前缀 `TASK-REQ-` 与末尾 `-<任务序号>`,如 `TASK-REQ-00001-00001` → `REQ-00001`
-   - 任务序号 = 末尾五位数字,如 `00001`
+ - 需求编码 = 任务编码去掉前缀 `TASK-REQ-` 与末尾 `-<任务序号>`,如 `TASK-REQ-00001-00001` → `REQ-00001`
+ - 任务序号 = 末尾五位数字,如 `00001`
 4. **缺陷分支解析**:
-   - 输入直接作为 `<缺陷编号>`,无需拆分
+ - 输入直接作为 `<缺陷编号>`,无需拆分
 
 ### 步骤 2 — 校验任务存在
 1. 读取 `./assistants/<版本号>/plan/<需求编号>/PLAN.md`
 2. 在"任务总览"中查找本任务编号
 3. **未找到** → 错误:
-   > 错误:`PLAN.md` 中未找到任务 `<任务编码>`。请先运行 `code-plan` 拆分任务,或在 `PLAN.md` 中补充本任务。
+ > 错误:`PLAN.md` 中未找到任务 `<任务编码>`。请先运行 `code-plan` 拆分任务,或在 `PLAN.md` 中补充本任务。
 4. **找到** → 记录该任务的当前状态、类型、关联任务、前置任务
 
 ### 步骤 3 — 定位 / 创建工作目录
@@ -477,19 +477,19 @@ function preTaskGuard(taskNum, version):
 依次:
 1. `Read "./assistants/<版本号>/plan/<需求编号>/PLAN.md"` —— 找到本任务,记录**触发/来源**字段
 2. 根据触发/来源决定:
-   - **`触发/来源 = 审查改修`**(由 `code-check` 派生):
-     - `Read "./assistants/<版本号>/review/<任务编码>/RESULT.md"` —— **本任务的全部输入**(改修要求、文件清单、改修方案)
-     - `Read "./assistants/<版本号>/code/<关联原任务>/RESULT.md"` —— 关联原任务的改修正文(理解上下文)
-     - **不读** `./assistants/<版本号>/plan/<需求编号>/RESULT.md`(那是上游设计,本任务是修补,不是新设计)
-   - **其他触发/来源**:
-     - `Read "./assistants/<版本号>/plan/<需求编号>/RESULT.md"` —— 详细设计(主要依据)
-     - 必要时:`Read "./assistants/<版本号>/design/<需求编号>/RESULT.md"` 与 `./assistants/<版本号>/require/<需求编号>/RESULT.md` 作为上下文
+ - **`触发/来源 = 审查改修`**(由 `code-check` 派生):
+ - `Read "./assistants/<版本号>/review/<任务编码>/RESULT.md"` —— **本任务的全部输入**(改修要求、文件清单、改修方案)
+ - `Read "./assistants/<版本号>/code/<关联原任务>/RESULT.md"` —— 关联原任务的改修正文(理解上下文)
+ - **不读** `./assistants/<版本号>/plan/<需求编号>/RESULT.md`(那是上游设计,本任务是修补,不是新设计)
+ - **其他触发/来源**:
+ - `Read "./assistants/<版本号>/plan/<需求编号>/RESULT.md"` —— 详细设计(主要依据)
+ - 必要时:`Read "./assistants/<版本号>/design/<需求编号>/RESULT.md"` 与 `./assistants/<版本号>/require/<需求编号>/RESULT.md` 作为上下文
 3. 把本任务涉及的关键信息摘录到 `work-log.md`:
-   - 普通任务:PLAN.md §3 任务详情 + 详细设计对应章节
-   - 审查改修任务:review/RESULT.md 的"问题清单"和"应当改修的文件"
+ - 普通任务:PLAN.md §3 任务详情 + 详细设计对应章节
+ - 审查改修任务:review/RESULT.md 的"问题清单"和"应当改修的文件"
 4. **预检规范 vs 任务冲突**:
-   - 普通任务:同 `code-design` 步骤 4
-   - 审查改修任务:review/RESULT.md 的"关联依据"已明确引用的规范/设计条款,记录到 work-log.md
+ - 普通任务:同 `code-design` 步骤 4
+ - 审查改修任务:review/RESULT.md 的"关联依据"已明确引用的规范/设计条款,记录到 work-log.md
 
 ### 步骤 6 — 探索项目代码(核对实现风格)
 - 项目类型与构建/运行命令检测(详见步骤 9/10)
@@ -501,20 +501,20 @@ function preTaskGuard(taskNum, version):
 
 ### 步骤 7 — 处理任务前置依赖与状态
 1. **检查前置任务**:
-   - 若本任务有"前置任务",确认这些任务在 `PLAN.md` 中状态为"已完成"或"已取消(可绕过)"
-   - 若有前置任务未完成,主动询问用户:
-     > 前置任务 <T-XXX> 当前状态为"<状态>",未完成。是否继续?
-     > - A. 继续(我会自己处理前置任务的依赖,记录在 work-log.md)
-     > - B. 暂停,先去完成前置任务
+ - 若本任务有"前置任务",确认这些任务在 `PLAN.md` 中状态为"已完成"或"已取消(可绕过)"
+ - 若有前置任务未完成,主动询问用户:
+ > 前置任务 <T-XXX> 当前状态为"<状态>",未完成。是否继续?
+ > - A. 继续(我会自己处理前置任务的依赖,记录在 work-log.md)
+ > - B. 暂停,先去完成前置任务
 2. **处理当前任务状态**:
-   - `待开始` → 推进为 `进行中`,更新 `PLAN.md`,在变更记录中记录
-   - `进行中` / `阻塞` → 继续(可能是中断后回来)
-   - `已完成` → 主动询问用户:
-     > 任务 <任务编码> 已标记为"已完成"。是否要重做?
-     > - A. 重做(我会在 `deviations.md` 记录重新实现的原因,并把本任务关联到新任务)
-     > - B. 取消(跳过)
-   - `已取消` → 错误:
-     > 任务 <任务编码> 已标记为"已取消"。如需重启,请先在 `PLAN.md` 中处理。
+ - `待开始` → 推进为 `进行中`,更新 `PLAN.md`,在变更记录中记录
+ - `进行中` / `阻塞` → 继续(可能是中断后回来)
+ - `已完成` → 主动询问用户:
+ > 任务 <任务编码> 已标记为"已完成"。是否要重做?
+ > - A. 重做(我会在 `deviations.md` 记录重新实现的原因,并把本任务关联到新任务)
+ > - B. 取消(跳过)
+ - `已取消` → 错误:
+ > 任务 <任务编码> 已标记为"已取消"。如需重启,请先在 `PLAN.md` 中处理。
 
 > **路径生成语义(REQ-00025 字面更新)**:本技能在步骤 3 创建 `./assistants/<版本号>/code/<任务编码>/` 子目录时,`<任务编码>` 完整保留(原样写入文件系统,不做归一化);父级 + 子级后缀按 `-` 切分沿用新规则(后缀自由,`[A-Za-z0-9.\-_]+` 字符集)
 
@@ -556,7 +556,7 @@ function preTaskGuard(taskNum, version):
 
 > 本步骤是 `code-it` 在"## 步骤 8 实施开发"**之后**、"## 步骤 8.5 按需写单测"**之前**的**守卫**。**仅**在 `code-it` 步骤 1 判定为任务分支(任务编码匹配 `^TASK-REQ-\d{5}-\d{5}$` 5+5 位嵌套式)时触达;缺陷分支(`^TASK-BUG-...`)守卫不触达。
 > 沿用原 `code-unit` 步骤 0a 行为,**字节级沿用** 7 项检查 + 判定逻辑 + 屏显模板。
-> 依据:本需求 REQ-00034 FR-2;原 `code-unit` 步骤 0a + 0a.1 + 0a.2 + 0a.4 字节级保留。
+> 依据:;原 `code-unit` 步骤 0a + 0a.1 + 0a.2 + 0a.4 字节级保留。
 
 #### 步骤 8a.1 守卫检查项清单(7 项,字节级沿用 `code-unit` 步骤 0a.1)
 
@@ -576,10 +576,10 @@ function preTaskGuard(taskNum, version):
 
 ```
 1. 顺序执行 7 项检查(复杂度递减:复杂验证优先)
-   ├─ 检查 1(package.json):Glob → 存在 → Read 验证 scripts.test
-   ├─ 检查 2(pyproject.toml):Glob → 存在 → Read 验证测试配置
-   ├─ 检查 3-6:仅 Glob 存在性
-   └─ 检查 7:Glob 目录存在性
+ ├─ 检查 1(package.json):Glob → 存在 → Read 验证 scripts.test
+ ├─ 检查 2(pyproject.toml):Glob → 存在 → Read 验证测试配置
+ ├─ 检查 3-6:仅 Glob 存在性
+ └─ 检查 7:Glob 目录存在性
 2. 命中任一 → testable = True → 屏幕输出"✓ code-it 守卫通过" → 进入"## 步骤 8.5"
 3. 全部不命中 → testable = False → 屏幕输出"⏭ code-it 守卫不通过" → 进入"## 步骤 8a.3 跳过流程"
 ```
@@ -604,13 +604,13 @@ function preTaskGuard(taskNum, version):
 
 任务:<任务编码>
 守卫检查:
-  - package.json:✓ (含 scripts.test)
-  - pyproject.toml:✗
-  - Cargo.toml:✗
-  - go.mod:✗
-  - pom.xml:✗
-  - build.gradle:✗
-  - test/ 目录:✗
+ - package.json:✓ (含 scripts.test)
+ - pyproject.toml:✗
+ - Cargo.toml:✗
+ - go.mod:✗
+ - pom.xml:✗
+ - build.gradle:✗
+ - test/ 目录:✗
 项目可测,继续按需写单测流程
 ```
 
@@ -620,13 +620,13 @@ function preTaskGuard(taskNum, version):
 
 任务:<任务编码>
 守卫检查:
-  - package.json:✗
-  - pyproject.toml:✗
-  - Cargo.toml:✗
-  - go.mod:✗
-  - pom.xml:✗
-  - build.gradle:✗
-  - test/ 目录:✗
+ - package.json:✗
+ - pyproject.toml:✗
+ - Cargo.toml:✗
+ - go.mod:✗
+ - pom.xml:✗
+ - build.gradle:✗
+ - test/ 目录:✗
 状态:不适用
 
 看板"任务清单"区段:测试状态 → 不适用
@@ -647,7 +647,7 @@ function preTaskGuard(taskNum, version):
 
 > 本步骤是 `code-it` 在"## 步骤 8a 守卫"**之后**、"## 步骤 9 编译验证"**之前**的**行为接管**。**仅**在 `testable = True` 时执行。
 > 沿用原 `code-unit` 步骤 4 / 7 / 8 / 9 行为,**自动判定** 3 类任务,无 `AskUserQuestion`。
-> 依据:本需求 REQ-00034 FR-3;原 `code-unit` 步骤 4 / 7 / 8 / 9 字节级保留。
+> 依据:;原 `code-unit` 步骤 4 / 7 / 8 / 9 字节级保留。
 
 #### 步骤 8.5.1 守卫通过后才执行
 
@@ -677,16 +677,16 @@ function preTaskGuard(taskNum, version):
 
 ```
 loop:
-  if 写单测跑通 有错误:
-    解析错误信息
-    定位失败用例
-    判断失败原因:
-      - 测试代码 bug(本任务范围内可修)→ 修测试 → 重跑
-      - 被测代码 bug(实际代码逻辑错)→ 记入 deviations.md,停下,询问用户
-      - 环境/依赖问题(测试环境异常)→ 尝试解决,记入 work-log.md
-    重新跑测试
-  else:
-    跳出循环
+ if 写单测跑通 有错误:
+ 解析错误信息
+ 定位失败用例
+ 判断失败原因:
+ - 测试代码 bug(本任务范围内可修)→ 修测试 → 重跑
+ - 被测代码 bug(实际代码逻辑错)→ 记入 deviations.md,停下,询问用户
+ - 环境/依赖问题(测试环境异常)→ 尝试解决,记入 work-log.md
+ 重新跑测试
+ else:
+ 跳出循环
 
 最多连续失败 5 次后必须停下询问用户
 ```
@@ -699,7 +699,7 @@ loop:
 #### 步骤 8.5.5 产出物格式
 
 - **路径**:`code/<任务编码>/unit-test-results.md`
-- **格式**:Markdown,7 字段(沿用本需求 REQ-00034 FR-4 `code-it/templates/RESULT.md` 模板新增"## 单元测试"小节)
+- **格式**:Markdown,7 字段(沿用`code-it/templates/RESULT.md` 模板新增"## 单元测试"小节)
 - **既有字段 0 改**:仅追加,不修改既有章节(沿用 NFR-10)
 
 #### 步骤 8.5.6 退出码契约
@@ -740,17 +740,17 @@ loop:
 
 ```
 loop:
-  if 编译/启动/测试 有错误:
-    解析错误信息
-    定位错误位置(行号/堆栈)
-    判断错误类型:
-      - 代码 bug(本任务范围内可修)→ 修代码 → 重跑
-      - 设计缺陷(详细设计不可行)→ 记入 deviations.md,停下,询问用户
-      - 环境/依赖问题(非代码 bug)→ 尝试解决(装依赖、配环境变量等),记入 work-log.md
-      - 上游错误(PLAN.md / 详细设计 / 规范有错)→ 停下,询问用户
-    重新跑对应验证步骤
-  else:
-    跳出循环
+ if 编译/启动/测试 有错误:
+ 解析错误信息
+ 定位错误位置(行号/堆栈)
+ 判断错误类型:
+ - 代码 bug(本任务范围内可修)→ 修代码 → 重跑
+ - 设计缺陷(详细设计不可行)→ 记入 deviations.md,停下,询问用户
+ - 环境/依赖问题(非代码 bug)→ 尝试解决(装依赖、配环境变量等),记入 work-log.md
+ - 上游错误(PLAN.md / 详细设计 / 规范有错)→ 停下,询问用户
+ 重新跑对应验证步骤
+ else:
+ 跳出循环
 ```
 
 **最多连续失败 N 次后必须停下询问用户**:
@@ -781,9 +781,9 @@ loop:
 - 完成人:<执行者>
 - 提交哈希(若项目是 git 仓库):<git sha>
 - 在 PLAN.md 的"变更记录"中追加:
-  ```
-  YYYY-MM-DD HH:mm  状态更新  T-XXX 状态"进行中"→"已完成",提交 <hash>
-  ```
+ ```
+ YYYY-MM-DD HH:mm 状态更新 T-XXX 状态"进行中"→"已完成",提交 <hash>
+ ```
 - 视情况小幅更新版本号(如 v1.1 → v1.2),但**不重写其他任务**
 
 ### 步骤 14.5 — 推进看板开发状态(REQ-00017 新增,
@@ -799,9 +799,9 @@ loop:
 4. 把"完成时间"列填入 `YYYY-MM-DD HH:mm`
 5. 写回看板文件
 6. 在"变更记录"区段追加(沿用既有"任务完成"事件类型,**不**新增枚举值):
-   ```
-   YYYY-MM-DD HH:mm  任务完成  <任务编码> <任务标题>(开发状态:已完成)  <任务编码>
-   ```
+ ```
+ YYYY-MM-DD HH:mm 任务完成 <任务编码> <任务标题>(开发状态:已完成) <任务编码>
+ ```
 
 **幂等性**:本任务"开发状态"已是"已完成"时,**不重复写**(步骤 15 既有逻辑)。
 
@@ -820,25 +820,25 @@ loop:
 ### 步骤 15 — 同步版本看板(强制)
 1. `Read "./assistants/<版本号>/RESULT.md"`,定位"任务清单"区段
 2. 找到本任务行,更新:
-   - `开发状态`:`待开始` / `进行中` → `已完成`
-   - `完成时间`:填入
-   - `提交哈希`:填入(若有)
-   - `涉及文件`:从本任务 RESULT.md 提取填入
+ - `开发状态`:`待开始` / `进行中` → `已完成`
+ - `完成时间`:填入
+ - `提交哈希`:填入(若有)
+ - `涉及文件`:从本任务 RESULT.md 提取填入
 3. 在"变更记录"追加:
-   ```
-   YYYY-MM-DD HH:mm  开发状态更新  T-XXX 开发状态"进行中"→"已完成",提交 <hash>  T-XXX
-   ```
+ ```
+ YYYY-MM-DD HH:mm 开发状态更新 T-XXX 开发状态"进行中"→"已完成",提交 <hash> T-XXX
+ ```
 4. 若过程中发现代码缺陷,同步在"缺陷清单"追加一行(若本任务有"已知问题/未完成项"或 review/QA 转交)
 5. 更新看板文档头"最近更新"
 
 ### 步骤 16 — 完善过程文档与汇报
 - 收尾 `work-log.md` / `compile-and-run.md` / `deviations.md` / `test-results.md`
 - 向用户汇报:
-  - 完成的改动文件清单
-  - 编译/启动/测试结果
-  - 关键决策与偏离
-  - **版本看板同步情况**(任务清单中本任务行的更新)
-  - 下一步建议(下一个任务、code-unit、code-check 等)
+ - 完成的改动文件清单
+ - 编译/启动/测试结果
+ - 关键决策与偏离
+ - **版本看板同步情况**(任务清单中本任务行的更新)
+ - 下一步建议(下一个任务、code-unit、code-check 等)
 
 ---
 
@@ -852,14 +852,14 @@ loop:
 
 ### 步骤 17 — 校验缺陷与修复方案存在
 1. 读取 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` —— 验证:
-   - 缺陷已登记
-   - 当前状态 ∈ {`修复规划中`, `修复编码中`}(若是 `报告` / `调查中`,提示用户先调 `code-plan`)
+ - 缺陷已登记
+ - 当前状态 ∈ {`修复规划中`, `修复编码中`}(若是 `报告` / `调查中`,提示用户先调 `code-plan`)
 2. 读取 `./assistants/<版本号>/fix/<缺陷编号>/PLAN.md` —— 提取:任务总览 + 任务详情 + 测试方案
 3. 读取 `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` —— 提取:详细设计点(算法 / 数据结构 / 接口 / 异常处理 / 风险与回退)
 4. 校验失败 → 报错并退出:
-   - 缺 `RESULT.md` → "请先调 `code-fix <缺陷编号>` 登记缺陷"
-   - 缺 `PLAN.md` → "请先调 `code-plan <缺陷编号>` 规划修复方案"
-   - 状态不符 → 提示用户:当前状态是 X,需要先 `code-fix` 推进到 `修复规划中` / `修复编码中`
+ - 缺 `RESULT.md` → "请先调 `code-fix <缺陷编号>` 登记缺陷"
+ - 缺 `PLAN.md` → "请先调 `code-plan <缺陷编号>` 规划修复方案"
+ - 状态不符 → 提示用户:当前状态是 X,需要先 `code-fix` 推进到 `修复规划中` / `修复编码中`
 
 #### E-7 边界:`` 存在 + `PLAN.md` 缺失
 
@@ -868,8 +868,8 @@ loop:
 - **触发**:`` 存在(仅 BUG-00001 历史)+ `PLAN.md` 缺失
 - **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/" && test -f "./assistants/<版本号>/fix/<缺陷编号>/PLAN.md" || echo "PLAN_MISSING"`
 - **处理**:
-  - `` 存在 + `PLAN.md` 缺失 → 退化 + 屏显 `⚠ 检测到历史 ;请先用 code-plan <缺陷编号> 产出 PLAN.md`(沿用既有"缺 PLAN.md"错误信息 + 附加检测说明)
-  - `` 不存在 + `PLAN.md` 存在 → 正常进入步骤 18
+ - `` 存在 + `PLAN.md` 缺失 → 退化 + 屏显 `⚠ 检测到历史 ;请先用 code-plan <缺陷编号> 产出 PLAN.md`(沿用既有"缺 PLAN.md"错误信息 + 附加检测说明)
+ - `` 不存在 + `PLAN.md` 存在 → 正常进入步骤 18
 - **依据规范**:`./assistants/rules/module-conventions §规则 1`(`templates/` 留作历史不删)
 
 ### 步骤 18 — 定位 / 创建工作目录
@@ -890,11 +890,11 @@ loop:
 
 ### 步骤 21 — 处理缺陷状态与本轮起点
 1. 读取 `fix/<缺陷编号>/RESULT.md` 当前状态:
-   - `修复规划中` → 推进为 `修复编码中`,更新 `RESULT.md` 状态字段
-   - `修复编码中` → 继续(可能是中断后回来)
+ - `修复规划中` → 推进为 `修复编码中`,更新 `RESULT.md` 状态字段
+ - `修复编码中` → 继续(可能是中断后回来)
 2. 在 `fix/<缺陷编号>/RESULT.md` 追加:
-   - 修复日志:`YYYY-MM-DD HH:mm  修复开始  code-it 开始实施修复`
-   - 变更记录:`YYYY-MM-DD HH:mm  状态推进  <缺陷编号> 状态"修复规划中"→"修复编码中"  <缺陷编号>`
+ - 修复日志:`YYYY-MM-DD HH:mm 修复开始 code-it 开始实施修复`
+ - 变更记录:`YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"修复规划中"→"修复编码中" <缺陷编号>`
 3. 同步 `fix/RESULT.md` 缺陷总览:状态 → `修复编码中`
 4. 同步版本看板"缺陷清单":状态 → `修复编码中`
 5. **特别处理:若状态既非 `修复规划中` 也非 `修复编码中`**,主动询问用户是否要重做或调整。
@@ -929,8 +929,8 @@ loop:
 - **触发**:`` 存在(仅 BUG-00001 历史)
 - **检测**:`Bash: test -f "./assistants/<版本号>/code/<TASK-BUG-...>/"`
 - **处理**:
-  - 文件存在 → 屏显 `⚠ 检测到历史 fix- 前缀过程文档;本次为新结构 TASK-BUG- 任务编号,过程文档不再使用 fix- 前缀;是否手动迁移?推荐不迁移(BUG-00001 已修复-待验证,历史保留)`
-  - 文件不存在 → 正常写入 `code/<TASK-BUG-...>/work-log.md`
+ - 文件存在 → 屏显 `⚠ 检测到历史 fix- 前缀过程文档;本次为新结构 TASK-BUG- 任务编号,过程文档不再使用 fix- 前缀;是否手动迁移?推荐不迁移(BUG-00001 已修复-待验证,历史保留)`
+ - 文件不存在 → 正常写入 `code/<TASK-BUG-...>/work-log.md`
 
 ### 步骤 23 — 编译 / 启动 / 测试验证
 
@@ -949,53 +949,53 @@ loop:
 - **触发**:`` 存在(仅 BUG-00001 历史)
 - **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/"`
 - **处理**:
-  - 文件存在 → 步骤 24 **不**写 `` 同步动作(因本需求后**不**再生成 ``;历史文件保留)
-  - 文件不存在 → 正常进入步骤 25
+ - 文件存在 → 步骤 24 **不**写 `` 同步动作(因本需求后**不**再生成 ``;历史文件保留)
+ - 文件不存在 → 正常进入步骤 25
 
 ### 步骤 24 — 同步 fix/<缺陷编号>/RESULT.md 与看板(强制)
 1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"`
 2. 用 `Edit` 更新:
-   - 文档头:
-     - 状态:`修复编码中` → `已修复-待验证`
-     - 修复提交:填入 git sha(若有)
-   - 修复实施区段:填入关键决策、改动文件清单
-   - 修复日志:追加
-     ```
-     YYYY-MM-DD HH:mm  修复完成  code-it 完成修复,提交 abc1234,等待验证
-     ```
-   - 变更记录:追加
-     ```
-     YYYY-MM-DD HH:mm  状态推进  <缺陷编号> 状态"修复编码中"→"已修复-待验证"  <缺陷编号>
-     ```
+ - 文档头:
+ - 状态:`修复编码中` → `已修复-待验证`
+ - 修复提交:填入 git sha(若有)
+ - 修复实施区段:填入关键决策、改动文件清单
+ - 修复日志:追加
+ ```
+ YYYY-MM-DD HH:mm 修复完成 code-it 完成修复,提交 abc1234,等待验证
+ ```
+ - 变更记录:追加
+ ```
+ YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"修复编码中"→"已修复-待验证" <缺陷编号>
+ ```
 3. `Read "./assistants/<版本号>/fix/RESULT.md"`(总览)
 4. 用 `Edit` 更新:
-   - 缺陷清单表中本条:
-     - 状态 → `已修复-待验证`
-     - 修复时间:填入
-   - 统计区更新
-   - 变更记录追加一条
+ - 缺陷清单表中本条:
+ - 状态 → `已修复-待验证`
+ - 修复时间:填入
+ - 统计区更新
+ - 变更记录追加一条
 5. `Read "./assistants/<版本号>/RESULT.md"`,定位"缺陷清单"区段
 6. 更新本条:
-   - 状态 → `已修复-待验证`
-   - 修复时间:填入
-   - 修复提交:填入
+ - 状态 → `已修复-待验证`
+ - 修复时间:填入
+ - 修复提交:填入
 7. 在"变更记录"追加:
-   ```
-   YYYY-MM-DD HH:mm  缺陷状态  <缺陷编号> 状态"修复编码中"→"已修复-待验证"  <缺陷编号>
-   ```
+ ```
+ YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"修复编码中"→"已修复-待验证" <缺陷编号>
+ ```
 
 ### 步骤 25 — 完善过程文档与汇报
 - 收尾 `code/<TASK-BUG-...>/{work-log.md, compile-and-run.md, test-results.md, deviations.md}`(原 `fix-` 前缀过程文档退场,见 E-9 边界)
 - 向用户汇报:
-  - 改动的文件清单
-  - 编译/启动/测试结果
-  - 关键决策与偏离
-  - **缺陷状态推进**:`修复规划中` / `修复编码中` → `已修复-待验证`
-  - **同步的文件**:`fix/<缺陷编号>/RESULT.md` / `fix/RESULT.md` / 版本看板
-  - 下一步建议:
-    1. 跑测试,确认通过后调 `code-fix <缺陷编号>` 推进到 `已修复-已验证`
-    2. (可选)调 `code-check` 对本修复做正式评审
-    3. (可选)在 `code-it` 步骤 8.5 按需写单测(沿用本需求 REQ-00034 FR-2/FR-3)
+ - 改动的文件清单
+ - 编译/启动/测试结果
+ - 关键决策与偏离
+ - **缺陷状态推进**:`修复规划中` / `修复编码中` → `已修复-待验证`
+ - **同步的文件**:`fix/<缺陷编号>/RESULT.md` / `fix/RESULT.md` / 版本看板
+ - 下一步建议:
+ 1. 跑测试,确认通过后调 `code-fix <缺陷编号>` 推进到 `已修复-已验证`
+ 2. (可选)调 `code-check` 对本修复做正式评审
+ 3. (可选)在 `code-it` 步骤 8.5 按需写单测(沿用)
 
 ---
 
@@ -1047,9 +1047,9 @@ loop:
 - 时间:YYYY-MM-DD HH:mm
 - 退出码:<n>
 - 输出:
-  ```
-  <完整输出>
-  ```
+ ```
+ <完整输出>
+ ```
 - 结论:成功 / 失败
 
 ## 启动
@@ -1059,9 +1059,9 @@ loop:
 
 ## 修复记录
 - 第 1 次失败:<error>
-  - 根因推断:...
-  - 修复:...
-  - 重跑结果:...
+ - 根因推断:...
+ - 修复:...
+ - 重跑结果:...
 - 第 2 次失败:...
 ```
 
@@ -1073,8 +1073,8 @@ loop:
 ## 偏离 1:<一句话描述>
 - **类别**:代码偏离设计 / 代码偏离规范 / 任务范围扩展 / 其他
 - **依据**:
-  - 设计要求:详细设计 §X / PLAN.md §X
-  - 规范要求:./assistants/rules/<file> §X
+ - 设计要求:详细设计 §X / PLAN.md §X
+ - 规范要求:./assistants/rules/<file> §X
 - **实际做法**:...
 - **偏离理由**:...
 - **影响**:...
@@ -1107,14 +1107,14 @@ loop:
 
 ## 衔接
 - **下游**:
-  - 任务分支:`code-check` 在本任务完成后对本次变更展开;后续任务的 `code-it` 会以本任务的产出为依赖;若项目可测且任务涉及函数级改动,由 `code-it` 步骤 8.5 自含的 `unit-test-results.md` 产出单测(沿用本需求 REQ-00034 FR-2/FR-3)
-  - 缺陷分支:用户调 `code-fix <缺陷编号>` 推进状态;可选 `code-check` / `code-unit`
+ - 任务分支:`code-check` 在本任务完成后对本次变更展开;后续任务的 `code-it` 会以本任务的产出为依赖;若项目可测且任务涉及函数级改动,由 `code-it` 步骤 8.5 自含的 `unit-test-results.md` 产出单测(沿用)
+ - 缺陷分支:用户调 `code-fix <缺陷编号>` 推进状态;可选 `code-check` / `code-unit`
 - **上游**:
-  - 任务分支:`code-version`(必须);`code-plan` 的 `PLAN.md` / `RESULT.md`;项目级规范
-  - 缺陷分支:`code-version`(必须);`code-fix` 的 `fix/<缺陷编号>/RESULT.md`;`code-plan` 的 ``;项目级规范
+ - 任务分支:`code-version`(必须);`code-plan` 的 `PLAN.md` / `RESULT.md`;项目级规范
+ - 缺陷分支:`code-version`(必须);`code-fix` 的 `fix/<缺陷编号>/RESULT.md`;`code-plan` 的 ``;项目级规范
 - **横向**:
-  - 任务分支:`./assistants/<版本号>/code/<其他任务编码>/RESULT.md` 形成本次需求的所有任务执行档案
-  - 缺陷分支:与同版本其他 `fix/<其他缺陷编号>/` 互不干扰
+ - 任务分支:`./assistants/<版本号>/code/<其他任务编码>/RESULT.md` 形成本次需求的所有任务执行档案
+ - 缺陷分支:与同版本其他 `fix/<其他缺陷编号>/` 互不干扰
 
 ## 不要做的事
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
@@ -1127,15 +1127,15 @@ loop:
 - 修改 `PLAN.md` 中除本任务状态/完成字段/变更记录之外的任何内容
 - 把代码改动保存到 `assistants/code/` 目录(那是文档目录,不是源码目录)
 - **任务分支(审查改修)的特殊禁止**:
-  - **不读** `<版本号>/plan/<需求编号>/RESULT.md`(那是上游设计,本任务是修补)
-  - **不扩展任务范围** —— 即使改修中发现新问题,记到 `deviations.md`,不擅自修复
-  - **不修改** `<版本号>/review/<任务编码>/RESULT.md` 中"不需要做的"部分
-  - **不破坏** 关联原任务的现有功能(其测试必须仍通过)
+ - **不读** `<版本号>/plan/<需求编号>/RESULT.md`(那是上游设计,本任务是修补)
+ - **不扩展任务范围** —— 即使改修中发现新问题,记到 `deviations.md`,不擅自修复
+ - **不修改** `<版本号>/review/<任务编码>/RESULT.md` 中"不需要做的"部分
+ - **不破坏** 关联原任务的现有功能(其测试必须仍通过)
 - **缺陷分支的特殊禁止**:
-  - **不在没有 `` 的情况下继续** —— 必须先 `code-plan <缺陷编号>`
-  - **不修改 ``** —— 那是上游;若发现方案不可行,停下,询问用户(可能要回 `code-plan` 重新规划)
-  - **不修改 `fix/<缺陷编号>/RESULT.md` 中"缺陷描述" / "根因分析"等稳定章节** —— 只更新状态字段、修复日志、变更记录
-  - **不修改其他缺陷的 `fix/<其他缺陷编号>/`** —— 各缺陷独立
-  - **不把缺陷修复的过程文档写到 `code/<任务>/`** —— 那是任务路径的目录;缺陷用 `fix/<缺陷>/` + `fix-` 前缀
-  - **不直接关闭缺陷** —— 完成实施后状态是 `已修复-待验证`,验证通过后由 `code-fix` 推进到 `已修复-已验证`,再由 `code-fix` 关闭
+ - **不在没有 `` 的情况下继续** —— 必须先 `code-plan <缺陷编号>`
+ - **不修改 ``** —— 那是上游;若发现方案不可行,停下,询问用户(可能要回 `code-plan` 重新规划)
+ - **不修改 `fix/<缺陷编号>/RESULT.md` 中"缺陷描述" / "根因分析"等稳定章节** —— 只更新状态字段、修复日志、变更记录
+ - **不修改其他缺陷的 `fix/<其他缺陷编号>/`** —— 各缺陷独立
+ - **不把缺陷修复的过程文档写到 `code/<任务>/`** —— 那是任务路径的目录;缺陷用 `fix/<缺陷>/` + `fix-` 前缀
+ - **不直接关闭缺陷** —— 完成实施后状态是 `已修复-待验证`,验证通过后由 `code-fix` 推进到 `已修复-已验证`,再由 `code-fix` 关闭
 - 修改 `./assistants/<版本号>/RESULT.md` 中非本技能负责的区段(本技能负责:任务清单 / 缺陷清单 / 执行的开发命令记录 / 变更记录)

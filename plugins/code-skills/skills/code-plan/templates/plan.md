@@ -48,12 +48,12 @@
 ```
 ### 模块:<名称>(对应概要设计 §X.Y)
 - **关键类/函数**:
-  - `<class/function 1>`:<签名 + 一句话职责>
-  - `<class/function 2>`:...
+ - `<class/function 1>`:<签名 + 一句话职责>
+ - `<class/function 2>`:...
 - **内部状态**:
 - **关键调用顺序**:
-  1. ...
-  2. ...
+ 1. ...
+ 2. ...
 - **并发模型**:
 - **资源管理**(连接/锁/缓存):
 - **错误处理范式**(异常类型/返回值/全局兜底):
@@ -74,15 +74,15 @@
 - **复杂度**:时间 O(?),空间 O(?)
 - **依赖**:(调用的其他函数/库)
 - **伪代码**:
-  ```
-  function algorithm_1(input):
-      validate(input)
-      a = step1(input)
-      b = step2(a)
-      if b is invalid:
-          handle_error(...)
-      return step3(b)
-  ```
+ ```
+ function algorithm_1(input):
+ validate(input)
+ a = step1(input)
+ b = step2(a)
+ if b is invalid:
+ handle_error(...)
+ return step3(b)
+ ```
 - **关键决策与权衡**:为什么用这个算法而不是候选
 - **边界条件**:空、极大、极小、并发
 - **对应任务**:<任务编号>
@@ -152,12 +152,12 @@
 对有状态的对象(订单/工单/会话等):
 ```
 stateDiagram-v2
-  [*] --> Pending
-  Pending --> Processing: 触发
-  Processing --> Done: 成功
-  Processing --> Failed: 失败
-  Failed --> Pending: 重试
-  Done --> [*]
+ [*] --> Pending
+ Pending --> Processing: 触发
+ Processing --> Done: 成功
+ Processing --> Failed: 失败
+ Failed --> Pending: 重试
+ Done --> [*]
 ```
 
 ## 11. 性能与资源(本节**必填**;若无性能目标显式写"本仓库无性能要求,性能优化通过外部调优完成")

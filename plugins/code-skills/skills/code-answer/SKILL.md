@@ -30,14 +30,14 @@ description: 只读功能查询。给一个关键词、需求编号或 EXISTING 
 
 ```
 ./assistants/
-├── .current-version              # 当前激活版本标记(本技能读,缺失时降级全版本扫描)
-├── rules/                        # 项目级规范(本技能不读)
+├── .current-version # 当前激活版本标记(本技能读,缺失时降级全版本扫描)
+├── rules/ # 项目级规范(本技能不读)
 └── <版本号>/
-    └── require/                  # 扫描目标(只读)
-        ├── EXISTING-NNN/         # code-init 创建的基线需求
-        │   └── RESULT.md
-        └── REQ-NNNNN/            # code-require 创建的开发需求
-            └── RESULT.md
+ └── require/ # 扫描目标(只读)
+ ├── EXISTING-NNN/ # code-init 创建的基线需求
+ │ └── RESULT.md
+ └── REQ-NNNNN/ # code-require 创建的开发需求
+ └── RESULT.md
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
@@ -95,13 +95,13 @@ description: 只读功能查询。给一个关键词、需求编号或 EXISTING 
 ## 工具使用约定
 
 - **读**:
-  - `Read "./assistants/.current-version"`(步骤 0,可选 — 缺失时降级全版本扫描)
-  - `Read "<文件路径>"` 读 `RESULT.md` / 源代码段
+ - `Read "./assistants/.current-version"`(步骤 0,可选 — 缺失时降级全版本扫描)
+ - `Read "<文件路径>"` 读 `RESULT.md` / 源代码段
 - **列目录**:
-  - `Glob "./assistants/*/require/*/RESULT.md"`(全版本需求清单)
-  - `Glob "./src/**/*"` 等常见源码目录(FR-4 触发时)
+ - `Glob "./assistants/*/require/*/RESULT.md"`(全版本需求清单)
+ - `Glob "./src/**/*"` 等常见源码目录(FR-4 触发时)
 - **搜索**:
-  - `Grep "<关键字>" --type <ext>` 跨文件检索(忽略大小写,支持中英文)
+ - `Grep "<关键字>" --type <ext>` 跨文件检索(忽略大小写,支持中英文)
 - **不调用**:`Write` / `Edit` / `Bash` / `WebFetch` / `WebSearch` / `Task` / `Agent` / `cron` / `ScheduleWakeup` / 任何 MCP 工具(FR-6 严守)
 - **不调用**任何其他 `code-*` 技能(职责单一)
 
@@ -119,8 +119,8 @@ description: 只读功能查询。给一个关键词、需求编号或 EXISTING 
 1. 若输入为空 → 屏显用法 + 退出(边界 E-1)
 2. 提取查询字符串
 3. 判定路径:
-   - 匹配 `^REQ-\d{5}$` / `^EXISTING-\d{3}$` → 精确编号路径(步骤 2a)
-   - 其他 → 关键字模糊路径(步骤 2b)
+ - 匹配 `^REQ-\d{5}$` / `^EXISTING-\d{3}$` → 精确编号路径(步骤 2a)
+ - 其他 → 关键字模糊路径(步骤 2b)
 
 ### 步骤 2a — 精确编号匹配(FR-3a)
 
@@ -237,16 +237,16 @@ description: 只读功能查询。给一个关键词、需求编号或 EXISTING 
 
 ```
 function scoreFile(filePath, query):
-  // 权重:标题命中 = 10 / 概述命中 = 5 / FR 命中 = 2
-  score = 0
-  title = parseTitle(filePath)         // 第 1 行 # 标题
-  overview = readSection(filePath, "需求概述")  // §1
-  frs = readSection(filePath, "功能需求")  // §4
-  if contains(title, query): score += 10
-  if contains(overview, query): score += 5
-  for fr in frs:
-    if contains(fr, query): score += 2
-  return score
+ // 权重:标题命中 = 10 / 概述命中 = 5 / FR 命中 = 2
+ score = 0
+ title = parseTitle(filePath) // 第 1 行 # 标题
+ overview = readSection(filePath, "需求概述") // §1
+ frs = readSection(filePath, "功能需求") // §4
+ if contains(title, query): score += 10
+ if contains(overview, query): score += 5
+ for fr in frs:
+ if contains(fr, query): score += 2
+ return score
 ```
 
 - 权重按"用户最关心的内容"排序:标题最直接 → 概述最易扫读 → FR 最具体

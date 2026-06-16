@@ -7,37 +7,37 @@
 ```
 <项目根目录>/
 ├── assistants/
-│   ├── rules/                          ← 项目级规范(只读,跨版本共享)
-│   │   ├── architecture.md
-│   │   ├── module-conventions.md
-│   │   ├── api-standards.md
-│   │   ├── data-modeling.md
-│   │   └── ...
-│   ├── .current-version                ← 当前激活版本标记
-│   │   (内容示例:v1.0.0)
-│   └── <版本号>/                       ★ 版本工作空间
-│       ├── RESULT.md                   ← 版本开发进度看板
-│       ├── require/
-│       │   └── REQ-00001/
-│       │       ├── RESULT.md            ← 上游需求,本技能只读
-│       │       └── ...
-│       ├── design/
-│       │   └── REQ-00001/
-│       │       ├── RESULT.md            ← 上游概要设计,本技能只读
-│       │       └── ...
-│       └── plan/                        ← 本技能产出,可写
-│           └── REQ-00001/
-│               ├── RESULT.md            # 详细设计
-│               ├── PLAN.md              # 编码计划(任务列表 + 状态)
-│               ├── materials-index.md
-│               ├── design-notes.md
-│               ├── module-details.md
-│               ├── interface-specs.md
-│               ├── data-changes.md
-│               ├── risk-analysis.md
-│               ├── rule-compliance.md
-│               └── clarifications.md
-├── src/                                # 用户的项目源码(本技能只读,用于核对实现细节)
+│ ├── rules/ ← 项目级规范(只读,跨版本共享)
+│ │ ├── architecture.md
+│ │ ├── module-conventions.md
+│ │ ├── api-standards.md
+│ │ ├── data-modeling.md
+│ │ └── ...
+│ ├── .current-version ← 当前激活版本标记
+│ │ (内容示例:v1.0.0)
+│ └── <版本号>/ ★ 版本工作空间
+│ ├── RESULT.md ← 版本开发进度看板
+│ ├── require/
+│ │ └── REQ-00001/
+│ │ ├── RESULT.md ← 上游需求,本技能只读
+│ │ └── ...
+│ ├── design/
+│ │ └── REQ-00001/
+│ │ ├── RESULT.md ← 上游概要设计,本技能只读
+│ │ └── ...
+│ └── plan/ ← 本技能产出,可写
+│ └── REQ-00001/
+│ ├── RESULT.md # 详细设计
+│ ├── PLAN.md # 编码计划(任务列表 + 状态)
+│ ├── materials-index.md
+│ ├── design-notes.md
+│ ├── module-details.md
+│ ├── interface-specs.md
+│ ├── data-changes.md
+│ ├── risk-analysis.md
+│ ├── rule-compliance.md
+│ └── clarifications.md
+├── src/ # 用户的项目源码(本技能只读,用于核对实现细节)
 ├── package.json / pyproject.toml / ... # 用户的项目配置
 └── ...
 ```
@@ -67,10 +67,10 @@
 ## 任务状态机
 ```
 待开始 ──开始──→ 进行中 ──完成──→ 已完成(终态)
-                    │
-                    ├──阻塞──→ 阻塞 ──解除──→ 进行中
-                    │
-                    └──取消──→ 已取消(终态,不可恢复)
+ │
+ ├──阻塞──→ 阻塞 ──解除──→ 进行中
+ │
+ └──取消──→ 已取消(终态,不可恢复)
 ```
 - `已完成` 与 `已取消` 都是终态,**不可修改**
 - 终态任务如需重做,新增"修改类"任务并通过"关联任务"字段指向旧任务

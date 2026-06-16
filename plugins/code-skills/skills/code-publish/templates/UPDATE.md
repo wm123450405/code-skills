@@ -34,7 +34,7 @@
 ```bash
 # 默认示例:tar.gz 打包(与 DEPLOY.md §2.1 一致)
 # <source_dir> = 编译后或构建后的目录(例如:dist/ / build/ / target/)
-# <output>    = 输出的压缩包路径(例如:myapp-v0.0.2.tar.gz,**注意版本号与源版本不同**)
+# <output> = 输出的压缩包路径(例如:myapp-v0.0.2.tar.gz,**注意版本号与源版本不同**)
 
 tar -czf <output>.tar.gz <source_dir>
 
@@ -66,13 +66,13 @@ docker save -o <output>.tar <image_name>:<version>
 
 ```
 dist/
-├── myapp-v0.0.1.tar.gz        (源版本,保留)
+├── myapp-v0.0.1.tar.gz (源版本,保留)
 ├── myapp-v0.0.1.tar.gz.sha256
-├── myapp-v0.0.2.tar.gz        (本版本,新)
+├── myapp-v0.0.2.tar.gz (本版本,新)
 ├── myapp-v0.0.2.tar.gz.sha256
-├── upgrade-db.sql             (数据库升级脚本,**新**)
-├── rollback-db.sql            (数据库回滚脚本,**新 — 必须有**)
-└── release-notes.md           (本次变更说明)
+├── upgrade-db.sql (数据库升级脚本,**新**)
+├── rollback-db.sql (数据库回滚脚本,**新 — 必须有**)
+└── release-notes.md (本次变更说明)
 ```
 
 - **主成果物**:<新版本文件名,如 myapp-v0.0.2.tar.gz>
@@ -104,18 +104,18 @@ ssh <user>@<server> "cd /path/to/upgrade/ && sha256sum -c <output>.tar.gz.sha256
 
 ```
 /opt/
-├── myapp/                    # 当前生产目录(运行源版本)
-│   ├── bin/myapp
-│   ├── config/config.yaml
-│   └── ...
-├── releases/                 # 历史发布物归档
-│   ├── myapp-v0.0.1/
-│   └── ...
-└── upgrade/                  # 升级专用目录(本次升级的临时文件)
-    ├── myapp-v0.0.2.tar.gz
-    ├── myapp-v0.0.2.tar.gz.sha256
-    ├── upgrade-db.sql
-    └── rollback-db.sql
+├── myapp/ # 当前生产目录(运行源版本)
+│ ├── bin/myapp
+│ ├── config/config.yaml
+│ └── ...
+├── releases/ # 历史发布物归档
+│ ├── myapp-v0.0.1/
+│ └── ...
+└── upgrade/ # 升级专用目录(本次升级的临时文件)
+ ├── myapp-v0.0.2.tar.gz
+ ├── myapp-v0.0.2.tar.gz.sha256
+ ├── upgrade-db.sql
+ └── rollback-db.sql
 ```
 
 ---
@@ -157,7 +157,7 @@ mysql -u<user> -p<passwd> <dbname> < <upgrade-db.sql>
 
 # 3. 验证表结构
 mysql -u<user> -p<passwd> -e "USE <dbname>; SHOW TABLES;" | head
-mysql -u<user> -p<passwd> -e "USE <dbname>; SELECT * FROM schema_migrations ORDER BY version DESC LIMIT 5;"  # 若用 Flyway / Liquibase
+mysql -u<user> -p<passwd> -e "USE <dbname>; SELECT * FROM schema_migrations ORDER BY version DESC LIMIT 5;" # 若用 Flyway / Liquibase
 ```
 
 **说明**:
@@ -175,7 +175,7 @@ mysql -u<user> -p<passwd> -e "USE <dbname>; SELECT * FROM schema_migrations ORDE
 
 UPDATE users
 SET first_name = SUBSTRING_INDEX(full_name, ' ', 1),
-    last_name  = SUBSTRING_INDEX(full_name, ' ', -1)
+ last_name = SUBSTRING_INDEX(full_name, ' ', -1)
 WHERE full_name IS NOT NULL;
 ```
 
@@ -204,15 +204,15 @@ SELECT COUNT(*) FROM users WHERE first_name IS NULL AND full_name IS NOT NULL;
 
 ```diff
 # /etc/myapp/config.yaml
-  server:
-    port: 8080
-+   max_connections: 1000    # 新增(默认值 1000)
-  logging:
-    level: INFO
--   enable_legacy_logging: false  # 废弃(代码兼容,日志告警)
-  db:
-    url: jdbc:mysql://localhost:3306/myapp_prod
-+   connection_timeout: 30s  # 新增(默认 30s)
+ server:
+ port: 8080
++ max_connections: 1000 # 新增(默认值 1000)
+ logging:
+ level: INFO
+- enable_legacy_logging: false # 废弃(代码兼容,日志告警)
+ db:
+ url: jdbc:mysql://localhost:3306/myapp_prod
++ connection_timeout: 30s # 新增(默认 30s)
 ```
 
 **应用方式**:
@@ -247,7 +247,7 @@ sudo cp /opt/myapp/bin/myapp /opt/upgrade/myapp.v0.0.1.bak
 # 3. 替换为新版本二进制
 sudo cp /path/to/upgrade/<output>.tar.gz /tmp/
 cd /tmp && tar -xzf <output>.tar.gz
-sudo rsync -av --delete <extracted-dir>/ /opt/myapp/   # 注意: --delete 会删除旧文件;先确认无遗留
+sudo rsync -av --delete <extracted-dir>/ /opt/myapp/ # 注意: --delete 会删除旧文件;先确认无遗留
 
 # 4. 启动新版本
 sudo systemctl start myapp
@@ -309,8 +309,8 @@ sudo cp /opt/upgrade/myapp.v0.0.1.bak /opt/myapp/bin/myapp
 sudo cp /opt/upgrade/config.yaml.bak /etc/myapp/config.yaml
 
 # 4. (若 §5.2/5.3 不可逆)**决策点:数据是否回滚**
-#   - 情况 A:DB 变更**可逆**(如:只新增表/列)→ 跳过 DB 回滚
-#   - 情况 B:DB 变更**不可逆**(如:DROP COLUMN)→ 执行 DB 回滚(详 §8.2)
+# - 情况 A:DB 变更**可逆**(如:只新增表/列)→ 跳过 DB 回滚
+# - 情况 B:DB 变更**不可逆**(如:DROP COLUMN)→ 执行 DB 回滚(详 §8.2)
 
 # 5. 启动源版本
 sudo systemctl start myapp

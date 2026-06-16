@@ -10,46 +10,46 @@
 ```
 <项目根目录>/
 ├── assistants/
-│   ├── rules/                          ← 项目级规范(跨版本共享,只读)
-│   │   ├── architecture.md
-│   │   ├── module-conventions.md
-│   │   ├── api-standards.md
-│   │   └── ...
-│   ├── .current-version                ★ 当前激活版本标记文件
-│   │                                    (由 code-version 写入;code-publish 只读)
-│   │
-│   ├── qanda/                          ★ 项目级 Q&A 长期沉淀(跨版本共享)
-│   │   │                                (本技能顺带创建,见 AC-6.1~6.3)
-│   │   ├── README.md                    ← 目录用途说明(本技能首次调用时创建)
-│   │   └── <主题>.md                   ← 用户后续添加的 Q&A 文件
-│   │                                    (例:deploy-faq.md / db-init-faq.md)
-│   │
-│   ├── v1.0.0/                         ← 版本工作空间 1(由 code-version 创建)
-│   │   ├── RESULT.md                   ★ 版本开发进度看板
-│   │   │                                (本技能只读消费 3 区段,见 SKILL.md "## 看板字段约定")
-│   │   ├── require/                    ← code-require 产出
-│   │   ├── design/                     ← code-design 产出
-│   │   ├── plan/                       ← code-plan 产出
-│   │   ├── code/                       ← code-it 产出
-│   │   ├── test/                       ← code-unit 产出
-│   │   ├── review/                     ← code-check 产出
-│   │   │
-│   │   └── publish/                    ★ 本技能产出(可写,见 FR-2)
-│   │       ├── DEPLOY.md                ← 全新部署手册骨架(始终生成)
-│   │       ├── UPDATE.md                ← 升级部署手册骨架(基线版本跳过)
-│   │       └── Q&A.md                   ← Q&A 手册(从 qanda/ 聚合)
-│   │
-│   ├── v1.1.0/                         ← 版本工作空间 2(并行或后续)
-│   │   ├── RESULT.md
-│   │   ├── ...
-│   │   └── publish/
-│   │       └── ...
-│   │
-│   └── <其他历史/并行版本>/
-│       └── ...
+│ ├── rules/ ← 项目级规范(跨版本共享,只读)
+│ │ ├── architecture.md
+│ │ ├── module-conventions.md
+│ │ ├── api-standards.md
+│ │ └── ...
+│ ├── .current-version ★ 当前激活版本标记文件
+│ │ (由 code-version 写入;code-publish 只读)
+│ │
+│ ├── qanda/ ★ 项目级 Q&A 长期沉淀(跨版本共享)
+│ │ │ (本技能顺带创建,见 AC-6.1~6.3)
+│ │ ├── README.md ← 目录用途说明(本技能首次调用时创建)
+│ │ └── <主题>.md ← 用户后续添加的 Q&A 文件
+│ │ (例:deploy-faq.md / db-init-faq.md)
+│ │
+│ ├── v1.0.0/ ← 版本工作空间 1(由 code-version 创建)
+│ │ ├── RESULT.md ★ 版本开发进度看板
+│ │ │ (本技能只读消费 3 区段,见 SKILL.md "## 看板字段约定")
+│ │ ├── require/ ← code-require 产出
+│ │ ├── design/ ← code-design 产出
+│ │ ├── plan/ ← code-plan 产出
+│ │ ├── code/ ← code-it 产出
+│ │ ├── test/ ← code-unit 产出
+│ │ ├── review/ ← code-check 产出
+│ │ │
+│ │ └── publish/ ★ 本技能产出(可写,见 FR-2)
+│ │ ├── DEPLOY.md ← 全新部署手册骨架(始终生成)
+│ │ ├── UPDATE.md ← 升级部署手册骨架(基线版本跳过)
+│ │ └── Q&A.md ← Q&A 手册(从 qanda/ 聚合)
+│ │
+│ ├── v1.1.0/ ← 版本工作空间 2(并行或后续)
+│ │ ├── RESULT.md
+│ │ ├── ...
+│ │ └── publish/
+│ │ └── ...
+│ │
+│ └── <其他历史/并行版本>/
+│ └── ...
 │
-├── src/                                # 用户的项目源码(由 code-it 修改)
-├── tests/                              # 用户的测试代码(由 code-unit 修改)
+├── src/ # 用户的项目源码(由 code-it 修改)
+├── tests/ # 用户的测试代码(由 code-unit 修改)
 └── ...
 ```
 
@@ -59,8 +59,8 @@
 
 ```
 assistants/qanda/
-├── README.md                            # 目录说明(由本技能首次创建,内容来自 templates/qanda-README.md)
-└── <主题>.md                           # 用户添加的 Q&A 文件
+├── README.md # 目录说明(由本技能首次创建,内容来自 templates/qanda-README.md)
+└── <主题>.md # 用户添加的 Q&A 文件
 ```
 
 **职责**:
@@ -76,16 +76,16 @@ assistants/qanda/
 
 ```
 <版本号>/publish/
-├── DEPLOY.md                            # 全新部署手册骨架(始终生成)
-├── UPDATE.md                            # 升级部署手册骨架(基线版本跳过)
-└── Q&A.md                               # Q&A 手册(从 qanda/ 聚合)
+├── DEPLOY.md # 全新部署手册骨架(始终生成)
+├── UPDATE.md # 升级部署手册骨架(基线版本跳过)
+└── Q&A.md # Q&A 手册(从 qanda/ 聚合)
 ```
 
 **职责**:
 - 每次调本技能 + 前置检查通过时,生成 2 或 3 份手册到 `publish/`:
-  - **DEPLOY.md** —— 全新部署场景的步骤手册
-  - **UPDATE.md** —— 仅当本版本非基线时生成(基线跳过)
-  - **Q&A.md** —— 始终生成;内容来自 `qanda/*.md` 聚合
+ - **DEPLOY.md** —— 全新部署场景的步骤手册
+ - **UPDATE.md** —— 仅当本版本非基线时生成(基线跳过)
+ - **Q&A.md** —— 始终生成;内容来自 `qanda/*.md` 聚合
 - 模板来自 `templates/DEPLOY.md` / `UPDATE.md` / `Q&A.md`
 - 写入前 `ls` 检测已有文件 → 在报告中提示"已覆盖 N 个文件"
 - 覆盖是允许的(NFR-6 幂等);用户应 git diff 审阅后再手动 commit(NFR-3)
@@ -128,11 +128,11 @@ assistants/qanda/
 ### 2. 模板的双向引用
 
 - **本技能**(`SKILL.md` + 5 模板)有**两处**描述同一组目录:
-  - `SKILL.md` 的"## 工作目录约定"小节(简版,~40 行)
-  - `assistants-layout.md` 的"## 整体布局"小节(详版,本文)
+ - `SKILL.md` 的"## 工作目录约定"小节(简版,~40 行)
+ - `assistants-layout.md` 的"## 整体布局"小节(详版,本文)
 - 两文档**内容一致**但**用途不同**:
-  - `SKILL.md` 是技能入口;目录树是"## 工作目录约定"小节
-  - `assistants-layout.md` 是标准技能资产;目录树是"## 整体布局"独立小节
+ - `SKILL.md` 是技能入口;目录树是"## 工作目录约定"小节
+ - `assistants-layout.md` 是标准技能资产;目录树是"## 整体布局"独立小节
 - **变更时需同步**:改一处 → 改另一处(本任务执行时**已对齐**)
 
 ### 3. 本技能"可写目录"边界

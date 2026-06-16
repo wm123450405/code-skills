@@ -1,0 +1,53 @@
+======================================================================
+所有「本需求 REQ-」字面 + 是否被 R-1 扩展命中
+======================================================================
+  [未命中] plugins\code-skills\skills\code-auto\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)→ `code-check` 循环(派生任务自动修复)→ 完成报告,实现"从需求到代码 + 单测 + 评审无必须...
+  [未命中] plugins\code-skills\skills\code-auto\SKILL.md L??: 本需求 REQ-00024 改造:沿用路径感知判定)
+  [未命中] plugins\code-skills\skills\code-auto\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)
+  [未命中] plugins\code-skills\skills\code-auto\SKILL.md L??: 本需求 REQ-00034 退场,守卫逻辑由 `code-it` 步骤 8a 接管)
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3,
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 NFR-2)
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 NFR-2;新任务**不**产此文件,由 `code-it` 步骤 8.5 自含的 `code/<任务>/unit-test-res...
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 退场)
+  [未命中] plugins\code-skills\skills\code-check\SKILL.md L??: 本需求 REQ-00034 退场,产出**不**再含)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 新增,本需求 REQ-00029 屏显瘦身)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 改造,本需求 REQ-00029 屏显瘦身)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 改造,本需求 REQ-00029 屏显瘦身)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 改造,本需求 REQ-00029 建议单行)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00029 屏显瘦身)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 新增边界(沿用概要设计 §6)
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00023 改造后**:总览模式 4 段已精简(总开发进度 + 5 类状态占比 + 高优缺陷 + ≤ 5 条建议);屏显总行数 ≤ 12 行(N...
+  [未命中] plugins\code-skills\skills\code-dashboard\SKILL.md L??: 本需求 REQ-00025 双正则兼容)
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-2 收紧):
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-3 收窄)
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-3 收窄至 5 列**):
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-3 收窄)
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-3 简化)
+  [未命中] plugins\code-skills\skills\code-design\SKILL.md L??: 本需求 REQ-00030 FR-3 收窄至 4 项 / 依赖**):
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3 改造**(
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00020 M-4 归并 E-1 / E-4 / E-8 / E-9 为职责归属表)
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-2;原 `code-unit` 步骤 0a + 0a.1 + 0a.2 + 0a.4 字节级保留。
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-3;原 `code-unit` 步骤 4 / 7 / 8 / 9 字节级保留。
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-4 `code-it/templates/RESULT.md` 模板新增"## 单元测试"小节)
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)
+  [未命中] plugins\code-skills\skills\code-it\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)
+  [未命中] plugins\code-skills\skills\code-it\templates\RESULT.md L??: 本需求 REQ-00034 FR-4 新增,
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 M-1 归并为引用)
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 M-1 归并**:`code-design` 步骤 0b.0 与本步骤**完全同构**(都检测 `.code-auto-runnin...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 扩展**:`code-plan` 阶段问全 7 维度(原 4 维度沿用 REQ-00011 + 新增 3 维度):
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 FR-3 扩展 3 行**)
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 M-2 定义段):`Glob ./assistants/rules/**/*` → 不存在/空则 `AskUserQuestion`...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 M-2 定义段):不为"探索架构",只为"详细设计提供实现约束"——目标语言规范 / 既有相似功能实现风格 / 测试风格与覆盖度 /...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00020 M-4 归并:原 4 种情形 → 3 种情形(移除"PLAN.md 存在,RESULT.md 不存在"分支 — 与"都不存在"分支语...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00030 FR-6 收紧,
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00030 FR-6 新增**):**满足 FR-1 扩展性触发条件**(新增三方依赖 OR 跨 ≥3 模块 OR 对接多套实现)
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00030 FR-6 新增**):**整体设计目标 = `--extensible`**(由 `code-design` 步骤 0b 判定并写入...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00030 FR-6 修订**):**任一不满足触发条件**即不插入架构任务,包括:
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00034 FR-1)。
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00031 FR-3 收窄,
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00034 FR-3,原 `code-unit` 流程独立承担 → `code-it` 接管),**不**在 `code-plan` 任务粒度中...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00034 FR-3,原 `code-unit` 另起流程 → `code-it` 步骤 8.5 产出 `code/<任务>/unit-test...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00011 新增,本需求 REQ-00020 扩展为 7 维度)
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00019 BUG 模式退场前表述,本需求后写 `fix/<BUG-NNN>/RESULT.md` 或 `materials-index.md`...
+  [未命中] plugins\code-skills\skills\code-plan\SKILL.md L??: 本需求 REQ-00034 FR-2/FR-3)

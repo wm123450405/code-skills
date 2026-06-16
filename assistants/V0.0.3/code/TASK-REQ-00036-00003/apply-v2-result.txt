@@ -1,0 +1,71 @@
+======================================================================
+REQ-00036 清理补丁 v2(T-3 范围)
+======================================================================
+  plugins\code-skills\skills\code-answer\SKILL.md                             | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  268-> 268 -0.0%
+  plugins\code-skills\skills\code-auto\SKILL.md                               | R-1=  4 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  846-> 846 -0.0%
+  plugins\code-skills\skills\code-check\SKILL.md                              | R-1=  6 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  671-> 671 -0.0%
+  plugins\code-skills\skills\code-check\templates\assistants-layout.md        | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  114-> 114 -0.0%
+  plugins\code-skills\skills\code-check\templates\process-doc-decisions.md    | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   41->  41 -0.0%
+  plugins\code-skills\skills\code-check\templates\REVIEW-FIX.md               | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  126-> 126 -0.0%
+  plugins\code-skills\skills\code-check\templates\REVIEW-REPORT.md            | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  101-> 101 -0.0%
+  plugins\code-skills\skills\code-dashboard\SKILL.md                          | R-1= 12 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  455-> 455 -0.0%
+  plugins\code-skills\skills\code-design\SKILL.md                             | R-1=  6 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  669-> 669 -0.0%
+  plugins\code-skills\skills\code-design\templates\assistants-layout.md       | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   97->  97 -0.0%
+  plugins\code-skills\skills\code-design\templates\design.md                  | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  249-> 249 -0.0%
+  plugins\code-skills\skills\code-design\templates\process-doc-decisions.md   | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   46->  46 -0.0%
+  plugins\code-skills\skills\code-fix\SKILL.md                                | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  436-> 436 -0.0%
+  plugins\code-skills\skills\code-fix\templates\assistants-layout.md          | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   38->  38 -0.0%
+  plugins\code-skills\skills\code-fix\templates\bug.md                        | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  147-> 147 -0.0%
+  plugins\code-skills\skills\code-fix\templates\fix-registry.md               | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  101-> 101 -0.0%
+  plugins\code-skills\skills\code-init\SKILL.md                               | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  412-> 412 -0.0%
+  plugins\code-skills\skills\code-init\templates\assistants-layout.md         | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   51->  51 -0.0%
+  plugins\code-skills\skills\code-init\templates\existing-requirement.md      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  109-> 109 -0.0%
+  plugins\code-skills\skills\code-init\templates\INIT-REPORT.md               | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  161-> 161 -0.0%
+  plugins\code-skills\skills\code-it\SKILL.md                                 | R-1=  7 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行 1142->1142 -0.0%
+  plugins\code-skills\skills\code-it\templates\assistants-layout.md           | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  116-> 116 -0.0%
+  plugins\code-skills\skills\code-it\templates\process-doc-decisions.md       | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   37->  37 -0.0%
+  plugins\code-skills\skills\code-it\templates\RESULT.md                      | R-1=  1 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  128-> 128 -0.0%
+  plugins\code-skills\skills\code-merge\SKILL.md                              | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  530-> 530 -0.0%
+  plugins\code-skills\skills\code-plan\SKILL.md                               | R-1= 19 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行 1170->1170 -0.0%
+  plugins\code-skills\skills\code-plan\templates\assistants-layout.md         | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  124-> 124 -0.0%
+  plugins\code-skills\skills\code-plan\templates\fix-plan.md                  | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  156-> 156 -0.0%
+  plugins\code-skills\skills\code-plan\templates\plan.md                      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  202-> 202 -0.0%
+  plugins\code-skills\skills\code-plan\templates\process-doc-decisions.md     | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   49->  49 -0.0%
+  plugins\code-skills\skills\code-plan\templates\task-plan.md                 | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  231-> 231 -0.0%
+  plugins\code-skills\skills\code-publish\SKILL.md                            | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  558-> 558 -0.0%
+  plugins\code-skills\skills\code-publish\templates\assistants-layout.md      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  173-> 173 -0.0%
+  plugins\code-skills\skills\code-publish\templates\DEPLOY.md                 | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  246-> 246 -0.0%
+  plugins\code-skills\skills\code-publish\templates\Q&A.md                    | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   64->  64 -0.0%
+  plugins\code-skills\skills\code-publish\templates\qanda-README.md           | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  135-> 135 -0.0%
+  plugins\code-skills\skills\code-publish\templates\UPDATE.md                 | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  366-> 366 -0.0%
+  plugins\code-skills\skills\code-require\SKILL.md                            | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  616-> 616 -0.0%
+  plugins\code-skills\skills\code-require\templates\assistants-layout.md      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   65->  65 -0.0%
+  plugins\code-skills\skills\code-require\templates\process-doc-decisions.md  | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   39->  39 -0.0%
+  plugins\code-skills\skills\code-require\templates\requirements.md           | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  164-> 164 -0.0%
+  plugins\code-skills\skills\code-rule\SKILL.md                               | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  450-> 450 -0.0%
+  plugins\code-skills\skills\code-rule\templates\assistants-layout.md         | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   36->  36 -0.0%
+  plugins\code-skills\skills\code-rule\templates\rule.md                      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行   75->  75 -0.0%
+  plugins\code-skills\skills\code-version\SKILL.md                            | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  373-> 373 -0.0%
+  plugins\code-skills\skills\code-version\templates\assistants-layout.md      | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  133-> 133 -0.0%
+  plugins\code-skills\skills\code-version\templates\version-RESULT.md         | R-1=  0 R-2= 0 R-3= 0 R-4= 0 R-5= 0 R-6= 0 | 行  203-> 203 -0.0%
+
+======================================================================
+汇总(T-3 范围)
+======================================================================
+  R-1: 55
+  R-2: 0
+  R-3: 0
+  R-4: 0
+  R-5: 0
+  R-6: 0
+  合计: 55
+  修改文件数: 40
+  二次验证失败: 0 个
+  需回退文件(>30% 减少): 0 个
+
+======================================================================
+占位符保留验证(NFR-6)
+======================================================================
+  REQ-00001: 剩余 34 次,分布在 11 文件
+  BUG-00001: 剩余 60 次,分布在 10 文件
+  TASK-REQ-00001-00001: 剩余 11 次,分布在 7 文件

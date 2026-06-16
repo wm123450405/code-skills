@@ -1,0 +1,69 @@
+
+=== plugins\code-skills\skills\code-auto\SKILL.md ===
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00024'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+
+=== plugins\code-skills\skills\code-check\SKILL.md ===
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+
+=== plugins\code-skills\skills\code-dashboard\SKILL.md ===
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00029'
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00029'
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00029'
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00029'
+  [删]: '本需求 REQ-00029'
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00023'
+  [删]: '本需求 REQ-00025'
+
+=== plugins\code-skills\skills\code-design\SKILL.md ===
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+
+=== plugins\code-skills\skills\code-it\SKILL.md ===
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+
+=== plugins\code-skills\skills\code-it\templates\RESULT.md ===
+  [删]: '本需求 REQ-00034'
+
+=== plugins\code-skills\skills\code-plan\SKILL.md ===
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00030'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00031'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00034'
+  [删]: '本需求 REQ-00011'
+  [删]: '本需求 REQ-00020'
+  [删]: '本需求 REQ-00019'
+  [删]: '本需求 REQ-00034'

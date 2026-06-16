@@ -7,36 +7,36 @@
 ```
 <项目根目录>/
 ├── assistants/
-│   ├── rules/                          ← 项目级规范(只读,跨版本共享)
-│   │   ├── architecture.md
-│   │   ├── module-conventions.md
-│   │   ├── api-standards.md
-│   │   ├── data-modeling.md
-│   │   └── ...
-│   ├── .current-version                ← 当前激活版本标记
-│   │   (内容示例:v1.0.0)
-│   └── <版本号>/                       ★ 版本工作空间
-│       ├── RESULT.md                   ← 版本开发进度看板
-│       ├── require/<需求编号>/
-│       │   └── RESULT.md                ← 上游需求(只读)
-│       ├── design/<需求编号>/
-│       │   └── RESULT.md                ← 上游概要设计(只读)
-│       ├── plan/
-│       │   └── <需求编号>/
-│       │       ├── RESULT.md            ← 上游详细设计(只读,审查改修任务不读此文件)
-│       │       └── PLAN.md              ← 上游任务计划(只读,但本技能会更新本任务开发状态字段)
-│       ├── review/<任务编码>/          ← 触发/来源=审查改修 时的输入源(只读)
-│       │   └── RESULT.md
-│       └── code/
-│           └── <任务编码>/              ← 本技能产出,可写
-│               ├── RESULT.md            # 改修总结(主产出)
-│               ├── work-log.md          # 过程文档:开发过程日志
-│               ├── compile-and-run.md   # 过程文档:编译/启动验证
-│               ├── deviations.md        # 过程文档:偏离设计/规范
-│               └── test-results.md      # 过程文档:测试结果(若适用)
-├── src/                                # 用户的项目源码(本技能会修改)
+│ ├── rules/ ← 项目级规范(只读,跨版本共享)
+│ │ ├── architecture.md
+│ │ ├── module-conventions.md
+│ │ ├── api-standards.md
+│ │ ├── data-modeling.md
+│ │ └── ...
+│ ├── .current-version ← 当前激活版本标记
+│ │ (内容示例:v1.0.0)
+│ └── <版本号>/ ★ 版本工作空间
+│ ├── RESULT.md ← 版本开发进度看板
+│ ├── require/<需求编号>/
+│ │ └── RESULT.md ← 上游需求(只读)
+│ ├── design/<需求编号>/
+│ │ └── RESULT.md ← 上游概要设计(只读)
+│ ├── plan/
+│ │ └── <需求编号>/
+│ │ ├── RESULT.md ← 上游详细设计(只读,审查改修任务不读此文件)
+│ │ └── PLAN.md ← 上游任务计划(只读,但本技能会更新本任务开发状态字段)
+│ ├── review/<任务编码>/ ← 触发/来源=审查改修 时的输入源(只读)
+│ │ └── RESULT.md
+│ └── code/
+│ └── <任务编码>/ ← 本技能产出,可写
+│ ├── RESULT.md # 改修总结(主产出)
+│ ├── work-log.md # 过程文档:开发过程日志
+│ ├── compile-and-run.md # 过程文档:编译/启动验证
+│ ├── deviations.md # 过程文档:偏离设计/规范
+│ └── test-results.md # 过程文档:测试结果(若适用)
+├── src/ # 用户的项目源码(本技能会修改)
 ├── package.json / pyproject.toml / ... # 用户的项目配置
-├── tests/                              # 用户的测试代码(本技能可能修改)
+├── tests/ # 用户的测试代码(本技能可能修改)
 └── ...
 ```
 

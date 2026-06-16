@@ -1,0 +1,2036 @@
+{
+  "totals": {
+    "R-1": 87,
+    "R-2": 7,
+    "R-3": 39,
+    "R-4": 37,
+    "R-5": 66,
+    "R-6": 0
+  },
+  "results": [
+    {
+      "path": "plugins\\code-skills\\skills\\code-answer\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-auto\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 26,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2692,
+            "end": 2750,
+            "text": "(本需求 REQ-00024 改造 + REQ-00027 新增模式 C,替代原\"模式 A / 模式 B 关键字\")"
+          },
+          {
+            "start": 7053,
+            "end": 7086,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 21043,
+            "end": 21061,
+            "text": "(本需求 REQ-00024 撤销)"
+          },
+          {
+            "start": 21181,
+            "end": 21199,
+            "text": "(本需求 REQ-00024 撤销)"
+          },
+          {
+            "start": 21258,
+            "end": 21276,
+            "text": "(本需求 REQ-00024 撤销)"
+          },
+          {
+            "start": 21327,
+            "end": 21345,
+            "text": "(本需求 REQ-00024 新增)"
+          },
+          {
+            "start": 21434,
+            "end": 21452,
+            "text": "(本需求 REQ-00024 新增)"
+          },
+          {
+            "start": 21578,
+            "end": 21596,
+            "text": "(本需求 REQ-00027 新增)"
+          },
+          {
+            "start": 21765,
+            "end": 21783,
+            "text": "(本需求 REQ-00027 新增)"
+          },
+          {
+            "start": 21917,
+            "end": 21935,
+            "text": "(本需求 REQ-00027 新增)"
+          }
+        ],
+        "R-2-paren": [
+          {
+            "start": 19939,
+            "end": 19955,
+            "text": "(原 code-unit 接管)"
+          }
+        ],
+        "R-2-inline": [
+          {
+            "start": 19940,
+            "end": 19962,
+            "text": "原 code-unit 接管) | N2 |"
+          }
+        ],
+        "R-3-paren": [
+          {
+            "start": 15259,
+            "end": 15273,
+            "text": "(Q-2 锁定 A:不重试)"
+          },
+          {
+            "start": 20613,
+            "end": 20627,
+            "text": "(Q-1 锁定 A:无上限)"
+          },
+          {
+            "start": 23977,
+            "end": 23987,
+            "text": "(Q-2 锁定 A)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 8221,
+            "end": 8231,
+            "text": "Q-2 锁定 A):"
+          },
+          {
+            "start": 13319,
+            "end": 13328,
+            "text": "Q-1 锁定 A)"
+          },
+          {
+            "start": 15260,
+            "end": 15273,
+            "text": "Q-2 锁定 A:不重试)"
+          },
+          {
+            "start": 20614,
+            "end": 20656,
+            "text": "Q-1 锁定 A:无上限);用户可 `Ctrl+C` | FR-5.AC-5.5 |"
+          },
+          {
+            "start": 23664,
+            "end": 23671,
+            "text": "Q-7 锁定)"
+          },
+          {
+            "start": 23978,
+            "end": 23987,
+            "text": "Q-2 锁定 A)"
+          },
+          {
+            "start": 24053,
+            "end": 24068,
+            "text": "Q-11 锁定:重跑从头开始)"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 7071,
+            "end": 7087,
+            "text": "2026-06-15 起生效):"
+          }
+        ],
+        "R-5": [
+          {
+            "start": 7651,
+            "end": 7662,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 7726,
+            "end": 7741,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 12296,
+            "end": 12307,
+            "text": "fix-plan.md"
+          }
+        ],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-check\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 15,
+      "matches": {
+        "R-1": [
+          {
+            "start": 4155,
+            "end": 4188,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 11840,
+            "end": 11884,
+            "text": "(本需求 REQ-00030 FR-7 校验点 1 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 12170,
+            "end": 12214,
+            "text": "(本需求 REQ-00030 FR-7 校验点 2 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 12304,
+            "end": 12322,
+            "text": "(本需求 REQ-00030 锁定)"
+          },
+          {
+            "start": 12711,
+            "end": 12755,
+            "text": "(本需求 REQ-00030 FR-7 校验点 3 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 12872,
+            "end": 12890,
+            "text": "(本需求 REQ-00030 锁定)"
+          },
+          {
+            "start": 13006,
+            "end": 13050,
+            "text": "(本需求 REQ-00035 FR-7 校验点 1 新增,2026-06-15 起生效)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [
+          {
+            "start": 1290,
+            "end": 1308,
+            "text": "原 code-unit 产出已退场)"
+          }
+        ],
+        "R-3-paren": [],
+        "R-3-inline": [
+          {
+            "start": 12311,
+            "end": 12323,
+            "text": "Q-00030 锁定):"
+          },
+          {
+            "start": 12879,
+            "end": 12890,
+            "text": "Q-00030 锁定)"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 4173,
+            "end": 4188,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 11869,
+            "end": 11884,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 12199,
+            "end": 12214,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 12740,
+            "end": 12755,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 13035,
+            "end": 13050,
+            "text": "2026-06-15 起生效)"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-check\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-check\\templates\\process-doc-decisions.md",
+      "is_code_fix": false,
+      "match_count": 1,
+      "matches": {
+        "R-1": [
+          {
+            "start": 549,
+            "end": 572,
+            "text": "(本需求 REQ-00035 FR-7 新增)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-check\\templates\\REVIEW-FIX.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-check\\templates\\REVIEW-REPORT.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-dashboard\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 10,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2047,
+            "end": 2074,
+            "text": "(本需求 REQ-00023 改造,沿用 NFR-1)"
+          },
+          {
+            "start": 2447,
+            "end": 2496,
+            "text": "(本需求 REQ-00029 改造,沿用 plan/REQ-00029/RESULT.md §4)"
+          },
+          {
+            "start": 2908,
+            "end": 2959,
+            "text": "(本需求 REQ-00029 改造,沿用 plan/REQ-00029/RESULT.md §4.5)"
+          },
+          {
+            "start": 3811,
+            "end": 3844,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 6073,
+            "end": 6106,
+            "text": "(本需求 REQ-00029 屏显瘦身,FR-4 删进度条解释行)"
+          },
+          {
+            "start": 6883,
+            "end": 6921,
+            "text": "(本需求 REQ-00029 屏显瘦身,FR-2 5 类状态压缩为单行摘要)"
+          },
+          {
+            "start": 7405,
+            "end": 7441,
+            "text": "(本需求 REQ-00029 屏显瘦身,FR-1 P0/P1 单行合并)"
+          },
+          {
+            "start": 8631,
+            "end": 8671,
+            "text": "(本需求 REQ-00029 屏显瘦身,FR-3 建议从 3 行压缩为 1 行)"
+          },
+          {
+            "start": 15253,
+            "end": 15271,
+            "text": "(本需求 REQ-00023 改造)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 3829,
+            "end": 3844,
+            "text": "2026-06-15 起生效)"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-design\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 20,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2799,
+            "end": 2832,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 5251,
+            "end": 5274,
+            "text": "(本需求 REQ-00021 新增,FR-1)"
+          },
+          {
+            "start": 6010,
+            "end": 6028,
+            "text": "(本需求 REQ-00021 新增)"
+          },
+          {
+            "start": 6181,
+            "end": 6204,
+            "text": "(本需求 REQ-00011 新增,FR-1)"
+          },
+          {
+            "start": 8248,
+            "end": 8322,
+            "text": "(本需求 REQ-00011 新增,FR-1,本需求 REQ-00020 简化为 1 维度,本需求 REQ-00030 进一步收敛小需求为 0 问)"
+          },
+          {
+            "start": 8337,
+            "end": 8375,
+            "text": "(本需求 REQ-00030 FR-1 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 9617,
+            "end": 9652,
+            "text": "(本需求 REQ-00020 锁定,本需求 REQ-00030 强化)"
+          },
+          {
+            "start": 9863,
+            "end": 9883,
+            "text": "(本需求 REQ-00030 FR-2)"
+          },
+          {
+            "start": 9896,
+            "end": 9916,
+            "text": "(本需求 REQ-00030 FR-1)"
+          },
+          {
+            "start": 13177,
+            "end": 13240,
+            "text": "(本需求 REQ-00030 FR-3 锁定,字段下沉到 `code-plan` 的 `module-details.md`)"
+          },
+          {
+            "start": 13533,
+            "end": 13566,
+            "text": "(本需求 REQ-00030 FR-3 收窄至 4 项 / 接口)"
+          },
+          {
+            "start": 13811,
+            "end": 13844,
+            "text": "(本需求 REQ-00030 FR-3 收窄至 4 项 / 实体)"
+          },
+          {
+            "start": 19209,
+            "end": 19232,
+            "text": "(本需求 REQ-00021 新增,FR-2)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [
+          {
+            "start": 6368,
+            "end": 6388,
+            "text": "(Q-2 锁定 A:中断 + 报错退出)"
+          },
+          {
+            "start": 17549,
+            "end": 17573,
+            "text": "(Q-3 锁定 A / FR-3.AC-3.4)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 6369,
+            "end": 6389,
+            "text": "Q-2 锁定 A:中断 + 报错退出):"
+          },
+          {
+            "start": 9624,
+            "end": 9790,
+            "text": "Q-00020 锁定,本需求 REQ-00030 强化):`code-design` 是**概设**阶段,只关注\"系统长什么样 + 功能性 1 维度\";架构维度(扩展性 / 健壮性 / 可维护性 / 封装性 / 可复用性 / 可读性)统一下沉到 `code-plan` **详设**阶段,由 `code-plan` 步骤 0b 询问"
+          },
+          {
+            "start": 17550,
+            "end": 17574,
+            "text": "Q-3 锁定 A / FR-3.AC-3.4):"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 2817,
+            "end": 2832,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 8360,
+            "end": 8376,
+            "text": "2026-06-12 起生效):"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-design\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-design\\templates\\design.md",
+      "is_code_fix": false,
+      "match_count": 3,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2487,
+            "end": 2510,
+            "text": "(本需求 REQ-00030 FR-4 新增)"
+          },
+          {
+            "start": 3093,
+            "end": 3116,
+            "text": "(本需求 REQ-00030 FR-4 新增)"
+          },
+          {
+            "start": 3812,
+            "end": 3835,
+            "text": "(本需求 REQ-00030 FR-4 新增)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-design\\templates\\process-doc-decisions.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-fix\\SKILL.md",
+      "is_code_fix": true,
+      "match_count": 1,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [
+          {
+            "start": 3054,
+            "end": 3138,
+            "text": "Q-1 锁定\"从已有内容派生,不新增字段\" + FR-5.AC-5.2(\"## 缺陷标题\" 小节本轮新增) + NFR-2 零规范变更 + NFR-3 字符数 ≤ 30"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-fix\\templates\\assistants-layout.md",
+      "is_code_fix": true,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-fix\\templates\\bug.md",
+      "is_code_fix": true,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-fix\\templates\\fix-registry.md",
+      "is_code_fix": true,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-init\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-init\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-init\\templates\\existing-requirement.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-init\\templates\\INIT-REPORT.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-it\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 59,
+      "matches": {
+        "R-1": [
+          {
+            "start": 323,
+            "end": 400,
+            "text": "(本需求 REQ-00031 FR-4 + 本需求 REQ-00034 FR-2/FR-3 声明,2026-06-12 + 2026-06-15 起生效)"
+          },
+          {
+            "start": 3846,
+            "end": 3879,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 11865,
+            "end": 11887,
+            "text": "(本需求 REQ-00020 M-4 归并)"
+          },
+          {
+            "start": 17625,
+            "end": 17663,
+            "text": "(本需求 REQ-00034 FR-2 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 20341,
+            "end": 20379,
+            "text": "(本需求 REQ-00034 FR-3 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 26056,
+            "end": 26089,
+            "text": "(本需求 REQ-00019 修订,2026-06-06 起生效)"
+          },
+          {
+            "start": 26609,
+            "end": 26627,
+            "text": "(本需求 REQ-00019 新增)"
+          },
+          {
+            "start": 28583,
+            "end": 28601,
+            "text": "(本需求 REQ-00019 新增)"
+          },
+          {
+            "start": 29072,
+            "end": 29097,
+            "text": "(本需求 REQ-00020 M-3 归并为引用)"
+          },
+          {
+            "start": 29564,
+            "end": 29582,
+            "text": "(本需求 REQ-00019 新增)"
+          },
+          {
+            "start": 30611,
+            "end": 30644,
+            "text": "(本需求 REQ-00019 修订,2026-06-06 起生效)"
+          }
+        ],
+        "R-2-paren": [
+          {
+            "start": 21387,
+            "end": 21410,
+            "text": "(沿用原 code-unit 步骤 8 检测)"
+          },
+          {
+            "start": 21780,
+            "end": 21814,
+            "text": "(沿用原 code-unit 步骤 11 + 本需求 E-8 锁定)"
+          }
+        ],
+        "R-2-inline": [
+          {
+            "start": 21388,
+            "end": 21410,
+            "text": "沿用原 code-unit 步骤 8 检测)"
+          },
+          {
+            "start": 21781,
+            "end": 21814,
+            "text": "沿用原 code-unit 步骤 11 + 本需求 E-8 锁定)"
+          }
+        ],
+        "R-3-paren": [
+          {
+            "start": 20613,
+            "end": 20625,
+            "text": "(Q-4 隐含答复 C)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 10138,
+            "end": 10169,
+            "text": "Q-2 锁定 A):开发状态 ∈ {待开始, 进行中, 阻塞}"
+          },
+          {
+            "start": 20614,
+            "end": 20625,
+            "text": "Q-4 隐含答复 C)"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 385,
+            "end": 516,
+            "text": "2026-06-15 起生效):本技能的职责是\"编码 + 编译/运行成功 + **按需写单测**(项目可测性守卫 7 项 + 写单测 + 跑通);**不**弹 `AskUserQuestion`(沿用原 `code-unit` 步骤 0a 守卫逻辑,字节级沿用)"
+          },
+          {
+            "start": 620,
+            "end": 669,
+            "text": "2026-06-15 起生效,沿用原 `code-unit` 步骤 0a + 步骤 7 字节级):"
+          },
+          {
+            "start": 3864,
+            "end": 3879,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 17648,
+            "end": 17663,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 20364,
+            "end": 20379,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 23985,
+            "end": 24000,
+            "text": "2026-06-05 起生效)"
+          },
+          {
+            "start": 26074,
+            "end": 26089,
+            "text": "2026-06-06 起生效)"
+          },
+          {
+            "start": 30629,
+            "end": 30644,
+            "text": "2026-06-06 起生效)"
+          }
+        ],
+        "R-5": [
+          {
+            "start": 25979,
+            "end": 25994,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 26579,
+            "end": 26590,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26650,
+            "end": 26661,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26699,
+            "end": 26710,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26725,
+            "end": 26736,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26826,
+            "end": 26837,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26929,
+            "end": 26940,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26979,
+            "end": 26990,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27059,
+            "end": 27070,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27171,
+            "end": 27182,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27326,
+            "end": 27341,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 27459,
+            "end": 27474,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 27519,
+            "end": 27530,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27623,
+            "end": 27638,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 28080,
+            "end": 28091,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 28425,
+            "end": 28440,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 28564,
+            "end": 28579,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 28624,
+            "end": 28639,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 28644,
+            "end": 28666,
+            "text": "fix-compile-and-run.md"
+          },
+          {
+            "start": 28671,
+            "end": 28690,
+            "text": "fix-test-results.md"
+          },
+          {
+            "start": 28754,
+            "end": 28769,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 28854,
+            "end": 28869,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 29369,
+            "end": 29380,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29549,
+            "end": 29560,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29605,
+            "end": 29616,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29648,
+            "end": 29659,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29735,
+            "end": 29746,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29784,
+            "end": 29795,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 29817,
+            "end": 29828,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 32767,
+            "end": 32778,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 32980,
+            "end": 32991,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 33573,
+            "end": 33584,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 33632,
+            "end": 33643,
+            "text": "fix-plan.md"
+          }
+        ],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-it\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-it\\templates\\process-doc-decisions.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-it\\templates\\RESULT.md",
+      "is_code_fix": false,
+      "match_count": 1,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 2013,
+            "end": 2028,
+            "text": "2026-06-15 起生效)"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-merge\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 1,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [
+          {
+            "start": 13900,
+            "end": 13908,
+            "text": "Q-P7 锁定)"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 73,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2810,
+            "end": 2843,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 7545,
+            "end": 7568,
+            "text": "(本需求 REQ-00021 新增,FR-1)"
+          },
+          {
+            "start": 8417,
+            "end": 8435,
+            "text": "(本需求 REQ-00021 新增)"
+          },
+          {
+            "start": 8587,
+            "end": 8610,
+            "text": "(本需求 REQ-00011 新增,FR-2)"
+          },
+          {
+            "start": 10412,
+            "end": 10460,
+            "text": "(本需求 REQ-00020 M-1 归并后,本步骤占位 ~12 行,原 18 行重复文字删除)"
+          },
+          {
+            "start": 10480,
+            "end": 10533,
+            "text": "(本需求 REQ-00011 新增,FR-2 / FR-3,本需求 REQ-00020 扩展为 7 维度)"
+          },
+          {
+            "start": 10659,
+            "end": 10701,
+            "text": "(本需求 REQ-00020 改后 — `code-design` 只写 1 维度)"
+          },
+          {
+            "start": 12929,
+            "end": 12954,
+            "text": "(本需求 REQ-00020 M-2 归并为引用)"
+          },
+          {
+            "start": 13608,
+            "end": 13633,
+            "text": "(本需求 REQ-00020 M-2 归并为引用)"
+          },
+          {
+            "start": 13880,
+            "end": 13907,
+            "text": "(本需求 REQ-00020 M-4 归并为三种情形)"
+          },
+          {
+            "start": 14177,
+            "end": 14215,
+            "text": "(本需求 REQ-00030 FR-5 强化,2026-06-12 起生效)"
+          },
+          {
+            "start": 14695,
+            "end": 14718,
+            "text": "(本需求 REQ-00030 FR-5 锁定)"
+          },
+          {
+            "start": 15789,
+            "end": 15827,
+            "text": "(本需求 REQ-00031 FR-1 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 17569,
+            "end": 17643,
+            "text": "(本需求 REQ-00031 FR-2,2026-06-12 起生效 + 本需求 REQ-00034 FR-3 改写,2026-06-15 起生效)"
+          },
+          {
+            "start": 18431,
+            "end": 18505,
+            "text": "(本需求 REQ-00031 FR-3,2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效)"
+          },
+          {
+            "start": 19029,
+            "end": 19106,
+            "text": "(本需求 REQ-00031 FR-3 简化,2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效)"
+          },
+          {
+            "start": 20318,
+            "end": 20336,
+            "text": "(本需求 REQ-00020 新增)"
+          },
+          {
+            "start": 20417,
+            "end": 20435,
+            "text": "(本需求 REQ-00020 新增)"
+          },
+          {
+            "start": 20530,
+            "end": 20548,
+            "text": "(本需求 REQ-00020 新增)"
+          },
+          {
+            "start": 26592,
+            "end": 26617,
+            "text": "(本需求 REQ-00020 M-2 归并为引用)"
+          },
+          {
+            "start": 26830,
+            "end": 26855,
+            "text": "(本需求 REQ-00020 M-2 归并为引用)"
+          },
+          {
+            "start": 27212,
+            "end": 27245,
+            "text": "(本需求 REQ-00019 新增,2026-06-06 起生效)"
+          },
+          {
+            "start": 28590,
+            "end": 28623,
+            "text": "(本需求 REQ-00019 新增,2026-06-06 起生效)"
+          },
+          {
+            "start": 31219,
+            "end": 31252,
+            "text": "(本需求 REQ-00019 新增,2026-06-06 起生效)"
+          },
+          {
+            "start": 35935,
+            "end": 35958,
+            "text": "(本需求 REQ-00021 新增,FR-2)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [
+          {
+            "start": 8774,
+            "end": 8794,
+            "text": "(Q-2 锁定 A:中断 + 报错退出)"
+          },
+          {
+            "start": 33529,
+            "end": 33553,
+            "text": "(Q-3 锁定 A / FR-3.AC-3.4)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 4198,
+            "end": 4285,
+            "text": "Q-1 锁定\"从已有内容派生,不新增字段\"+ Q-2 锁定\"`REQ-00001 · 标题`\"(中点 `·`)+ Q-3 锁定\"字符数 ≤ 30\"+ FR-4 + NFR-3"
+          },
+          {
+            "start": 8775,
+            "end": 8795,
+            "text": "Q-2 锁定 A:中断 + 报错退出):"
+          },
+          {
+            "start": 33530,
+            "end": 33554,
+            "text": "Q-3 锁定 A / FR-3.AC-3.4):"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 2828,
+            "end": 2843,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 14200,
+            "end": 14215,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 15812,
+            "end": 15935,
+            "text": "2026-06-12 起生效):任务的\"完成定义\"**显式含**\"编译成功\"**或**\"运行成功\"(按任务性质二选一);**不**单列独立的\"编译运行检测\"任务(冗余 — `code-it` 步骤 9-12 已强制每任务迭代修复至编译/启动正常)"
+          },
+          {
+            "start": 16314,
+            "end": 16329,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 17138,
+            "end": 17153,
+            "text": "2026-06-05 起生效)"
+          },
+          {
+            "start": 17589,
+            "end": 17665,
+            "text": "2026-06-12 起生效 + 本需求 REQ-00034 FR-3 改写,2026-06-15 起生效):`code-plan` 不规划单元测试任务"
+          },
+          {
+            "start": 18271,
+            "end": 18287,
+            "text": "2026-06-12 起生效):"
+          },
+          {
+            "start": 18451,
+            "end": 18715,
+            "text": "2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效):原 6 个枚举(`未编写` / `已编写` / `已运行-通过` / `已运行-失败` / `不适用` / `阻塞`)中的 4 个\"中间态\"(`未编写` / `已编写` / `已运行-失败` / `阻塞`)由 `code-it` 步骤 8.5 内化(沿用本需求 REQ-00034 FR-3,原 `code-unit` 流程独立承担 → `code-it` 接管),**不**在 `code-plan` 任务粒度中体现"
+          },
+          {
+            "start": 19052,
+            "end": 19131,
+            "text": "2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效):**任务\"真正可发布\" = 开发状态=已完成**"
+          },
+          {
+            "start": 21866,
+            "end": 21882,
+            "text": "2026-06-05 起生效):"
+          },
+          {
+            "start": 27230,
+            "end": 27245,
+            "text": "2026-06-06 起生效)"
+          },
+          {
+            "start": 28608,
+            "end": 28623,
+            "text": "2026-06-06 起生效)"
+          },
+          {
+            "start": 31237,
+            "end": 31252,
+            "text": "2026-06-06 起生效)"
+          }
+        ],
+        "R-5": [
+          {
+            "start": 26084,
+            "end": 26095,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26111,
+            "end": 26122,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26135,
+            "end": 26146,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26677,
+            "end": 26688,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 26711,
+            "end": 26722,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27049,
+            "end": 27060,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27140,
+            "end": 27151,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27268,
+            "end": 27279,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27317,
+            "end": 27328,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27343,
+            "end": 27354,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27430,
+            "end": 27441,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27519,
+            "end": 27530,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27553,
+            "end": 27564,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27620,
+            "end": 27631,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27640,
+            "end": 27651,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 27915,
+            "end": 27926,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 28647,
+            "end": 28658,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 30328,
+            "end": 30339,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 30367,
+            "end": 30378,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 30685,
+            "end": 30696,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 30814,
+            "end": 30825,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 32408,
+            "end": 32419,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 32514,
+            "end": 32525,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 32743,
+            "end": 32754,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 37821,
+            "end": 37832,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 37843,
+            "end": 37858,
+            "text": "fix-work-log.md"
+          },
+          {
+            "start": 38482,
+            "end": 38493,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 38562,
+            "end": 38573,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 38942,
+            "end": 38953,
+            "text": "fix-plan.md"
+          },
+          {
+            "start": 39002,
+            "end": 39013,
+            "text": "fix-plan.md"
+          }
+        ],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\templates\\fix-plan.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\templates\\plan.md",
+      "is_code_fix": false,
+      "match_count": 3,
+      "matches": {
+        "R-1": [
+          {
+            "start": 226,
+            "end": 279,
+            "text": "(本需求 REQ-00031 FR-1 / FR-2 / FR-3 强约束,2026-06-12 起生效)"
+          },
+          {
+            "start": 1363,
+            "end": 1386,
+            "text": "(本需求 REQ-00030 FR-5 必填)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 264,
+            "end": 375,
+            "text": "2026-06-12 起生效):每个任务的\"完成定义\"**显式含**\"编译成功\"或\"运行成功\";**不**单列独立的\"编译运行检测\"任务(冗余 — `code-it` 步骤 9-12 已强制每任务迭代修复至编译/启动正常)"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\templates\\process-doc-decisions.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-plan\\templates\\task-plan.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 4,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [
+          {
+            "start": 4175,
+            "end": 4193,
+            "text": "(Q-1 锁定 A — 全检查最严)"
+          },
+          {
+            "start": 9554,
+            "end": 9564,
+            "text": "(Q-2 锁定 A)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 4176,
+            "end": 4194,
+            "text": "Q-1 锁定 A — 全检查最严):"
+          },
+          {
+            "start": 9555,
+            "end": 9564,
+            "text": "Q-2 锁定 A)"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 2,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [
+          {
+            "start": 2554,
+            "end": 2564,
+            "text": "(Q-2 锁定 A)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 2555,
+            "end": 2580,
+            "text": "Q-2 锁定 A);未来 v2 可能由独立技能管理"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\templates\\DEPLOY.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\templates\\Q&A.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\templates\\qanda-README.md",
+      "is_code_fix": false,
+      "match_count": 1,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [
+          {
+            "start": 218,
+            "end": 273,
+            "text": "Q-2 锁定 A);未来 v2 可能由独立技能管理(如 `code-qanda`),目前请按本文档约定手动整理"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-publish\\templates\\UPDATE.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-require\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 16,
+      "matches": {
+        "R-1": [
+          {
+            "start": 2438,
+            "end": 2471,
+            "text": "(本需求 REQ-00035 新增,2026-06-15 起生效)"
+          },
+          {
+            "start": 5079,
+            "end": 5102,
+            "text": "(本需求 REQ-00021 新增,FR-1)"
+          },
+          {
+            "start": 5820,
+            "end": 5838,
+            "text": "(本需求 REQ-00021 新增)"
+          },
+          {
+            "start": 11283,
+            "end": 11316,
+            "text": "(本需求 REQ-00032 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 14263,
+            "end": 14296,
+            "text": "(本需求 REQ-00032 新增,2026-06-12 起生效)"
+          },
+          {
+            "start": 15831,
+            "end": 15854,
+            "text": "(本需求 REQ-00021 新增,FR-2)"
+          }
+        ],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [
+          {
+            "start": 6115,
+            "end": 6135,
+            "text": "(Q-2 锁定 A:中断 + 报错退出)"
+          },
+          {
+            "start": 12750,
+            "end": 12774,
+            "text": "(Q-3 锁定 A / FR-3.AC-3.4)"
+          }
+        ],
+        "R-3-inline": [
+          {
+            "start": 3695,
+            "end": 3782,
+            "text": "Q-1 锁定\"从已有内容派生,不新增字段\"+ Q-2 锁定\"`REQ-00001 · 标题`\"(中点 `·`)+ Q-3 锁定\"字符数 ≤ 30\"+ FR-3 + NFR-3"
+          },
+          {
+            "start": 6116,
+            "end": 6136,
+            "text": "Q-2 锁定 A:中断 + 报错退出):"
+          },
+          {
+            "start": 12751,
+            "end": 12775,
+            "text": "Q-3 锁定 A / FR-3.AC-3.4):"
+          }
+        ],
+        "R-4-paren": [],
+        "R-4-inline": [
+          {
+            "start": 2456,
+            "end": 2471,
+            "text": "2026-06-15 起生效)"
+          },
+          {
+            "start": 11301,
+            "end": 11316,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 11338,
+            "end": 11407,
+            "text": "2026-06-12 起生效):在 code-require 完成需求分析(首次/增量)后,屏幕输出\"下一步建议\",引导用户选择后续路径:"
+          },
+          {
+            "start": 14281,
+            "end": 14296,
+            "text": "2026-06-12 起生效)"
+          },
+          {
+            "start": 14318,
+            "end": 14387,
+            "text": "2026-06-12 起生效):在 code-require 完成需求分析(首次/增量)后,屏幕输出\"下一步建议\",引导用户选择后续路径:"
+          }
+        ],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-require\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-require\\templates\\process-doc-decisions.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-require\\templates\\requirements.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-rule\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-rule\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-rule\\templates\\rule.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-version\\SKILL.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-version\\templates\\assistants-layout.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    },
+    {
+      "path": "plugins\\code-skills\\skills\\code-version\\templates\\version-RESULT.md",
+      "is_code_fix": false,
+      "match_count": 0,
+      "matches": {
+        "R-1": [],
+        "R-2-paren": [],
+        "R-2-inline": [],
+        "R-3-paren": [],
+        "R-3-inline": [],
+        "R-4-paren": [],
+        "R-4-inline": [],
+        "R-5": [],
+        "R-6-person": [],
+        "R-6-old": []
+      }
+    }
+  ]
+}

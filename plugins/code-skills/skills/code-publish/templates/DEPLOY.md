@@ -27,7 +27,7 @@
 ```bash
 # 默认示例:tar.gz 打包
 # <source_dir> = 编译后或构建后的目录(例如:dist/ / build/ / target/)
-# <output>    = 输出的压缩包路径(例如:myapp-v0.0.0.tar.gz)
+# <output> = 输出的压缩包路径(例如:myapp-v0.0.0.tar.gz)
 
 tar -czf <output>.tar.gz <source_dir>
 
@@ -49,8 +49,8 @@ rsync -avz --delete <source_dir>/ <user>@<server>:/path/to/dest/
 ```bash
 # 默认示例:Docker 镜像打包
 # <image_name> = 镜像名(例如:myapp)
-# <version>    = 镜像 tag(例如:v0.0.0)
-# <output>     = 保存到本地的 tar 路径(例如:myapp-v0.0.0-docker.tar)
+# <version> = 镜像 tag(例如:v0.0.0)
+# <output> = 保存到本地的 tar 路径(例如:myapp-v0.0.0-docker.tar)
 
 docker build -t <image_name>:<version> .
 docker save -o <output>.tar <image_name>:<version>
@@ -85,7 +85,7 @@ dist/
 
 ```bash
 # 默认示例:scp 上传
-# <user>   = 服务器登录用户(例如:deploy)
+# <user> = 服务器登录用户(例如:deploy)
 # <server> = 服务器地址(例如:192.168.1.100 或 deploy-prod-01.example.com)
 # /path/to/dest/ = 目标部署目录(例如:/opt/releases/)
 
@@ -205,10 +205,10 @@ sudo systemctl status myapp
 - **默认密码**:`<...>`(**首次登录后立即修改**;不要保留在文档中)
 - **HTTPS 配置**:<如有,提供证书路径与配置说明;如无,标注"建议加 HTTPS">
 - **首次操作建议**:
-  - 修改默认管理员密码
-  - 配置 SMTP(若需要邮件通知)
-  - 配置备份策略(数据库 + 配置文件)
-  - 配置监控(进程存活 / 接口探活 / 日志告警)
+ - 修改默认管理员密码
+ - 配置 SMTP(若需要邮件通知)
+ - 配置备份策略(数据库 + 配置文件)
+ - 配置监控(进程存活 / 接口探活 / 日志告警)
 
 ---
 

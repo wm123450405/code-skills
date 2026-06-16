@@ -5,21 +5,21 @@
 ```
 <当前工作目录(CWD)>/
 └── assistants/
-    └── <版本号>/
-        ├── RESULT.md                # 版本看板(本技能追加"缺陷清单" / "变更记录")
-        └── fix/                     # ★ 本技能维护的缺陷工作空间
-            ├── RESULT.md            # ★ 缺陷总览(本技能首次/追加)
-            ├── BUG-00001/          # 第一个缺陷
-            │   ├── RESULT.md        # ★ 缺陷详情(本技能首次/更新)
-            │   ├── investigation.md # 调查笔记(可选)
-            │   ├── fix-plan.md      # 修复方案(由 code-plan 写入)
-            │   ├── fix-work-log.md  # 实施日志(由 code-it 写入)
-            │   ├── fix-compile-and-run.md  # 编译/运行(由 code-it 写入)
-            │   ├── fix-test-results.md     # 测试结果(由 code-it 写入)
-            │   └── deviations.md    # 偏离记录(由 code-it 写入)
-            ├── BUG-00002/
-            │   └── ...
-            └── ...
+ └── <版本号>/
+ ├── RESULT.md # 版本看板(本技能追加"缺陷清单" / "变更记录")
+ └── fix/ # ★ 本技能维护的缺陷工作空间
+ ├── RESULT.md # ★ 缺陷总览(本技能首次/追加)
+ ├── BUG-00001/ # 第一个缺陷
+ │ ├── RESULT.md # ★ 缺陷详情(本技能首次/更新)
+ │ ├── investigation.md # 调查笔记(可选)
+ │ ├── fix-plan.md # 修复方案(由 code-plan 写入)
+ │ ├── fix-work-log.md # 实施日志(由 code-it 写入)
+ │ ├── fix-compile-and-run.md # 编译/运行(由 code-it 写入)
+ │ ├── fix-test-results.md # 测试结果(由 code-it 写入)
+ │ └── deviations.md # 偏离记录(由 code-it 写入)
+ ├── BUG-00002/
+ │ └── ...
+ └── ...
 ```
 
 ## 关键约束

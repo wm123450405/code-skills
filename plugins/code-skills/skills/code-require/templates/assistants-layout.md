@@ -7,29 +7,29 @@
 ```
 <项目根目录>/
 └── assistants/
-    ├── rules/                          ← 项目级规范(只读,跨版本共享)
-    │   └── ...
-    ├── .current-version                ← 当前激活版本标记
-    │   (内容示例:v1.0.0)
-    └── <版本号>/                       ★ 版本工作空间
-        ├── RESULT.md                   ← 版本开发进度看板(code-version 初始化,本技能追加"需求清单"区段)
-        └── require/                    ← 本技能的目录粒度
-            ├── REQ-00001/
-            │   ├── prd-v1.md              # ← 用户放置
-            │   ├── design-login.png       # ← 用户放置
-            │   ├── design-home.png        # ← 用户放置
-            │   ├── meeting-0512.md        # ← 用户放置
-            │   ├── demo.mp4               # ← 用户放置
-            │   ├── recording-0515.m4a     # ← 用户放置
-            │   ├── RESULT.md              # 技能产出
-            │   ├── materials-index.md     # 技能产出
-            │   ├── clarifications.md      # 技能产出
-            │   ├── related-requirements.md# 技能产出
-            │   └── analysis-notes.md      # 技能产出(可选)
-            ├── REQ-00002/
-            │   └── ...
-            └── REQ-00510/
-                └── ...
+ ├── rules/ ← 项目级规范(只读,跨版本共享)
+ │ └── ...
+ ├── .current-version ← 当前激活版本标记
+ │ (内容示例:v1.0.0)
+ └── <版本号>/ ★ 版本工作空间
+ ├── RESULT.md ← 版本开发进度看板(code-version 初始化,本技能追加"需求清单"区段)
+ └── require/ ← 本技能的目录粒度
+ ├── REQ-00001/
+ │ ├── prd-v1.md # ← 用户放置
+ │ ├── design-login.png # ← 用户放置
+ │ ├── design-home.png # ← 用户放置
+ │ ├── meeting-0512.md # ← 用户放置
+ │ ├── demo.mp4 # ← 用户放置
+ │ ├── recording-0515.m4a # ← 用户放置
+ │ ├── RESULT.md # 技能产出
+ │ ├── materials-index.md # 技能产出
+ │ ├── clarifications.md # 技能产出
+ │ ├── related-requirements.md# 技能产出
+ │ └── analysis-notes.md # 技能产出(可选)
+ ├── REQ-00002/
+ │ └── ...
+ └── REQ-00510/
+ └── ...
 ```
 
 ## 命名建议
