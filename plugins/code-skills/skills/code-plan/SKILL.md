@@ -89,7 +89,7 @@ description: 详细设计与编码计划。把概要设计落到"可以直接编
 
 ---
 
-## 过程文档自适应判定(本需求 REQ-00035 新增,2026-06-15 起生效)
+## 过程文档自适应判定
 
 > 本节是 `code-plan` 启动时执行"过程文档生成判定"的依据。AI 在执行过程中按本节的"不涉及/不适用"判定准则自适应决定本轮是否生成对应过程文档。
 > 详见 `templates/process-doc-decisions.md`(决策记录文件模板);本节与之配套。
@@ -137,7 +137,7 @@ description: 详细设计与编码计划。把概要设计落到"可以直接编
 ## 标题解析(REQ-00013 新增)
 
 > 适用对象:所有用户可见的屏幕输出位置(启动 / 完成 / 中止 / 错误 / 拆分 / 派生任务)
-> 依据规范:Q-1 锁定"从已有内容派生,不新增字段"+ Q-2 锁定"`REQ-00001 · 标题`"(中点 `·`)+ Q-3 锁定"字符数 ≤ 30"+ FR-4 + NFR-3
+> 依据规范:
 
 **工具函数**(伪代码):
 
@@ -227,7 +227,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 
 ---
 
-## 命令行参数解析(本需求 REQ-00021 新增,FR-1)
+## 命令行参数解析
 
 > 本小节是 `code-plan` 的**可选参数**解析约定。本参数**不**影响主流程,无参时按原行为执行。
 
@@ -255,17 +255,17 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 
 ### 模板填充步骤
 
-> 详见 §"## 模板填充步骤(本需求 REQ-00021 新增)"小节(在本 SKILL.md 末尾"## 不要做的事"前)。
+> 详见 §"## 模板填充步骤"小节(在本 SKILL.md 末尾"## 不要做的事"前)。
 
 ---
 
 ## 工作流程
 
 ### 步骤 0a — 拉取最新代码(强制前置,新增)
-所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。步骤 0a 成功后,`code-plan` 进入"步骤 0b 设计目标确认"(本需求 REQ-00011 新增,FR-2)。
+所有其他 `code-*` 技能的第一步都是这一步。位于既有"步骤 0"之前。步骤 0a 成功后,`code-plan` 进入"步骤 0b 设计目标确认"。
 1. 探测 `git` 可用性 → 执行 `Bash: git --version`,失败 → 中断 + 提示"未检测到 git,本需求需要 git,请先安装 git 后重试"(E-12)
 2. 执行 `Bash: git pull`(默认 upstream / tracking 分支)
-3. 拉取失败 3 种情况分类处理(Q-2 锁定 A:中断 + 报错退出):
+3. 拉取失败 3 种情况分类处理:
    - **冲突**(退出码非 0 + stderr 含 "CONFLICT" / "Merge conflict" / "unmerged")→ 打印 `✗ git pull 失败:存在未解决的冲突,冲突文件:<列出>`,提示"请手动解决冲突后,重跑该技能"(E-2)
    - **网络**(退出码非 0 + stderr 含 "Could not resolve host" / "Connection" / "timeout")→ 打印 `✗ git pull 失败:网络/remote 不可达,远程仓库:<remote-url>`,提示"请检查网络/代理后重试"(E-3)
    - **凭据**(退出码非 0 + stderr 含 "Permission denied" / "Authentication failed" / "403")→ 打印 `✗ git pull 失败:权限/凭据`,提示"请检查 git 凭据(SSH key / token)后重试"(E-4)
@@ -289,11 +289,11 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **约束**:不修改 frontmatter(L1-3 字节级保留);不修改既有"## 工作流程"小节;不修改既有"步骤 0b"小节
 - **D-5 修订说明**:同 `code-design` 步骤 0b.0 — 与 BUG-00001 选定的方案 A3 配套
 
-> 完整段详见 `code-design/SKILL.md` 步骤 0b.0(本需求 REQ-00020 M-1 归并后,本步骤占位 ~12 行,原 18 行重复文字删除)
+> 完整段详见 `code-design/SKILL.md` 步骤 0b.0
 
-### 步骤 0b — 设计目标确认(本需求 REQ-00011 新增,FR-2 / FR-3,本需求 REQ-00020 扩展为 7 维度)
+### 步骤 0b — 设计目标确认
 1. 读 `design/<REQ>/RESULT.md` 的"## 设计目标"小节(算法 3 / `readDesignGoalsFromDesign`):
-   - **存在** → 屏显"沿用 design 的设计目标:<功能性 1 维度摘要>(本需求 REQ-00020 改后 — `code-design` 只写 1 维度)" + 复制到 `plan/.../RESULT.md` 顶部"## 设计目标"小节(`writeDesignGoalsSection(..., "code-plan")` / NFR-3 幂等覆盖)
+   - **存在** → 屏显"沿用 design 的设计目标:<功能性 1 维度摘要>" + 复制到 `plan/.../RESULT.md` 顶部"## 设计目标"小节(`writeDesignGoalsSection(..., "code-plan")` / NFR-3 幂等覆盖)
    - **不存在**(E-1 / E-5)→ 屏显"⚠ 未检测到 design/<REQ>/RESULT.md" + 触发 `AskUserQuestion` 1-8 问(同 §步骤 0b 步骤 1 的自适应策略,小 1 / 中 4 / 大 8)+ 写 `plan/.../RESULT.md`(**不**写 `design/.../RESULT.md`,FR-3.AC-3.3 职责分离)
 2. **本需求 REQ-00020 扩展**:`code-plan` 阶段问全 7 维度(原 4 维度沿用 REQ-00011 + 新增 3 维度):
    - **沿用 4 维度**:功能性 / 扩展性 / 健壮性 / 可维护性
@@ -341,7 +341,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - 不存在 → `mkdir -p` 创建
 - 存在 → 直接进入步骤 3
 
-### 步骤 3 — 读取项目级规范(本需求 REQ-00020 M-2 归并为引用)
+### 步骤 3 — 读取项目级规范
 
 > 公共子步骤(REQ + BUG 路径共用,本需求 REQ-00020 M-2 定义段):`Glob ./assistants/rules/**/*` → 不存在/空则 `AskUserQuestion` 询问;存在则逐个 `Read` 归类到 8 类(功能架构/模块规划/接口定义/数据结构/安全/性能/测试/可观测性)→ 摘要写入 `materials-index.md`。引用方:`code-plan` 步骤 3 + 步骤 21 + `code-design` 步骤 3(完全同构)。
 
@@ -354,11 +354,11 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    - 概要设计中的"用户授权的偏离"与本详细设计是否仍继承
    - 发现的冲突记入 `rule-compliance.md` 的"待澄清冲突"区,稍后步骤 8A 一并询问
 
-### 步骤 5 — 探索项目代码(本需求 REQ-00020 M-2 归并为引用)
+### 步骤 5 — 探索项目代码
 
 > 公共子步骤(REQ + BUG 路径共用,本需求 REQ-00020 M-2 定义段):不为"探索架构",只为"详细设计提供实现约束"——目标语言规范 / 既有相似功能实现风格 / 测试风格与覆盖度 / 可复用工具函数。写入 `materials-index.md` 的"项目现状(实现细节)"部分。BUG 路径在 `步骤 22` 保留 3 行差异点(缺陷描述 / git blame / 既有测试组织)。
 
-### 步骤 6 — 检查 RESULT.md / PLAN.md 是否存在(本需求 REQ-00020 M-4 归并为三种情形)
+### 步骤 6 — 检查 RESULT.md / PLAN.md 是否存在
 
 > 本需求 REQ-00020 M-4 归并:原 4 种情形 → 3 种情形(移除"PLAN.md 存在,RESULT.md 不存在"分支 — 与"都不存在"分支语义重叠,合并到首次设计步骤 7A)。
 
@@ -367,7 +367,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **RESULT.md 存在,PLAN.md 不存在** → 补 PLAN.md(步骤 7C–11C)
 - **都存在** → 增量更新(步骤 7B–13B)
 
-### 步骤 7A — 首次:详细化设计(本需求 REQ-00030 FR-5 强化,2026-06-12 起生效)
+### 步骤 7A — 首次:详细化设计
 按概要设计逐模块展开,**产出完整可直接编码的细节**:**任何概要设计未覆盖的细节必须在详设阶段补全,不得以下游实施时再补为由跳过**。
 
 - **每个模块**详细化:
@@ -377,7 +377,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
   - **接口完整规格**(`interface-specs.md`):入参/出参 JSON schema + 错误码 + 示例 + 版本策略 + 鉴权 + 限流 + 幂等 + 链路追踪
   - **风险分析**(`risk-analysis.md`):异常路径 + 安全边界 + 性能热点 + 资源限制 + 回退策略 + 测试要点
 
-**过程文档由"可选"改"必选"**(本需求 REQ-00030 FR-5 锁定):
+**过程文档由"可选"改"必选"**:
 - `module-details.md`:**必选**
 - `interface-specs.md`:**必选**
 - `data-changes.md`:**必选**
@@ -424,7 +424,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **不拆分到多个任务**:例:"用户登录功能"的 UI / 鉴权逻辑 / README 入门说明 必须在 1 个任务中
 - **可独立验证**:每个任务有清晰的"完成定义" — 既包含"产物是什么"也包含"产物如何被验证"
 - **0.5–2 天内可完成**
-- **任务完成定义内化编译/运行**(本需求 REQ-00031 FR-1 新增,2026-06-12 起生效):任务的"完成定义"**显式含**"编译成功"**或**"运行成功"(按任务性质二选一);**不**单列独立的"编译运行检测"任务(冗余 — `code-it` 步骤 9-12 已强制每任务迭代修复至编译/启动正常)
+- **任务完成定义内化编译/运行**:任务的"完成定义"**显式含**"编译成功"**或**"运行成功"(按任务性质二选一);**不**单列独立的"编译运行检测"任务(冗余 — `code-it` 步骤 9-12 已强制每任务迭代修复至编译/启动正常)
 
 **功能点识别启发式**(辅助 LLM 判断粒度):
 - **用户故事维度**:1 个功能点 = 1 个用户故事 = "作为<角色>,我可以<能力>,以便<价值>"
@@ -433,7 +433,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **反例**:不应拆为"用户登录 UI" + "用户登录后端" + "用户登录 README"(3 个子项应在 1 个任务)
 - **反例**:不应合并为"所有用户相关功能" + "所有订单相关功能"(粒度过粗,违反"0.5–2 天可完成")
 
-#### 架构任务作为首个任务(条件性,本需求 REQ-00030 FR-6 收紧,2026-06-12 起生效)
+#### 架构任务作为首个任务(条件性,本需求 REQ-00030 FR-6 收紧,
 
 - **触发条件**(任一满足):
   - **触发 1**:**较高扩展性 / 较高可维护性 / 较高可配置性** + **较高复杂度**
@@ -454,7 +454,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - 既有 7 个 PLAN(REQ-00004/05/06/07 + 部分其他)**不**追溯重拆
 - **不**修改其他 12 个 `code-*` 技能(任务编号/双状态/触发来源 **不**变)
 
-#### 拆任务约束(REQ-00017 强约束,2026-06-05 起生效)
+#### 拆任务约束(REQ-00017 强约束,
 
 - **一个任务 = 一个"实际产出"**
 - **实际产出候选集**:`{代码改写, 测试编写, 文档改写, 数据迁移, 配置变更, 部署脚本}`
@@ -470,7 +470,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - `修复`:针对已知 bug 的修复
 - `文档`:独立提交的文档更新
 
-> **测试类型已从本列表移除**(本需求 REQ-00031 FR-2,2026-06-12 起生效 + 本需求 REQ-00034 FR-3 改写,2026-06-15 起生效):`code-plan` 不规划单元测试任务。单元测试由 `code-it` 接管(`code-it` 步骤 8a 项目可测性守卫 + 步骤 8.5 按需写单测),与 `code-plan` 任务粒度**正交**。`code-unit` 技能已退场(2026-06-15 起,沿用本需求 REQ-00034 FR-1)。
+> **测试类型已从本列表移除**:`code-plan` 不规划单元测试任务。单元测试由 `code-it` 接管(`code-it` 步骤 8a 项目可测性守卫 + 步骤 8.5 按需写单测),与 `code-plan` 任务粒度**正交**。`code-unit` 技能已退场(2026-06-15 起,沿用本需求 REQ-00034 FR-1)。
 
 **任务编号**:
 - 格式:`TASK-(REQ|BUG)-<父级>-<任务序号>`,如 `TASK-REQ-00001-00001`、`TASK-BUG-00001-00001`
@@ -482,18 +482,18 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - **开发状态**(必填,初值 = `待开始`):
   - `待开始` / `进行中` / `已完成` / `已取消` / `阻塞` / `待重新评估`
   - 含义:代码本身是否被实现
-- **测试状态**(必填,初值 = `不适用`;本需求 REQ-00031 FR-3 收窄,2026-06-12 起生效):
+- **测试状态**(必填,初值 = `不适用`;本需求 REQ-00031 FR-3 收窄,
   - `已运行-通过` / `不适用`
   - 含义:任务"自含"的"集成/冒烟测试"是否已运行(由 `code-it` 末尾兜底负责);`code-plan` 不再规划单元测试任务,本字段在 V0.0.3 修订后**对所有任务**统一填 `不适用`
 
-> **测试状态枚举已收窄**(本需求 REQ-00031 FR-3,2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效):原 6 个枚举(`未编写` / `已编写` / `已运行-通过` / `已运行-失败` / `不适用` / `阻塞`)中的 4 个"中间态"(`未编写` / `已编写` / `已运行-失败` / `阻塞`)由 `code-it` 步骤 8.5 内化(沿用本需求 REQ-00034 FR-3,原 `code-unit` 流程独立承担 → `code-it` 接管),**不**在 `code-plan` 任务粒度中体现。**新拆分 REQ**(REQ-00031+)应用 2 选 1 规则;**既有 REQ**(REQ-00001 ~ REQ-00030)保留原值(NFR-2 沿用,`code-check` 评审不追溯重写)。
+> **测试状态枚举已收窄**:原 6 个枚举(`未编写` / `已编写` / `已运行-通过` / `已运行-失败` / `不适用` / `阻塞`)中的 4 个"中间态"(`未编写` / `已编写` / `已运行-失败` / `阻塞`)由 `code-it` 步骤 8.5 内化(沿用本需求 REQ-00034 FR-3,原 `code-unit` 流程独立承担 → `code-it` 接管),**不**在 `code-plan` 任务粒度中体现。**新拆分 REQ**(REQ-00031+)应用 2 选 1 规则;**既有 REQ**(REQ-00001 ~ REQ-00030)保留原值(NFR-2 沿用,`code-check` 评审不追溯重写)。
 
 **任务双状态的初始化**:
 - **代码类任务**(类型 = 新增/修改/重构/修复/测试):开发状态=`待开始`,测试状态=`未编写`
 - **纯文档任务**(类型 = 文档):开发状态=`待开始`,测试状态=`不适用`(在"不适用理由"中注明"纯文档任务")
 - 若任务范围明确不含可测代码(如纯配置变更),可在 `code-plan` 或 `code-it` 中讨论后设为 `不适用`
 
-**双状态语义**(本需求 REQ-00031 FR-3 简化,2026-06-12 起生效 + 本需求 REQ-00034 FR-5 沿用,2026-06-15 起生效):**任务"真正可发布" = 开发状态=已完成**。本字段在 V0.0.2 期间用于"任务自含单元测试"语义;V0.0.3 修订后,`code-plan` **不**规划测试任务,本字段由 `code-it` 初始填 `不适用`;若项目需要单元测试,由 `code-it` 步骤 8.5 接管(沿用本需求 REQ-00034 FR-3,原 `code-unit` 另起流程 → `code-it` 步骤 8.5 产出 `code/<任务>/unit-test-results.md`),与 `code-plan` 任务粒度**正交**。
+**双状态语义**:**任务"真正可发布" = 开发状态=已完成**。本字段在 V0.0.2 期间用于"任务自含单元测试"语义;V0.0.3 修订后,`code-plan` **不**规划测试任务,本字段由 `code-it` 初始填 `不适用`;若项目需要单元测试,由 `code-it` 步骤 8.5 接管(沿用本需求 REQ-00034 FR-3,原 `code-unit` 另起流程 → `code-it` 步骤 8.5 产出 `code/<任务>/unit-test-results.md`),与 `code-plan` 任务粒度**正交**。
 
 **任务触发/来源字段(每个任务)**:回答"为什么创建本任务"
 - 值:`需求新增` / `需求变更` / `需求撤回` / `设计变更` / `规范变更` / `代码变更` / `主动优化` / **`审查改修`** / `缺陷修复` / `性能优化` / `安全加固` / `测试补齐` / `其他`
@@ -514,9 +514,9 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 | `--minimal` | * | — | 合并同类任务,粒度粗化(轻度合并启发式:P-D3 锁定 — 只合并明显同类的,如"修改文件 A" + "修改文件 A 同字段" → 合并) |
 | `--balanced` | 高/中/低 | — | 默认粒度(无调整) |
 | `--extensible` | 扩展性=高 | 1(沿用 REQ-00011) | 加"扩展架构设计" / "设计模式使用"等任务 |
-| `--extensible` | 封装性=高 | 1(本需求 REQ-00020 新增) | 加"封装抽象层" / "接口契约" / "扩展点"等任务 — 归并相同、相似、相近的代码逻辑 |
-| `--extensible` | 可复用性=高 | 1(本需求 REQ-00020 新增) | 加"抽取公共逻辑" / "归并相似代码" / "复用既有模块"等任务 — 通过复用性减少冗余代码量 |
-| `--extensible` | 可读性=高 + 编程语言非自然语言 | 1(本需求 REQ-00020 新增) | 加"关键代码注释" / "复杂逻辑说明"等任务 — 对非自然语言编程语言,适当增加详细的代码注释 |
+| `--extensible` | 封装性=高 | 1 | 加"封装抽象层" / "接口契约" / "扩展点"等任务 — 归并相同、相似、相近的代码逻辑 |
+| `--extensible` | 可复用性=高 | 1 | 加"抽取公共逻辑" / "归并相似代码" / "复用既有模块"等任务 — 通过复用性减少冗余代码量 |
+| `--extensible` | 可读性=高 + 编程语言非自然语言 | 1 | 加"关键代码注释" / "复杂逻辑说明"等任务 — 对非自然语言编程语言,适当增加详细的代码注释 |
 | `--extensible` | 扩展性=高(沿用 REQ-00011) | 至少 3 个扩展性相关任务(沿用) | — |
 
 > **不**强制加任务的维度(AC-4.4 沿用 + 本需求改后):功能性 / 健壮性 / 可维护性 / 封装性=中或低 / 可复用性=中或低 / 可读性=中或低 / 可读性=高但项目是自然语言
@@ -571,7 +571,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 1. `Read "./assistants/<版本号>/RESULT.md"`,定位"详细设计与任务计划汇总"区段
 2. **追加本计划**:
    - 需求编码 / 标题 / 状态=`已完成` / 创建时间 / 任务总数(从 PLAN.md 数出) / 链接
-2.5. **只追加真实任务**(REQ-00017 强约束,2026-06-05 起生效):
+2.5. **只追加真实任务**(REQ-00017 强约束,
    - 看板"任务清单"区段**只**追加"步骤 10A 拆出的真实任务"
    - **不**追加"更新看板"派生任务(本类任务**不**在拆任务候选集中,详 §"步骤 10A 任务拆分" → "#### 拆任务约束(REQ-00017 强约束)")
    - 看板"任务清单"区段本计划所有任务的"触发/来源"列**全部**="详细设计"
@@ -697,7 +697,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 > - 缺陷已有明确的"问题描述"(`fix/<BUG-NNN>/RESULT.md`),无需再做需求分析
 > - 修复方案的规模通常远小于一个完整需求,故产出物升级为 `RESULT.md` + `PLAN.md` + 7 份过程文档(`materials-index.md` / `module-details.md` / `interface-specs.md` / `data-changes.md` / `risk-analysis.md` / `rule-compliance.md` / `design-notes.md` + 可选 `clarifications.md`),与 REQ 模式完全同构,**仅**参考来源不同(REQ 模式读 `require/<REQ>/RESULT.md` + `design/<REQ>/RESULT.md`,BUG 模式读 `fix/<BUG-NNN>/RESULT.md`)
 > - 若修复跨多步,可在 `PLAN.md` 任务总览中拆分为多个 `TASK-BUG-NNNNN-NNNNN` 任务(从 `TASK-BUG-NNNNN-00001` 起递增);`code-it` 通过任务清单区段读取 BUG 任务
-> - BUG 任务沿用既有 `TASK-...` 编号体系,新格式 `TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,沿用 `encoding-conventions §规则 1/3`);`code-it` 步骤 17 同步改为读 `PLAN.md` + `RESULT.md` 而非 `fix-plan.md`(本需求后**不**再生成 `fix-plan.md`;`templates/fix-plan.md` 留作历史不删)
+> - BUG 任务沿用既有 `TASK-...` 编号体系,新格式 `TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,沿用 `encoding-conventions §规则 1/3`);`code-it` 步骤 17 同步改为读 `PLAN.md` + `RESULT.md` 而非 ``(本需求后**不**再生成 ``;`templates/` 留作历史不删)
 
 ### 步骤 19 — 定位 / 创建工作目录
 1. 检查 `./assistants/<版本号>/fix/<缺陷编号>/` 是否存在
@@ -713,12 +713,12 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 2. 若存在 `investigation.md`,一并 `Read` —— 提取已确认/已排除的根因假设
 3. 把"已知信息"和"待分析项"摘录到本次会话的内部状态
 
-### 步骤 21 — 读取项目级规范(本需求 REQ-00020 M-2 归并为引用)
+### 步骤 21 — 读取项目级规范
 
 > 同 REQ 步骤 3,不再重复。完整段在 `步骤 3 — 读取项目级规范`。
-> BUG 路径差异:摘要写入 `fix-plan.md` / `RESULT.md` 起始区(原"`fix-plan.md` 起始区"为本需求 REQ-00019 BUG 模式退场前表述,本需求后写 `fix/<BUG-NNN>/RESULT.md` 或 `materials-index.md`)
+> BUG 路径差异:摘要写入 `` / `RESULT.md` 起始区(原"`` 起始区"为本需求 REQ-00019 BUG 模式退场前表述,本需求后写 `fix/<BUG-NNN>/RESULT.md` 或 `materials-index.md`)
 
-### 步骤 22 — 探索项目代码(本需求 REQ-00020 M-2 归并为引用)
+### 步骤 22 — 探索项目代码
 
 > 同 REQ 步骤 5,不再重复。完整段在 `步骤 5 — 探索项目代码(核对实现细节)`。
 > BUG 路径特别关注(本需求保留 3 行差异点):
@@ -726,25 +726,25 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 > - 既有相似 bug 的修复历史(`git log` / `git blame` 找类似 commit)
 > - 既有测试用例(`tests/`)如何组织
 
-### 步骤 23 — 检查 fix-plan.md 是否存在
+### 步骤 23 — 检查  是否存在
 - **不存在** → 走"**首次规划**"分支(步骤 24A)
 - **存在** → 走"**增量更新**"分支(步骤 24B)
-  - 读 `fix-plan.md` 现有内容
+  - 读 `` 现有内容
   - 了解已规划的方案,识别本轮需要调整的地方
 
-### 步骤 23+ — 步骤 23 修订 E-1 边界(本需求 REQ-00019 新增,2026-06-06 起生效)
+### 步骤 23+ — 步骤 23 修订 E-1 边界
 
-> 本步骤是 BUG-00001 历史 `fix-plan.md` 的兼容检测(仅 BUG-00001 受影响;本需求后**不**再生成 `fix-plan.md`)。
+> 本步骤是 BUG-00001 历史 `` 的兼容检测(仅 BUG-00001 受影响;本需求后**不**再生成 ``)。
 
-- **触发**:`fix-plan.md` 存在(仅 BUG-00001 历史)
-- **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md" && echo "EXISTS" || echo "NOT_EXISTS"`
+- **触发**:`` 存在(仅 BUG-00001 历史)
+- **检测**:`Bash: test -f "./assistants/<版本号>/fix/<缺陷编号>/" && echo "EXISTS" || echo "NOT_EXISTS"`
 - **处理**:
-  - 文件**存在** → 屏显 `⚠ 检测到历史 fix-plan.md,本需求已不再生成该文件;是否继续以本缺陷的 fix-plan.md 为参考?` + `AskUserQuestion` 3 选 1:
-    - **A. 继续**(以本缺陷的 fix-plan.md 为参考,继续按 fix-plan.md 内'步骤'列表实施 — 仅 BUG-00001)
+  - 文件**存在** → 屏显 `⚠ 检测到历史 ,本需求已不再生成该文件;是否继续以本缺陷的  为参考?` + `AskUserQuestion` 3 选 1:
+    - **A. 继续**(以本缺陷的  为参考,继续按  内'步骤'列表实施 — 仅 BUG-00001)
     - **B. 手动迁移**(用户先手动调用 `code-plan BUG-NNN` 产出 `RESULT.md` + `PLAN.md` + 7 份过程文档,沿用本需求后新流程)
     - **C. 中止**(本轮不产出修复方案,用户稍后决策)
   - 文件**不存在** → 正常进入步骤 24A(首次规划,本需求后默认路径)
-- **依据规范**:`./assistants/rules/module-conventions §规则 1`(`templates/fix-plan.md` 留作历史不删,但不再被引用)
+- **依据规范**:`./assistants/rules/module-conventions §规则 1`(`templates/` 留作历史不删,但不再被引用)
 
 ### 步骤 24A — 首次规划:根因定位 + 修复方案
 **任务**:
@@ -770,9 +770,9 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    - 任务总览"需求"列 = `BUG-NNN`(3 位)
    - 任务总览"关联任务"列 = `BUG-NNN`(自查)
 
-### 步骤 24A+1 — 产出 9 份文档同构于 REQ 模式(本需求 REQ-00019 新增,2026-06-06 起生效)
+### 步骤 24A+1 — 产出 9 份文档同构于 REQ 模式
 
-> 本步骤是 BUG 模式产出物从单文件 `fix-plan.md` 升级为 9 份文档的核心。沿用 `code-plan` REQ 路径的 `templates/plan.md` + `templates/task-plan.md` 作为 BUG 路径模板。
+> 本步骤是 BUG 模式产出物从单文件 `` 升级为 9 份文档的核心。沿用 `code-plan` REQ 路径的 `templates/plan.md` + `templates/task-plan.md` 作为 BUG 路径模板。
 
 - **任务**(执行 9 份文档产出):
   1. 撰写 `fix/<BUG-NNN>/RESULT.md`(14 章节,沿用 `templates/plan.md`)
@@ -813,7 +813,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - `PLAN.md` 任务总览"任务编号"列 = `TASK-BUG-NNNNN-NNNNN`(5+5 位嵌套式,新格式)
 
 **注意**:
-- `fix-plan.md` **不**再生成(本需求后);`templates/fix-plan.md` 留作历史不删
+- `` **不**再生成(本需求后);`templates/` 留作历史不删
 - 长度可与 `plan/<req-id>/RESULT.md` 相当(因同构)
 - 不重写稳定章节(增量更新时尤其重要)
 
@@ -823,13 +823,13 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    - 文档头"当前状态"字段:`报告` / `调查中` → `修复规划中`
    - 修复日志:追加一条
      ```
-     YYYY-MM-DD HH:mm  修复规划  code-plan 已产出 fix-plan.md
+     YYYY-MM-DD HH:mm  修复规划  code-plan 已产出 
      ```
    - 变更记录:追加一条
      ```
      YYYY-MM-DD HH:mm  状态推进  <缺陷编号> 状态"<旧>"→"修复规划中"  <缺陷编号>
      ```
-   - 修复方案小节:填入 fix-plan.md 的链接与摘要
+   - 修复方案小节:填入  的链接与摘要
 3. `Read "./assistants/<版本号>/fix/RESULT.md"`(总览)
 4. 用 `Edit` 更新:
    - 缺陷清单表中本条:状态 → `修复规划中`
@@ -847,7 +847,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    ```
 4. 更新文档头"最近更新"
 
-### 步骤 28A+1 — 同步版本看板'任务清单'区段(本需求 REQ-00019 新增,2026-06-06 起生效)
+### 步骤 28A+1 — 同步版本看板'任务清单'区段
 
 > 本步骤是 BUG 任务进入看板"任务清单"区段的核心同步。沿用既有 12 列字段,**不**新增字段/枚举/区段(0 触发 `dashboard-conventions §规则 1` 三同步)。
 
@@ -879,11 +879,11 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 1. **缺陷侧变更**:
    - 重读 `fix/<BUG-NNN>/RESULT.md`,对比"变更记录"识别变化(用户可能在 `code-fix` 中更新了根因/状态)
 2. **代码侧变更**:
-   - 重跑步骤 22,与 `fix-plan.md` 的"项目现状"对比
+   - 重跑步骤 22,与 `` 的"项目现状"对比
 3. **规范侧变更**(若有):
    - 重 `Glob + Read` `./assistants/rules/`,对比
 
-### 步骤 25B — 局部更新 fix-plan.md
+### 步骤 25B — 局部更新 
 对每一项变更:
 - **缺陷侧变化** → 修订"缺陷摘要"/"根因定位"对应章节
 - **代码侧变化** → 更新"项目现状"或"涉及文件与变更"
@@ -895,7 +895,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 同 27A、28A,只是状态可能不变(增量更新未必推进状态)。
 
 ### 步骤 29 — 完善过程文档与汇报
-- 收尾 `fix-plan.md`
+- 收尾 ``
 - 向用户汇报:
   - 根因定位结果
   - 选定修复方案 + 涉及文件
@@ -929,7 +929,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
    - `<计划标题>` 从本轮 PLAN.md 的标题提取
    - `<任务数>` 从本轮 PLAN.md 任务总览的总数提取
 
-4. **弹 3 选 1 确认**(Q-3 锁定 A / FR-3.AC-3.4):
+4. **弹 3 选 1 确认**:
    - **A. 确认提交(推荐)** → 进入步骤 5
    - **B. 修改 commit message** → 重新生成预览(可由用户编辑)→ 返回步骤 4
    - **C. 取消** → 跳过 commit,打印"已取消提交,文件保持暂存/工作区状态",**退出**(E-9)
@@ -1086,7 +1086,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 
 ---
 
-## 模板填充步骤(本需求 REQ-00021 新增,FR-2)
+## 模板填充步骤
 
 > 本小节是 `code-plan` 在主产出物 `plan/.../RESULT.md` + `plan/.../PLAN.md` 完成后,根据 `--result` / `--plan` 参数执行**可选**的模板填充步骤。
 > 本步骤**不**是必需步骤;无 2 参数时跳过。
@@ -1143,7 +1143,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 ## 衔接
 - **下游**:
   - 需求分支:`code-it` 按 `PLAN.md` 的任务执行,逐任务更新状态
-  - 缺陷分支:`code-it <BUG-NNN>` 读 `fix-plan.md` 实施修复,产出 `fix-work-log.md` 等
+  - 缺陷分支:`code-it <BUG-NNN>` 读 `` 实施修复,产出 `` 等
 - **下游(次级)**:`code-check` 在 `code-it` 内对单任务展开;若项目可测,`code-it` 步骤 8.5 自含的 `unit-test-results.md` 产出单测(沿用本需求 REQ-00034 FR-2/FR-3)
 - **上游**:
   - 需求分支:`code-version`(必须有激活版本);`code-require` 的 `RESULT.md`、`code-design` 的 `RESULT.md`、项目级规范
@@ -1153,8 +1153,8 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 ## 不要做的事
 - 不修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件(工程代码改动由 `code-it` 实施,本技能只写 `plan/<REQ>/RESULT.md` / `PLAN.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
-- 不读上游 `RESULT.md` / `fix-plan.md` / `./assistants/rules/` 就直接做规划
-- 在不读取现有 `RESULT.md` / `PLAN.md` / `fix-plan.md` 的情况下重写整个文件
+- 不读上游 `RESULT.md` / `` / `./assistants/rules/` 就直接做规划
+- 在不读取现有 `RESULT.md` / `PLAN.md` / `` 的情况下重写整个文件
 - 重新分配已有任务的编号(编号一旦分配就稳定)
 - 修改已完成任务的描述或状态(只能追加"修改类"任务)
 - 让 `RESULT.md` 与 `PLAN.md` 不一致(交叉验证是必需步骤)
@@ -1163,7 +1163,7 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 - 修改 `./assistants/<版本号>/require/<编号>/`、`<版本号>/design/<编号>/`、`./assistants/rules/` 下的任何内容(只读)
 - **缺陷分支额外禁止**:
   - 不要在没有 `fix/<BUG-NNN>/RESULT.md` 的情况下继续执行(必须先调 `code-fix` 登记)
-  - 不要为 bug 修复产出 `plan/<需求编号>/PLAN.md`(那是需求路径的产物;bug 修复的产物是 `fix-plan.md`)
-  - 不要把 bug 修复拆成多个 `BUG-NNN-XXX` 任务(若需任务跟踪,在 `fix-plan.md` 中以"步骤"形式列出即可,单任务足够)
+  - 不要为 bug 修复产出 `plan/<需求编号>/PLAN.md`(那是需求路径的产物;bug 修复的产物是 ``)
+  - 不要把 bug 修复拆成多个 `BUG-NNN-XXX` 任务(若需任务跟踪,在 `` 中以"步骤"形式列出即可,单任务足够)
   - 不要在 `code-plan <BUG-NNN>` 中实施任何代码修改(那是 `code-it` 的事)
 - 修改 `./assistants/<版本号>/RESULT.md` 中非本技能负责的区段(本技能负责:详细设计与任务计划汇总 / 任务清单 / 里程碑 / 缺陷清单 / 变更记录)

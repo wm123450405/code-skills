@@ -104,7 +104,7 @@
 - 取代任务(若本任务覆盖了已完成的旧任务):<T-XXX>
 - 关联 code-check / code-unit 链接(若已发起):<PR/MR URL 或 commit>
 
-## 9. 单元测试(由 code-it 内化,本需求 REQ-00034 FR-4 新增,2026-06-15 起生效)
+## 9. 单元测试(由 code-it 内化,本需求 REQ-00034 FR-4 新增,
 
 > 本小节由 `code-it` 步骤 8.5 接管 `code-unit` 产出,沿用 `code-unit` 步骤 4 / 7 / 8 / 9 字节级;详见 `code-it/SKILL.md` 步骤 8.5 子节。
 
