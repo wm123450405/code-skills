@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-15 12:00(REQ-00034 需求分析完成)
+- 最近更新:2026-06-16 17:33(REQ-00036 需求分析完成)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -82,10 +82,11 @@
 | REQ-00033 | 明文契约化 `code-require` 不涉及技术选型(只确定功能点) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00033/RESULT.md](./require/REQ-00033/RESULT.md) | [REQ-00033/RESULT.md](./design/REQ-00033/RESULT.md) | [REQ-00033/PLAN.md](./plan/REQ-00033/PLAN.md) |
 | REQ-00034 | 移除 /code-unit 技能,能力整合进 /code-it(按需写单测/不适用工程跳过) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00034/RESULT.md](./require/REQ-00034/RESULT.md) | [REQ-00034/RESULT.md](./design/REQ-00034/RESULT.md) | [REQ-00034/PLAN.md](./plan/REQ-00034/PLAN.md) |
 | REQ-00035 | 过程文档自适应生成改造(AI 自主判定,减少不必要过程文档 token 消耗) | 进行中 | 2026-06-15 | — | [REQ-00035/RESULT.md](./require/REQ-00035/RESULT.md) | — | — |
+| REQ-00036 | 清理技能文件(SKILL.md + templates/)中的开发痕迹(REQ/BUG 编号引用、退场功能说明、决策记录、生效日标记等) | 已完成 | 2026-06-16 | 2026-06-16 | [REQ-00036/RESULT.md](./require/REQ-00036/RESULT.md) | — | — |
 
 **统计**:
-- 总数:15
-- 已完成:11
+- 总数:16
+- 已完成:12
 - 进行中:2
 - 待开始:2
 - 已取消:0
@@ -501,6 +502,7 @@
 | 2026-06-15 19:20 | 计划更新 | REQ-00035 详细设计与编码计划完成(共 7 任务,合并 5 模板新增到 T-001~T-005;整体=--balanced,功能性=中;0 模块/0 接口/0 数据结构/0 依赖;0 派生"更新看板"任务,沿用 REQ-00017 强约束;1 里程碑 M1-REQ-00035;code-auto 上下文 0 问;看板追加 7 行;本轮过程文档决策:`interface-specs.md` / `data-changes.md` / `clarifications.md` 不生成(§6.3 准则)) | REQ-00035 |
 | 2026-06-15 19:30 | 任务完成 | TASK-REQ-00035-00001 · [修改] code-require 步骤 0a 过程文档判定 + 模板新增(开发状态:已完成);SKILL.md 锚点追加 45 行(在 `## 工具使用约定` 段后新增 `## 过程文档自适应判定` 小节);模板 `process-doc-decisions.md` 新增 50 行;0 必须改;提交 6be9a13 | TASK-REQ-00035-00001 |
 | 2026-06-15 20:00 | 任务完成 | TASK-REQ-00035-00002~00007 · 6 任务批量完成(开发状态:已完成);code-design / code-plan / code-it / code-check SKILL.md 各 +45 行(锚点追加 `## 过程文档自适应判定` 小节);code-check +8.13 评审维度(派生"建议改"不阻断);code-auto 子技能调用表备注追加;code-dashboard 解析兼容;4 模板新增(`process-doc-decisions.md` × code-require/code-design/code-plan/code-it/code-check);0 必须改;提交 48335d7 | TASK-REQ-00035-00002 ~ 00007 |
+| 2026-06-16 17:33 | 需求新增 | REQ-00036 需求分析完成(8 FR / 10 NFR / 8 AC);清理 14 技能 SKILL.md + 同目录 templates/ 中的开发痕迹(REQ/BUG 编号引用、退场功能说明、决策记录、生效日标记、占位注释等);占位符 `REQ-00001` / `BUG-00001` 保留;不动 checklists/ / guidelines/ / assistants/ | REQ-00036 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
