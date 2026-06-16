@@ -255,7 +255,7 @@
 | TASK-REQ-00035-00007 | REQ-00035 | 修改 | 详细设计 | [修改] code-dashboard 解析兼容(变更记录行数自适应) | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §解析锚点 | 2026-06-15 20:00 | 48335d7 | — |
 | TASK-REQ-00036-00001 | REQ-00036 | 文档 | 详细设计 | [文档] 扫描并产出 14 技能 SKILL.md + templates/ 待清理文件表与命中计数基线 | 已完成 | 不适用 | plugins/code-skills/skills/*/{SKILL.md, templates/*.md}(14 SKILL.md + 33 templates = 47 文件) | 2026-06-16 17:33 | — | — |
 | TASK-REQ-00036-00002 | REQ-00036 | 文档 | 详细设计 | [文档] 应用 6 条清理规则(R-1 ~ R-6)到 T-1 清单,原地改写 + diff 校验 + 残缺回退 | 已完成 | 不适用 | 同 T-1(47 文件) | 2026-06-16 17:33 | — | — |
-| TASK-REQ-00036-00003 | REQ-00036 | 文档 | 详细设计 | [文档] 跑 AC-1 ~ AC-8 验证 + 1 次 commit + 看板同步 + 末尾兜底 | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md + git 仓库 | 2026-06-16 17:33 | 见 commit | — |
+| TASK-REQ-00036-00003 | REQ-00036 | 文档 | 详细设计 | [文档] 跑 AC-1 ~ AC-8 验证 + 1 次 commit + 看板同步 + 末尾兜底 | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md + git 仓库 | 2026-06-16 17:33 | a5dddb5 | — |
 
 **统计**:
 - 总任务数:84
