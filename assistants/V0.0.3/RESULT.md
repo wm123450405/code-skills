@@ -112,8 +112,9 @@
 | REQ-00031 | 优化 /code-plan 任务粒度(内化编译/运行,外移单元测试) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00031/RESULT.md](./design/REQ-00031/RESULT.md) |
 | REQ-00032 | 优化 /code-require 登记结束后报告(输出下一步建议) | 已完成 | 2026-06-12 | 2026-06-12 | [REQ-00032/RESULT.md](./design/REQ-00032/RESULT.md) |
 | REQ-00035 | 过程文档自适应生成改造(AI 自主判定不涉及的过程文档不生成,减少 token 消耗) | 已完成 | 2026-06-15 | 2026-06-15 | [REQ-00035/RESULT.md](./design/REQ-00035/RESULT.md) |
+| REQ-00036 | 清理技能文件(SKILL.md + templates/)中的开发痕迹(--minimal 路线;6 条硬编码规则;0 新增模块/接口/数据结构/依赖) | 已完成 | 2026-06-16 | 2026-06-16 | [REQ-00036/RESULT.md](./design/REQ-00036/RESULT.md) |
 
-**统计**:11 / 已完成 11 / 进行中 0
+**统计**:12 / 已完成 12 / 进行中 0
 
 ---
 
@@ -503,6 +504,7 @@
 | 2026-06-15 19:30 | 任务完成 | TASK-REQ-00035-00001 · [修改] code-require 步骤 0a 过程文档判定 + 模板新增(开发状态:已完成);SKILL.md 锚点追加 45 行(在 `## 工具使用约定` 段后新增 `## 过程文档自适应判定` 小节);模板 `process-doc-decisions.md` 新增 50 行;0 必须改;提交 6be9a13 | TASK-REQ-00035-00001 |
 | 2026-06-15 20:00 | 任务完成 | TASK-REQ-00035-00002~00007 · 6 任务批量完成(开发状态:已完成);code-design / code-plan / code-it / code-check SKILL.md 各 +45 行(锚点追加 `## 过程文档自适应判定` 小节);code-check +8.13 评审维度(派生"建议改"不阻断);code-auto 子技能调用表备注追加;code-dashboard 解析兼容;4 模板新增(`process-doc-decisions.md` × code-require/code-design/code-plan/code-it/code-check);0 必须改;提交 48335d7 | TASK-REQ-00035-00002 ~ 00007 |
 | 2026-06-16 17:33 | 需求新增 | REQ-00036 需求分析完成(8 FR / 10 NFR / 8 AC);清理 14 技能 SKILL.md + 同目录 templates/ 中的开发痕迹(REQ/BUG 编号引用、退场功能说明、决策记录、生效日标记、占位注释等);占位符 `REQ-00001` / `BUG-00001` 保留;不动 checklists/ / guidelines/ / assistants/ | REQ-00036 |
+| 2026-06-16 17:33 | 设计新增 | REQ-00036 概要设计完成(16 章节;6 条硬编码清理规则 + 9 条硬约束 + 6 项风险;0 新增模块/接口/数据结构/三方依赖;整体=`--minimal`,功能性=中;0 触发 §规则 1 三同步;0 派生"更新看板"任务) | REQ-00036 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
