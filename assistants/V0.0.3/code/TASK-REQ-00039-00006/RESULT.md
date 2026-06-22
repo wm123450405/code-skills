@@ -160,4 +160,4 @@
 
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- | --- |
-| 2026-06-22 16:42 | v1 | 初始完成 | 由 code-check 派生,合并 T-2 / T-3 / T-4 评审发现 = 1 必须改(F-T4-1)+ 2 建议改(F-T2-1 / F-T3-1);3 文件字面修正全部落地(`code-it/templates/RESULT.md` line 124 + `code-it/SKILL.md` line 762 + `code-check/SKILL.md` line 440);frontmatter L1-3 字节级保留;步骤 8a 守卫判定项目不可测 → 任务测试状态=不适用;§偏离 0;末尾兜底 1 次 commit(沿用 `chore(code-check):` 模式) | wangmiao |
+| 2026-06-22 16:42 | v1 | 初始完成 | 由 code-check 派生,合并 T-2 / T-3 / T-4 评审发现 = 1 必须改(F-T4-1)+ 2 建议改(F-T2-1 / F-T3-1);3 文件字面修正全部落地(`code-it/templates/RESULT.md` line 124 + `code-it/SKILL.md` line 762 + `code-check/SKILL.md` line 440);frontmatter L1-3 字节级保留;步骤 8a 守卫判定项目不可测 → 任务测试状态=不适用;§偏离 0;末尾兜底 1 次 commit 落地 `82fc5b7`(9 files, +348 / -15) | wangmiao |
