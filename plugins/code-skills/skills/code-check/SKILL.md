@@ -423,7 +423,25 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 - **不阻断** `code-check` —— 警告而非错误,供 `code-check` 评审人员参考
 - 警告文案:`⚠ 概设/详设行数比例异常(<ratio>),建议复核概设是否过深`
 
-**8.13 过程文档适配性**
+**8.13 代码行数超标检查**
+- 读 `code/<任务>/RESULT.md` 的"## 逻辑行统计(由 code-it 内化)"小节,提取每个变更文件的"逻辑行(新增)" + "逻辑行(总规模)" + "检测方式"
+- 阈值:默认 500 / 200(沿用 `plugins/code-skills/skills/code-it/lib/logic-loc-defaults.md`);用户配置覆盖 → 读 `require/<需求>/RESULT.md` "## 阈值配置"小节
+- 沿用 `plugins/code-skills/skills/code-it/lib/logic-loc.md` §函数 4 `code-check-exceed` 派生发现:
+ - 调用 `code-check-exceed(file, totalLoc, newLoc, threshold)`
+ - 返回非 `null` → 追加到评审发现清单
+- 派生发现格式(沿用既有 8.12 屏显契约):
+ ```
+ [代码行数超标] <file> 逻辑行(总规模)=<N> 阈值=<M> 超<P>%(级别:<级别>) 建议拆分...
+ ```
+- **不通过判定**(沿用 `logic-loc.md` §函数 4):
+ - 总规模超标 ≤10% → "可选"
+ - 总规模超标 ≤50% → "建议改"
+ - 总规模超标 >50% → "必须改"
+ - 新增超标阈值级别同上(总规模优先,新增次之)
+- **不通过** → 视超标比例标"必须改" / "建议改" / "可选"
+- 边界:无"## 逻辑行统计"小节 → 跳过(由 `code-it` 步骤 8.6 失败兜底,NFR-7)
+
+**8.14 过程文档适配性**
 - 检查本需求下所有过程文档**是否都满足 NFR-1(零空白文件)**
 - 检查 `process-doc-decisions.md` 中"不生成"的过程文档**判定是否合理**:
  - AI 判定"不生成"的理由是否符合 §6 准则
@@ -587,6 +605,7 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 | P3 | 一致性 | 建议改 |
 | P3 | 测试质量(非关键) | 建议改 |
 | P3 | 注释/可读性 | 可选 |
+| P3 | 代码行数超标 | 可选 / 建议改 / 必须改 |
 
 ## 过程文档格式
 

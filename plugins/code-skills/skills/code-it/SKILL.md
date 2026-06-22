@@ -713,6 +713,95 @@ loop:
 | 守卫通过 + 崩溃 | ≠ 0 | 中断 |
 | 任务编码不存在 / 无 `.current-version` | ≠ 0 | 中断(原行为) |
 
+### 步骤 8.6 — 逻辑行统计(由 code-it 内化)
+
+> 适用对象:本技能在"## 步骤 8.5 按需写单测"**之后**、"## 步骤 9 编译验证"**之前**的**逻辑行 metadata 收尾**。
+> 依据:FR-1(逻辑行计算函数)+ FR-2(工具集成)+ FR-3(`code-it` 步骤 8 末尾追加 `calcLogicLoc` 子步骤)+ NFR-1(< 3 秒)+ NFR-2(兼容性)+ NFR-7(不阻断)+ NFR-8(缺陷分支不触达)
+> 触发条件:**仅**在步骤 1 判定为任务分支(任务编码匹配 `^TASK-REQ-\d{5}-\d{5}$` 5+5 位嵌套式)时触达;缺陷分支(`^TASK-BUG-...`)**不**触达(NFR-8 强约束)
+> 共享库:本步骤**仅**引用 `./plugins/code-skills/skills/code-it/lib/logic-loc.md` §"调用方约定" 中的 `calcLogicLoc` 伪代码;**不**重写 4 函数
+
+#### 步骤 8.6.1 目标
+
+在 `code-it` 步骤 8 实施开发末尾,按 `logic-loc.md` §函数 1 `detectLocTool` + §函数 2 `calcLogicLines` 收集本任务涉及文件的"实际代码逻辑行"(`newLoc` + `totalLoc` + `detection`),写入 `code/<task>/RESULT.md` 新增"## 逻辑行统计(由 code-it 内化)"小节,为下游 `code-check` 步骤 8.13 派生"代码行数超标"发现提供 metadata 输入。
+
+#### 步骤 8.6.2 算法
+
+```
+1. tool = detectLocTool()                    // 沿用 logic-loc.md §函数 1
+2. changedFiles = Bash: git diff --name-only HEAD~1
+ - 若 Bash 失败(非 git 仓库)→ 屏显 ⚠ + 跳过(不阻断,NFR-7)
+3. per-file:
+ - oldContent = Bash: git show HEAD~1:<file>(若文件存在)
+ - newContent = 当前文件内容
+ - oldLoc = calcLogicLines(oldContent, tool).totalLoc(若 oldContent 存在)
+ - newLoc = calcLogicLines(newContent, tool).totalLoc
+ - delta = newLoc - oldLoc
+4. 累计本任务逻辑行(新增) = Σ delta
+5. 累计本任务逻辑行(总规模) = Σ newLoc
+6. 写入 code/<task>/RESULT.md 新增"## 逻辑行统计(由 code-it 内化)"小节:
+ | 文件 | 逻辑行(新增) | 逻辑行(总规模) | 检测方式 |
+ | --- | --- | --- | --- |
+ | src/foo.ts | 25 | 80 | tokei |
+ | **本任务汇总** | **35** | **110** | — |
+7. 屏显契约(字节级沿用 logic-loc.md §函数 1 屏显契约):
+ === code-it 逻辑行统计(步骤 8 末尾)===
+ 任务:<taskNum>
+ 变更文件:N 个
+ 逻辑行(新增):<Σ>
+ 逻辑行(总规模):<Σ>
+ 检测方式:tokei / cloc / heuristic
+8. 失败 → 屏显 ⚠ + 跳过(不阻断 code-it,NFR-7 强约束)
+```
+
+#### 步骤 8.6.3 边界与异常(NFR-2 / NFR-7)
+
+| E 边界 | 触发场景 | 处理 |
+| --- | --- | --- |
+| **E-1** | `tokei` + `cloc` 都不存在 | 沿用 `logic-loc.md` §函数 1 → 回退 `heuristic` + 屏显 `⚠` |
+| **E-2** | 非 git 仓库(`git diff` 失败) | 屏显 `⚠` + 跳过(不阻断) |
+| **E-3** | 变更文件无法访问(权限/不存在) | 跳过该文件 + 屏显警告 |
+| **E-4** | 单文件过大(> 10MB) | 跳过该文件 + 屏显警告(性能) |
+| **E-5** | 缺陷分支(`^TASK-BUG-...`) | **不**触达(NFR-8 强约束,本步骤不执行) |
+| **E-6** | `tokei` / `cloc` 调用失败 | 返回 `{ newLoc: 0, totalLoc: 0, detection: "error" }` + 屏显 `⚠` |
+| **E-7** | 旧版本文件不存在(新建文件) | `delta = newLoc`(新增 = 当前规模) |
+
+#### 步骤 8.6.4 性能(NFR-1)
+
+- **总耗时**:**< 3 秒**(典型 100 文件 / 单文件 50-500 行下;`tokei` < 1s,`cloc` < 1s,`heuristic` < 2s)
+- **跳过策略**:单文件 > 10MB 跳过(避免长耗时)
+
+#### 步骤 8.6.5 屏显契约(NFR-7)
+
+- **成功**:
+ ```
+ === code-it 逻辑行统计(步骤 8 末尾)===
+ 任务:<taskNum>
+ 变更文件:N 个
+ 逻辑行(新增):<Σ>
+ 逻辑行(总规模):<Σ>
+ 检测方式:tokei / cloc / heuristic
+ ```
+- **失败**(工具检测失败/非 git 仓库/单文件过大):屏显 `⚠ code-it 逻辑行统计跳过(<原因>),不阻断本任务`
+
+#### 步骤 8.6.6 退出码契约
+
+| 场景 | 退出码 | `code-auto` 响应 |
+| --- | --- | --- |
+| 逻辑行统计成功 | 0 | 继续 |
+| 逻辑行统计失败(非 git 仓库 / 工具失败 / 文件过大) | 0 | 继续(NFR-7 不阻断) |
+| 任务编码不存在 / 无 `.current-version` | ≠ 0 | 中断(原行为) |
+
+#### 步骤 8.6.7 约束
+
+- **不**修改 frontmatter(L1-3 字节级保留,NFR-7)
+- **不**修改既有"## 步骤 0a 前置任务守卫" / "## 步骤 8 实施开发" / "## 步骤 8a 项目可测性守卫" / "## 步骤 8.5 按需写单测" / "## 步骤 9 编译验证" / "## 步骤 10 启动运行验证" 等既有章节
+- **不**修改"## 标题解析(REQ-00013 新增)" / "## 过程文档自适应判定" / "## 不要做的事" 等既有章节
+- **不**触发 `AskUserQuestion`(NFR-3 强约束)
+- **不**新增 CLI 参数(NFR-3 强约束)
+- **不**触发 `dashboard-conventions §规则 1` 三同步(metadata 写入 `code/<task>/RESULT.md` 而非看板)
+- **不**重写 `logic-loc.md` 中已定义的 4 函数(本步骤**仅**引用)
+- **不**修改 `logic-loc-defaults.md`(沿用既有)
+
 ### 步骤 9 — 编译验证
 1. **检测构建命令**
 2. **执行构建**:`Bash` 执行

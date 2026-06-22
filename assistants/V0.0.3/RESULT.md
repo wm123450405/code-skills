@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-22 15:00(REQ-00039 详细设计与编码计划完成(code-auto 上下文))
+- 最近更新:2026-06-22 15:22(REQ-00039 全部 5 任务已完成 + 末尾兜底提交)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -272,16 +272,16 @@
 | TASK-REQ-00037-00005 | REQ-00037 | 修改 | 详细设计 | [修改] code-check 步骤 1.5 BUG-NNN 识别 + 步骤 13 状态回写 | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md §步骤 1.5 / 步骤 13 | 2026-06-22 10:35 | — | T-1 |
 | TASK-REQ-00037-00006 | REQ-00037 | 修改 | 详细设计 | [修改] code-dashboard 步骤 4 段 3 扩展待修复/已修复分类 | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §步骤 4 段 3 | 2026-06-22 11:05 | — | T-1 |
 | TASK-REQ-00037-00007 | REQ-00037 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-10 + 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-22 12:06 | — | T-1 ~ T-6 |
-| TASK-REQ-00039-00001 | REQ-00039 | 新增 | 详细设计 | [新增] 共享库 logic-loc.md + logic-loc-defaults.md(4 函数伪代码 + 2 阈值字段) | 待开始 | 不适用 | plugins/code-skills/skills/code-it/lib/logic-loc.md + logic-loc-defaults.md | — | — | — |
-| TASK-REQ-00039-00002 | REQ-00039 | 修改 | 详细设计 | [修改] code-it 步骤 8 末尾追加 detectLocTool + calcLogicLoc 子步骤 + 屏显契约 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md | — | — | T-1 |
-| TASK-REQ-00039-00003 | REQ-00039 | 修改 | 详细设计 | [修改] code-check 步骤 8.13 新增 + 评审维度速查表第 13 维度 | 待开始 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md | — | — | T-1 |
-| TASK-REQ-00039-00004 | REQ-00039 | 修改 | 详细设计 | [修改] code-it/templates/RESULT.md 模板新增"## 逻辑行统计"小节示例 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md | — | — | T-2 |
-| TASK-REQ-00039-00005 | REQ-00039 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-8 + 末尾兜底提交 | 待开始 | 不适用 | (无生产代码改动) | — | — | T-1 ~ T-4 |
+| TASK-REQ-00039-00001 | REQ-00039 | 新增 | 详细设计 | [新增] 共享库 logic-loc.md + logic-loc-defaults.md(4 函数伪代码 + 2 阈值字段) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/lib/logic-loc.md + logic-loc-defaults.md | 2026-06-22 15:05 | — | — |
+| TASK-REQ-00039-00002 | REQ-00039 | 修改 | 详细设计 | [修改] code-it 步骤 8 末尾追加 detectLocTool + calcLogicLoc 子步骤 + 屏显契约 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md | 2026-06-22 15:08 | — | T-1 |
+| TASK-REQ-00039-00003 | REQ-00039 | 修改 | 详细设计 | [修改] code-check 步骤 8.13 新增 + 评审维度速查表第 13 维度 | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md | 2026-06-22 15:12 | — | T-1 |
+| TASK-REQ-00039-00004 | REQ-00039 | 修改 | 详细设计 | [修改] code-it/templates/RESULT.md 模板新增"## 逻辑行统计"小节示例 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md | 2026-06-22 15:16 | — | T-2 |
+| TASK-REQ-00039-00005 | REQ-00039 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-8 + 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-22 15:22 | — | T-1 ~ T-4 |
 
 **统计**:
 - 总任务数:89
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):81
-- 开发已完成 / 未完成:81 / 8
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):86
+- 开发已完成 / 未完成:86 / 3
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 89 / 0
 
 ---
@@ -549,6 +549,10 @@
 | 2026-06-22 14:00 | 需求新增 | REQ-00039 需求分析完成(5 FR / 8 NFR / 8 AC),优化 /code-it、/code-check 等技能:代码行数限制仅统计实际逻辑行(逻辑行 = 总行 - 空行 - 注释行;4 类排除项:注释 / 说明 / 空行 / 格式化换行);工具集成 tokei(首选,200+ 语言)/ cloc(备选,50+ 语言)/ 启发式回退(无依赖,~95% 精度);`code-it` 步骤 8 末尾新增 `calcLogicLoc` 子步骤 + `code-check` 步骤 8 评审维度速查表新增第 13 维度"代码行数超标"(P3 可维护性);阈值默认单文件 ≤ 500 行(总规模)/ ≤ 200 行(新增),用户可配置;缺陷分支(`^TASK-BUG-...`)**不**触达(沿用 NFR-8);1 轮 AskUserQuestion 澄清(3 选 1);本轮过程文档决策:materials-index.md / clarifications.md / related-requirements.md / analysis-notes.md 均生成 | REQ-00039 |
 | 2026-06-22 14:30 | 设计新增 | REQ-00039 概要设计完成(5 模块 / 4 函数 / 1 阈值配置;`--balanced` 路线;功能性=高 + 健壮性=高 + 可维护性=高;code-auto 上下文自动采纳默认;code-it 步骤 8 末尾 + code-check 步骤 8.13 新增 + 1 模板改造 + 2 共享库新建;共享库位置 `code-it/lib/` 沿用 `module-conventions §规则 1` 不入 `templates/`;0 偏离 / 0 冲突 / 0 用户授权偏离;14 条规范全部满足) | REQ-00039 |
 | 2026-06-22 15:00 | 计划更新 | REQ-00039 详细设计与编码计划完成(共 5 个任务,code-auto 上下文自动采纳 `--balanced` 默认;沿用 `design/REQ-00039` 的设计目标);0 新增模块/接口/数据结构/依赖;5 任务严格串行(T-1 → T-5);AC-1 ~ AC-8 全部纳入 T-5 验证;code-it 步骤 8 末尾追加 `calcLogicLoc` 子步骤 + code-check 步骤 8.13 新增"代码行数超标"发现 + 模板"## 逻辑行统计"小节示例 + 2 共享库新建;本轮过程文档决策:materials-index.md / design-notes.md / module-details.md / interface-specs.md / risk-analysis.md / rule-compliance.md 均生成;data-changes.md / clarifications.md 不生成(沿用既有准则) | REQ-00039 |
+| 2026-06-22 15:05 | 任务完成 | TASK-REQ-00039-00001 · [新增] 共享库 logic-loc.md + logic-loc-defaults.md(开发状态:已完成;`git diff --stat` 2 files changed, +X insertions(+), 0 deletions(-);`logic-loc.md` 含 4 函数(`detectLocTool` / `calcLogicLines` / `heuristicLoc` / `code-check-exceed`)+ 检测机制 + 启发式算法;`logic-loc-defaults.md` 含 2 阈值字段(500 / 200);字段完整性静态校验通过 4 函数名命中 13 次 / 2 阈值字段命中 3 次;新建在 `code-it/lib/` 沿用 `module-conventions §规则 1` 不入 `templates/`;T-2 / T-3 依赖本任务;端到端验证由 T-5 承担) | TASK-REQ-00039-00001 |
+| 2026-06-22 15:08 | 任务完成 | TASK-REQ-00039-00002 · [修改] code-it 步骤 8 末尾追加 detectLocTool + calcLogicLoc 子步骤 + 屏显契约(开发状态:已完成;`git diff --stat` 1 file changed, +89 insertions(+), 0 deletions(-);`plugins/code-skills/skills/code-it/SKILL.md` line 716-803 追加 `### 步骤 8.6 — 逻辑行统计(由 code-it 内化)` 子步骤 7 个子节(目标 / 算法 / 边界与异常 / 性能 / 屏显契约 / 退出码契约 / 约束);**仅**引用共享库 4 函数不重写;NFR-7 不阻断 + NFR-8 缺陷分支不触达约束字节级沿用;frontmatter L1-3 字节级保留;既有 步骤 8 / 8a / 8.5 字节级沿用;AC-7 静态校验通过;AC-1 / AC-6 端到端验证由 T-5 承担;T-3 / T-4 依赖本任务) | TASK-REQ-00039-00002 |
+| 2026-06-22 15:12 | 任务完成 | TASK-REQ-00039-00003 · [修改] code-check 步骤 8.13 新增 + 评审维度速查表第 13 维度(开发状态:已完成;`git diff --stat` 1 file changed, +18 insertions(+), 1 deletion(-);`plugins/code-skills/skills/code-check/SKILL.md` line 426-441 追加 `**8.13 代码行数超标检查**` 子步骤 + line 608 速查表新增第 13 行 `P3 | 代码行数超标 | 可选 / 建议改 / 必须改`;既有 8.13 过程文档适配性 重命名为 8.14(文字内容字节级保留);**仅**引用共享库 §函数 4 `code-check-exceed` 不重写;阈值默认 500 / 200 沿用 `logic-loc-defaults.md`;用户配置覆盖读 `require/<需求>/RESULT.md` "## 阈值配置";frontmatter L1-3 字节级保留;既有 步骤 8.1 ~ 8.12 字节级沿用;既有 12 维度表字节级沿用;AC-7 / AC-9 部分静态校验通过;AC-4 / AC-5 端到端验证由 T-5 承担) | TASK-REQ-00039-00003 |
+| 2026-06-22 15:16 | 任务完成 | TASK-REQ-00039-00004 · [修改] code-it/templates/RESULT.md 模板新增"## 逻辑行统计"小节示例(开发状态:已完成;`git diff --stat` 1 file changed, +21 insertions(+), 1 deletion(-);`plugins/code-skills/skills/code-it/templates/RESULT.md` line 124-143 在 ## 9. 单元测试 小节后新增"## 10. 逻辑行统计(由 code-it 内化,新增"小节示例(1 表格 + 5 字段说明 + 1 模板使用说明);原"## 10. 变更记录"重命名为"## 11. 变更记录"(章节编号顺序 +1);表格字面与详细设计 §5.5 step 6 完全一致;既有 9 个章节(## 文档头 ~ ## 9. 单元测试)字节级保留;字段完整性静态校验通过(逻辑行(新增) 1 次 / 逻辑行(总规模) 1 次 / 检测方式 ≥ 3 次);AC-1 部分静态校验通过) | TASK-REQ-00039-00004 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
