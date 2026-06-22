@@ -234,7 +234,8 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 **逻辑(三态机)**:
 1. **无参**(`/code-check`)→ **整版本模式** → 跳转"步骤 2 整版本模式"
 2. **`REQ-NNNNN`**(匹配 `^REQ-\d{5}$`)→ **单需求模式**(既有,字节级不变)→ 跳转既有"步骤 2 定位/创建工作目录"
-3. **其他无效参数** → 整版本模式 + 打印警告"⚠ 忽略参数: <invalid>"
+3. **`BUG-NNNNN`**(匹配 `^BUG-\d{5}$`)→ **单缺陷模式** → 跳转"步骤 2 单缺陷模式"
+4. **其他无效参数** → 整版本模式 + 打印警告"⚠ 忽略参数: <invalid>"
 
 **依据**:FR-1.AC-1.1 / FR-1.AC-1.2 / FR-1.AC-1.3
 
@@ -510,6 +511,16 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
  YYYY-MM-DD HH:mm 评审发现 <需求编码> 评审完成(共 N 条发现,派生 M 个"审查改修"任务) <需求编码>
  ```
 7. 更新看板文档头"最近更新"
+8. **`checkStateRollback` 子步骤**(单缺陷模式下,本步骤末尾追加):
+ - 读 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字面 → `oldStatus`
+ - 判定推进策略:
+ - `oldStatus != "待审查"`(已推进过 或 老字面)→ `newStatus = oldStatus`,屏显 `✓ code-check 状态回写:状态非 '待审查',跳过(旧状态=<oldStatus>)`
+ - 其他 → `newStatus = "已完成"`
+ - 幂等检查:`newStatus == oldStatus` → 跳过
+ - 写新状态到 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字段
+ - 在 `fix/<缺陷编号>/RESULT.md` 修复日志 + 变更记录追加:`YYYY-MM-DD HH:mm 评审完成 code-check 评审通过,状态推进` / `YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"oldStatus"→"newStatus" <缺陷编号>`
+ - 同步 `fix/RESULT.md` 缺陷清单表本条"状态"列
+ - 失败回退(NFR-2)
 
 ### 步骤 14 — 完善过程文档
 - `work-log.md` 收尾
@@ -668,3 +679,5 @@ const taskRow = `| ${taskNum} | ${req} | 修改 | 审查改修 | ${truncateTitle
 - 给出模糊批评(必须给出可执行建议)
 - 把 review/RESULT.md 写成"建议改用更安全的写法"这种程度(必须具体到文件:行 + 改修方案)
 - 修改 `./assistants/<版本号>/RESULT.md` 中非本技能负责的区段(本技能负责:任务清单 / 评审发现汇总 / 派生任务记录 / 缺陷清单 / 变更记录)
+- **不**修改 `fix/<BUG-NNN>/RESULT.md` 的"缺陷描述" / "根因分析" 等稳定章节 — 单缺陷模式仅更新状态字段、评审日志、变更记录(沿用)
+- 单缺陷模式下,评审发现"必须改"派生改修任务时,BUG 状态维持 `待审查`,**不**推进(避免评审未通过却显示已完成的误判)

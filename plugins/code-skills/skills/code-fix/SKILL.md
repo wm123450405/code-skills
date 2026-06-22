@@ -238,13 +238,14 @@ function parseFixTitle(fixPath: string): string {
 
 ### 步骤 4 — 询问本轮状态推进(纯登记型)
 
-> 本技能是**纯登记型**:本步骤是本技能的核心,但候选目标状态已收敛为"登记/分析类"。本技能**只**主动推进"报告 / 调查中" 2 段;"修复规划中"由用户调 `code-plan <BUG-NNN>` 推进,本技能**仅在复跑时校验**(读 `fix-plan.md` 是否存在),不作为本技能的候选目标状态;"修复编码中"及之后由 `code-it` / `code-check` 推进。
+> 本技能是**纯登记型**:本步骤是本技能的核心,但候选目标状态已收敛为"登记/分析类"。新建 BUG 的初始状态为 `待处理`;本技能**只**主动推进"待处理 / 报告 / 调查中" 3 段;"待开发 / 开发中 / 待审查 / 已完成"等状态由 `code-plan` / `code-it` / `code-check` 自动推进,本技能**不**参与。
 
 用 `AskUserQuestion` 让用户选择本轮要推进到的目标状态:
 
 | 当前状态 | 候选目标状态 |
 | --- | --- |
-| (新建) | 报告 / 调查中 |
+| (新建) | 待处理 / 报告 / 调查中 |
+| 待处理 | 报告 / 调查中 / 已关闭-非缺陷 / 已取消 |
 | 报告 | 调查中 / 已关闭-非缺陷 / 已取消 |
 | 调查中 | 已关闭-非缺陷 / 阻塞 / 已取消 |
 | 已关闭-非缺陷 | (终态) |
@@ -266,12 +267,12 @@ function parseFixTitle(fixPath: string): string {
 - **`→ 已关闭-*`**:询问"关闭理由"
 - **`→ 阻塞`**:询问"阻塞原因 / 解除条件"
 
-> **注**:本技能**不**再推进"修复规划中 / 修复编码中 / 已修复-待验证 / 已修复-已验证"等状态。
+> **注**:本技能**不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进。
 > 若需推进上述状态,请按以下顺序调:
-> 1. `code-plan <BUG-NNN>` —— 产出 `fix-plan.md`,推进"修复规划中"
-> 2. `code-it <BUG-NNN>` —— 产出 `fix-work-log.md`,推进"修复编码中" / "已修复-待验证"
+> 1. `code-plan <BUG-NNN>` —— 产出 `fix-plan.md`,推进"待处理 → 待开发"
+> 2. `code-it <BUG-NNN>` —— 产出 `fix-work-log.md`,推进"待开发 → 开发中"(第 1 个任务)→ "待审查"(全部完成)
 > 3. (可选)`code-it <BUG-NNN>` 步骤 8.5 自含按需写单测—— 产出 `unit-test-results.md`(若项目可测)
-> 4. `code-check <BUG-NNN>` —— 产出 `REVIEW-REPORT.md`,推进"已修复-已验证" / "已关闭"
+> 4. `code-check <BUG-NNN>` —— 产出 `REVIEW-REPORT.md`,推进"待审查 → 已完成"
 
 ### 步骤 6 — 写缺陷详情 `RESULT.md`
 
@@ -344,22 +345,22 @@ function parseFixTitle(fixPath: string): string {
 
 | 当前状态 | 下一步建议 |
 | --- | --- |
+| 待处理 | 调 `code-fix <BUG-NNN>` 进入"报告",补充报告信息 |
 | 报告 | 调 `code-fix <BUG-NNN>` 进入"调查中",补充根因 |
-| 调查中 | 调 `code-fix <BUG-NNN>` 进入"修复规划中";若已规划,调 `code-plan <BUG-NNN>` 产出 `fix-plan.md` |
-| 修复规划中 | (由 `code-plan` 推进;本技能不主动推进此状态之后) |
-| 修复编码中 | (由 `code-it <BUG-NNN>` 推进) |
-| 已修复-待验证 | (由 `code-it` 推进) |
-| 已修复-已验证 | (由 `code-check <BUG-NNN>` 推进) |
-| 已关闭-不修复 | (终态;由 `code-check` 推进) |
+| 调查中 | 调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`,进入"待开发" |
+| 待开发 | (由 `code-plan` 推进;本技能不参与此状态之后) |
+| 开发中 | (由 `code-it <BUG-NNN>` 推进) |
+| 待审查 | (由 `code-it` 全部完成时推进;本技能不参与) |
+| 已完成 | (由 `code-check <BUG-NNN>` 推进;本技能不参与) |
 | 阻塞 | 解决阻塞后调 `code-fix` 解除 |
 
-> **典型修复流程**(本技能不参与,仅在用户复跑时确认状态):
-> 1. `code-fix "用户报告:..."` → 登记 BUG,产出 `fix/<BUG-NNN>/RESULT.md`(本技能)
-> 2. `code-fix BUG-NNN` → 推进到"调查中" → "修复规划中"(本技能前 3 段)
-> 3. `code-plan BUG-NNN` → 产出 `fix-plan.md`,状态推进到"修复规划中"后由 `code-plan` 接管
-> 4. `code-it BUG-NNN` → 产出 `fix-work-log.md`,状态推进到"已修复-待验证"
+> **典型修复流程**(本技能只参与前 2 步,后续由 `code-plan` / `code-it` / `code-check` 自动接力):
+> 1. `code-fix "用户报告:..."` → 登记 BUG,产出 `fix/<BUG-NNN>/RESULT.md`(本技能,初始状态 = `待处理`)
+> 2. `code-fix BUG-NNN` → 推进到"报告" → "调查中"(本技能前 3 段)
+> 3. `code-plan BUG-NNN` → 产出 `fix-plan.md`,状态由"调查中"自动推进到"待开发"
+> 4. `code-it BUG-NNN` → 实际改代码,状态由"待开发"经"开发中"自动推进到"待审查"
 > 5. (可选)`code-it BUG-NNN` 步骤 8.5 自含按需写单测(若项目可测)→ 产出 `unit-test-results.md`
-> 6. `code-check BUG-NNN` → 产出 `REVIEW-REPORT.md`,状态推进到"已修复-已验证" / "已关闭"
+> 6. `code-check BUG-NNN` → 产出 `REVIEW-REPORT.md`,状态由"待审查"自动推进到"已完成"
 
 ### 步骤 10 — 完善过程文档与汇报
 
@@ -401,18 +402,12 @@ function parseFixTitle(fixPath: string): string {
 | `code-require` / `code-design` | 与本技能无直接关系(本技能在主流程之外) |
 | `code-version` | 不同版本的缺陷独立登记;切换版本后,新版本从空开始 |
 
-**典型完整流程**:
+**典型完整流程**(本技能只负责登记 + 前 5 段状态推进;后续由 `code-plan` / `code-it` / `code-check` 自动接力):
 ```
-1. code-fix "用户报告:登录页密码框不显示" → BUG-00001 / 报告
-2. code-fix BUG-00001 (→ 调查中) → 补充根因
-3. code-plan BUG-00001 → fix-plan.md
-4. code-fix BUG-00001 (→ 修复规划中) → 看板同步
-5. code-it BUG-00001 → 实际改代码,产出 fix-work-log.md
-6. code-fix BUG-00001 (→ 修复编码中) → 看板同步
-7. code-fix BUG-00001 (→ 已修复-待验证) → 等待验证
-8. 跑测试
-9. code-fix BUG-00001 (→ 已修复-已验证) → 记录验证信息
-10. code-fix BUG-00001 (→ 已关闭) → 归档
+1. code-fix "用户报告:登录页密码框不显示" → BUG-00001 / 待处理
+2. code-plan BUG-00001 → fix-plan.md,状态自动推进到"待开发"
+3. code-it BUG-00001 → 实际改代码,状态自动经"开发中"推进到"待审查"
+4. code-check BUG-00001 → REVIEW-REPORT.md,状态自动推进到"已完成"
 ```
 
 ## 衔接
@@ -431,5 +426,5 @@ function parseFixTitle(fixPath: string): string {
 - 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的 `RESULT.md` 与版本看板的"缺陷清单"/"变更记录")
 - **不**产出 `investigation.md` / `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-it` / `code-plan` / `code-check` 产出)
 - **不**实施代码改动(由 `code-it` 实施)
-- **不**推进"修复规划中 / 修复编码中 / 已修复-待验证 / 已修复-已验证"等状态(由 `code-plan` / `code-it` / `code-check` 推进)
+- **不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进
 - **不**直接关闭缺陷(终态由 `code-check` 推进)

@@ -820,30 +820,46 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
 ### 步骤 27A — 同步 fix/<BUG-NNN>/RESULT.md 与 fix/RESULT.md(强制)
 1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"`
 2. 用 `Edit` 更新:
- - 文档头"当前状态"字段:`报告` / `调查中` → `修复规划中`
+ - 文档头"当前状态"字段:按 `planStateRollback` 子步骤判定推进(`待处理` → `待开发`;`报告` / `调查中` → `修复规划中`;其他状态 → 维持原字面,跳过)
  - 修复日志:追加一条
  ```
- YYYY-MM-DD HH:mm 修复规划 code-plan 已产出 
+ YYYY-MM-DD HH:mm 修复规划 code-plan 已产出
  ```
  - 变更记录:追加一条
  ```
- YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧>"→"修复规划中" <缺陷编号>
+ YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧>"→"<新>" <缺陷编号>
  ```
  - 修复方案小节:填入 的链接与摘要
 3. `Read "./assistants/<版本号>/fix/RESULT.md"`(总览)
 4. 用 `Edit` 更新:
- - 缺陷清单表中本条:状态 → `修复规划中`
+ - 缺陷清单表中本条:状态 → 按 `planStateRollback` 判定的新状态
  - 统计区更新
  - 变更记录追加一条
+5. **`planStateRollback` 子步骤**(本步骤末尾追加):
+ - 读 `fix/<BUG-NNN>/RESULT.md` 文档头"当前状态"字面 → `oldStatus`
+ - 判定推进策略:
+ - `oldStatus == "待处理"`(新字面)→ `newStatus = "待开发"`
+ - `oldStatus in ["报告", "调查中"]`(老字面)→ `newStatus = "修复规划中"`(走既有路径)
+ - `oldStatus in ["待开发", "开发中", "待审查", "已完成", "修复规划中", "修复编码中", "已修复-待验证", "已修复-已验证", "已关闭", "已关闭-非缺陷", "已取消", "阻塞"]` → `newStatus = oldStatus`(维持,跳过)
+ - `oldStatus` 缺失或无法解析 → `newStatus = oldStatus` + 屏显 `⚠ code-plan 状态回写:无法识别当前状态字面`
+ - 幂等检查:`newStatus == oldStatus` → 跳过(不写文件)
+ - 写新状态到 `fix/<BUG-NNN>/RESULT.md` 文档头"当前状态"字段(`Edit` 工具)
+ - 同步 `fix/RESULT.md` 缺陷清单表本条"状态"列
+ - 在 `fix/<BUG-NNN>/RESULT.md` 变更记录追加:`YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧>"→"<新>" <缺陷编号>`
+ - 失败回退(NFR-2):任一同步失败 → 写回旧状态 + 屏显 `⚠`
 
 ### 步骤 28A — 同步版本看板(强制)
 1. `Read "./assistants/<版本号>/RESULT.md"`,定位"缺陷清单"区段
 2. 更新本条:
- - 状态 → `修复规划中`
+ - 状态 → `planStateRollback` 判定的新状态(沿用步骤 27A 第 5 款)
  - 关联任务/修复提交留空(`code-it` 完成后回填)
-3. 在"变更记录"追加:
+3. `syncKanbanBugList` 调用(本步骤末尾追加,沿用 `code-it` 步骤 24 第 6 款):
+ - 读 `fix/RESULT.md` 缺陷清单表本行"状态"列,与版本看板"缺陷清单"区段本行"状态"列同步
+ - 幂等检查:若两端字面已一致 → 跳过
+ - 写 `Edit` 更新看板本行"状态"列
+ - 在看板"变更记录"追加:
  ```
- YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"<旧>"→"修复规划中" <缺陷编号>
+ YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"<旧>"→"<新>" <缺陷编号>
  ```
 4. 更新文档头"最近更新"
 
@@ -1166,4 +1182,5 @@ function parsePlanTaskTitle(planPath: string, taskNum: string): string {
  - 不要为 bug 修复产出 `plan/<需求编号>/PLAN.md`(那是需求路径的产物;bug 修复的产物是 ``)
  - 不要把 bug 修复拆成多个 `BUG-NNN-XXX` 任务(若需任务跟踪,在 `` 中以"步骤"形式列出即可,单任务足够)
  - 不要在 `code-plan <BUG-NNN>` 中实施任何代码修改(那是 `code-it` 的事)
+- **不**修改 `fix/<BUG-NNN>/RESULT.md` 的"缺陷描述" / "根因分析" 等稳定章节 — 只更新状态字段、修复日志、变更记录(沿用)
 - 修改 `./assistants/<版本号>/RESULT.md` 中非本技能负责的区段(本技能负责:详细设计与任务计划汇总 / 任务清单 / 里程碑 / 缺陷清单 / 变更记录)

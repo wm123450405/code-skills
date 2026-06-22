@@ -890,14 +890,27 @@ loop:
 
 ### 步骤 21 — 处理缺陷状态与本轮起点
 1. 读取 `fix/<缺陷编号>/RESULT.md` 当前状态:
- - `修复规划中` → 推进为 `修复编码中`,更新 `RESULT.md` 状态字段
- - `修复编码中` → 继续(可能是中断后回来)
+ - `修复规划中` / `待开发` → 推进为 `修复编码中` / `开发中`,更新 `RESULT.md` 状态字段(按 `itStartStateRollback` 子步骤判定)
+ - `修复编码中` / `开发中` → 继续(可能是中断后回来)
 2. 在 `fix/<缺陷编号>/RESULT.md` 追加:
  - 修复日志:`YYYY-MM-DD HH:mm 修复开始 code-it 开始实施修复`
- - 变更记录:`YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"修复规划中"→"修复编码中" <缺陷编号>`
-3. 同步 `fix/RESULT.md` 缺陷总览:状态 → `修复编码中`
-4. 同步版本看板"缺陷清单":状态 → `修复编码中`
-5. **特别处理:若状态既非 `修复规划中` 也非 `修复编码中`**,主动询问用户是否要重做或调整。
+ - 变更记录:`YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧>"→"<新>" <缺陷编号>`
+3. 同步 `fix/RESULT.md` 缺陷总览:状态 → `修复编码中` / `开发中`(按子步骤判定)
+4. 同步版本看板"缺陷清单":状态 → `修复编码中` / `开发中`(按子步骤判定)
+5. **特别处理:若状态既非 `修复规划中` / `待开发` 也非 `修复编码中` / `开发中`**,主动询问用户是否要重做或调整。
+6. **`itStartStateRollback` 子步骤**(本步骤末尾追加):
+ - 读 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字面 → `oldStatus`
+ - 读 `fix/<缺陷编号>/PLAN.md` 任务总览首条任务编号 → `firstTaskNum`(沿用 `dashboard-conventions §规则 1` 锚点 `^## 任务总览$`)
+ - 判定推进策略:
+ - `taskNum != firstTaskNum`(本任务非首条)→ `newStatus = oldStatus`,状态维持,屏显 `✓ code-it 状态回写:本任务非首条,状态维持(旧状态=<oldStatus>)`
+ - `oldStatus == "待开发"`(新字面)→ `newStatus = "开发中"`
+ - `oldStatus == "修复规划中"`(老字面)→ `newStatus = "修复编码中"`(走既有路径)
+ - 其他字面 → `newStatus = oldStatus`,屏显 `✓ code-it 状态回写:状态非 '待开发/修复规划中',跳过(旧状态=<oldStatus>)`
+ - 幂等检查:`newStatus == oldStatus` → 跳过
+ - 写新状态到 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字段
+ - 在 `fix/<缺陷编号>/RESULT.md` 修复日志 + 变更记录追加
+ - 同步 `fix/RESULT.md` 缺陷清单表本条"状态"列 + `syncKanbanBugList` 同步版本看板
+ - 失败回退(NFR-2)
 
 ### 步骤 22 — 实施修复
 按 `` 中选定的方案展开:
@@ -983,6 +996,18 @@ loop:
  ```
  YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"修复编码中"→"已修复-待验证" <缺陷编号>
  ```
+8. **`itEndStateRollback` 子步骤**(本步骤末尾追加):
+ - 读 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字面 → `oldStatus`
+ - 读 `fix/<缺陷编号>/PLAN.md` 任务总览,统计"开发状态 ∈ {`已完成`, `已取消`}"的任务数 → `doneCount`;总任务数 → `totalCount`
+ - 判定推进策略:
+ - `doneCount < totalCount`(仍有任务未完成)→ `newStatus = oldStatus`,状态维持,屏显 `✓ code-it 状态回写:仍有任务未完成,状态维持(已完成/已取消=doneCount/totalCount,旧状态=oldStatus)`
+ - `oldStatus ∉ {`待开发`, `开发中`}`(状态已推进过 或 老字面)→ `newStatus = oldStatus`,屏显 `✓ code-it 状态回写:状态非 '待开发/开发中',跳过(旧状态=oldStatus)`
+ - 其他(`doneCount == totalCount` ∧ `oldStatus ∈ {`待开发`, `开发中`}`)→ `newStatus = "待审查"`
+ - 幂等检查:`newStatus == oldStatus` → 跳过
+ - 写新状态到 `fix/<缺陷编号>/RESULT.md` 文档头"当前状态"字段
+ - 在 `fix/<缺陷编号>/RESULT.md` 修复日志 + 变更记录追加:`YYYY-MM-DD HH:mm 修复完成 code-it 全部任务完成,状态推进` / `YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"oldStatus"→"newStatus" <缺陷编号>`
+ - 同步 `fix/RESULT.md` 缺陷清单表本条"状态"列 + 同步版本看板"缺陷清单"区段本行"状态"列
+ - 失败回退(NFR-2)
 
 ### 步骤 25 — 完善过程文档与汇报
 - 收尾 `code/<TASK-BUG-...>/{work-log.md, compile-and-run.md, test-results.md, deviations.md}`(原 `fix-` 前缀过程文档退场,见 E-9 边界)
@@ -1136,6 +1161,7 @@ loop:
  - **不修改 ``** —— 那是上游;若发现方案不可行,停下,询问用户(可能要回 `code-plan` 重新规划)
  - **不修改 `fix/<缺陷编号>/RESULT.md` 中"缺陷描述" / "根因分析"等稳定章节** —— 只更新状态字段、修复日志、变更记录
  - **不修改其他缺陷的 `fix/<其他缺陷编号>/`** —— 各缺陷独立
+- **不**修改 `fix/<BUG-NNN>/RESULT.md` 的"缺陷描述" / "根因分析" 等稳定章节 — 只更新状态字段、修复日志、变更记录(沿用)
  - **不把缺陷修复的过程文档写到 `code/<任务>/`** —— 那是任务路径的目录;缺陷用 `fix/<缺陷>/` + `fix-` 前缀
  - **不直接关闭缺陷** —— 完成实施后状态是 `已修复-待验证`,验证通过后由 `code-fix` 推进到 `已修复-已验证`,再由 `code-fix` 关闭
 - 修改 `./assistants/<版本号>/RESULT.md` 中非本技能负责的区段(本技能负责:任务清单 / 缺陷清单 / 执行的开发命令记录 / 变更记录)
