@@ -27,9 +27,9 @@
 
 BUG:
 
-1. require技能还是会出现技术选型的问题
+1. 技能 `/code-require` 还是会出现技术选型的选择问题，应该只能在 `/code-design` 阶段出现选择技术选型相关问题
 
-2. code-it 还是会出现输出不必要的过程文档的情况，以下是一个markdown类的工程下执行后的日志，请分析原因并修正这个问题。
+2. 技能 `/code-it` 还是会出现输出不必要的过程文档的情况，以下是一个markdown类的工程下执行后的日志，请分析原因并修正这个问题，并检查其他所有技能过程文档，若存在类似问题需要一并修改。
 ● Write(assistants\V0.0.3\code\TASK-REQ-00039-00003\compile-and-run.md)
   ⎿  Wrote 17 lines to assistants\V0.0.3\code\TASK-REQ-00039-00003\compile-and-run.md
        2 # 编译与启动验证 — TASK-REQ-00039-00003
