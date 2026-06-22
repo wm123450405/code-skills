@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-22 14:30(REQ-00039 概要设计完成(code-auto 上下文))
+- 最近更新:2026-06-22 15:00(REQ-00039 详细设计与编码计划完成(code-auto 上下文))
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -56,6 +56,7 @@
 | M1-REQ-00032 | REQ-00032 T-001(1 任务,1 个被改文件) | 1 任务开发=已完成 ∧ 测试=不适用;INV-1~INV-10 全部满足;`code-require/SKILL.md` 步骤 10A / 10B 段内文末各追加 1 段"### 下一步建议";18 AC 全通过;7 项 git diff 全部 0 改既有 | 已完成 | 2026-06-12 | 2026-06-12 |
 | M1-REQ-00036 | REQ-00036 全部 3 任务(T-1 ~ T-3) | 3 任务开发=已完成 ∧ 测试=不适用;AC-1 ~ AC-8 全过(AC-2 / AC-4 允许 ≤ 3 处例外);1 次 commit 落地;`code/<TASK>/work-log.md` 完整 | 待开始 | 2026-06-16 | — |
 | M1-REQ-00037 | REQ-00037 全部 7 任务(T-1 ~ T-7) | 7 任务开发=已完成 ∧ 测试=不适用;AC-1 ~ AC-10 全过;4 个 SKILL.md 修改 + 1 看板技能扩展;1 次末尾兜底提交 | 待开始 | 2026-06-22 | — |
+| M1-REQ-00039 | REQ-00039 全部 5 任务(T-1 ~ T-5) | 5 任务开发=已完成 ∧ 测试=不适用;AC-1 ~ AC-8 全过;2 SKILL.md 修改 + 1 模板改造 + 2 共享库新建;1 次末尾兜底提交 | 待开始 | 2026-06-22 | — |
 
 > 完成定义显式列出两轴状态要求,避免把"开发完成"误当"可发布"。
 
@@ -149,8 +150,9 @@
 | REQ-00035 | 过程文档自适应生成改造(AI 自主判定不涉及的过程文档不生成,减少 token 消耗) | 已完成 | 7 | 0 | 0(不适用) | 2026-06-15 | [REQ-00035/PLAN.md](./plan/REQ-00035/PLAN.md) |
 | REQ-00036 | 清理技能文件(SKILL.md + templates/)中的开发痕迹(--minimal 路线;6 条硬编码规则;3 任务扫描/应用/验证严格串行) | 已完成 | 3 | 0 | 0(不适用) | 2026-06-16 | [REQ-00036/PLAN.md](./plan/REQ-00036/PLAN.md) |
 | REQ-00037 | 优化 /code-fix 技能及整个缺陷修复流程的状态推进(--balanced 路线;7 任务严格串行;AC-1 ~ AC-10 全部纳入 T-7 验证) | 草稿 | 7 | 0 | 0(不适用) | 2026-06-22 | [REQ-00037/PLAN.md](./plan/REQ-00037/PLAN.md) |
+| REQ-00039 | 优化 /code-it、/code-check 等技能:代码行数限制仅统计实际逻辑行(--balanced 路线;5 任务严格串行;逻辑行 = 总行 - 空行 - 注释行;工具集成 tokei/cloc + 启发式回退;阈值默认 500/200) | 草稿 | 5 | 0 | 0(不适用) | 2026-06-22 | [REQ-00039/PLAN.md](./plan/REQ-00039/PLAN.md) |
 
-**统计**:18 个计划 / 共 99 个任务 / 开发完成 51 / 测试通过 0(不适用 99)
+**统计**:19 个计划 / 共 104 个任务 / 开发完成 51 / 测试通过 0(不适用 104)
 
 (详细:REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 + REQ-00025 9 = 40;开发完成含 2 条"审查改修"待开始任务按既有看板约定计入;不适用 = REQ-00020 6 + REQ-00021 8 + REQ-00022 10 + REQ-00023 6 + REQ-00024 1 = 31;新增 REQ-00036 3 任务)
 
@@ -270,12 +272,17 @@
 | TASK-REQ-00037-00005 | REQ-00037 | 修改 | 详细设计 | [修改] code-check 步骤 1.5 BUG-NNN 识别 + 步骤 13 状态回写 | 已完成 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md §步骤 1.5 / 步骤 13 | 2026-06-22 10:35 | — | T-1 |
 | TASK-REQ-00037-00006 | REQ-00037 | 修改 | 详细设计 | [修改] code-dashboard 步骤 4 段 3 扩展待修复/已修复分类 | 已完成 | 不适用 | plugins/code-skills/skills/code-dashboard/SKILL.md §步骤 4 段 3 | 2026-06-22 11:05 | — | T-1 |
 | TASK-REQ-00037-00007 | REQ-00037 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-10 + 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-22 12:06 | — | T-1 ~ T-6 |
+| TASK-REQ-00039-00001 | REQ-00039 | 新增 | 详细设计 | [新增] 共享库 logic-loc.md + logic-loc-defaults.md(4 函数伪代码 + 2 阈值字段) | 待开始 | 不适用 | plugins/code-skills/skills/code-it/lib/logic-loc.md + logic-loc-defaults.md | — | — | — |
+| TASK-REQ-00039-00002 | REQ-00039 | 修改 | 详细设计 | [修改] code-it 步骤 8 末尾追加 detectLocTool + calcLogicLoc 子步骤 + 屏显契约 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md | — | — | T-1 |
+| TASK-REQ-00039-00003 | REQ-00039 | 修改 | 详细设计 | [修改] code-check 步骤 8.13 新增 + 评审维度速查表第 13 维度 | 待开始 | 不适用 | plugins/code-skills/skills/code-check/SKILL.md | — | — | T-1 |
+| TASK-REQ-00039-00004 | REQ-00039 | 修改 | 详细设计 | [修改] code-it/templates/RESULT.md 模板新增"## 逻辑行统计"小节示例 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md | — | — | T-2 |
+| TASK-REQ-00039-00005 | REQ-00039 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-8 + 末尾兜底提交 | 待开始 | 不适用 | (无生产代码改动) | — | — | T-1 ~ T-4 |
 
 **统计**:
-- 总任务数:84
+- 总任务数:89
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):81
-- 开发已完成 / 未完成:81 / 3
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 84 / 0
+- 开发已完成 / 未完成:81 / 8
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 89 / 0
 
 ---
 
@@ -541,6 +548,7 @@
 | 2026-06-22 13:00 | 需求新增 | REQ-00038 需求分析完成(5 FR / 6 NFR / 7 AC),优化 /code-it 技能单测判定从工程粒度细化到模块粒度;模块识别优先级链(声明文件 + git diff + CWD 根退化 3 层)+ 模块级守卫 7 项(检查位置从 CWD 根 → 模块目录,沿用 REQ-00034 字节级)+ 单测输出位置模块级(测试目录识别优先级链 7 层,无约定时退化到 CWD 根)+ 模板多模块支持(`unit-test-results.md` 新增"## 各模块单测结果"小节);100% 兼容 REQ-00034 工程根级行为(单模块 = 字节级沿用);1 轮 AskUserQuestion 澄清(3 选 1);FR-5 `code-plan` 适配 1 句字面新增(可选);本轮过程文档决策:materials-index.md / clarifications.md / related-requirements.md / analysis-notes.md 均生成(§适用过程文档清单 准则) | REQ-00038 |
 | 2026-06-22 14:00 | 需求新增 | REQ-00039 需求分析完成(5 FR / 8 NFR / 8 AC),优化 /code-it、/code-check 等技能:代码行数限制仅统计实际逻辑行(逻辑行 = 总行 - 空行 - 注释行;4 类排除项:注释 / 说明 / 空行 / 格式化换行);工具集成 tokei(首选,200+ 语言)/ cloc(备选,50+ 语言)/ 启发式回退(无依赖,~95% 精度);`code-it` 步骤 8 末尾新增 `calcLogicLoc` 子步骤 + `code-check` 步骤 8 评审维度速查表新增第 13 维度"代码行数超标"(P3 可维护性);阈值默认单文件 ≤ 500 行(总规模)/ ≤ 200 行(新增),用户可配置;缺陷分支(`^TASK-BUG-...`)**不**触达(沿用 NFR-8);1 轮 AskUserQuestion 澄清(3 选 1);本轮过程文档决策:materials-index.md / clarifications.md / related-requirements.md / analysis-notes.md 均生成 | REQ-00039 |
 | 2026-06-22 14:30 | 设计新增 | REQ-00039 概要设计完成(5 模块 / 4 函数 / 1 阈值配置;`--balanced` 路线;功能性=高 + 健壮性=高 + 可维护性=高;code-auto 上下文自动采纳默认;code-it 步骤 8 末尾 + code-check 步骤 8.13 新增 + 1 模板改造 + 2 共享库新建;共享库位置 `code-it/lib/` 沿用 `module-conventions §规则 1` 不入 `templates/`;0 偏离 / 0 冲突 / 0 用户授权偏离;14 条规范全部满足) | REQ-00039 |
+| 2026-06-22 15:00 | 计划更新 | REQ-00039 详细设计与编码计划完成(共 5 个任务,code-auto 上下文自动采纳 `--balanced` 默认;沿用 `design/REQ-00039` 的设计目标);0 新增模块/接口/数据结构/依赖;5 任务严格串行(T-1 → T-5);AC-1 ~ AC-8 全部纳入 T-5 验证;code-it 步骤 8 末尾追加 `calcLogicLoc` 子步骤 + code-check 步骤 8.13 新增"代码行数超标"发现 + 模板"## 逻辑行统计"小节示例 + 2 共享库新建;本轮过程文档决策:materials-index.md / design-notes.md / module-details.md / interface-specs.md / risk-analysis.md / rule-compliance.md 均生成;data-changes.md / clarifications.md 不生成(沿用既有准则) | REQ-00039 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
