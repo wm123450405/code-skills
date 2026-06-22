@@ -89,7 +89,10 @@
 
 ## 8. 提交哈希
 
-(末尾兜底 1 次 commit 提交后回填)
+**665b1f6** — `chore(code-it): REQ-00039 优化 /code-it、/code-check 等技能:代码行数限制仅统计实际逻辑行`
+- 32 files changed, +1726 insertions(+), -16 deletions(-)
+- 包含:5 M + 25 A(5 任务 × 5 过程文档)+ 2 A(共享库)
+- 累积 T-1 ~ T-5 全部修改;沿用 REQ-00037 T-7 末尾兜底 1 次 commit 模式
 
 ## 9. 过程文档清单
 
