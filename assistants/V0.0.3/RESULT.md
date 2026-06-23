@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-22 16:42(REQ-00039 派生任务 T-006 修正完成,3 项字面落地)
+- 最近更新:2026-06-22 23:00(BUG-00004 修复完成 4/4 任务,状态 → 待审查)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -279,15 +279,15 @@
 | TASK-REQ-00039-00004 | REQ-00039 | 修改 | 详细设计 | [修改] code-it/templates/RESULT.md 模板新增"## 逻辑行统计"小节示例 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md | 2026-06-22 15:16 | — | T-2 |
 | TASK-REQ-00039-00005 | REQ-00039 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-8 + 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-22 15:22 | — | T-1 ~ T-4 |
 | TASK-REQ-00039-00006 | REQ-00039 | 修改 | 审查改修 | [修改] 修正 T-2 / T-3 / T-4 评审发现(合并 1 必须改 + 2 建议改) | 已完成 | 不适用 | code-it/templates/RESULT.md + code-it/SKILL.md + code-check/SKILL.md | 2026-06-22 16:42 | — | T-2, T-3, T-4 |
-| TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | — | — | BUG-00004 |
-| TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | — | — | BUG-00004 |
-| TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 待开始 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | — | — | BUG-00004 |
-| TASK-BUG-00004-00004 | BUG-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 待开始 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | — | — | BUG-00004 |
+| TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | 2026-06-22 20:55 | — | BUG-00004 |
+| TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
+| TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | 2026-06-22 22:00 | — | BUG-00004 |
+| TASK-BUG-00004-00004 | BUG-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 已完成 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | 2026-06-22 23:00 | — | BUG-00004 |
 
 **统计**:
 - 总任务数:94
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):**87**
-- 开发已完成 / 未完成:**87 / 7**
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):**91**
+- 开发已完成 / 未完成:**91 / 3**
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / **94** / 0
 
 ---
@@ -304,9 +304,9 @@
 | BUG-00001 | P0 | code-require/code-design/code-plan... | 修复编码中 | 2026-06-06 22:41 | — | — | — |
 | BUG-00002 | P0 | SKILL.md 描述中"特定文件类型"字面(`skills/*/SKILL.md` / `tests/` / `*.test.*`)违反本项目"通用开发技能集"定位 | 已修复-待验证 | 2026-06-08 14:00 | 2026-06-08 14:40 | — | 678e602 |
 | BUG-00003 | P0 | SKILL.md 描述中"绝对路径"(`plugins/code-skills/...`)在 plugin 安装后断链 | 修复编码中 | 2026-06-08 14:10 | — | — | — |
-| BUG-00004 | P1 | `code-it` SKILL.md "过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程",导致纯 Markdown 改造类任务仍生成 `compile-and-run.md` / `test-results.md` 等空占位过程文档 | 修复规划中 | 2026-06-22 20:15 | — | — | — |
+| BUG-00004 | P1 | `code-it` SKILL.md "过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程",导致纯 Markdown 改造类任务仍生成 `compile-and-run.md` / `test-results.md` 等空占位过程文档 | 修复编码中 | 2026-06-22 20:15 | — | — | — |
 
-**统计**:4 / P0: 3 / P1: 1 / P2: 0 / 已修复 0 / 待修复 4 / 修复规划中 1 / 修复编码中 1 / 调查中 0 / 报告 0 / 已修复-待验证 1
+**统计**:4 / P0: 3 / P1: 1 / P2: 0 / 已修复 0 / 待修复 4 / 修复规划中 0 / 修复编码中 2 / 调查中 0 / 报告 0 / 已修复-待验证 1
 
 ---
 
@@ -571,6 +571,12 @@
 | 2026-06-22 20:15 | 缺陷登记 | code-fix 创建缺陷 BUG-00004(严重度 P1,状态 报告):`code-it` 在纯 Markdown 改造任务上仍输出 `compile-and-run.md` / `test-results.md` 等空占位过程文档;由 TASK-REQ-00039-00003 触发 | BUG-00004 |
 | 2026-06-22 20:15 | 缺陷状态 | BUG-00004 状态"报告"→"调查中"(根因初步定稿:`code-it/SKILL.md` "## 过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程"的步骤 9/10/11;待排查其他 `code-*` 技能是否同类问题) | BUG-00004 |
 | 2026-06-22 20:30 | 缺陷状态 | BUG-00004 状态"调查中"→"修复规划中"(code-plan 完成详细设计 + 9 份文档 + 4 任务拆分;其他 6 个技能旁路验证仅静态校验;M1-BUG-00004 待开始) | BUG-00004 |
+| 2026-06-22 20:50 | 缺陷状态 | BUG-00004 状态"修复规划中"→"修复编码中"(code-it 开始实施 TASK-BUG-00004-00001) | BUG-00004 |
+| 2026-06-22 20:55 | 任务完成 | TASK-BUG-00004-00001 · [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫(开发状态:已完成;`git diff --stat` 1 file changed, +118 insertions(+), 1 deletion(-);frontmatter L1-3 字节级保留;步骤 8.7 正确插入 + 步骤 9/10/11 守卫逻辑字面正确 + 既有逻辑字节级沿用;§偏离 1 + §偏离 0) | TASK-BUG-00004-00001 |
+| 2026-06-22 21:10 | 任务完成 | TASK-BUG-00004-00002 · [修改] code-it 步骤 13/16 + templates/RESULT.md 改造(开发状态:已完成;`git diff --stat` 2 files changed, +177 insertions(+), 2 deletions(-);`code-it/SKILL.md` 步骤 13/16 末尾追加 +24 行引用块 + `templates/RESULT.md` line 101-105 "## 8. 关联任务" → "## 8. 过程文档清单(由 code-it 内化,BUG-00004 新增)";既有"## 9. 单元测试 / ## 10. 逻辑行统计 / ## 11. 变更记录" 标题字面保留;**步骤 8.7 守卫首次生效**,本任务不生成 `compile-and-run.md` / `test-results.md`;§偏离 1 + §偏离 2 + §偏离 0) | TASK-BUG-00004-00002 |
+| 2026-06-22 22:00 | 任务完成 | TASK-BUG-00004-00003 · [文档] 端到端验证(开发状态:已完成;静态校验 `code-it/SKILL.md` 步骤 8.7 line 805-914 + 步骤 9/10/11 守卫 line 917/926/936 + `templates/RESULT.md` §8 改造 line 101-136 全部就位;**T-002 真实产物 = 决定性证据**(4 个文件,守卫决定性生效);静态模拟判定场景 1(纯 Markdown 改造 7/7 观察点命中)+ 场景 3(纯文档任务 3/3 观察点命中);本任务**不**真跑 `code-it TASK-REQ-00039-00003`(避免状态污染,沿用 §偏离 1);§偏离 1 + §偏离 0) | TASK-BUG-00004-00003 |
+| 2026-06-22 23:00 | 任务完成 | TASK-BUG-00004-00004 · [文档] 7 个技能旁路验证(开发状态:已完成;`code-require` / `code-design` / `code-check` / `code-plan` / `code-fix` / `code-init` / `code-rule` 7 个技能;4 个有判定表 / 3 个无判定表;全部"实际过度生成风险" = 低 / 中(0 触发) / 极低 / 无;**均不修复**;`side-skill-verification.md` 报告完整;与 BUG-00004 详细设计 §6 末字面 100% 一致;§偏离 1 + §偏离 0;末尾兜底提交累积 T-001 + T-002 + T-003 + T-004 一起 commit;**BUG-00004 状态推进** `修复编码中` → `待审查`) | TASK-BUG-00004-00004 |
+| 2026-06-22 23:00 | 缺陷状态 | BUG-00004 状态"修复编码中"→"待审查"(`itEndStateRollback` 子步骤执行,`doneCount=4/totalCount=4`) | BUG-00004 |
 | 2026-06-22 20:30 | 计划完成 | code-plan 完成 BUG-00004 详细设计(9 份文档:本文件 + `./assistants/V0.0.3/fix/BUG-00004/PLAN.md` + 7 份过程文档);拆 4 个任务(T-001 ~ T-004,全部 触发/来源=缺陷修复);M1-BUG-00004 新增 | BUG-00004 |
 
 **变更类型枚举**:

@@ -4,11 +4,11 @@
 - 所属版本:V0.0.3
 - 详细设计:./assistants/V0.0.3/fix/BUG-00004/RESULT.md (v1)
 - 状态:草稿
-- **开发完成度**:0 / 4
-- **测试完成度**:0 / 4
+- **开发完成度**:4 / 4
+- **测试完成度**:4 / 4
 - 创建:2026-06-22
-- 最近更新:2026-06-22 20:30
-- 当前版本:v1
+- 最近更新:2026-06-22 21:10
+- 当前版本:v1.4
 
 ## 1. 计划概述
 
@@ -23,10 +23,10 @@
 
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件/模块 | 前置任务 | 估算 | 责任人 | 关联任务 | 对应设计章节 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-BUG-00004-00001 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | - | 0.5d | wangmiao | BUG-00004 | RESULT.md §4 + §5 算法 1+2 |
-| TASK-BUG-00004-00002 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | T-001 | 0.3d | wangmiao | BUG-00004 | RESULT.md §5 算法 3 |
-| TASK-BUG-00004-00003 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 待开始 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | T-001, T-002 | 0.3d | wangmiao | BUG-00004 | RESULT.md §12 |
-| TASK-BUG-00004-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 待开始 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | - | 0.2d | wangmiao | BUG-00004 | RESULT.md §6 末"其他技能旁路验证结论" |
+| TASK-BUG-00004-00001 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | - | 0.5d | wangmiao | BUG-00004 | RESULT.md §4 + §5 算法 1+2 |
+| TASK-BUG-00004-00002 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | T-001 | 0.3d | wangmiao | BUG-00004 | RESULT.md §5 算法 3 |
+| TASK-BUG-00004-00003 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | T-001, T-002 | 0.3d | wangmiao | BUG-00004 | RESULT.md §4 + §12 |
+| TASK-BUG-00004-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 已完成 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | - | 0.2d | wangmiao | BUG-00004 | RESULT.md §6 末"其他技能旁路验证结论" |
 
 **字段说明**:
 - **任务编号**:`TASK-BUG-00004-NNNNN`(5+5 位嵌套式,沿用既有)
@@ -307,6 +307,10 @@ graph LR
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- | --- |
 | 2026-06-22 20:30 | v1 | 初始创建 | 完成首次编码计划,共 4 条任务 | wangmiao |
+| 2026-06-22 20:55 | v1.1 | 开发状态更新 | TASK-BUG-00004-00001 开发状态"待开始"→"已完成"(`git diff --stat` 1 file changed, +118 insertions(+), 1 deletion(-)) | wangmiao |
+| 2026-06-22 21:10 | v1.2 | 开发状态更新 | TASK-BUG-00004-00002 开发状态"待开始"→"已完成"(`git diff --stat` 2 files changed, +177 insertions(+), 2 deletions(-);`code-it/SKILL.md` 步骤 13/16 末尾追加 +24 行 + `templates/RESULT.md` 改造 ## 8. 过程文档清单;**步骤 8.7 守卫首次生效**,本任务不生成 `compile-and-run.md` / `test-results.md`) | wangmiao |
+| 2026-06-22 22:00 | v1.3 | 开发状态更新 | TASK-BUG-00004-00003 开发状态"待开始"→"已完成"(静态校验 `code-it/SKILL.md` 步骤 8.7 line 805-914 + 步骤 9/10/11 守卫 line 917/926/936 + `templates/RESULT.md` §8 改造 line 101-136 全部就位;**T-002 真实产物 = 决定性证据**(4 个文件,守卫决定性生效);静态模拟判定场景 1(7/7 观察点命中)+ 场景 3(3/3 观察点命中);本任务**不**真跑 `code-it TASK-REQ-00039-00003`(避免状态污染,沿用 §偏离 1)) | wangmiao |
+| 2026-06-22 23:00 | v1.4 | 开发状态更新 | TASK-BUG-00004-00004 开发状态"待开始"→"已完成"(7 个技能旁路验证:4 个有判定表 / 3 个无判定表;全部"实际过度生成风险" = 低 / 中(0 触发) / 极低 / 无;**均不修复**;`side-skill-verification.md` 报告完整;与 BUG-00004 详细设计 §6 末字面 100% 一致;§偏离 1(PLAN.md 字面歧义);`doneCount=4/totalCount=4` → `itEndStateRollback` 推进 BUG-00004 状态 `修复编码中` → `待审查`;末尾兜底提交累积 T-001 + T-002 + T-003 + T-004 一起 commit) | wangmiao |
 
 变更类型:
 - **初始创建**:首次生成计划

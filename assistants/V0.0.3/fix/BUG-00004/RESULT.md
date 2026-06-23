@@ -19,7 +19,7 @@
 | 严重度 | `P1` |
 | 报告人 | wangmiao |
 | 报告时间 | 2026-06-22 20:15 |
-| 当前状态 | 修复规划中 |
+| 当前状态 | 待审查 |
 | 当前负责人 | wangmiao |
 | 涉及模块 | `plugins/code-skills/skills/code-it/SKILL.md`(以及可能存在的同类问题:其他 `code-*` 技能) |
 | 修复提交 | — |
@@ -161,6 +161,13 @@
 | 2026-06-22 20:15 | (登记) → 报告 | wangmiao 报告缺陷:`code-it` 在纯 Markdown 改造任务上仍输出 `compile-and-run.md` / `test-results.md` 等空占位过程文档 |
 | 2026-06-22 20:15 | 报告 → 调查中 | code-fix 完成根因分析:`code-it/SKILL.md` "## 过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程"的步骤 9/10/11;同时发现需要排查其他 `code-*` 技能是否同类问题 |
 | 2026-06-22 20:30 | 调查中 → 修复规划中 | code-plan 完成 BUG-00004 详细设计(本文件末尾 `## 详细设计` 段 + `./PLAN.md` + 7 份过程文档);拆 4 个任务 T-001 ~ T-004;其他 6 个技能旁路验证仅静态校验,不修复 |
+| 2026-06-22 20:50 | 修复规划中 → 修复编码中 | code-it 开始实施 TASK-BUG-00004-00001(步骤 8.7 新增 + 步骤 9/10/11 守卫) |
+| 2026-06-22 20:55 | (任务 T-001 进行中) | code-it 完成 TASK-BUG-00004-00001(`code-it/SKILL.md` 新增 114 行 `### 步骤 8.7` + 步骤 9/10/11 段首加守卫;`git diff --stat` 1 file changed, +118/-1);`doneCount=1/totalCount=4` → 状态维持 `修复编码中` |
+| 2026-06-22 21:00 | (任务 T-002 进行中) | code-it 开始实施 TASK-BUG-00004-00002(步骤 13/16 + templates/RESULT.md 改造) |
+| 2026-06-22 21:10 | (任务 T-002 完成) | code-it 完成 TASK-BUG-00004-00002(`code-it/SKILL.md` 步骤 13/16 末尾追加 +24 行引用块 + `templates/RESULT.md` line 101-105 "## 8. 关联任务" → "## 8. 过程文档清单(由 code-it 内化,BUG-00004 新增)";`git diff --stat` 2 files changed, +177/-2;`doneCount=2/totalCount=4` → 状态维持 `修复编码中`;**步骤 8.7 守卫首次生效**,本任务不生成 `compile-and-run.md` / `test-results.md`) |
+| 2026-06-22 21:20 | (任务 T-003 进行中) | code-it 开始实施 TASK-BUG-00004-00003(端到端验证) |
+| 2026-06-22 22:00 | (任务 T-003 完成) | code-it 完成 TASK-BUG-00004-00003(端到端验证 — 静态校验 `code-it/SKILL.md` 步骤 8.7 line 805-914 + 步骤 9/10/11 守卫 line 917/926/936 + `templates/RESULT.md` §8 改造 line 101-136 全部就位;**T-002 真实产物 = 决定性证据**(4 个文件,守卫决定性生效,跳过 `compile-and-run.md` / `test-results.md`,生成 `process-doc-decisions.md`);静态模拟判定场景 1(纯 Markdown 改造 7/7 观察点命中)+ 场景 3(纯文档任务 3/3 观察点命中);本任务**不**真跑 `code-it TASK-REQ-00039-00003`(避免状态污染,沿用 §偏离 1);`doneCount=3/totalCount=4` → 状态维持 `修复编码中`) |
+| 2026-06-22 23:00 | (任务 T-004 完成) | code-it 完成 TASK-BUG-00004-00004(7 个技能旁路验证 — `code-require` / `code-design` / `code-check` / `code-plan` / `code-fix` / `code-init` / `code-rule`;4 个有判定表 / 3 个无判定表;全部"实际过度生成风险" = 低 / 中(0 触发) / 极低 / 无;**均不修复**;`side-skill-verification.md` 报告完整;与 BUG-00004 详细设计 §6 末字面 100% 一致;§偏离 1(PLAN.md 字面歧义);`doneCount=4/totalCount=4` → `itEndStateRollback` 推进 BUG-00004 状态 `修复编码中` → `待审查`;末尾兜底提交累积 T-001 + T-002 + T-003 + T-004 一起 commit) |
 
 ---
 
@@ -183,6 +190,9 @@
 | 2026-06-22 20:15 | 状态推进 | BUG-00004 状态"报告"→"调查中"(根因初步定稿) | BUG-00004 |
 | 2026-06-22 20:30 | 状态推进 | BUG-00004 状态"调查中"→"修复规划中"(code-plan 完成详细设计 + 4 任务拆分) | BUG-00004 |
 | 2026-06-22 20:30 | 计划完成 | code-plan 完成 BUG-00004 详细设计 + 4 任务拆分(9 份文档:RESULT.md + PLAN.md + 7 份过程文档;3 个"不生成"判定) | BUG-00004 |
+| 2026-06-22 22:00 | 任务完成 | TASK-BUG-00004-00003 · [文档] 端到端验证(开发状态:已完成;静态校验全部就位;T-002 真实产物 = 决定性证据;场景 1 7/7 + 场景 3 3/3 观察点命中;不真跑 TASK-REQ-00039-00003 避免状态污染) | TASK-BUG-00004-00003 |
+| 2026-06-22 23:00 | 任务完成 | TASK-BUG-00004-00004 · [文档] 7 个技能旁路验证(开发状态:已完成;4 个有判定表 / 3 个无判定表;全部"实际过度生成风险" = 低 / 中(0 触发) / 极低 / 无;**均不修复**;`side-skill-verification.md` 报告完整;与 BUG-00004 详细设计 §6 末字面 100% 一致;§偏离 1(PLAN.md 字面歧义);末尾兜底提交累积 T-001 + T-002 + T-003 + T-004 一起 commit) | TASK-BUG-00004-00004 |
+| 2026-06-22 23:00 | 状态推进 | BUG-00004 状态"修复编码中"→"待审查"(`itEndStateRollback` 子步骤执行,`doneCount=4/totalCount=4`,`oldStatus=修复编码中` → `newStatus=待审查`) | BUG-00004 |
 
 ---
 
