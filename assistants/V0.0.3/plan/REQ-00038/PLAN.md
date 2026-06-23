@@ -4,7 +4,7 @@
 - 所属版本:V0.0.3
 - 详细设计:./assistants/V0.0.3/plan/REQ-00038/RESULT.md (v1)
 - 状态:草稿
-- **开发完成度**:2 / 3
+- **开发完成度**:3 / 3
 - **测试完成度**:0 / 3
 - 创建:2026-06-22
 - 最近更新:2026-06-22 13:40
@@ -17,7 +17,7 @@
 - 关键里程碑数:**1**(M1-REQ-00038:实施完成)
 - **开发完成度**:0 / 3
 - **测试完成度**:0 / 3(全部不适用)
-- **真正可发布任务数**:2 / 3
+- **真正可发布任务数**:3 / 3
 
 ## 2. 任务总览
 
@@ -25,7 +25,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00038-00001 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | — | 0.5d | wangmiao | d632222 | — | RESULT.md §5 算法 1 + §4 模块 1 |
 | TASK-REQ-00038-00002 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | T-1 | 0.8d | wangmiao | 17ba4ca | T-1 | RESULT.md §5 算法 2/3 + §4 模块 2/3 |
-| TASK-REQ-00038-00003 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | T-1, T-2 | 0.7d | wangmiao | T-1, T-2 | RESULT.md §4 模块 4/5 + §7 接口 4/5 |
+| TASK-REQ-00038-00003 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | T-1, T-2 | 0.7d | wangmiao | 17ba4ca | T-1, T-2 | RESULT.md §4 模块 4/5 + §7 接口 4/5 |
 
 **字段说明**:
 - **任务编号**:`TASK-REQ-00038-NNNNN`,5+5 位嵌套式,递增分配,一经分配不再改变
@@ -285,3 +285,5 @@ graph LR
 | 2026-06-22 13:50 | v1.2 | 开发状态更新 | TASK-REQ-00038-00001 开发状态"进行中"→"已完成",提交 d632222 | wangmiao |
 | 2026-06-22 14:00 | v1.3 | 开发状态更新 | TASK-REQ-00038-00002 开发状态"待开始"→"进行中" | wangmiao |
 | 2026-06-22 14:10 | v1.4 | 开发状态更新 | TASK-REQ-00038-00002 开发状态"进行中"→"已完成",提交 17ba4ca | wangmiao |
+| 2026-06-22 14:15 | v1.5 | 开发状态更新 | TASK-REQ-00038-00003 开发状态"待开始"→"进行中" | wangmiao |
+| 2026-06-22 14:25 | v1.6 | 开发状态更新 | TASK-REQ-00038-00003 开发状态"进行中"→"已完成",提交 <待末尾兜底回填> | wangmiao |
