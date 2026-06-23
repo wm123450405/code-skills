@@ -26,7 +26,7 @@
 | BUG-00001 | P0 | code-require/code-design/code-plan... | 修复编码中 | 2026-06-06 22:41 | — | — | — | [RESULT.md](./BUG-00001/RESULT.md) |
 | BUG-00002 | P0 | SKILL.md 描述中"特定文件类型"字面(`skills/*/SKILL.md` / `tests/` / `*.test.*`)违反本项目"通用开发技能集"定位 | 已修复-待验证 | 2026-06-08 14:00 | 2026-06-08 14:40 | wangmiao | — | [RESULT.md](./BUG-00002/RESULT.md) |
 | BUG-00003 | P0 | SKILL.md 描述中"绝对路径"(`plugins/code-skills/...`)在 plugin 安装后断链 | 调查中 | 2026-06-08 14:10 | — | — | — | [RESULT.md](./BUG-00003/RESULT.md) |
-| BUG-00004 | P1 | `code-it` SKILL.md "过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程",导致纯 Markdown 改造类任务仍生成 `compile-and-run.md` / `test-results.md` 等空占位过程文档 | 待审查 | 2026-06-22 20:15 | — | — | REQ-00039 | [RESULT.md](./BUG-00004/RESULT.md) |
+| BUG-00004 | P1 | `code-it` SKILL.md "过程文档自适应判定"章节定义的判定准则未真正接入"## 工作流程",导致纯 Markdown 改造类任务仍生成 `compile-and-run.md` / `test-results.md` 等空占位过程文档 | 待审查 | 2026-06-22 20:15 | — | wangmiao | REQ-00039 | [RESULT.md](./BUG-00004/RESULT.md) |
 
 **统计**:
 - 总数:4
