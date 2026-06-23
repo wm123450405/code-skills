@@ -288,12 +288,12 @@
 | TASK-BUG-00004-00004 | BUG-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 已完成 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | 2026-06-22 23:00 | — | BUG-00004 |
 | TASK-REQ-00038-00001 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | 2026-06-22 13:50 | d632222 | — |
 | TASK-REQ-00038-00002 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | 2026-06-22 14:10 | 17ba4ca | — |
-| TASK-REQ-00038-00003 | REQ-00038 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | 2026-06-22 14:25 | <待末尾兜底回填> | — |
+| TASK-REQ-00038-00003 | REQ-00038 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | 2026-06-22 14:25 | ae59fd2 | — |
 
 **统计**:
 - 总任务数:97
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):**91**
-- 开发已完成 / 未完成:**91 / 6**
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):**94**
+- 开发已完成 / 未完成:**94 / 3**
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / **97** / 0
 
 ---
