@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-22 13:40(REQ-00038 详细设计与编码计划完成,看板 §详细设计与任务计划汇总追加 1 行 + §任务清单追加 3 行 + §里程碑追加 1 条 + §变更记录追加 1 条)
+- 最近更新:2026-06-22 13:50(REQ-00038 T-1 code-it 步骤 8a.0 模块识别完成,看板 §任务清单 T-1 行开发=已完成 ∧ 完成时间填入 + §变更记录追加 1 条)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -286,7 +286,7 @@
 | TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
 | TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | 2026-06-22 22:00 | — | BUG-00004 |
 | TASK-BUG-00004-00004 | BUG-00004 | 文档 | 缺陷修复 | [文档] 其他 6 个技能旁路验证(grep 判定表 + 静态校验,**不修改**) | 已完成 | 不适用 | plugins/code-skills/skills/{code-require,code-design,code-check,code-plan,code-fix,code-init,code-rule}/SKILL.md | 2026-06-22 23:00 | — | BUG-00004 |
-| TASK-REQ-00038-00001 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | — | — | — |
+| TASK-REQ-00038-00001 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | 2026-06-22 13:50 | <待末尾兜底回填> | — |
 | TASK-REQ-00038-00002 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | — | — | — |
 | TASK-REQ-00038-00003 | REQ-00038 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | — | — | — |
 
@@ -588,6 +588,7 @@
 | 2026-06-22 13:30 | 设计新增 | REQ-00038 概要设计完成(8 决策 / 8 不变量 / 1 主改造 + 1 模板追加 + 1 文档字面改写 / 0 新增依赖),整体=--balanced,功能性=高(用户手动 1 问确认);0 触发扩展性问路(只读 monorepo 声明文件,不引入新依赖);0 冲突;候选 3 任务(由 code-plan 阶段细化);§概要设计清单追加 1 行 | REQ-00038 |
 | 2026-06-22 20:30 | 计划完成 | code-plan 完成 BUG-00004 详细设计(9 份文档:本文件 + `./assistants/V0.0.3/fix/BUG-00004/PLAN.md` + 7 份过程文档);拆 4 个任务(T-001 ~ T-004,全部 触发/来源=缺陷修复);M1-BUG-00004 新增 | BUG-00004 |
 | 2026-06-22 13:40 | 计划更新 | REQ-00038 详细设计与编码计划完成(共 3 个任务,全部开发=待开始,测试=不适用;整体=`--balanced` + 功能性=高;0 派生"更新看板"任务,沿用 REQ-00017 强约束;3 任务严格串行 T-1 → T-3;AC-1 ~ AC-7 全部纳入 T-3 验证;1 里程碑 M1-REQ-00038);7 份过程文档(materials-index / design-notes / module-details / interface-specs / risk-analysis / rule-compliance / 0 clarifications)已生成 | REQ-00038 |
+| 2026-06-22 13:50 | 任务完成 | TASK-REQ-00038-00001 · [修改] code-it 步骤 8a.0 模块识别(新增子步骤)(开发状态:已完成;`git diff --stat` 1 file changed, +121 insertions, 0 deletions;`plugins/code-skills/skills/code-it/SKILL.md` L555-L675 新增 `### 步骤 8a.0 — 模块识别` 子节 + 9 子节(目标 / 识别优先级链 / 算法 / 输出与缓存 / 边界 / 性能 / 屏显契约 / 退出码契约 / 约束);frontmatter L1-3 字节级保留;INV-1 ~ INV-3 / INV-8 全部满足;8 套声明文件解析手写 0 新增三方依赖;末尾兜底 1 次 commit) | TASK-REQ-00038-00001 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间

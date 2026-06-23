@@ -552,6 +552,127 @@ function preTaskGuard(taskNum, version):
 - 重要的临时决策、踩坑、查到的关键信息都记
 - **审查改修任务**额外记录:每条 review 发现(F-1, F-2, ...)的修复情况
 
+### 步骤 8a.0 — 模块识别
+
+> 本步骤是 `code-it` 在"## 步骤 8 实施开发"**之后**、"## 步骤 8a 项目可测性守卫"**之前**的**模块识别**。**仅**在 `code-it` 步骤 1 判定为任务分支(任务编码匹配 `^TASK-REQ-\d{5}-\d{5}$` 5+5 位嵌套式)时触达;缺陷分支(`^TASK-BUG-...`)不触达。
+> 沿用本任务上游详细设计 §5 算法 1(综合 8 套 monorepo 声明文件 + git diff 公共子目录 + CWD 根退化 3 层优先级链);0 新增三方依赖(8 套声明文件解析手写);0 触发 `AskUserQuestion`(NFR-3 强约束)。
+
+#### 步骤 8a.0.1 目标
+
+在 `code-it` 步骤 8 实施开发完成、拿到 `git diff --name-only` 输出后,综合 8 套 monorepo 声明文件 + git diff 公共子目录 + CWD 根退化 3 层优先级链,识别当前任务变更文件所属的模块路径列表,缓存到 `code-it` 内部,供步骤 8a 守卫(对每个模块独立执行 7 项检查)与步骤 8.5 单测输出(对每个通过的模块识别约定测试目录)消费。
+
+#### 步骤 8a.0.2 识别优先级链
+
+```
+1. 声明文件检测(monorepo workspace, 高优先级):
+ ├─ pnpm-workspace.yaml        → 读 `packages` 字段
+ ├─ package.json + workspaces  → 枚举 `packages` / `nohoist`
+ ├─ lerna.json                 → 读 `packages` 字段
+ ├─ nx.json / turbo.json       → 读 workspace 配置
+ ├─ pom.xml                    → 读 `<modules>` 字段(Maven 多模块)
+ ├─ Cargo.toml + [workspace]   → 读 `members` 字段
+ └─ go.mod                     → 约定式(module 路径 + 子目录)
+2. git diff 公共子目录退化(无声明文件):
+ → 变更文件路径的最长公共子目录(LCP)
+3. CWD 根退化(无变更路径, 理论不可能):
+ → ['.'] 兜底
+```
+
+#### 步骤 8a.0.3 算法(伪代码)
+
+```
+function identifyModules(changedFiles: string[]): string[]
+ 1. 声明文件检测(高优先级)
+  if exists('pnpm-workspace.yaml') and yamlParseable('pnpm-workspace.yaml'):
+   return readPnpmWorkspaces()  // YAML.parse → packages 字段
+  if exists('package.json') and hasWorkspacesField('package.json'):
+   return readNpmWorkspaces()   // package.json#workspaces 字段
+  if exists('lerna.json') and jsonParseable('lerna.json'):
+   return readLernaPackages()   // JSON.parse → packages 字段
+  if exists('nx.json') or exists('turbo.json'):
+   return readNxTurboWorkspace() // nx.json / turbo.json workspace 配置
+  if exists('pom.xml') and xmlParseable('pom.xml'):
+   return readMavenModules()    // pom.xml#modules 字段
+  if exists('Cargo.toml') and hasWorkspaceSection('Cargo.toml'):
+   return readCargoWorkspace()  // Cargo.toml#workspace.members 字段
+  if exists('go.mod'):
+   return inferGoModules()      // 约定式:module 路径 + 子目录
+
+ 2. git diff 退化(无声明文件)
+  if changedFiles.length > 0:
+   lcp = longestCommonPrefix(changedFiles)
+   if lcp and lcp != '.':
+    return [lcp]  // 返回 LCP 目录
+   return ['.']   // 退化到 CWD 根
+
+ 3. CWD 根退化(空 changedFiles, 理论不可能)
+  return ['.']  // E-7 兜底
+```
+
+#### 步骤 8a.0.4 输出与缓存
+
+- **输出**:`modules: string[]` —— 模块路径列表(相对 CWD;单模块工程 = `['.']`)
+- **缓存**:任务级内存缓存,任务生命周期内复用
+- **下游消费者**:
+ - `code-it` 步骤 8a 守卫:对每个模块独立执行 7 项检查
+ - `code-it` 步骤 8.5 单测输出:对每个通过的模块识别约定测试目录
+- **审计日志**:`work-log.md` 追加"## 模块识别"小节,记录识别的模块列表(NFR-5 锁定)
+
+#### 步骤 8a.0.5 边界与异常
+
+| E 边界 | 触发场景 | 处理 |
+| --- | --- | --- |
+| **E-1** | 声明文件存在但格式异常(如 `pnpm-workspace.yaml` 解析失败 / `package.json#workspaces` 非数组) | 退化为下一优先级链 → 屏显 `⚠ code-it 模块识别:声明文件解析失败,退化为 git diff 公共子目录(<错误信息>)` |
+| **E-2** | `git diff --name-only` 失败(非 git 仓库 / `git` 命令不可用) | 退化为 CWD 根(原 REQ-00034 行为)→ 屏显 `⚠ code-it 模块识别:git diff 失败,退化为 CWD 根` |
+| **E-3** | 变更路径跨越多个 LCP(最长公共前缀 = 根) | 退化为 CWD 根,屏显警告 |
+| **E-4** | 解析结果与变更路径不一致(声明文件 packages 不含变更路径) | 以声明文件结果为准,屏显警告 |
+| **E-7** | 空 `changedFiles`(理论不可能) | 退化为 CWD 根兜底 |
+
+#### 步骤 8a.0.6 性能(NFR-1)
+
+- **总耗时**:**< 2 秒**(典型 100 模块 monorepo)
+ - 声明文件检测:典型 < 50ms(单次 `fs.access` + `fs.readFile`)
+ - git diff 退化:典型 < 10ms(`Bash: git diff --name-only`)
+ - LCP 计算:O(n),n = 变更文件数,典型 < 1ms
+- **跳过策略**:N/A
+
+#### 步骤 8a.0.7 屏显契约
+
+**成功**:
+```
+=== code-it 模块识别(步骤 8a.0)===
+任务:<任务编码>
+识别结果:N 个模块(<comma-separated 模块路径列表>)
+识别方式:<pnpm-workspace / package.json#workspaces / lerna / nx / turbo / pom.xml#modules / Cargo.toml#workspace.members / go.mod / git diff LCP / CWD 根退化>
+```
+
+**部分退化**(声明文件解析失败):
+```
+⚠ code-it 模块识别:声明文件解析失败(<错误信息>),退化为 git diff 公共子目录
+=== code-it 模块识别(步骤 8a.0)===
+任务:<任务编码>
+识别结果:N 个模块(<LCP 结果>)
+识别方式:git diff LCP
+```
+
+#### 步骤 8a.0.8 退出码契约
+
+| 场景 | 退出码 | `code-auto` 响应 |
+| --- | --- | --- |
+| 模块识别成功 | 0 | 继续到步骤 8a |
+| 模块识别全失败(声明文件 + git diff + 兜底全失败) | 0 | 继续到步骤 8a(`['.']` 兜底,字节级沿用 REQ-00034 行为) |
+| 任务编码不存在 / 无 `.current-version` | ≠ 0 | 中断(原行为) |
+
+#### 步骤 8a.0.9 约束
+
+- **不**修改 frontmatter(L1-3 字节级保留,NFR-3)
+- **不**修改既有"## 步骤 0a 前置任务守卫" / "## 步骤 8 实施开发" / "## 步骤 8a 项目可测性守卫" / "## 步骤 8.5 按需写单测" / "## 步骤 8.6 逻辑行统计" / "## 步骤 8.7 过程文档自适应判定执行" / "## 步骤 9 编译验证" / "## 步骤 10 启动运行验证" 等既有章节
+- **不**修改"## 标题解析(REQ-00013 新增)" / "## 过程文档自适应判定" / "## 不要做的事" 等既有章节
+- **不**触发 `AskUserQuestion`(NFR-3 强约束)
+- **不**新增 CLI 参数(NFR-3 强约束)
+- **不**新增三方依赖(NFR-3 沿用 REQ-00034;8 套声明文件解析手写)
+- **不**触发 `dashboard-conventions §规则 1` 三同步(本步骤不修改看板字段)
+
 ### 步骤 8a — 项目可测性守卫
 
 > 本步骤是 `code-it` 在"## 步骤 8 实施开发"**之后**、"## 步骤 8.5 按需写单测"**之前**的**守卫**。**仅**在 `code-it` 步骤 1 判定为任务分支(任务编码匹配 `^TASK-REQ-\d{5}-\d{5}$` 5+5 位嵌套式)时触达;缺陷分支(`^TASK-BUG-...`)守卫不触达。
