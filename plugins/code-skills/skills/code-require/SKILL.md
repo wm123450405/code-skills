@@ -331,6 +331,8 @@ function parseResultTitle(filePath: string): string {
  - `影响的 RESULT.md 章节`
 
 > **不要一次问完所有问题**。每轮聚焦 1-3 个最阻塞的点,得到答复后先更新对应章节,再迭代出下一批问题。
+>
+> **过滤技术选型类问题**(REQ-00033 / BUG-00005 修复):在生成 `AskUserQuestion` 候选选项后,先按关键词集 `{技术选型, 实现方式, 框架, 库, 工具, monorepo, single-package, pnpm, npm, yarn, Jest, Vitest, Mocha, React, Vue, Angular, 数据库, ORM, 消息队列, 缓存, Redis, MongoDB}` 逐项匹配。命中任一关键词的候选选项,本轮**不**弹出 `AskUserQuestion`,改为追加到 `clarifications.md` 的 `## 延迟到 code-design 阶段(技术选型类)` 区段(每条含:`时间` / `原始问题` / `命中的关键词` / `延迟到=code-design` 字段,留待 `code-design` 阶段统一分析);未命中关键词的候选选项照常弹 `AskUserQuestion`。本子节与"## 不要做的事"步骤 615 配套 — 步骤 615 声明"不涉及技术选型",本子节给出"发现技术选型类候选选项时的具体处理动作";算法与边界条件详见 BUG-00005 修复详细设计 §5.1。
 
 ### 步骤 8A — 撰写 RESULT.md
 按 `templates/requirements.md` 的章节结构生成完整 `RESULT.md`:
