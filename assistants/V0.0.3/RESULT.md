@@ -291,7 +291,7 @@
 | TASK-REQ-00038-00003 | REQ-00038 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | 2026-06-22 14:25 | ae59fd2 | — |
 | TASK-BUG-00005-00001 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 7A 添加技术选型过滤器 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 7A(L322-335) | 2026-06-23 | 5250a54 | — | BUG-00005 | — | — |
 | TASK-BUG-00005-00002 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 8A 添加 NFR 技术选型过滤器 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 8A(L337-353) | 2026-06-23 | a94bda2 | — | T-1, BUG-00005 | — | — |
-| TASK-BUG-00005-00003 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 615 硬约束增强(引用步骤 7A/8A) | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 615(L619-620) | 2026-06-23 | — | — | T-1, T-2, BUG-00005 | — | — |
+| TASK-BUG-00005-00003 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 615 硬约束增强(引用步骤 7A/8A) | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 615(L619-620) | 2026-06-23 | c3206c9 | — | T-1, T-2, BUG-00005 | — | — |
 
 **统计**:
 - 总任务数:103
