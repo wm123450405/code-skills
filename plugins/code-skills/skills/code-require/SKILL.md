@@ -349,6 +349,8 @@ function parseResultTitle(filePath: string): string {
 11. 关联需求(引用 6A 的结果)
 12. 待澄清 / 未决项(本轮无法澄清的,留作后续)
 13. 变更记录(初始条目)
+>
+> **过滤技术选型类 NFR**(REQ-00033 / BUG-00005 修复):在按上述章节结构生成 NFR 章节时,先按关键词集 `{技术选型, 实现方式, 框架, 库, 工具, 数据库, ORM, 消息队列, 缓存, Redis, MongoDB, pnpm-workspace, monorepo, single-package}` 逐项扫描每条 NFR 候选。命中任一关键词的 NFR 候选,本轮**不**写入 `RESULT.md` 的 NFR 章节,改为追加到 `clarifications.md` 的 `## NFR 延迟到 code-design 阶段(技术选型类)` 区段(每条含:`时间` / `原始 NFR` / `命中的关键词` / `延迟到=code-design` 字段,留待 `code-design` 阶段统一分析);未命中关键词的 NFR 候选照常写入 `RESULT.md` 的 NFR 章节。本子节与步骤 7A 末尾"过滤技术选型类问题"子节 + "## 不要做的事"步骤 615 配套 — 三者形成"输入澄清(步骤 7A)+ NFR 记录(步骤 8A)+ 硬约束声明(步骤 615)"的完整技术选型过滤链;算法与边界条件详见 BUG-00005 修复详细设计 §5.2。
 
 要求:
 - **详尽**:任何一句需求都展开为可独立验证的描述
