@@ -24,7 +24,7 @@
 | 任务编号 | 类型 | 触发/来源 | 标题 | 开发状态 | 测试状态 | 涉及文件/模块 | 前置任务 | 估算 | 责任人 | 关联任务 | 对应设计章节 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00038-00001 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | — | 0.5d | wangmiao | d632222 | — | RESULT.md §5 算法 1 + §4 模块 1 |
-| TASK-REQ-00038-00002 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | T-1 | 0.8d | wangmiao | d632222 | T-1 | RESULT.md §5 算法 2/3 + §4 模块 2/3 |
+| TASK-REQ-00038-00002 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | T-1 | 0.8d | wangmiao | 17ba4ca | T-1 | RESULT.md §5 算法 2/3 + §4 模块 2/3 |
 | TASK-REQ-00038-00003 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 待开始 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | T-1, T-2 | 0.7d | wangmiao | T-1, T-2 | RESULT.md §4 模块 4/5 + §7 接口 4/5 |
 
 **字段说明**:
@@ -284,4 +284,4 @@ graph LR
 | 2026-06-22 13:45 | v1.1 | 开发状态更新 | TASK-REQ-00038-00001 开发状态"待开始"→"进行中" | wangmiao |
 | 2026-06-22 13:50 | v1.2 | 开发状态更新 | TASK-REQ-00038-00001 开发状态"进行中"→"已完成",提交 d632222 | wangmiao |
 | 2026-06-22 14:00 | v1.3 | 开发状态更新 | TASK-REQ-00038-00002 开发状态"待开始"→"进行中" | wangmiao |
-| 2026-06-22 14:10 | v1.4 | 开发状态更新 | TASK-REQ-00038-00002 开发状态"进行中"→"已完成",提交 <待末尾兜底回填> | wangmiao |
+| 2026-06-22 14:10 | v1.4 | 开发状态更新 | TASK-REQ-00038-00002 开发状态"进行中"→"已完成",提交 17ba4ca | wangmiao |
