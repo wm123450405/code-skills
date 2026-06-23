@@ -681,7 +681,7 @@ function identifyModules(changedFiles: string[]): string[]
 
 #### 步骤 8a.1 守卫检查项清单(7 项,字节级沿用 `code-unit` 步骤 0a.1)
 
-> 仅检查项目根,**不**递归子目录(避免误判)。命中任一 → 可测,全部不命中 → 不可测。
+> 仅检查模块目录(对每个识别的模块独立执行 7 项检查),**不**递归子目录(避免误判)。命中任一 → 该模块可测,全部不命中 → 该模块不可测;**整体** testable = 至少 1 个模块命中。
 
 | 序号 | 文件/目录 | 类型 | 验证方式 | 备注 |
 | --- | --- | --- | --- | --- |
@@ -696,13 +696,14 @@ function identifyModules(changedFiles: string[]): string[]
 #### 步骤 8a.2 守卫判定逻辑(字节级沿用 `code-unit` 步骤 0a.2)
 
 ```
-1. 顺序执行 7 项检查(复杂度递减:复杂验证优先)
+1. 接收步骤 8a.0 模块识别结果 modules: string[]
+2. 对每个模块独立执行 7 项检查(复杂度递减:复杂验证优先)
  ├─ 检查 1(package.json):Glob → 存在 → Read 验证 scripts.test
  ├─ 检查 2(pyproject.toml):Glob → 存在 → Read 验证测试配置
  ├─ 检查 3-6:仅 Glob 存在性
  └─ 检查 7:Glob 目录存在性
-2. 命中任一 → testable = True → 屏幕输出"✓ code-it 守卫通过" → 进入"## 步骤 8.5"
-3. 全部不命中 → testable = False → 屏幕输出"⏭ code-it 守卫不通过" → 进入"## 步骤 8a.3 跳过流程"
+3. 聚合:至少 1 个模块命中 → testable = True → 屏幕输出"✓ code-it 守卫通过" → 进入"## 步骤 8.5"
+4. 全部模块不命中 → testable = False → 屏幕输出"⏭ code-it 守卫不通过" → 进入"## 步骤 8a.3 跳过流程"
 ```
 
 #### 步骤 8a.3 守卫不通过 → 跳过流程(字节级沿用 `code-unit` 步骤 0a.3)
@@ -719,12 +720,40 @@ function identifyModules(changedFiles: string[]): string[]
 
 #### 步骤 8a.4 屏幕报告格式(字节级沿用 `code-unit` 步骤 0a.4)
 
-**守卫通过**:
+**守卫通过**(多模块命中示例,monorepo 根无守卫命中 + 子包命中):
 ```
 ✓ code-it 守卫通过(项目可测)进入正常流程
 
 任务:<任务编码>
-守卫检查:
+模块识别:<N 个模块> [<comma-separated 模块路径列表>]
+守卫检查(模块级):
+ 模块 <module-1>:
+ - package.json:✓ (含 scripts.test)
+ - pyproject.toml:✗
+ - Cargo.toml:✗
+ - go.mod:✗
+ - pom.xml:✗
+ - build.gradle:✗
+ - test/ 目录:✗
+ 模块 <module-2>:
+ - package.json:✗
+ - pyproject.toml:✗
+ - Cargo.toml:✗
+ - go.mod:✗
+ - pom.xml:✗
+ - build.gradle:✗
+ - test/ 目录:✗
+项目可测(至少 1 个模块命中),继续按需写单测流程
+```
+
+**守卫通过**(单模块命中示例,字节级沿用 REQ-00034 行为):
+```
+✓ code-it 守卫通过(项目可测)进入正常流程
+
+任务:<任务编码>
+模块识别:1 个模块 [. ]
+守卫检查(模块级):
+ 模块 . :
  - package.json:✓ (含 scripts.test)
  - pyproject.toml:✗
  - Cargo.toml:✗
@@ -780,7 +809,7 @@ function identifyModules(changedFiles: string[]): string[]
 | 任务类型 | 判定 | 处理 | 产出物 |
 | --- | --- | --- | --- |
 | `文档` | 任务类型 = `文档` | **不**写单测;写 `unit-test-results.md` 占位 = "本任务不涉及单元测试" | `code/<任务编码>/unit-test-results.md` |
-| `新增` / `修改` / `重构` / `修复` + 涉及"函数级"改动 | 任务类型 = `新增` / `修改` / `重构` / `修复` + 检测到"函数级"代码改动 | 写单测到 CWD 下项目测试目录;跑通(`Bash` 跑项目测试命令);写 `unit-test-results.md` | `code/<任务编码>/unit-test-results.md` |
+| `新增` / `修改` / `重构` / `修复` + 涉及"函数级"改动 | 任务类型 = `新增` / `修改` / `重构` / `修复` + 检测到"函数级"代码改动 | 对每个通过的模块识别其约定测试目录(7 层优先级链:package.json#scripts.test 含 jest/vitest/mocha → pyproject.toml#tool.pytest.ini_options → Cargo.toml → go.mod → pom.xml/build.gradle → 模块根 test/ → CWD 根 test/ 退化);多模块分别写单测;跑通(`Bash` 跑项目测试命令);写 `unit-test-results.md` | `code/<任务编码>/unit-test-results.md` |
 | `配置` / `类型定义` / 其他 | 任务类型不属于上述 5 类 | **不**写单测;写 `unit-test-results.md` 占位 = "本任务不涉及单元测试" | `code/<任务编码>/unit-test-results.md` |
 
 #### 步骤 8.5.3 屏幕输出(字节级沿用 `code-unit` 步骤 7)
@@ -820,7 +849,7 @@ loop:
 #### 步骤 8.5.5 产出物格式
 
 - **路径**:`code/<任务编码>/unit-test-results.md`
-- **格式**:Markdown,7 字段(沿用`code-it/templates/RESULT.md` 模板新增"## 单元测试"小节)
+- **格式**:Markdown,既有"## 单元测试(由 code-it 内化)"小节字节级保留(沿用 NFR-10),**追加**"## 各模块单测结果"小节(沿用`code-it/templates/RESULT.md` 模板多模块支持,字段:模块路径 / 守卫检查 / 检查位置 / 测试框架 / 测试文件 / 跑通情况)
 - **既有字段 0 改**:仅追加,不修改既有章节(沿用 NFR-10)
 
 #### 步骤 8.5.6 退出码契约
