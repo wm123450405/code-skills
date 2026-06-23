@@ -289,7 +289,7 @@
 | TASK-REQ-00038-00001 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a.0 模块识别(新增子步骤) | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8 之后新增"## 步骤 8a.0 — 模块识别" | 2026-06-22 13:50 | d632222 | — |
 | TASK-REQ-00038-00002 | REQ-00038 | 修改 | 详细设计 | [修改] code-it 步骤 8a 守卫位置 + 步骤 8.5 单测输出位置扩展 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8a.1 / 8a.2 / 8a.4 + §步骤 8.5.2 / 8.5.5 | 2026-06-22 14:10 | 17ba4ca | — |
 | TASK-REQ-00038-00003 | REQ-00038 | 修改 | 详细设计 | [修改] 模板追加"## 各模块单测结果"小节 + code-plan 任务粒度描述字面改写 + 端到端验证 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/templates/RESULT.md + plugins/code-skills/skills/code-plan/SKILL.md L473 / L496 + (端到端校验) | 2026-06-22 14:25 | ae59fd2 | — |
-| TASK-BUG-00005-00001 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 7A 添加技术选型过滤器 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 7A(L322-335) | 2026-06-23 | — | — | BUG-00005 | — | — |
+| TASK-BUG-00005-00001 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 7A 添加技术选型过滤器 | 已完成 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 7A(L322-335) | 2026-06-23 | 5250a54 | — | BUG-00005 | — | — |
 | TASK-BUG-00005-00002 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 8A 添加 NFR 技术选型过滤器 | 待开始 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 8A(L335-351) | — | — | — | T-1, BUG-00005 | — | — |
 | TASK-BUG-00005-00003 | BUG-00005 | 修改 | 缺陷修复 | [修改] code-require 步骤 615 硬约束增强(引用步骤 7A/8A) | 待开始 | 不适用 | plugins/code-skills/skills/code-require/SKILL.md §步骤 615 | — | — | — | T-1, T-2, BUG-00005 | — | — |
 
