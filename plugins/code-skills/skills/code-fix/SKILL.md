@@ -368,7 +368,144 @@ function detectStartability(cwd):
  ```
 3. 若有 `fix-plan.md` / `fix-work-log.md` / `fix-test-results.md` 等下游文件,把它们的关键摘要链接到 `RESULT.md`
 
-**关键:不重写 `RESULT.md` 的稳定章节**(缺陷描述、根因、修复方案等)。只在必要位置追加/更新状态。
+### 步骤 6.X — 复现产物登记(本需求新增子节,在"**关键:不重写**"注释前)
+
+> 本子节消费步骤 0.X 写入的 `context.canStart` / `context.startCommand` 上下文,执行复现动作并收集 3 类产物(日志 / 截图 / 交互数据)。沿用 NFR-4(失败降级不阻断)+ NFR-9(不修改项目源码)+ NFR-3(不触发 `AskUserQuestion` + 不新增 CLI 参数)。
+
+**触发条件**(全部满足时触发):
+1. `context.canStart == true`(步骤 0.X 探测结果)
+2. 当前是"新建分支"(更新分支**不**触发,避免反复启动,沿用 NFR-6 幂等)
+3. 用户在步骤 1 / 5 提供了"复现步骤"(`### 复现步骤` 段内容长度 > 0 判定)
+
+**9 步复现算法**:
+
+```
+function reproduceBug(bugNum, startCommand, reproSteps, timeout = 60):
+ reproduceDir = "./assistants/<version>/fix/" + bugNum + "/reproduce/"
+ mkdir(reproduceDir)
+
+ startedAt = now()
+ // 1. 启动子进程(在 cwd 下,不改 cwd)
+ childProcess = Bash: <startCommand> > reproduceDir + "run.stdout.log" 2> reproduceDir + "run.stderr.log"
+
+ // 2. 等 5s(给程序启动时间)
+ sleep 5s
+
+ let exitCode = 0
+ let reproduceResult = "已复现"
+ let failureReason = null
+
+ // 3. 执行复现步骤(超时控制,沿用 executeStep 3 类分发)
+ try:
+ await Promise.race([
+ Promise.all(reproSteps.map(step => executeStep(step, reproduceDir))),
+ sleep(timeout * 1000).then(() => { throw new TimeoutError() })
+ ])
+ except TimeoutError:
+ exitCode = 124
+ reproduceResult = "复现失败(超时)"
+ failureReason = "Timeout after " + timeout + "s"
+ except Exception as e:
+ exitCode = 1
+ reproduceResult = "复现失败"
+ failureReason = e.message
+
+ // 4. 终止子进程(SIGTERM 5s 后 SIGKILL,沿用 PD-3)
+ if childProcess.isRunning():
+ childProcess.kill("SIGTERM")
+ await sleep(5s)
+ if childProcess.isRunning():
+ childProcess.kill("SIGKILL")
+
+ endedAt = now()
+
+ // 5. 合并 stdout + stderr → run.log(加时间戳,沿用 PD-4)
+ mergeLogsWithTimestamp(reproduceDir + "run.stdout.log", reproduceDir + "run.stderr.log", reproduceDir + "run.log")
+
+ // 6. 写元信息 RESULT-meta.json(单行 JSON,沿用 PD-5)
+ meta = {
+ bugNum: bugNum,
+ startCommand: startCommand,
+ startedAt: startedAt,
+ endedAt: endedAt,
+ exitCode: exitCode,
+ reproduceResult: reproduceResult,
+ artifacts: listArtifacts(reproduceDir),
+ failureReason: failureReason
+ }
+ writeFile(reproduceDir + "RESULT-meta.json", jsonStringify(meta))
+
+ // 7. 写"## 复现产物登记" 区段到 fix/<BUG-NNN>/RESULT.md(模板已含)
+ writeReproSection(fixResultPath, meta, reproduceDir)
+
+ return meta
+```
+
+**executeStep(step, reproduceDir) 3 类分发**:
+
+```
+function executeStep(step, reproduceDir):
+ switch step.type:
+ case "cli":
+ // 直接执行命令,stdout/stderr 已通过 > 重定向到子进程
+ Bash: <step.command>
+ break
+ case "http":
+ // 交互数据采集(沿用 PD-7)
+ response = Bash: curl -X <step.method> -H "<step.headers>" -d '<step.body>' <step.url>
+ interaction = {
+ step: step.index, method: step.method, url: step.url,
+ headers: step.headers, requestBody: step.body,
+ responseStatus: response.status, responseBody: response.body,
+ responseHeaders: response.headers
+ }
+ writeFile(reproduceDir + "interaction-" + step.index + ".json", jsonStringify(interaction, indent=2))
+ break
+ case "browser":
+ // 截图采集链式降级:playwright → puppeteer → headless-chrome(沿用 PD-6)
+ if Bash: command -v playwright:
+ Bash: npx playwright screenshot <step.url> <reproduceDir + "screenshot-" + step.index + ".png">
+ elif Bash: command -v puppeteer:
+ Bash: npx puppeteer-cli screenshot <step.url> --output <reproduceDir + "screenshot-" + step.index + ".png">
+ elif Bash: command -v chrome:
+ Bash: chrome --headless --screenshot=<reproduceDir + "screenshot-" + step.index + ".png"> <step.url>
+ else:
+ log("⚠ 截图工具不可用,跳过截图产物")
+ break
+ default:
+ log("⚠ 未知步骤类型:" + step.type)
+```
+
+**11 边界 + 1 复合边界**(沿用 NFR-4 失败降级,**不**阻断 `code-fix` 主流程):
+
+| 边界 | 触发 | 处理 |
+| --- | --- | --- |
+| E-1 | `canStart = false`(无启动命令) | 跳过复现动作,`复现方式 = 文本复现`,继续登记 |
+| E-2 | 启动失败(exit ≠ 0) | 屏显 `⚠ 启动失败:<stderr 前 500 字符>` + `复现方式 = 文本复现` + 继续 |
+| E-3 | 复现超时(> 60s) | 终止进程 + 屏显 `⚠ 启动超时` + 降级为文本复现 |
+| E-4 | 复现未触发 bug | `复现结论 = 未复现`,继续登记 |
+| E-5 | 日志过大(> 10MB) | 截断到前 1MB + 屏显 `⚠ 日志过大,已截断到前 1MB` |
+| E-6 | 截图工具不可用 | 跳过截图,屏显 `⚠ 截图工具不可用,跳过截图产物` |
+| E-7 | 用户未给复现步骤 | 触发条件 3 不满足,跳过 |
+| E-8 | `code-fix` 复跑已有 BUG(更新分支) | 触发条件 2 不满足,跳过(沿用 NFR-6 幂等) |
+| E-9 | `code-auto` 上下文 | 沿用 NFR-3 / NFR-4(不触发 `AskUserQuestion` + 失败降级不阻断) |
+| E-10 | `reproduce/` 子目录已存在 | 沿用既有产物,`code-fix` 在目录后追加 `_2` / `_3` 等后缀 |
+| E-11 | `fix/<BUG-NNN>/` 目录被人工删除后复跑 | 沿用既有 `code-fix` 步骤 2 行为(自动 `mkdir -p`) |
+| E-12(复合) | 启动成功 + 步骤 1 失败 + 步骤 2 成功 | `reproduceResult = "已复现"`(以最后一步为准);产物清单含步骤 1 失败记录 |
+
+**屏显契约**:
+
+```
+=== code-fix 复现动作(步骤 6 末尾)===
+启动命令:<command>
+产物目录:<reproduceDir>
+=== code-fix 复现完成 ===
+退出码:<N>
+复现结论:<已复现 / 未复现 / 复现失败>
+产物数:<N> 个
+```
+
+**性能**:启动 5s + 步骤执行 < 55s = 总 < 60s(沿用 NFR-1)
 
 ### 步骤 7 — 写缺陷总览 `fix/RESULT.md`
 
