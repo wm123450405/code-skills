@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-25 14:50(TASK-REQ-00040-00005 完成,看板 §"任务清单" 追加开发状态/完成时间/提交哈希 + §"变更记录" 追加 1 条;其他区段未变)
+- 最近更新:2026-06-25 14:57(TASK-REQ-00040-00006 完成,看板 §"任务清单" 追加开发状态/完成时间 + §"变更记录" 追加 1 条;M1-REQ-00040 状态字面维持"待开始"待 code-check 评审后推进;其他区段未变)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -291,7 +291,7 @@
 | TASK-REQ-00040-00003 | REQ-00040 | 修改 | 详细设计 | [修改] bug.md 模板新增"## 复现产物登记" 区段(3 子项:产物清单/实际行为/复现结论)+ 文档头 2 字段(复现方式/产物路径) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/bug.md | 2026-06-25 14:42 | f029be6 | REQ-00040 |
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(在 fix/<BUG-NNN>/ 子目录列表) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | 2026-06-25 14:46 | 70f4632 | REQ-00040 |
 | TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-25 14:50 | 6a8d55c | REQ-00040 |
-| TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md | — | — | REQ-00040 |
+| TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md | 2026-06-25 14:57 | — | REQ-00040 |
 | TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | 2026-06-22 20:55 | — | BUG-00004 |
 | TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
 | TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | 2026-06-22 22:00 | — | BUG-00004 |
@@ -622,6 +622,7 @@
 | 2026-06-25 14:42 | 任务完成 | TASK-REQ-00040-00003 · [修改] bug.md 模板新增"## 复现产物登记" 区段(开发状态:已完成;`git diff --stat` 1 file changed, +361/-0 含过程文档;`plugins/code-skills/skills/code-fix/templates/bug.md` 文档头表 line 22 后新增 2 行(复现方式 / 产物路径)+ line 60 `---` 分隔符前插入"## 复现产物登记" 区段含 3 子项(产物清单 / 实际行为 / 复现结论),共约 +29 行;既有 9 区段字节级保留;0 偏离;AC-5 / AC-6 / AC-7 / AC-11 静态校验通过;commit f029be6) | TASK-REQ-00040-00003 |
 | 2026-06-25 14:46 | 任务完成 | TASK-REQ-00040-00004 · [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(开发状态:已完成;`git diff --stat` 1 file changed, +323/-1 含过程文档;`plugins/code-skills/skills/code-fix/templates/assistants-layout.md` BUG-00001 子目录列表末尾(line 19 `deviations.md` 后 + line 20 `BUG-00002/` 前)追加 1 行 `│ └── reproduce/ # 复现产物(由 code-fix 步骤 6 末尾生成,可选)`;既有结构(7 子文件 + 关键约束 + 文件名约定)字节级保留(仅位置后移 1 行);0 偏离;AC-7 / AC-11 静态校验通过;commit 70f4632) | TASK-REQ-00040-00004 |
 | 2026-06-25 14:50 | 任务完成 | TASK-REQ-00040-00005 · [文档] 端到端验证 12 条 AC(全部静态校验)+ 末尾兜底提交(开发状态:已完成;`git diff --stat` 1 file changed, +396/-0 含 AC-4 注释补充 + 5 份过程文档;`plugins/code-skills/skills/code-fix/SKILL.md` 步骤 6.X 子节 line 384 前补充 1 行注释 `// 产物路径:fix/<BUG-NNN>/reproduce/(模板字面,与 FR-4 + assistants-layout.md 同步)` 修复 AC-4 静态校验遗漏;12 条 AC 全部通过静态校验(本仓库 0 测试框架,全部降级为静态);**0 偏离**;M1-REQ-00040 里程碑完成定义全部满足 — 6 任务开发=已完成 ∧ 测试=不适用 ∧ AC-1 ~ AC-12 全过;commit 6a8d55c) | TASK-REQ-00040-00005 |
+| 2026-06-25 14:57 | 任务完成 | TASK-REQ-00040-00006 · [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(开发状态:已完成;`git diff --stat` 5 files changed, +323/-0 含 4 份过程文档 + 1 主产出物;`./assistants/V0.0.3/RESULT.md` 任务清单追加 1 行 T-006(待开始→已完成)+ 变更记录追加 1 条 + 文档头"最近更新" 刷新;**不**触碰 M1-REQ-00040 里程碑状态字面(沿用 `code-check` 推进职责);M1-REQ-00040 完成定义全部满足(6 任务开发=已完成 ∧ 测试=不适用 + AC-1 ~ AC-12 全过 + 1 次末尾兜底提交);**0 偏离**;末尾兜底提交落地;commit 4da784a) | TASK-REQ-00040-00006 |
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
 - `需求新增/变更/撤回`:需求清单变化
