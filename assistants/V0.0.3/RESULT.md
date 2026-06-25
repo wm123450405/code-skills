@@ -292,7 +292,7 @@
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(在 fix/<BUG-NNN>/ 子目录列表) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | 2026-06-25 14:46 | 70f4632 | REQ-00040 |
 | TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-25 14:50 | 6a8d55c | REQ-00040 |
 | TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md | 2026-06-25 14:57 | — | REQ-00040 |
-| TASK-REQ-00040-00007 | REQ-00040 | 修改 | 审查改修 | [修改] 移除 design line 175 越界字段类型字面 string(`string` → `字符串`) | 已完成 | 不适用 | assistants/V0.0.3/design/REQ-00040/RESULT.md line 175 | 2026-06-25 14:55 | — | TASK-REQ-00040-00001, TASK-REQ-00040-00002 |
+| TASK-REQ-00040-00007 | REQ-00040 | 修改 | 审查改修 | [修改] 移除 design line 175 越界字段类型字面 string(`string` → `字符串`) | 已完成 | 不适用 | assistants/V0.0.3/design/REQ-00040/RESULT.md line 175 | 2026-06-25 14:55 | d99fcac | TASK-REQ-00040-00001, TASK-REQ-00040-00002 |
 | TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | 2026-06-22 20:55 | — | BUG-00004 |
 | TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
 | TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | 2026-06-22 22:00 | — | BUG-00004 |
