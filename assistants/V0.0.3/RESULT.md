@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-25 14:31(TASK-REQ-00040-00001 完成,看板 §"任务清单" 追加开发状态/完成时间/提交哈希 + §"变更记录" 追加 1 条;其他区段未变)
+- 最近更新:2026-06-25 14:36(TASK-REQ-00040-00002 完成,看板 §"任务清单" 追加开发状态/完成时间/提交哈希 + §"变更记录" 追加 1 条;其他区段未变)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -287,7 +287,7 @@
 | TASK-REQ-00039-00005 | REQ-00039 | 文档 | 详细设计 | [文档] 端到端验证 AC-1 ~ AC-8 + 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-22 15:22 | — | T-1 ~ T-4 |
 | TASK-REQ-00039-00006 | REQ-00039 | 修改 | 审查改修 | [修改] 修正 T-2 / T-3 / T-4 评审发现(合并 1 必须改 + 2 建议改) | 已完成 | 不适用 | code-it/templates/RESULT.md + code-it/SKILL.md + code-check/SKILL.md | 2026-06-22 16:42 | — | T-2, T-3, T-4 |
 | TASK-REQ-00040-00001 | REQ-00040 | 修改 | 详细设计 | [修改] code-fix 步骤 0 末尾追加"项目可启动性探测" 子节(detectStartability 7 步算法:Node.js/Python/Makefile/Docker/Rust/Go/Java) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md | 2026-06-25 14:31 | ae42e39 | REQ-00040 |
-| TASK-REQ-00040-00002 | REQ-00040 | 修改 | 详细设计 | [修改] code-fix 步骤 6 末尾追加"复现产物登记" 子节(reproduceBug 9 步算法 + executeStep 3 类采集 + 11 边界 + 1 复合边界) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md | — | — | REQ-00040 |
+| TASK-REQ-00040-00002 | REQ-00040 | 修改 | 详细设计 | [修改] code-fix 步骤 6 末尾追加"复现产物登记" 子节(reproduceBug 9 步算法 + executeStep 3 类采集 + 11 边界 + 1 复合边界) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md | 2026-06-25 14:36 | b9afdba | REQ-00040 |
 | TASK-REQ-00040-00003 | REQ-00040 | 修改 | 详细设计 | [修改] bug.md 模板新增"## 复现产物登记" 区段(3 子项:产物清单/实际行为/复现结论)+ 文档头 2 字段(复现方式/产物路径) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/templates/bug.md | — | — | REQ-00040 |
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(在 fix/<BUG-NNN>/ 子目录列表) | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | — | — | REQ-00040 |
 | TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 待开始 | 不适用 | (无生产代码改动) | — | — | REQ-00040 |
@@ -618,6 +618,7 @@
 | 2026-06-25 | 设计新增 | REQ-00040 概要设计完成(--balanced;10 决策 / 8 不变量;模块数 2 主改造 + 1 辅助;2 SKILL.md 改造步骤 0 末尾 + 步骤 6 末尾子节 + 1 模板改造 bug.md 新增"## 复现产物登记" 段 + 1 模板改造 assistants-layout.md 同步追加 reproduce/ 子目录;0 关联设计;0 规范冲突;0 新增三方依赖;4 份过程文档生成 / 3 份不生成(dependencies 0 / related-designs 0 / clarifications 0);看板 §概要设计清单 追加 1 行 + 统计 15→16) | REQ-00040 |
 | 2026-06-25 | 计划完成 | REQ-00040 详细设计与编码计划完成(15 章节 RESULT.md + 8 章节 PLAN.md;18 决策 / 8 不变量 / 5 内部接口 / 3 数据结构 / 11 边界 + 1 复合边界;6 任务严格串行 T-1 → T-6,全部 `触发/来源=详细设计`;12 AC 全部降级为静态校验;1 里程碑 M1-REQ-00040;7 份过程文档生成(其中 process-doc-decisions 决策文件 1 份);看板 §详细设计与任务计划汇总 追加 1 行 + §任务清单 追加 6 行 + §里程碑 追加 1 行 + §变更记录 追加 1 条;统计 19→20 计划 / 104→110 任务) | REQ-00040 |
 | 2026-06-25 14:31 | 任务完成 | TASK-REQ-00040-00001 · [修改] code-fix 步骤 0 末尾追加"项目可启动性探测" 子节(开发状态:已完成;`git diff --stat` 1 file changed, +80/-0;`plugins/code-skills/skills/code-fix/SKILL.md` line 183 起新增"### 步骤 0.X" 子节含 7 步探测算法伪代码 + 3 边界 + 1 性能,共 +80 行;frontmatter L1-4 字节级保留;既有"## 工作流程" 步骤 0 主体 line 177-181 + 步骤 1~10 主体 + "## 不要做的事" 段字节级保留;0 偏离;AC-1 / AC-7 / AC-11 静态校验通过;commit ae42e39) | TASK-REQ-00040-00001 |
+| 2026-06-25 14:36 | 任务完成 | TASK-REQ-00040-00002 · [修改] code-fix 步骤 6 末尾追加"复现产物登记" 子节(开发状态:已完成;`git diff --stat` 1 file changed, +494/-1 含过程文档;`plugins/code-skills/skills/code-fix/SKILL.md` line 371 起新增"### 步骤 6.X" 子节,含触发条件 3 条 + 9 步 reproduceBug 算法伪代码 + executeStep 3 类分发(cli/http/browser)+ 11 边界 + 1 复合边界 + 屏显契约 2 段 + 性能 1 段,共约 +140 行;发现并修复 Edit 时无意中复制的"**关键:不重写**" 注释(校验 `grep -c` 最终 = 1,确认**只 1 次**);frontmatter L1-4 + 步骤 6 主体 line 343-369 + 步骤 7-10 + "## 不要做的事" 字节级保留;0 偏离;AC-2 / AC-3 / AC-4 / AC-7 / AC-8 / AC-11 静态校验通过;commit b9afdba) | TASK-REQ-00040-00002 |
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
 - `需求新增/变更/撤回`:需求清单变化
