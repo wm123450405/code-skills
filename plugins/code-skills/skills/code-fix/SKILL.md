@@ -381,6 +381,7 @@ function detectStartability(cwd):
 
 ```
 function reproduceBug(bugNum, startCommand, reproSteps, timeout = 60):
+ // 产物路径:fix/<BUG-NNN>/reproduce/(模板字面,与 FR-4 + assistants-layout.md 同步)
  reproduceDir = "./assistants/<version>/fix/" + bugNum + "/reproduce/"
  mkdir(reproduceDir)
 
