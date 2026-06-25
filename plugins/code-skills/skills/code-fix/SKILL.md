@@ -180,6 +180,72 @@ function parseFixTitle(fixPath: string): string {
 3. 读取内容,记为 `<版本号>`,后续所有路径用 `assistants/<版本号>/...`
 4. 验证 `./assistants/<版本号>/` 目录存在
 
+### 步骤 0.X — 项目可启动性探测(本需求新增子节,在步骤 0 第 4 项后)
+
+> 本子节**自动判定**项目可启动性,为步骤 6 末尾的"复现产物登记" 子节提供 `canStart` / `startCommand` 上下文。沿用 NFR-3(零规范变更 + 不触发 `AskUserQuestion`),**不**新增 CLI 参数,**不**屏显任何内容,**不**写 `fix/<BUG-NNN>/RESULT.md`。
+
+```
+function detectStartability(cwd):
+ canStart = false
+ startCommand = null
+
+ // 优先级 1:Node.js(检测 lockfile 决定包管理器)
+ if exists(cwd + "/package.json"):
+ pkg = readJson(cwd + "/package.json")
+ if pkg.scripts and pkg.scripts.start:
+ canStart = true
+ if exists(cwd + "/pnpm-lock.yaml"): startCommand = "pnpm start"
+ elif exists(cwd + "/yarn.lock"): startCommand = "yarn start"
+ else: startCommand = "npm start"
+
+ // 优先级 2:Python
+ elif exists(cwd + "/pyproject.toml") or exists(cwd + "/setup.py") or exists(cwd + "/requirements.txt"):
+ canStart = true
+ startCommand = "python -m <module>" // 用户可在步骤 5 调整
+
+ // 优先级 3:Makefile
+ elif exists(cwd + "/Makefile"):
+ canStart = true
+ startCommand = "make start" // 也可检测 "run" / "dev" target
+
+ // 优先级 4:Docker Compose
+ elif exists(cwd + "/docker-compose.yml") or exists(cwd + "/docker-compose.yaml"):
+ canStart = true
+ startCommand = "docker compose up"
+
+ // 优先级 5:Rust
+ elif exists(cwd + "/Cargo.toml"):
+ canStart = true
+ startCommand = "cargo run"
+
+ // 优先级 6:Go
+ elif exists(cwd + "/go.mod"):
+ canStart = true
+ startCommand = "go run ."
+
+ // 优先级 7:Java Maven
+ elif exists(cwd + "/pom.xml"):
+ canStart = true
+ startCommand = "mvn spring-boot:run"
+
+ // 优先级 8:Java Gradle
+ elif exists(cwd + "/build.gradle") or exists(cwd + "/build.gradle.kts"):
+ canStart = true
+ startCommand = "gradle bootRun"
+
+ // 写入内存上下文(不写文件,供步骤 6 末尾子节消费)
+ context.canStart = canStart
+ context.startCommand = startCommand
+ return context
+```
+
+**边界**:
+- 配置文件不存在 / JSON 解析失败 → 跳过该优先级,继续下一优先级(不报错)
+- 全未命中 → `canStart = false`,`startCommand = null`(沿用 E-1 降级,步骤 6 末尾子节会跳过复现动作)
+- **不**抛异常;**不**中断 `code-fix` 主流程
+
+**性能**:8 个 `Bash: test -f` 调用,每次 < 50ms,总耗时 < 500ms(沿用 NFR-1)
+
 ### 步骤 1 — 收集缺陷编号 / 描述
 
 #### 1.1 检测用户输入
