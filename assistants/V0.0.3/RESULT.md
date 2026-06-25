@@ -290,7 +290,7 @@
 | TASK-REQ-00040-00002 | REQ-00040 | 修改 | 详细设计 | [修改] code-fix 步骤 6 末尾追加"复现产物登记" 子节(reproduceBug 9 步算法 + executeStep 3 类采集 + 11 边界 + 1 复合边界) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/SKILL.md | 2026-06-25 14:36 | b9afdba | REQ-00040 |
 | TASK-REQ-00040-00003 | REQ-00040 | 修改 | 详细设计 | [修改] bug.md 模板新增"## 复现产物登记" 区段(3 子项:产物清单/实际行为/复现结论)+ 文档头 2 字段(复现方式/产物路径) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/bug.md | 2026-06-25 14:42 | f029be6 | REQ-00040 |
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(在 fix/<BUG-NNN>/ 子目录列表) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | 2026-06-25 14:46 | 70f4632 | REQ-00040 |
-| TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 待开始 | 不适用 | (无生产代码改动) | — | — | REQ-00040 |
+| TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-25 14:50 | 6a8d55c | REQ-00040 |
 | TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md | — | — | REQ-00040 |
 | TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | 2026-06-22 20:55 | — | BUG-00004 |
 | TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
