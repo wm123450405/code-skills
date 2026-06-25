@@ -33,6 +33,7 @@
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行 | 待开始 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | — | — | REQ-00040 |
 | TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验)+ 末尾兜底提交 | 待开始 | 不适用 | (无生产代码改动;NFR-7 静态校验) | — | — | REQ-00040 |
 | TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 待开始 | 不适用 | assistants/V0.0.3/RESULT.md §任务清单 / §里程碑 / §变更记录 | — | — | REQ-00040 |
+| TASK-REQ-00040-00007 | REQ-00040 | 修改 | 审查改修 | [修改] 移除 design line 175 越界字段类型字面 string | 待开始 | 不适用 | assistants/V0.0.3/design/REQ-00040/RESULT.md line 175 | — | — | TASK-REQ-00040-00001, TASK-REQ-00040-00002 |
 
 > **任务粒度自检**:
 > - T-001:1 任务 = 1 子节(7 步算法),独立可验证
