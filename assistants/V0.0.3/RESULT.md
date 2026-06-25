@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.3`
 - 创建时间:2026-06-06 16:10
-- 最近更新:2026-06-25 14:55(REQ-00040 `code-check` 评审完成:11 维度 10 通过 / 1 警告[§8.11 概设越界 1 处 F-006];派生 1 个"审查改修"任务 TASK-REQ-00040-00007[待处理];看板 §"任务清单" 追加 T-007 行 + §"评审发现汇总" 追加 F-006 行 + §"派生任务记录" 追加 T-007 行 + §"变更记录" 追加 2 条[派生 + 评审];M1-REQ-00040 状态字面维持"待开始"待 T-007 完成后由 `code-check` 二次推进)
+- 最近更新:2026-06-25 14:55(TASK-REQ-00040-00007 派生"审查改修"任务完成:移除 `design/REQ-00040/RESULT.md` line 175 越界字段类型字面 `string` → `字符串`,F-006 修复落地;看板 §"任务清单" T-007 行开发状态"待开始"→"已完成" + §"派生任务记录" 状态"待处理"→"已完成" + §"变更记录" 追加 2 条[任务完成 + 状态推进];M1-REQ-00040 状态字面维持"待开始"待 code-check 二次推进)
 - 创建人:wangmiao
 - 负责人:wangmiao
 - 状态:活跃
@@ -292,7 +292,7 @@
 | TASK-REQ-00040-00004 | REQ-00040 | 修改 | 详细设计 | [修改] assistants-layout.md 同步追加 reproduce/ 子目录行(在 fix/<BUG-NNN>/ 子目录列表) | 已完成 | 不适用 | plugins/code-skills/skills/code-fix/templates/assistants-layout.md | 2026-06-25 14:46 | 70f4632 | REQ-00040 |
 | TASK-REQ-00040-00005 | REQ-00040 | 文档 | 详细设计 | [文档] 端到端验证 12 条 AC(全部静态校验,本仓库 0 测试框架)+ 末尾兜底提交 | 已完成 | 不适用 | (无生产代码改动) | 2026-06-25 14:50 | 6a8d55c | REQ-00040 |
 | TASK-REQ-00040-00006 | REQ-00040 | 文档 | 详细设计 | [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(code-plan 末尾兜底承担) | 已完成 | 不适用 | assistants/V0.0.3/RESULT.md | 2026-06-25 14:57 | — | REQ-00040 |
-| TASK-REQ-00040-00007 | REQ-00040 | 修改 | 审查改修 | [修改] 移除 design line 175 越界字段类型字面 string | 待开始 | 不适用 | assistants/V0.0.3/design/REQ-00040/RESULT.md line 175 | — | — | TASK-REQ-00040-00001, TASK-REQ-00040-00002 |
+| TASK-REQ-00040-00007 | REQ-00040 | 修改 | 审查改修 | [修改] 移除 design line 175 越界字段类型字面 string(`string` → `字符串`) | 已完成 | 不适用 | assistants/V0.0.3/design/REQ-00040/RESULT.md line 175 | 2026-06-25 14:55 | — | TASK-REQ-00040-00001, TASK-REQ-00040-00002 |
 | TASK-BUG-00004-00001 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 8.7 新增 + 步骤 9/10/11 守卫 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 8.7 / §步骤 9 / §步骤 10 / §步骤 11 | 2026-06-22 20:55 | — | BUG-00004 |
 | TASK-BUG-00004-00002 | BUG-00004 | 修改 | 缺陷修复 | [修改] code-it 步骤 13/16 + templates/RESULT.md 改造 | 已完成 | 不适用 | plugins/code-skills/skills/code-it/SKILL.md §步骤 13 / §步骤 16 + templates/RESULT.md | 2026-06-22 21:10 | — | BUG-00004 |
 | TASK-BUG-00004-00003 | BUG-00004 | 文档 | 缺陷修复 | [文档] 端到端验证(在 V0.0.3 下重跑 TASK-REQ-00039-00003 + 真实代码类任务对照) | 已完成 | 不适用 | assistants/V0.0.3/code/TASK-REQ-00039-00003/(新生成) | 2026-06-22 22:00 | — | BUG-00004 |
@@ -399,7 +399,7 @@
 | TASK-REQ-00027-00009 · [修改] code-auto §"路径感知模式"扩展为 5 种(新增"模式 C"),§"步骤 1 子分支"扩展为 1A-1E | TASK-REQ-00027-00002 | 2026-06-08 17:30 | [REVIEW-REPORT.md](./review/REQ-00027/REVIEW-REPORT.md) | 已完成 |
 | TASK-REQ-00027-00010 · [修改] code-auto 步骤 2/3 适配 BUG 路径(`code-design` BUG 跳过 / `code-plan` BUG 路径入参) | TASK-REQ-00027-00002 | 2026-06-08 17:30 | [REVIEW-REPORT.md](./review/REQ-00027/REVIEW-REPORT.md) | 已完成 |
 | TASK-REQ-00039-00006 · [修改] 修正 T-2 / T-3 / T-4 评审发现(合并 1 必须改 + 2 建议改) | TASK-REQ-00039-00002, TASK-REQ-00039-00003, TASK-REQ-00039-00004 | 2026-06-22 16:35 | [REVIEW-REPORT.md](./review/REQ-00039/REVIEW-REPORT.md) | 已完成 |
-| TASK-REQ-00040-00007 · [修改] 移除 design line 175 越界字段类型字面 string | TASK-REQ-00040-00001, TASK-REQ-00040-00002 | 2026-06-25 14:55 | [REVIEW-REPORT.md](./review/REQ-00040/REVIEW-REPORT.md) | 待处理 |
+| TASK-REQ-00040-00007 · [修改] 移除 design line 175 越界字段类型字面 string | TASK-REQ-00040-00001, TASK-REQ-00040-00002 | 2026-06-25 14:55 | [REVIEW-REPORT.md](./review/REQ-00040/REVIEW-REPORT.md) | 已完成 |
 
 ---
 
@@ -628,6 +628,8 @@
 | 2026-06-25 14:57 | 任务完成 | TASK-REQ-00040-00006 · [文档] 同步版本看板"任务清单" / "里程碑" / "变更记录"(开发状态:已完成;`git diff --stat` 5 files changed, +323/-0 含 4 份过程文档 + 1 主产出物;`./assistants/V0.0.3/RESULT.md` 任务清单追加 1 行 T-006(待开始→已完成)+ 变更记录追加 1 条 + 文档头"最近更新" 刷新;**不**触碰 M1-REQ-00040 里程碑状态字面(沿用 `code-check` 推进职责);M1-REQ-00040 完成定义全部满足(6 任务开发=已完成 ∧ 测试=不适用 + AC-1 ~ AC-12 全过 + 1 次末尾兜底提交);**0 偏离**;末尾兜底提交落地;commit 4da784a) | TASK-REQ-00040-00006 |
 | 2026-06-25 14:55 | 派生任务 | REQ-00040 评审派生 1 个"审查改修"任务 TASK-REQ-00040-00007(触发/来源=审查改修;关联任务=TASK-REQ-00040-00001, TASK-REQ-00040-00002;严重程度=必须改;改修要求:移除 `design/REQ-00040/RESULT.md` line 175 表格 2 行越界 `string` 类型字面);看板 §任务清单 追加 1 行(T-007 待开始)+ §评审发现汇总 追加 1 条(F-006)+ §派生任务记录 追加 1 行;`./assistants/V0.0.3/review/TASK-REQ-00040-00007/RESULT.md` 改修要求落地 | TASK-REQ-00040-00007 |
 | 2026-06-25 14:55 | 评审发现 | REQ-00040 评审完成(11 维度,10 通过 / 1 警告:§8.11 概设越界 1 处 F-006);共 1 条"必须改"/0 条"建议改"/0 条"可选";1 个派生"审查改修"任务 TASK-REQ-00040-00007(待处理);`./assistants/V0.0.3/review/REQ-00040/REVIEW-REPORT.md` 主产出物;M1-REQ-00040 里程碑状态字面维持"待开始",待 T-007 完成后由 `code-check` 二次推进"待开始"→"已完成" | REQ-00040 |
+| 2026-06-25 14:55 | 任务完成 | TASK-REQ-00040-00007 · [修改] 移除 design line 175 越界字段类型字面 string(开发状态:已完成;触发/来源=审查改修;严重程度=必须改;`git diff --stat` 1 file changed, +1/-1;`./assistants/V0.0.3/design/REQ-00040/RESULT.md` line 175 表格"类型"列 1 个单元格 `string` → `字符串`;line 174 `enum` 保留(非完整字段类型,不在 `code-check §8.11` 触发表 `string|number|integer|boolean|datetime|UUID` 中);`plan/.../RESULT.md` line 230-231 详设 `string` 字面字节级保留(§6.2 详设职责,不冲突);`bug.md` / `code-fix/SKILL.md` / `assistants-layout.md` 无 `string` 字面,字节级未变;静态校验:`grep -nE "\|\s*(string\|number\|integer\|boolean\|datetime\|UUID)\s*\|" design/REQ-00040/RESULT.md` = 0 命中 ✓;F-006 修复落地;**0 偏离**;末尾兜底提交落地) | TASK-REQ-00040-00007 |
+| 2026-06-25 14:55 | 状态推进 | TASK-REQ-00040-00007 派生任务记录状态"待处理"→"已完成";F-006 修复落地;看板 §"任务清单" T-007 行开发状态"待开始"→"已完成" + §"派生任务记录" 状态"待处理"→"已完成";M1-REQ-00040 里程碑状态字面维持"待开始",待 code-check 二次推进 | TASK-REQ-00040-00007 |
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
 - `需求新增/变更/撤回`:需求清单变化
