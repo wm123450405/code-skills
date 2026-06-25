@@ -16,7 +16,8 @@
  │ ├── fix-work-log.md # 实施日志(由 code-it 写入)
  │ ├── fix-compile-and-run.md # 编译/运行(由 code-it 写入)
  │ ├── fix-test-results.md # 测试结果(由 code-it 写入)
- │ └── deviations.md # 偏离记录(由 code-it 写入)
+ │ ├── deviations.md # 偏离记录(由 code-it 写入)
+ │ └── reproduce/ # 复现产物(由 code-fix 步骤 6 末尾生成,可选)
  ├── BUG-00002/
  │ └── ...
  └── ...
