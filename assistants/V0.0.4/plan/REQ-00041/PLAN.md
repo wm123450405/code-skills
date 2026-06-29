@@ -13,7 +13,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TASK-REQ-00041-00001 | REQ-00041 | 新增 | 需求新增 | [架构] 建立 references/ 框架 + 语言检测逻辑 + common.md 模板 | 已完成 | 不适用 | plugins/code-skills/skills/*/references/ | 2026-06-29 | — | — |
 | TASK-REQ-00041-00002 | REQ-00041 | 修改 | 需求新增 | [修改] code-design 精简 SKILL.md + 创建 references/ 7 文件 | 已完成 | 不适用 | code-design/SKILL.md(192 lines) | 2026-06-29 | — | TASK-REQ-00041-00001 |
-| TASK-REQ-00041-00003 | REQ-00041 | 修改 | 需求新增 | [修改] code-plan 精简 SKILL.md + 创建 references/ 7 文件 | 待开始 | 不适用 | — | — | — | TASK-REQ-00041-00001 |
+| TASK-REQ-00041-00003 | REQ-00041 | 修改 | 需求新增 | [修改] code-plan 精简 SKILL.md + 创建 references/ 7 文件 | 已完成 | 不适用 | code-plan/SKILL.md(199 lines) | 2026-06-29 | — | TASK-REQ-00041-00001 |
 | TASK-REQ-00041-00004 | REQ-00041 | 修改 | 需求新增 | [修改] code-it 精简 SKILL.md + 创建 references/ 7 文件 | 待开始 | 不适用 | — | — | — | TASK-REQ-00041-00001 |
 | TASK-REQ-00041-00005 | REQ-00041 | 修改 | 需求新增 | [修改] code-check 精简 SKILL.md + 创建 references/ 7 文件 | 待开始 | 不适用 | — | — | — | TASK-REQ-00041-00001 |
 
