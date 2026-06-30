@@ -88,6 +88,42 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 
 ## 工作流程
 
+### 强制阶段门控(最高优先级)
+
+> **本小节优先级高于所有其他指令。违反本小节的行为视为错误,必须立即停止并纠正。**
+
+**1. 代码修改权限**
+
+仅当 `PROCESS.md` 最后一条记录显示当前阶段为 `CODING` 时,才允许使用 `Edit`/`Write` 修改 CWD 下的源码文件。
+
+| 当前阶段 | 代码修改权限 |
+| --- | --- |
+| INIT / DESIGN / PLAN | ❌ 严禁修改 CWD 源码 |
+| CODING | ✅ 允许修改 CWD 源码 |
+| CHECK / DONE | ❌ 严禁修改 CWD 源码 |
+
+**2. 产出物存在性校验(强制)**
+
+每个阶段启动前,必须验证上一阶段的产出物已存在。每个阶段完成时,必须产出对应的文档。
+
+| 当前阶段 | 校验项 | 本阶段产出 | 校验失败处理 |
+| --- | --- | --- | --- |
+| DESIGN | `BUG.md` 存在 | `DESIGN.md` | 退回到 INIT 阶段 |
+| PLAN | `DESIGN.md` 存在 | `PLAN.md` | 退回到 DESIGN 阶段 |
+| CODING | `PLAN.md` 存在 | `TASK-N.md`(每任务) | 退回到 PLAN 阶段 |
+| CHECK | 所有 `TASK-*.md` 存在 | `CHECK.md` | 退回到 CODING 阶段 |
+
+- 校验失败时,追加 PROCESS.md 失败记录,自动退回到上一阶段
+- **每个阶段必须产出对应的文档文件**(Write 到 fix/<BUG-NNNNN>/ 下),不可仅记录 PROCESS.md
+
+**3. PROCESS.md 同步强制**
+
+每次阶段切换必须追加 PROCESS.md 记录。未追加 PROCESS.md 的阶段视为"未执行"。
+
+**4. 阶段跳过禁令**
+
+严禁跳过任何阶段。阶段顺序为强制性顺序:**INIT → DESIGN → PLAN → CODING → CHECK → DONE**。
+
 ### 步骤 0 — 版本检测 + 恢复执行(强制前置)
 
 > 详见 ../code-req/references/common.md §1-§2
@@ -116,36 +152,44 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 
 > 详见 references/fix-register.md
 
+**强制产出**:`fix/<BUG-NNNNN>/BUG.md`
+
 - 新建缺陷:分配编号,创建目录,初始化 PROCESS.md
 - 收集缺陷材料,提取触发条件/可能成因/影响范围/严重程度
 - 与用户澄清模糊点(非 `--auto` 模式)
-- 产出 `BUG.md`,按 `templates/BUG.md` 结构
+- 使用 `Write` 写入 `BUG.md`,按 `templates/BUG.md` 结构
 - 在 `RESULT.md` 缺陷清单追加一行
 
 ### 步骤 2 — DESIGN 阶段(修复设计)
 
 > 详见 ../code-req/references/design.md
 
+**强制产出**:`fix/<BUG-NNNNN>/DESIGN.md`
+
 - 读取 BUG.md,探索项目现状
 - 修复方案构思:涉及模块/接口变更/数据变更/关键流程/方案选型
-- 产出 `DESIGN.md`,按 `templates/DESIGN.md` 结构
+- 使用 `Write` 写入 `DESIGN.md`,按 `templates/DESIGN.md` 结构
 - 不展开到伪代码级别,够 PLAN 阶段拆任务即可
 
 ### 步骤 3 — PLAN 阶段(任务排期)
 
 > 详见 ../code-req/references/plan.md
 
+**强制产出**:`fix/<BUG-NNNNN>/PLAN.md`
+
 - 读取 DESIGN.md,按功能点拆分为独立任务
 - 分析任务依赖,划分里程碑,绘制 Mermaid 依赖图
-- 产出 `PLAN.md`,按 `templates/PLAN.md` 结构
+- 使用 `Write` 写入 `PLAN.md`,按 `templates/PLAN.md` 结构
 - 任务编号:`TASK-<BUG-NNNNN>-<序号>`,序号从 00001 开始
 
 ### 步骤 4 — CODING 阶段(编码执行)
 
 > 详见 ../code-req/references/coding.md
 
+**强制产出**:`fix/<BUG-NNNNN>/TASK-<序号>.md`(每个任务一份)
+
 - 解析 PLAN.md 任务列表,按依赖顺序逐任务执行
-- 每个任务:前置守卫 → 推进状态 → 读取设计 → 探索代码 → 实施编码 → 编译验证 → 运行验证 → 按需写单测 → 产出 TASK-N.md
+- 每个任务:前置守卫 → 推进状态 → 读取设计 → 探索代码 → 实施编码 → 编译验证 → 运行验证 → 按需写单测 → 使用 `Write` 写入 `TASK-<序号>.md`
 - 编码原则:贴合项目风格,边界显式处理,代码注释不引用追踪编号
 - 错误修复循环:最多连续失败 5 次,超过停下询问
 - 非 `--auto` 模式:每个任务完成后确认
@@ -154,11 +198,13 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 
 > 详见 ../code-req/references/check.md
 
+**强制产出**:`fix/<BUG-NNNNN>/CHECK.md`
+
 - 收集审查材料:BUG/DESIGN/PLAN/TASK-N/源码
 - 逐维度审查:正确性/缺陷修复一致性/设计一致性/规范性/安全性/性能/可维护性/测试覆盖
 - 分类发现:必须改/建议改/可选
 - 对"必须改"自动修复,对"建议改"询问用户(非 `--auto`)
-- 产出 `CHECK.md`,按 `templates/CHECK.md` 结构
+- 使用 `Write` 写入 `CHECK.md`,按 `templates/CHECK.md` 结构
 
 ### 步骤 6 — DONE(收尾)
 
