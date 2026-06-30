@@ -18,7 +18,7 @@
 | TASK-REQ-00044-00002 | 新增 | 需求新增 | [基础] 创建 code-req references(6 个阶段文档) | code-req/references/*.md | 已完成 | 不适用 | TASK-00001 |
 | TASK-REQ-00044-00003 | 新增 | 需求新增 | [技能] 创建 code-ver 技能 | code-ver/SKILL.md + references/common.md | 已完成 | 不适用 | TASK-00001 |
 | TASK-REQ-00044-00004 | 新增 | 需求新增 | [技能] 创建 code-req 技能 | code-req/SKILL.md | 已完成 | 不适用 | TASK-00001, TASK-00002 |
-| TASK-REQ-00044-00005 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | code-fix/SKILL.md + references/fix-register.md | 待开始 | 不适用 | TASK-00004 |
+| TASK-REQ-00044-00005 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | code-fix/SKILL.md + references/fix-register.md | 已完成 | 不适用 | TASK-00004 |
 | TASK-REQ-00044-00006 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | code-faq/SKILL.md + references/common.md + templates/*.md | 待开始 | 不适用 | TASK-00001 |
 | TASK-REQ-00044-00007 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | 3 个技能 SKILL.md + references/ | 待开始 | 不适用 | TASK-00004, TASK-00005 |
 | TASK-REQ-00044-00008 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 待开始 | 不适用 | TASK-00007 |

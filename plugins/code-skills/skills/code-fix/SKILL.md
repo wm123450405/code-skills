@@ -1,634 +1,200 @@
 ---
 name: code-fix
-description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编号),本技能把它登记成一条带状态的结构化记录,纳入版本看板统一追踪;本身只登记、不修代码,后续交给 `code-plan` 规划、`code-it` 实施、`code-check` 收尾。是 `code-require` 主流程之外的支线入口。
+description: 缺陷修复全流程。合并 code-fix+plan+it+check(缺陷路径)。默认交互确认每阶段,--auto 静默执行,PROCESS.md 断点续跑。
 ---
 
-# code-fix — 缺陷登记与跟踪(版本感知)
+# code-fix — 缺陷修复
 
 ## 目标
-提供**缺陷登记与跟踪**(纯登记型),作为 `code-require → code-design → code-plan → code-it → code-check` 主流程之外的**支线流程入口**:
-- **登记**:把"用户报告的缺陷"转化为结构化、可追踪的 `BUG-NNN/RESULT.md`
-- **跟踪**:在 `fix/RESULT.md` 与版本看板的"缺陷清单"区段实时反映每个缺陷的状态
-- **不实施修复**:本技能不写代码,只跟踪状态;实际修复由 `code-plan` + `code-it` + `code-check` 完成
-- **不推进"修复规划中"及之后状态**:本技能只推进"报告 / 调查中 / 修复规划中"(前 3 段);后续状态由 `code-plan` / `code-it` / `code-check` 推进
+提供缺陷修复的**全生命周期管理**,将 4 段式缺陷流程合并为单一入口:
+- **缺陷登记**:将用户输入转化为结构化 BUG.md
+- **修复设计**:结合项目现状,产出可被评审的 DESIGN.md
+- **任务排期**:将设计拆分为可独立执行的任务 PLAN.md
+- **编码执行**:逐任务编码,产出 TASK-N.md 与代码变更
+- **代码审查**:系统化审查,发现并修复缺陷,产出 CHECK.md
 
 ## 适用场景
-- 用户报告了一个 bug,需要登记跟踪
-- bug 登记后,需要调 `code-plan` / `code-it` / `code-check` 推进后续状态(本技能**不**推进"修复规划中"及之后状态)
-- 用户想查看当前所有 bug 的清单与状态
+- 从零开始修复一个缺陷
+- 缺陷已登记,续跑后续阶段(从 PROCESS.md 恢复)
+- 任何需要"从缺陷登记到代码审查"全流程的场景
+- `--auto` 模式:CI/批量场景,无人值守全自动跑通
 
 ## 不适用
-- 当前**没有激活的版本工作空间**(请先调 `code-version`)
-- 想**主动**为某项需求做计划(那是 `code-plan` 的事)
-- 想**实施**代码修复(那是 `code-it` 的事;`code-fix` 不产出 `PLAN.md` / `fix-work-log.md`)
-- 想**评审**已经写完的修复(那是 `code-check` 的事;本技能不实施)
-- 想**直接关闭**缺陷 —— 本技能不直接关闭;由 `code-check` 推进"已修复-已验证" / "已关闭-不修复",`code-fix` 复跑时直接确认
+- 当前**没有激活的版本工作空间**(请先调 `code-ver`)
+- 需求开发(请调 `code-req`)
+- 仅需单个阶段(如仅需缺陷登记)→ 也可用,但本技能会询问是否继续下一阶段
+- 版本管理/项目初始化(请调 `code-ver`)
 
 ## 工作目录约定(强制)
 
-**版本工作空间**:`./assistants/<版本号>/`(由 `./assistants/.current-version` 决定)。
-本技能操作新增的 `fix/` 子目录(纯登记型,本技能**只**产出 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `PLAN.md` / `fix-work-log.md` 等下游文件):
 ```
 ./assistants/
-├── rules/ # 跨版本规范,本技能只读
+├── rules/                  # 项目级规范(跨版本共享,只读)
+├── .current-version        # 当前激活版本标记(只读)
 └── <版本号>/
- ├── RESULT.md # 版本看板(本技能追加"缺陷清单" / "变更记录"区段)
- └── fix/ # ★ 本技能维护的缺陷工作空间(纯登记型)
- ├── RESULT.md # ★ 缺陷总览(本技能创建/追加)
- ├── BUG-00001/ # 第一个缺陷
- │ └── RESULT.md # ★ 缺陷详情 + 修复状态(本技能创建/更新)
- ├── BUG-00002/
- │ └── ...
- └── ...
+    ├── RESULT.md           # 版本看板(本技能在首次创建缺陷时追加一行)
+    └── fix/<BUG-NNNNN>/    # 本技能产出
+        ├── BUG.md          # 缺陷登记结果
+        ├── DESIGN.md       # 修复设计
+        ├── PLAN.md         # 任务排期
+        ├── TASK-<序号>.md  # 任务完成结果(每任务一份)
+        ├── CHECK.md        # 代码审查结果
+        ├── PROCESS.md      # 执行进程(追加式,用于断点续跑)
+        └── LOG.md          # 过程记录(可选,非必要不记录)
 ```
 
 - 路径以**当前工作目录(CWD)**为基准
-- 本技能**只**创建/修改 `./assistants/<版本号>/fix/` 下的 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md` 两个文件
-- 本技能**只**修改 `./assistants/<版本号>/RESULT.md` 的"缺陷清单" / "变更记录"区段
-- 本技能**不**触碰 `./assistants/rules/`、其他版本工作空间、`require/`、`design/`、`plan/`、`code/`、`test/`、`review/` 下的任何文件
-- 实际代码修改由 `code-plan` + `code-it` + `code-check` 完成,本技能**不**调用它们(由用户自行串联)
+- `rules/` **不**在版本下,跨版本共享,本技能只读
+- 本技能**不**修改 `./assistants/rules/` 下的任何内容
+- 本技能是**唯一**被允许修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件的技能(在 CODING 阶段)
 
 ## 输入
-- **缺陷编号**(`BUG-NNN`,N 从 001 起,3 位补零)或**缺陷描述**(自然语言,任意长度)
- - **默认**格式:5 位纯数字 `^BUG-\d{5}$`(本仓库主动产出)
- - **接收**可放宽:`^BUG-[A-Za-z0-9.\-_]+$`(前缀 `BUG-` + 后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端宽松正则,新规则 REQ-00025)
- - 二选一,至少一个
-- **可选补充**:
- - 严重度:`P0` / `P1` / `P2` / `P3`(缺省 `P2`)
- - 报告人:<用户/姓名>(缺省 `<unknown>`)
- - 模块/路径:缺陷涉及的代码位置
- - 复现步骤:如何触发该 bug
- - 期望行为 vs 实际行为
+- **缺陷描述**(必填):自然语言描述(如 `"用户报告:登录页密码框不显示"`)或缺陷编号(如 `BUG-00001`)
+- **--auto**(可选):静默模式,所有 `AskUserQuestion` 自动选推荐项,无人值守全自动执行
 
 ## 输出
-主产出物:
-- `./assistants/<版本号>/fix/<缺陷编号>/RESULT.md` —— 缺陷详情(本技能首次/更新)
-- `./assistants/<版本号>/fix/RESULT.md` —— 缺陷总览(本技能首次/追加)
-- `./assistants/<版本号>/RESULT.md` 的"缺陷清单" / "变更记录"区段(本技能追加/更新)
-
-**不修改**:
-- 项目源代码(只读)
-- 任何其他 `code-*` 技能负责的文件
+主产出物(均在 `fix/<BUG-NNNNN>/` 下):
+- `BUG.md` — 缺陷登记(缺陷描述/触发条件/可能成因/影响范围)
+- `DESIGN.md` — 修复设计(模块/接口/数据/流程/方案选型)
+- `PLAN.md` — 任务排期(任务列表/依赖/里程碑)
+- `TASK-<序号>.md` × N — 任务完成结果
+- `CHECK.md` — 代码审查结果
+- `PROCESS.md` — 执行进程(追加式)
+- `LOG.md` — 过程记录(可选)
+- CWD 下的实际代码变更(CODING 阶段产出)
 
 ## 工具使用约定
 - 读激活版本:`Read "./assistants/.current-version"`
-- 读既有文档:`Read "./assistants/<版本号>/fix/RESULT.md"`、`Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"`(若存在)
-- 建目录:`Bash: mkdir -p`
-- 写文件:`Write`(首次) / `Edit`(增量)
+- 读规范:`Glob "./assistants/rules/**/*"` + `Read`
+- 读写产出:`Read`/`Write`/`Edit`(对 `fix/<BUG>/` 下文件)
+- 改代码:`Edit`/`Write`(对 CWD 下源码,仅在 CODING 阶段)
+- 编译/运行/测试:`Bash`(仅在 CODING 阶段)
 - 与用户澄清:优先 `AskUserQuestion`;自然语言兜底
-
----
-
-## 标题解析(REQ-00013 新增)
-
-> 适用对象:所有用户可见的屏幕输出位置(启动 / 完成 / 登记 / 中止 / 错误)
-> 依据规范:
-
-**工具函数**(伪代码):
-
-```ts
-function truncateTitle(title: string, maxLen: number = 30): string {
- if ([...title].length <= maxLen) return title
- return [...title].slice(0, maxLen).join('') + '...'
-}
-
-function formatBugTitle(bugNum: string, title: string): string {
- return `${bugNum} · ${truncateTitle(title)}`
-}
-```
-
-**标题解析入口**:
-
-```ts
-function parseFixTitle(fixPath: string): string {
- const content = require('fs').readFileSync(fixPath, 'utf-8')
- // 匹配 "## 缺陷标题" 后第 1 行非空内容
- const match = content.match(/^## 缺陷标题\s*\n+(.+?)$/m)
- return match ? match[1] : '' // E-3 / E-5 退化
-}
-```
-
-**屏幕输出格式契约**:
-
-| 场景 | 格式 |
-| --- | --- |
-| 启动 | `正在处理: BUG-NNNNN · <缺陷标题>` |
-| 登记 | `已创建: BUG-NNNNN · <缺陷标题>` |
-| 完成 | `已修复: BUG-NNNNN · <缺陷标题>` |
-| 中止 | `⛔ code-fix 中止: BUG-NNNNN · <缺陷标题>(<原因>)` |
-| 错误 | `✗ 错误: BUG-NNNNN · <缺陷标题>(<错误信息>)` |
-
-**边界与异常**:
-- E-2:用户原始缺陷描述 > 30 字符 → `truncateTitle` 自动截断
-- E-3:标题字段缺失 → 退化:屏幕输出"BUG-NNNNN(无标题)"
-- E-5:老缺陷(无"## 缺陷标题" 小节) → 退化:用 `BUG-NNNNN` 占位
-- E-9:多次执行 `code-fix` → 标题覆盖(NFR-4 幂等)
-
-**约束**:
-- **不**使用"本缺陷"等指代词 — 替换为"编号+标题"(FR-2.AC-2.4 强约束)
-- **不**修改 frontmatter(L1-8 字节级保留,NFR-7)
-- **不**修改既有章节(锚点 = "## 工具使用约定" 段后 + "---" 分隔符后 + "## 工作流程" 前,本节为纯追加)
-- "## 缺陷标题" 小节**仅**在 `fix/<BUG-NNN>/RESULT.md` 内部新增,**不**写入看板"缺陷清单"区段(INV-7 严守)
-- **不**修改 `fix.md` 模板(本轮 0 触发,模板未实际存在,沿用既有结构)
-
----
-
-## 缺陷标题生成(REQ-00013 新增,步骤 1 末尾追加子节)
-
-> **位置**:`code-fix/SKILL.md` 步骤 1 末尾(在"#### 1.X 检测用户输入" 小节后,作为"#### 1.X+1 缺陷标题生成" 子节)
-> 依据:FR-5.AC-5.2(本轮唯一新增字段)+ NFR-2 零规范变更(不外溢到看板)
-
-**触发条件**:用户输入缺陷描述(无 `BUG-NNN`,仅"用户报告:...")时
-
-**算法**:
-
-```
-[/code-fix 步骤 1 末尾 — 缺陷标题生成子节]
- 1. 读取用户原始缺陷描述(从 args 或 stdin)
- 2. truncateTitle(描述, 30) // 字符数 ≤ 30
- 3. 写入 fix/<BUG-NNN>/RESULT.md 顶部 "## 缺陷标题" 小节:
- ## 缺陷标题
- <截断后的标题>
- 4. 屏幕输出: 正在处理: BUG-NNNNN · <截断后的标题>
-```
-
-**示例**:
-
-```
-用户输入: "用户报告:某 X 函数在传入 null 时崩溃,导致整个系统无法启动"
-截断后: "用户报告:某 X 函数在传入 null 时崩..."(30 字 + "...")
-写入文件: fix/BUG-00001/RESULT.md
- ## 缺陷标题
- 用户报告:某 X 函数在传入 null 时崩...
-```
-
-**E-5 退化**(老缺陷无"## 缺陷标题" 小节):
-- 不补写,沿用 `BUG-NNNNN` 占位
-- 屏幕输出:`BUG-NNNNN(无标题)`
-
-**约束**:
-- **不**写入看板"缺陷清单"区段的"标题"列(看板"缺陷清单"标题列沿用 V0.0.1 既有,0 触发三同步)
-- **不**修改 `fix/RESULT.md`(总览)— 仅在 `fix/<BUG-NNN>/RESULT.md` 内部
 
 ---
 
 ## 工作流程
 
-### 步骤 0 — 版本上下文检测(强制前置)
-1. 读取 `./assistants/.current-version`
-2. **文件不存在** → 立即停下,告知用户先调 `code-version`
-3. 读取内容,记为 `<版本号>`,后续所有路径用 `assistants/<版本号>/...`
-4. 验证 `./assistants/<版本号>/` 目录存在
+### 步骤 0 — 版本检测 + 恢复执行(强制前置)
 
-### 步骤 0.X — 项目可启动性探测(本需求新增子节,在步骤 0 第 4 项后)
+> 详见 ../code-req/references/common.md §1-§2
 
-> 本子节**自动判定**项目可启动性,为步骤 6 末尾的"复现产物登记" 子节提供 `canStart` / `startCommand` 上下文。沿用 NFR-3(零规范变更 + 不触发 `AskUserQuestion`),**不**新增 CLI 参数,**不**屏显任何内容,**不**写 `fix/<BUG-NNN>/RESULT.md`。
+1. 读取 `./assistants/.current-version`,不存在 → 停下,提示调 `code-ver`
+2. 解析用户输入:自然语言描述 → 分配新编号;`BUG-NNNNN` → 直接使用
+3. 检查 `fix/<BUG-NNNNN>/PROCESS.md` 是否存在:
+   - 不存在 → 创建目录 + 初始化 PROCESS.md,从 INIT 阶段开始
+   - 存在 → 读取最后一行,确定当前阶段,从中断处继续
+4. 若已是 DONE → 提示"已完成,无需重复执行"
 
-```
-function detectStartability(cwd):
- canStart = false
- startCommand = null
+### 阶段执行器(通用)
 
- // 优先级 1:Node.js(检测 lockfile 决定包管理器)
- if exists(cwd + "/package.json"):
- pkg = readJson(cwd + "/package.json")
- if pkg.scripts and pkg.scripts.start:
- canStart = true
- if exists(cwd + "/pnpm-lock.yaml"): startCommand = "pnpm start"
- elif exists(cwd + "/yarn.lock"): startCommand = "yarn start"
- else: startCommand = "npm start"
+> 详见 ../code-req/references/common.md §3-§4
 
- // 优先级 2:Python
- elif exists(cwd + "/pyproject.toml") or exists(cwd + "/setup.py") or exists(cwd + "/requirements.txt"):
- canStart = true
- startCommand = "python -m <module>" // 用户可在步骤 5 调整
+每个阶段按统一模式执行:
+1. 追加 PROCESS.md `| <时间> | <阶段> | 开始 | <目标> |`
+2. 执行阶段逻辑(详见对应 references)
+3. 追加 PROCESS.md `| <时间> | <阶段> | 完成 | <摘要统计> |`
+4. 非 `--auto` 模式 → `AskUserQuestion` 确认(继续/暂停/取消)
+5. `--auto` 模式 → 屏幕输出 `[code-fix --auto] <阶段> 完成,自动继续`
 
- // 优先级 3:Makefile
- elif exists(cwd + "/Makefile"):
- canStart = true
- startCommand = "make start" // 也可检测 "run" / "dev" target
+阶段顺序: **INIT → DESIGN → PLAN → CODING → CHECK → DONE**
 
- // 优先级 4:Docker Compose
- elif exists(cwd + "/docker-compose.yml") or exists(cwd + "/docker-compose.yaml"):
- canStart = true
- startCommand = "docker compose up"
+### 步骤 1 — INIT 阶段(缺陷登记)
 
- // 优先级 5:Rust
- elif exists(cwd + "/Cargo.toml"):
- canStart = true
- startCommand = "cargo run"
+> 详见 references/fix-register.md
 
- // 优先级 6:Go
- elif exists(cwd + "/go.mod"):
- canStart = true
- startCommand = "go run ."
+- 新建缺陷:分配编号,创建目录,初始化 PROCESS.md
+- 收集缺陷材料,提取触发条件/可能成因/影响范围/严重程度
+- 与用户澄清模糊点(非 `--auto` 模式)
+- 产出 `BUG.md`,按 `templates/BUG.md` 结构
+- 在 `RESULT.md` 缺陷清单追加一行
 
- // 优先级 7:Java Maven
- elif exists(cwd + "/pom.xml"):
- canStart = true
- startCommand = "mvn spring-boot:run"
+### 步骤 2 — DESIGN 阶段(修复设计)
 
- // 优先级 8:Java Gradle
- elif exists(cwd + "/build.gradle") or exists(cwd + "/build.gradle.kts"):
- canStart = true
- startCommand = "gradle bootRun"
+> 详见 ../code-req/references/design.md
 
- // 写入内存上下文(不写文件,供步骤 6 末尾子节消费)
- context.canStart = canStart
- context.startCommand = startCommand
- return context
-```
+- 读取 BUG.md,探索项目现状
+- 修复方案构思:涉及模块/接口变更/数据变更/关键流程/方案选型
+- 产出 `DESIGN.md`,按 `templates/DESIGN.md` 结构
+- 不展开到伪代码级别,够 PLAN 阶段拆任务即可
 
-**边界**:
-- 配置文件不存在 / JSON 解析失败 → 跳过该优先级,继续下一优先级(不报错)
-- 全未命中 → `canStart = false`,`startCommand = null`(沿用 E-1 降级,步骤 6 末尾子节会跳过复现动作)
-- **不**抛异常;**不**中断 `code-fix` 主流程
+### 步骤 3 — PLAN 阶段(任务排期)
 
-**性能**:8 个 `Bash: test -f` 调用,每次 < 50ms,总耗时 < 500ms(沿用 NFR-1)
+> 详见 ../code-req/references/plan.md
 
-### 步骤 1 — 收集缺陷编号 / 描述
+- 读取 DESIGN.md,按功能点拆分为独立任务
+- 分析任务依赖,划分里程碑,绘制 Mermaid 依赖图
+- 产出 `PLAN.md`,按 `templates/PLAN.md` 结构
+- 任务编号:`TASK-<BUG-NNNNN>-<序号>`,序号从 00001 开始
 
-#### 1.1 检测用户输入
-- 若用户本轮消息里**明确给出**了 `BUG-NNNNN` 字符串 → 走"**已有编号**"分支(步骤 1.2)
-- 若用户本轮消息里**没有** `BUG-NNNNN` 字符串,只有缺陷描述 → 走"**新建缺陷**"分支(步骤 1.3)
-- 若用户什么都没给 → 主动询问:
- > 请提供:
- > - A. 已有缺陷编号(如 `BUG-00001`),我会把该缺陷的当前状态刷新
- > - B. 缺陷描述(自然语言,1-2 句话即可),我会自动生成新编号并登记
+### 步骤 4 — CODING 阶段(编码执行)
 
-#### 1.2 已有编号分支
-1. 校验格式:`^BUG-[A-Za-z0-9.\-_]+$`(接收端宽松正则,后缀 1+ 位字母数字/`.`/`-`/`_`;沿用 `encoding-conventions §规则 1` 接收端,新规则 REQ-00025)
-2. 读取 `./assistants/<版本号>/fix/RESULT.md`(若存在),检查该编号是否已登记
-3. **两种情形**:
- - **已登记**(在 `fix/RESULT.md` 找到该编号) → 进入步骤 2 的"更新"分支
- - **未登记**(目录可能存在也可能不存在) → 用 `AskUserQuestion` 询问:
- > 检测到 `BUG-NNN` 尚未在 `fix/RESULT.md` 登记,但目录可能存在(可能为脏数据或孤儿目录)。
- > - A. 视为新缺陷,补登记(请补充缺陷描述)
- > - B. 我搞错了,应是另一个编号(请重答)
- > - C. 取消
+> 详见 ../code-req/references/coding.md
 
-#### 1.3 新建缺陷分支
-1. 用 `AskUserQuestion` 收集必要信息:
- - 严重度(`P0` / `P1` / `P2` / `P3`,缺省 `P2`)
- - 模块/路径(可选,缺省"未指定")
-2. **生成下一个可用编号**:
- - 若 `fix/RESULT.md` 不存在 → 编号 = `BUG-00001`
- - 若存在 → 解析所有 `BUG-NNNNN`,取最大值 N,新编号 = `BUG-{N+1 零填充到 5 位}`
-3. 进入步骤 2 的"新建"分支
+- 解析 PLAN.md 任务列表,按依赖顺序逐任务执行
+- 每个任务:前置守卫 → 推进状态 → 读取设计 → 探索代码 → 实施编码 → 编译验证 → 运行验证 → 按需写单测 → 产出 TASK-N.md
+- 编码原则:贴合项目风格,边界显式处理,代码注释不引用追踪编号
+- 错误修复循环:最多连续失败 5 次,超过停下询问
+- 非 `--auto` 模式:每个任务完成后确认
 
-### 步骤 2 — 定位 / 创建工作目录
+### 步骤 5 — CHECK 阶段(代码审查)
 
-**新建分支**(`fix/RESULT.md` 中无该编号):
-1. `Bash: mkdir -p "./assistants/<版本号>/fix/<缺陷编号>/"`
-2. `Bash: mkdir -p "./assistants/<版本号>/fix/"`
-3. 进入步骤 3
+> 详见 ../code-req/references/check.md
 
-**更新分支**(`fix/RESULT.md` 已有该编号):
-1. 检查 `./assistants/<版本号>/fix/<缺陷编号>/` 是否存在
-2. 不存在 → `Bash: mkdir -p` 创建(可能首次登记时漏了)
-3. 存在 → 直接进入步骤 3
-4. `Glob "./assistants/<版本号>/fix/<缺陷编号>/*"` 列出该缺陷目录下所有文件
+- 收集审查材料:BUG/DESIGN/PLAN/TASK-N/源码
+- 逐维度审查:正确性/缺陷修复一致性/设计一致性/规范性/安全性/性能/可维护性/测试覆盖
+- 分类发现:必须改/建议改/可选
+- 对"必须改"自动修复,对"建议改"询问用户(非 `--auto`)
+- 产出 `CHECK.md`,按 `templates/CHECK.md` 结构
 
-### 步骤 3 — 读取现有材料(更新分支)
+### 步骤 6 — DONE(完成)
 
-**仅更新分支需要**:
-1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"` —— 了解当前状态
-2. `Read` 该缺陷目录下所有其他 `*.md` 文件(若有):
- - `investigation.md`:调查笔记(由 `code-it` 写入,本技能只读)
- - `PLAN.md`:修复方案(由 `code-plan` 写入)
- - `fix-work-log.md`:实施日志(由 `code-it` 写入)
- - 其他
-3. 把所有材料汇总,在本技能内构成"缺陷当前完整画像"
+- 追加 PROCESS.md `| <时间> | DONE | 完成 | 全部阶段完成 |`
+- 屏幕输出完成报告:各阶段统计摘要
+- 建议下一步:`code-dashboard` 查看进度,或 `code-ver --publish` 发布
 
-**新建分支跳过此步**。
+---
 
-### 步骤 4 — 询问本轮状态推进(纯登记型)
+## 参数解析
 
-> 本技能是**纯登记型**:本步骤是本技能的核心,但候选目标状态已收敛为"登记/分析类"。新建 BUG 的初始状态为 `待处理`;本技能**只**主动推进"待处理 / 报告 / 调查中" 3 段;"待开发 / 开发中 / 待审查 / 已完成"等状态由 `code-plan` / `code-it` / `code-check` 自动推进,本技能**不**参与。
+### --auto 模式
 
-用 `AskUserQuestion` 让用户选择本轮要推进到的目标状态:
+- 所有 `AskUserQuestion` 自动选第一项(推荐项)
+- 屏幕输出前缀 `[code-fix --auto]`
+- 阶段失败时仍中断(不静默吞错误)
+- 暂停选项(B)被跳过,自动选继续(A)
 
-| 当前状态 | 候选目标状态 |
-| --- | --- |
-| (新建) | 待处理 / 报告 / 调查中 |
-| 待处理 | 报告 / 调查中 / 已关闭-非缺陷 / 已取消 |
-| 报告 | 调查中 / 已关闭-非缺陷 / 已取消 |
-| 调查中 | 已关闭-非缺陷 / 阻塞 / 已取消 |
-| 已关闭-非缺陷 | (终态) |
-| 已取消 | (终态) |
-| 阻塞 | 解除阻塞(回到报告中合适状态) / 已取消 |
+### 缺陷编号分配
 
-**状态语义**(本技能维护的"登记/分析类"状态):
-- `报告`:刚被登记,尚未开始调查
-- `调查中`:正在分析根因,可能在写 `investigation.md`
-- `修复规划中`:用户已调 `code-plan <BUG-NNN>` 产出 `PLAN.md`(本技能**校验但不主动推进**;实际推进由 `code-plan`)
-- `阻塞`:等待外部因素(等用户答复、等依赖版本升级、等权限开通等)
+> 详见 references/fix-register.md
 
-### 步骤 5 — 补充本轮信息
+- 新缺陷:扫描 `fix/BUG-*/` 目录,取最大编号 +1,格式 `BUG-NNNNN`(5 位数字)
+- 续跑:用户传入 `BUG-NNNNN` → 直接使用,验证目录存在
 
-根据用户在步骤 4 选择的目标状态,询问/记录本轮新增信息:
+---
 
-- **任意推进**:询问"本轮主要做了哪些工作?"(2-3 句话,写入 `RESULT.md` 的"修复日志"区段)
-- **`→ 调查中`**:询问"初步根因假设是什么?涉及哪些文件?"(可由 `code-it` 写 `investigation.md`,本技能不写)
-- **`→ 已关闭-*`**:询问"关闭理由"
-- **`→ 阻塞`**:询问"阻塞原因 / 解除条件"
+## 与 code-req 的关系
 
-> **注**:本技能**不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进。
-> 若需推进上述状态,请按以下顺序调:
-> 1. `code-plan <BUG-NNN>` —— 产出 `PLAN.md`,推进"待处理 → 待开发"
-> 2. `code-it <BUG-NNN>` —— 产出 `fix-work-log.md`,推进"待开发 → 开发中"(第 1 个任务)→ "待审查"(全部完成)
-> 3. (可选)`code-it <BUG-NNN>` 步骤 8.5 自含按需写单测—— 产出 `unit-test-results.md`(若项目可测)
-> 4. `code-check <BUG-NNN>` —— 产出 `REVIEW-REPORT.md`,推进"待审查 → 已完成"
-
-### 步骤 6 — 写缺陷详情 `RESULT.md`
-
-**新建分支**:
-1. `Write "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"`,基于 `templates/bug.md` 模板
-2. 填写:
- - 文档头:缺陷编号、严重度、报告人、报告时间、状态、当前负责人
- - 缺陷描述:用户原始描述 + (若有补充)复现步骤/期望行为/实际行为
- - 涉及文件/模块(若用户提供)
- - 修复日志:首条
- ```
- YYYY-MM-DD HH:mm 登记 <报告人> 报告缺陷:<原始描述>
- ```
- - 变更记录:首条
- ```
- YYYY-MM-DD HH:mm 缺陷登记 code-fix 创建缺陷 <缺陷编号>(严重度 <P?>) <缺陷编号>
- ```
-
-**更新分支**:
-1. `Read` 现有 `RESULT.md`
-2. 用 `Edit` 工具:
- - 更新"状态"字段
- - 在"修复日志"区段追加本轮记录
- - 在"变更记录"区段追加本轮条目:
- ```
- YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
- ```
-3. 若有 `PLAN.md` / `fix-work-log.md` / `fix-test-results.md` 等下游文件,把它们的关键摘要链接到 `RESULT.md`
-
-### 步骤 6.X — 复现产物登记(本需求新增子节,在"**关键:不重写**"注释前)
-
-> 本子节消费步骤 0.X 写入的 `context.canStart` / `context.startCommand` 上下文,执行复现动作并收集 3 类产物(日志 / 截图 / 交互数据)。沿用 NFR-4(失败降级不阻断)+ NFR-9(不修改项目源码)+ NFR-3(不触发 `AskUserQuestion` + 不新增 CLI 参数)。
-
-**触发条件**(全部满足时触发):
-1. `context.canStart == true`(步骤 0.X 探测结果)
-2. 当前是"新建分支"(更新分支**不**触发,避免反复启动,沿用 NFR-6 幂等)
-3. 用户在步骤 1 / 5 提供了"复现步骤"(`### 复现步骤` 段内容长度 > 0 判定)
-
-**9 步复现算法**:
-
-```
-function reproduceBug(bugNum, startCommand, reproSteps, timeout = 60):
- // 产物路径:fix/<BUG-NNN>/reproduce/(模板字面,与 FR-4 + assistants-layout.md 同步)
- reproduceDir = "./assistants/<version>/fix/" + bugNum + "/reproduce/"
- mkdir(reproduceDir)
-
- startedAt = now()
- // 1. 启动子进程(在 cwd 下,不改 cwd)
- childProcess = Bash: <startCommand> > reproduceDir + "run.stdout.log" 2> reproduceDir + "run.stderr.log"
-
- // 2. 等 5s(给程序启动时间)
- sleep 5s
-
- let exitCode = 0
- let reproduceResult = "已复现"
- let failureReason = null
-
- // 3. 执行复现步骤(超时控制,沿用 executeStep 3 类分发)
- try:
- await Promise.race([
- Promise.all(reproSteps.map(step => executeStep(step, reproduceDir))),
- sleep(timeout * 1000).then(() => { throw new TimeoutError() })
- ])
- except TimeoutError:
- exitCode = 124
- reproduceResult = "复现失败(超时)"
- failureReason = "Timeout after " + timeout + "s"
- except Exception as e:
- exitCode = 1
- reproduceResult = "复现失败"
- failureReason = e.message
-
- // 4. 终止子进程(SIGTERM 5s 后 SIGKILL,沿用 PD-3)
- if childProcess.isRunning():
- childProcess.kill("SIGTERM")
- await sleep(5s)
- if childProcess.isRunning():
- childProcess.kill("SIGKILL")
-
- endedAt = now()
-
- // 5. 合并 stdout + stderr → run.log(加时间戳,沿用 PD-4)
- mergeLogsWithTimestamp(reproduceDir + "run.stdout.log", reproduceDir + "run.stderr.log", reproduceDir + "run.log")
-
- // 6. 写元信息 RESULT-meta.json(单行 JSON,沿用 PD-5)
- meta = {
- bugNum: bugNum,
- startCommand: startCommand,
- startedAt: startedAt,
- endedAt: endedAt,
- exitCode: exitCode,
- reproduceResult: reproduceResult,
- artifacts: listArtifacts(reproduceDir),
- failureReason: failureReason
- }
- writeFile(reproduceDir + "RESULT-meta.json", jsonStringify(meta))
-
- // 7. 写"## 复现产物登记" 区段到 fix/<BUG-NNN>/RESULT.md(模板已含)
- writeReproSection(fixResultPath, meta, reproduceDir)
-
- return meta
-```
-
-**executeStep(step, reproduceDir) 3 类分发**:
-
-```
-function executeStep(step, reproduceDir):
- switch step.type:
- case "cli":
- // 直接执行命令,stdout/stderr 已通过 > 重定向到子进程
- Bash: <step.command>
- break
- case "http":
- // 交互数据采集(沿用 PD-7)
- response = Bash: curl -X <step.method> -H "<step.headers>" -d '<step.body>' <step.url>
- interaction = {
- step: step.index, method: step.method, url: step.url,
- headers: step.headers, requestBody: step.body,
- responseStatus: response.status, responseBody: response.body,
- responseHeaders: response.headers
- }
- writeFile(reproduceDir + "interaction-" + step.index + ".json", jsonStringify(interaction, indent=2))
- break
- case "browser":
- // 截图采集链式降级:playwright → puppeteer → headless-chrome(沿用 PD-6)
- if Bash: command -v playwright:
- Bash: npx playwright screenshot <step.url> <reproduceDir + "screenshot-" + step.index + ".png">
- elif Bash: command -v puppeteer:
- Bash: npx puppeteer-cli screenshot <step.url> --output <reproduceDir + "screenshot-" + step.index + ".png">
- elif Bash: command -v chrome:
- Bash: chrome --headless --screenshot=<reproduceDir + "screenshot-" + step.index + ".png"> <step.url>
- else:
- log("⚠ 截图工具不可用,跳过截图产物")
- break
- default:
- log("⚠ 未知步骤类型:" + step.type)
-```
-
-**11 边界 + 1 复合边界**(沿用 NFR-4 失败降级,**不**阻断 `code-fix` 主流程):
-
-| 边界 | 触发 | 处理 |
+| 方面 | code-req | code-fix |
 | --- | --- | --- |
-| E-1 | `canStart = false`(无启动命令) | 跳过复现动作,`复现方式 = 文本复现`,继续登记 |
-| E-2 | 启动失败(exit ≠ 0) | 屏显 `⚠ 启动失败:<stderr 前 500 字符>` + `复现方式 = 文本复现` + 继续 |
-| E-3 | 复现超时(> 60s) | 终止进程 + 屏显 `⚠ 启动超时` + 降级为文本复现 |
-| E-4 | 复现未触发 bug | `复现结论 = 未复现`,继续登记 |
-| E-5 | 日志过大(> 10MB) | 截断到前 1MB + 屏显 `⚠ 日志过大,已截断到前 1MB` |
-| E-6 | 截图工具不可用 | 跳过截图,屏显 `⚠ 截图工具不可用,跳过截图产物` |
-| E-7 | 用户未给复现步骤 | 触发条件 3 不满足,跳过 |
-| E-8 | `code-fix` 复跑已有 BUG(更新分支) | 触发条件 2 不满足,跳过(沿用 NFR-6 幂等) |
-| E-9 | `code-auto` 上下文 | 沿用 NFR-3 / NFR-4(不触发 `AskUserQuestion` + 失败降级不阻断) |
-| E-10 | `reproduce/` 子目录已存在 | 沿用既有产物,`code-fix` 在目录后追加 `_2` / `_3` 等后缀 |
-| E-11 | `fix/<BUG-NNN>/` 目录被人工删除后复跑 | 沿用既有 `code-fix` 步骤 2 行为(自动 `mkdir -p`) |
-| E-12(复合) | 启动成功 + 步骤 1 失败 + 步骤 2 成功 | `reproduceResult = "已复现"`(以最后一步为准);产物清单含步骤 1 失败记录 |
-
-**屏显契约**:
-
-```
-=== code-fix 复现动作(步骤 6 末尾)===
-启动命令:<command>
-产物目录:<reproduceDir>
-=== code-fix 复现完成 ===
-退出码:<N>
-复现结论:<已复现 / 未复现 / 复现失败>
-产物数:<N> 个
-```
-
-**性能**:启动 5s + 步骤执行 < 55s = 总 < 60s(沿用 NFR-1)
-
-### 步骤 7 — 写缺陷总览 `fix/RESULT.md`
-
-**若 `fix/RESULT.md` 不存在**:
-- `Write`,基于 `templates/fix-registry.md` 模板
-- 在"缺陷清单"表格追加本条:
- ```
- | 缺陷编号 | 严重度 | 标题 | 状态 | 报告时间 | 修复时间 | 修复人 | 关联需求 | 缺陷详情 |
- ```
-- 在"统计"区初始化(0/0/0/...)
-- 在"变更记录"首条记录本次登记
-
-**若 `fix/RESULT.md` 已存在**:
-- `Read` 后用 `Edit`:
- - "缺陷清单"表追加本条(若是新建)或更新本条的状态/时间(若是更新)
- - "统计"区更新总数
- - "变更记录"追加:
- ```
- YYYY-MM-DD HH:mm <变更类型> <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
- ```
-
-### 步骤 8 — 同步版本看板(强制)
-
-1. `Read "./assistants/<版本号>/RESULT.md"`,定位"缺陷清单"区段
-2. 检查本条缺陷是否已在表中:
- - **不存在** → 追加一行
- - **已存在** → 更新"状态" / "修复时间" / "关联任务" / "修复提交" 列
-3. 在"统计"区更新:
- - 总数 N
- - P0: N / P1: N / P2: N / P3: N
- - 已修复 N / 待修复 N
-4. 在"变更记录"区段追加:
- ```
- YYYY-MM-DD HH:mm 缺陷状态 <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
- ```
-
-### 步骤 9 — 引导下一步(纯登记型,引导调其他子技能)
-
-根据当前推进到的目标状态,给用户建议:
-
-| 当前状态 | 下一步建议 |
-| --- | --- |
-| 待处理 | 调 `code-fix <BUG-NNN>` 进入"报告",补充报告信息 |
-| 报告 | 调 `code-fix <BUG-NNN>` 进入"调查中",补充根因 |
-| 调查中 | 调 `code-plan <BUG-NNN>` 产出 `PLAN.md`,进入"待开发" |
-| 待开发 | (由 `code-plan` 推进;本技能不参与此状态之后) |
-| 开发中 | (由 `code-it <BUG-NNN>` 推进) |
-| 待审查 | (由 `code-it` 全部完成时推进;本技能不参与) |
-| 已完成 | (由 `code-check <BUG-NNN>` 推进;本技能不参与) |
-| 阻塞 | 解决阻塞后调 `code-fix` 解除 |
-
-> **典型修复流程**(本技能只参与前 2 步,后续由 `code-plan` / `code-it` / `code-check` 自动接力):
-> 1. `code-fix "用户报告:..."` → 登记 BUG,产出 `fix/<BUG-NNN>/RESULT.md`(本技能,初始状态 = `待处理`)
-> 2. `code-fix BUG-NNN` → 推进到"报告" → "调查中"(本技能前 3 段)
-> 3. `code-plan BUG-NNN` → 产出 `PLAN.md`,状态由"调查中"自动推进到"待开发"
-> 4. `code-it BUG-NNN` → 实际改代码,状态由"待开发"经"开发中"自动推进到"待审查"
-> 5. (可选)`code-it BUG-NNN` 步骤 8.5 自含按需写单测(若项目可测)→ 产出 `unit-test-results.md`
-> 6. `code-check BUG-NNN` → 产出 `REVIEW-REPORT.md`,状态由"待审查"自动推进到"已完成"
-
-### 步骤 10 — 完善过程文档与汇报
-
-- 读 `investigation.md`(若有,本技能不创建)
-- 向用户汇报:
- - 本轮做了什么
- - 缺陷状态从 X → Y
- - 哪个文件被更新:`fix/<BUG-NNN>/RESULT.md`、`fix/RESULT.md`、版本看板的"缺陷清单"
- - 下一步建议
-
----
-
-## 过程文档格式(纯登记型)
-
-### fix/<BUG-NNN>/RESULT.md
-见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(若已调 `code-plan`,链接 `PLAN.md`,否则标注"待 `code-plan` 补充")/ 修复日志(本轮工作记录)/ 变更记录。
-
-> **本技能不产出**:`investigation.md` / `PLAN.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-it` / `code-plan` / `code-check` 产出)。
-
-### fix/RESULT.md(缺陷总览)
-见 `templates/fix-registry.md`,核心区段:文档头 / 缺陷清单(表格)/ 统计 / 变更记录。
-
-### investigation.md(由 `code-it` 写入,本技能只读)
-自由形式,记录调查过程的笔记(由 `code-it` 在 BUG 路径下产出,本技能不创建;复跑时只读):
-- 根因假设与验证
-- 涉及的代码位置
-- 类似历史问题
-- 排除的可能
-
----
-
-## 与其他技能的关系
-
-| 技能 | 关系 |
-| --- | --- |
-| `code-plan` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 读,产出 `fix/<BUG-NNN>/PLAN.md`,**也**回写 `fix/RESULT.md` 与看板 |
-| `code-it` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 与 `PLAN.md` 读,实施代码修改,产出 `fix-work-log.md` 等,**也**回写 `fix/RESULT.md` 与看板(若项目可测,`code-it` 步骤 8.5 自含按需写单测) |
-| `code-check` | 接收 `BUG-NNN` 时,对已修复的 bug 走评审,产出 `fix/<BUG-NNN>/REVIEW-REPORT.md`,推进状态到"已修复-已验证" / "已关闭" |
-| `code-require` / `code-design` | 与本技能无直接关系(本技能在主流程之外) |
-| `code-version` | 不同版本的缺陷独立登记;切换版本后,新版本从空开始 |
-
-**典型完整流程**(本技能只负责登记 + 前 5 段状态推进;后续由 `code-plan` / `code-it` / `code-check` 自动接力):
-```
-1. code-fix "用户报告:登录页密码框不显示" → BUG-00001 / 待处理
-2. code-plan BUG-00001 → PLAN.md,状态自动推进到"待开发"
-3. code-it BUG-00001 → 实际改代码,状态自动经"开发中"推进到"待审查"
-4. code-check BUG-00001 → REVIEW-REPORT.md,状态自动推进到"已完成"
-```
+| 第 1 阶段 | REQUIRE(产出 REQUIRE.md) | INIT(产出 BUG.md) |
+| 后续阶段 | DESIGN/PLAN/CODING/CHECK | 复用 code-req references |
+| 输出目录 | `req/<REQ-NNNNN>/` | `fix/<BUG-NNNNN>/` |
+| 看板区段 | 需求清单 | 缺陷清单 |
 
 ## 衔接
-- **下游(并行)**:用户可同时跑 `code-plan <BUG-NNN>` 与 `code-it <BUG-NNN>`;本技能独立登记/跟踪
-- **上游**:无,通常由用户直接发起(用户报告 bug 时调一次,后续每次状态变化调一次)
-- **横向**:与同版本其他 BUG-NNN 互不干扰(各自独立目录)
+- **下游**:`code-ver --publish`(发布)
+- **上游**:`code-ver`(必须,提供激活版本);`code-rule`(项目级规范)
+- **横向**:`code-req`(需求开发,共享 DESIGN/PLAN/CODING/CHECK references);`code-faq`(查询导出)
 
 ## 不要做的事
-- 不修改 `<本仓库>` 中除了 `./assistants` 目录中的其他代码文件(工程代码改动由 `code-it` 实施,本技能只写 `fix/<BUG-NNN>/RESULT.md` 等工作空间文档)
 - 不要在没有 `./assistants/.current-version` 的情况下继续执行
-- 不要直接修改项目源代码(那是 `code-it` 的事)
-- 不要跳过"询问本轮状态推进"(步骤 4)直接写文件(状态推进是本技能的核心,必须显式确认)
-- 不要把 `BUG-NNN` 的编号搞乱(一旦分配稳定不变,即使关闭了也不复用)
-- 不要重写 `RESULT.md` 的稳定章节(缺陷描述、根因);只追加/更新状态字段
-- 不要在 `fix/<BUG-NNN>/RESULT.md` 中维护"详细修复方案"或"详细代码改动"(那些在 `PLAN.md` / `fix-work-log.md`,本文件只链接)
-- 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的 `RESULT.md` 与版本看板的"缺陷清单"/"变更记录")
-- **不**产出 `investigation.md` / `PLAN.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-it` / `code-plan` / `code-check` 产出)
-- **不**实施代码改动(由 `code-it` 实施)
-- **不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进
-- **不**直接关闭缺陷(终态由 `code-check` 推进)
+- 不要在 CODING 阶段之外修改 CWD 源码
+- 不要跳过 PROCESS.md 追加(断点续跑的唯一依据)
+- 不要在阶段失败时不追加 PROCESS.md 失败记录
+- 不要在 `--auto` 模式下弹出 `AskUserQuestion`
+- 不要在代码注释中引用 REQ-NNNNN/BUG-NNNNN/TASK-* 追踪编号
+- 不要修改 `./assistants/rules/` 下的任何内容
+- 不要修改 `RESULT.md` 中非本技能负责的区段
+- 不要在 INIT 阶段做技术选型(归 DESIGN 阶段)
+- 不要一次问完所有澄清问题(每轮 1-3 个最阻塞的点)
