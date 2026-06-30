@@ -22,8 +22,9 @@
 | --- | --- | --- |
 | REQ-00045 | 补充 REQ-00044 重构后丢失的旧技能能力 | [PROCESS.md](req/REQ-00045/PROCESS.md) |
 | REQ-00046 | 恢复旧技能中与用户确认的交互方式 | [PROCESS.md](req/REQ-00046/PROCESS.md) |
+| REQ-00047 | 优化 REQUIRE.md 和 BUG.md 保留用户原始输入 | [PROCESS.md](req/REQ-00047/PROCESS.md) |
 
-**统计**:2
+**统计**:3
 
 ---
 
