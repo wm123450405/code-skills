@@ -7,21 +7,26 @@
 `code-skills` 是一套用于走完完整软件开发生命周期的 Claude Code 技能集合,内置**版本感知工作空间管理**:
 
 ```
-code-version → code-require → code-design → code-plan → code-it → code-check
-   版本管理      需求分析        概要设计      详细计划     开发编码    代码评审
+code-ver → code-req → code-fix → code-faq → code-dashboard
+ 版本管理   需求开发   缺陷修复   知识查询   开发看板
 
-   code-init  (项目级一次性引导)— 扫描现有代码,登记为基线
-   code-rule  (横向,非主流程)  — 编码规范管理
-   code-fix   (支线流程入口)   — 缺陷登记与跟踪(与 code-plan / code-it 接驳)
+ code-rule  (横向,非主流程) — 编码规范管理
+ code-merge (横向,非主流程) — Worktree 自动合并
 ```
 
-`code-version` 是**必备的前置门** —— 主流程中其他所有 `code-*` 技能在执行时,都会先读取 `./assistants/.current-version` 以确定工作目录。
+`code-ver` 是**必备的前置门** —— 合并了版本管理、项目初始化、发布检查三种能力:新项目自动检测并初始化;已初始化项目切换版本;当前版本未发布时询问是否先发布再切换。
 
-`code-init` 是新项目的**一次性引导**:扫描现有源码,将每个已有功能登记为 `require/EXISTING-NNN/`,生成 `INIT-REPORT.md`,并创建基线版本。`code-init` 执行完成后,用户应调 `code-version` 切到新开发版本。
+`code-req` 是**需求开发全流程入口** —— 合并了需求分析、软件设计、任务排期、编码执行、代码审查五阶段,默认交互确认每阶段,`--auto` 静默执行,支持 `PROCESS.md` 断点续跑。
+
+`code-fix` 是**缺陷修复全流程入口** —— 合并了缺陷登记、修复设计、任务排期、编码执行、代码审查五阶段,复用 `code-req` 的 references,同样支持 `--auto` 和断点续跑。
+
+`code-faq` 是**知识查询与文档导出** —— 跨版本查询需求/缺陷,支持 `--require`/`--design`/`--summary`/`--template` 导出。
 
 `code-rule` **不在主流程管道中** —— 它负责维护跨版本共享的 `./assistants/rules/` 目录,主流程中的所有技能都会以只读方式读取该目录作为约束。
 
-`code-fix` 是**支线流程入口**:负责登记缺陷与跟踪其生命周期。它与 `code-plan` / `code-it`(两者均已扩展以接受 `BUG-NNN` 输入)协作,完整支线流程为:`code-fix`(登记)→ `code-plan <BUG-NNN>`(规划修复)→ `code-it <BUG-NNN>`(实施修复)→ `code-fix <BUG-NNN>`(推进状态/关闭)。
+`code-merge` **不在主流程管道中** —— 在 git worktree 中完成开发后,一键合回主干:提交未提交文件、拉取主干、LLM 智能解冲突、看板自检、`git merge --no-ff` 合回 main。
+
+`code-dashboard` **不在主流程管道中** —— 只读看板,一行命令查看版本进度,解析简化版 `RESULT.md`(需求清单+缺陷清单)和 `PROCESS.md` 获取进度。
 
 ## 仓库结构
 
@@ -39,15 +44,13 @@ code-skills/                          ← marketplace 仓库根
         ├── README.en.md              # 工作流总览与技能表(英文)
         ├── CLAUDE.md                 # 本文件
         └── skills/
-            ├── code-init/            # 工程初始化(项目级一次性引导)
-            ├── code-version/         # 版本管理(版本感知入口)
+            ├── code-ver/             # 版本管理(合并 code-version + code-publish + code-init)
+            ├── code-req/             # 需求开发全流程(合并 code-require + design + plan + it + check)
+            ├── code-fix/             # 缺陷修复全流程(合并 code-fix + plan + it + check 缺陷路径)
+            ├── code-faq/             # 知识查询与文档导出(原 code-answer)
             ├── code-rule/            # 编码规范管理(项目级共享)
-            ├── code-require/         # 需求分析
-            ├── code-design/          # 概要设计
-            ├── code-plan/            # 详细设计 / 实施计划(REQ 路径)+ 缺陷修复方案(BUG 路径)
-            ├── code-it/              # 开发编码(任务路径)+ 缺陷修复实施(缺陷路径)
-            ├── code-fix/             # 缺陷登记与跟踪
-            └── code-check/          # 代码评审
+            ├── code-merge/           # Worktree 自动合并
+            └── code-dashboard/       # 开发看板(只读)
 ```
 
 ## 需与用户确认的约定
@@ -61,50 +64,47 @@ code-skills/                          ← marketplace 仓库根
 - 每个 `SKILL.md` 遵循 Claude Code 的技能约定:YAML 前置元数据块(`name` 与 `description`)+ Markdown 正文。
 - `name` 字段是技能的标识(如 `code-version`);`description` 字段应明确触发条件。
 - 技能正文应描述:目标、适用场景、输入、输出、工作流步骤、上下游衔接。
-- 技能引用的资源位于同级目录:`templates/`(技能产出的文档)、`guidelines/`(技能强制执行的规则)、`checklists/`(校验清单)。
+- 技能引用的资源位于同级目录:`templates/`(技能产出的文档模板)、`references/`(技能强制执行的参考流程)。
 - 一个技能的下游产出,就是下一个技能的上游输入。当某个技能的输出模式变更时,产出方与消费方都需同步更新。
 
 ## 版本感知工作空间约定
 
-主流程中的技能(`code-require` 到 `code-check`)在版本层之下运作:
+主流程中的技能(`code-req` / `code-fix`)在版本层之下运作:
 
 ```
 assistants/
 ├── rules/                  # 项目级规范,跨版本共享,由 code-rule 维护
 ├── .current-version        # 当前激活版本标记
 └── <版本号>/               # 版本工作空间
-    ├── RESULT.md           # 版本开发进度看板
-    ├── INIT-REPORT.md      # (仅基线版本)code-init 生成的功能分析报告
-    ├── require/<需求编号>/
-    │   └── EXISTING-NNN/   # (仅基线版本)现有功能需求,由 code-init 批量创建
-    ├── design/<需求编号>/
-    ├── plan/<需求编号>/    # 需求路径的详细设计与任务计划(code-plan REQ 分支)
-    ├── code/<任务编码>/    # 任务路径的开发执行(code-it 任务分支)
-    ├── review/
-    └── fix/                # 缺陷路径(code-fix + code-plan/code-it BUG 分支)
-        ├── RESULT.md       # 缺陷总览
-        └── <BUG-NNN>/
-            ├── RESULT.md   # 缺陷详情
-            ├── PLAN.md # 修复方案(code-plan BUG 分支)
-            ├── fix-work-log.md / fix-compile-and-run.md / fix-test-results.md / deviations.md
-            └── ...
+    ├── RESULT.md           # 版本开发进度看板(简化版:需求清单+缺陷清单)
+    ├── req/<REQ-NNNNN>/    # 需求路径(code-req 产出)
+    │   ├── REQUIRE.md      # 需求分析
+    │   ├── DESIGN.md       # 软件设计
+    │   ├── PLAN.md         # 任务排期
+    │   ├── TASK-N.md       # 任务完成报告
+    │   ├── CHECK.md        # 代码审查
+    │   ├── PROCESS.md      # 执行进程(断点续跑)
+    │   └── LOG.md          # 过程记录(可选)
+    └── fix/<BUG-NNNNN>/    # 缺陷路径(code-fix 产出)
+        ├── BUG.md          # 缺陷分析
+        ├── DESIGN.md       # 修复设计
+        ├── PLAN.md         # 任务排期
+        ├── TASK-N.md       # 任务完成报告
+        ├── CHECK.md        # 代码审查
+        ├── PROCESS.md      # 执行进程(断点续跑)
+        └── LOG.md          # 过程记录(可选)
 ```
 
 - `rules/` **跨版本共享**,主流程技能对其**只读**;`code-rule` 是唯一写入该目录的技能。
-- 每个主流程技能的第一步是读取 `.current-version`;若文件不存在,技能立即中止并提示用户调 `code-version`。
-- `code-init` 是**唯一**会创建基线版本并填充 `EXISTING-NNN/` 的技能 —— 它不修改 `rules/`,且每个项目只应执行一次。执行完毕后,用户应调 `code-version` 开启新开发版本。
+- 每个主流程技能的第一步是读取 `.current-version`;若文件不存在,技能立即中止并提示用户调 `code-ver`。
+- `code-ver` 合并了初始化、版本切换、发布检查三种能力:新项目无 `assistants/` 时自动执行初始化(扫描代码、登记基线需求、创建基线版本);已初始化项目切换版本;当前版本未发布时询问是否先发布再切换。
 - `code-rule` **不**做版本感知 —— 它直接操作 `rules/`,从不读取或写入 `.current-version` 与任何版本目录。
-- `code-fix` **不在主流程管道中**但**做版本感知**:在当前激活版本的 `fix/` 目录下工作。它登记缺陷、跟踪生命周期,并与 `code-plan` / `code-it`(两者均已扩展以接受 `BUG-NNN` 输入)协作。
-- `code-plan` 与 `code-it` 是**双路径**设计:既接受需求编码(REQ-YYYY-NNNN),也接受缺陷编号(BUG-NNN),并分别路由到相应子目录。
-- 每个主流程技能在执行结束时,会更新 `<版本号>/RESULT.md`(版本看板)中其负责的区段。
+- `code-fix` 是**独立全流程技能**:缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查,复用 `code-req` 的 references(DESIGN/PLAN/CODING/CHECK 阶段),支持 `--auto` 和 `PROCESS.md` 断点续跑。
+- `code-req` 是**独立全流程技能**:需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查,默认交互确认,`--auto` 静默,支持 `PROCESS.md` 断点续跑。
 - 版本看板的写入责任划分:
-  - `code-require` → 需求清单, 变更记录
-  - `code-design` → 概要设计清单, 变更记录
-  - `code-plan`(REQ 路径)→ 详细设计与任务计划汇总, 任务清单, 里程碑, 变更记录
-  - `code-plan`(BUG 路径)→ 缺陷清单, 变更记录
-  - `code-it`(任务路径)→ 任务清单(开发状态), 缺陷清单, 执行的开发命令记录, 变更记录
-  - `code-it`(缺陷路径)→ 缺陷清单, 执行的开发命令记录, 变更记录
-  - `code-check` → 评审发现汇总, 派生任务记录, 缺陷清单, 任务清单(派生任务), 变更记录
+  - `code-req` → 需求清单(首次创建需求时追加一行)
+  - `code-fix` → 缺陷清单(首次创建缺陷时追加一行)
+  - 各阶段的进度通过 `PROCESS.md` 追踪,不再频繁更新看板
 
 ## 双状态任务模型
 
@@ -131,8 +131,9 @@ assistants/
 
 ### 指引 N: `code-dashboard` 行为约定
 - 展示策略:ASCII 进度表 + 文本柱状图(固定 12 字符 + `█` / `░` / `▓`)
-- 建议策略:5 类优先级(高/中/低/—)+ 最多 5 条;命令严格按既有 10 个 `code-*` SKILL.md 真实语法
-- 解析锚点:看板 3 区段(需求清单 / 任务清单 / 缺陷清单);按 `^## .*$` 定位 + 表格行 `^\| .* \|$` 匹配
+- 建议策略:5 类优先级(高/中/低/—)+ 最多 5 条;命令严格按既有 7 个 `code-*` SKILL.md 真实语法
+- 解析锚点:看板 2 区段(需求清单 / 缺陷清单);按 `^## .*$` 定位 + 表格行 `^\| .* \|$` 匹配
+- 进度追踪:通过 `PROCESS.md` 阶段追踪(INIT→REQUIRE→DESIGN→PLAN→CODING→CHECK→DONE)
 - 双格式兼容:任务编号新格式 `^TASK-(REQ|BUG)-\d{5}-\d{5}$` 优先;旧格式 `^(REQ|BUG)-\d{5}-\d{5}$` 透传
-- 状态字面:严格按字面匹配(不归一化 `已完成(需求分析)` 到 `已完成`)
+- 状态字面:严格按字面匹配(不归一化)
 - 工具集:仅 `Read` / `Glob` / `Grep`;禁用 `Write` / `Edit` / `Bash`

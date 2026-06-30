@@ -24,7 +24,7 @@
 | TASK-REQ-00044-00008 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 已完成 | 不适用 | TASK-00007 |
 | TASK-REQ-00044-00009 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | .claude-plugin/plugin.json, .claude-plugin/marketplace.json | 已完成 | 不适用 | TASK-00004, TASK-00005, TASK-00006 |
 | TASK-REQ-00044-00010 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | code-require/design/plan/it/check/auto/version/publish/init/answer | 已完成 | 不适用 | TASK-00003~00009 |
-| TASK-REQ-00044-00011 | 修改 | 审查改修 | [改修] 更新 CLAUDE.md 为 v2 结构 | CLAUDE.md | 待开始 | 不适用 | TASK-00010 |
+| TASK-REQ-00044-00011 | 修改 | 审查改修 | [改修] 更新 CLAUDE.md 为 v2 结构 | CLAUDE.md | 已完成 | 不适用 | TASK-00010 |
 
 ## 任务依赖图
 
