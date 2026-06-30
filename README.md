@@ -1,10 +1,10 @@
 # code-skills
 
-> 面向 AI 协作的项目管理 + 编码工作流工具集(基于 Claude Code)。
+> 面向 AI 协作的软件开发生命周期管理工具集(基于 Claude Code)。
 
 ## 简介
 
-`code-skills` 是一组 Claude Code 技能,覆盖需求分析 → 概要设计 → 详细设计 → 编码 → 单测 → 评审 → 发布的完整开发周期。
+`code-skills` 是一组 Claude Code 技能,覆盖从需求分析到代码审查的完整开发周期,内置版本感知工作空间管理。
 
 ## 快速开始
 
@@ -16,30 +16,29 @@
    ```
    claude plugin install code-skills@code-skills-marketplace
    ```
-3. 在项目中调用首个技能:
+3. 在项目中调用技能:
    ```
-   /code-version V0.0.0
-   /code-require "添加用户登录功能"
+   /code-ver              ← 初始化项目,创建版本
+   /code-req "你的需求"    ← 开始需求开发
+   /code-fix "缺陷描述"    ← 修复缺陷
+   /code-dashboard        ← 查看进度
    ```
 
-## 主要能力
+## 技能概览
 
 | 技能 | 用途 |
 | --- | --- |
-| `code-version` | 版本工作空间管理 |
-| `code-require` | 需求分析 |
-| `code-design` | 概要设计 |
-| `code-plan` | 详细设计 + 任务拆分 |
-| `code-it` | 任务编码 |
-| `code-check` | 代码评审 |
-| `code-dashboard` | 开发看板 |
-| `code-publish` | 发布部署 |
-| `code-auto` | 自动开发(编排) |
-| `code-rule` | 编码规范管理 |
+| `code-ver` | 版本管理 — 初始化项目、切换版本、发布 |
+| `code-req` | 需求开发 — 从需求分析到代码审查的全流程 |
+| `code-fix` | 缺陷修复 — 从缺陷登记到修复审查的全流程 |
+| `code-faq` | 知识查询 — 跨版本查询需求和缺陷,支持导出 |
+| `code-rule` | 编码规范 — 用自然语言描述规范,自动整理为条款 |
+| `code-merge` | 分支合并 — 将 worktree 改动合回主干 |
+| `code-dashboard` | 开发看板 — 查看版本进度,获取下一步建议 |
 
 ## 📖 详细文档
 
-完整技能说明、安装细节、版本管理:[./plugins/code-skills/README.md](./plugins/code-skills/README.md)
+完整技能说明、安装细节、使用指南:[./plugins/code-skills/README.md](./plugins/code-skills/README.md)
 
 ## 许可证
 
