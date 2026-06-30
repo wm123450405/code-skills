@@ -89,10 +89,9 @@
 | REQ-00041 | 技能多语言模块化重构 | 已完成 | 5 | 5 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00041/PLAN.md) / [RESULT.md](plan/REQ-00041/RESULT.md) |
 | REQ-00042 | 代码产出中禁止包含追踪编号 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00042/PLAN.md) / [RESULT.md](plan/REQ-00042/RESULT.md) |
 | REQ-00043 | 移除 fix-plan.md 废弃引用 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00043/PLAN.md) |
+| REQ-00044 | 技能系统 v2 大改版 | 已完成 | 10 | 0 | 0 | 2026-06-30 | [PLAN.md](plan/REQ-00044/PLAN.md) / [RESULT.md](plan/REQ-00044/RESULT.md) |
 
-**统计**:3 个计划 / 共 7 个任务 / 开发完成 7 / 测试通过 0
-
-**统计**:2 个计划 / 共 6 个任务 / 开发完成 5 / 测试通过 0
+**统计**:4 个计划 / 共 17 个任务 / 开发完成 7 / 测试通过 0
 
 ---
 
@@ -113,12 +112,22 @@
 | TASK-REQ-00041-00005 | REQ-00041 | 修改 | 需求新增 | [修改] code-check 精简 SKILL.md + 创建 references/ 7 文件 | 已完成 | 不适用 | code-check/SKILL.md(157 lines) | 2026-06-29 | — | TASK-REQ-00041-00001 |
 | TASK-REQ-00042-00001 | REQ-00042 | 修改 | 需求新增 | [修改] code-it:编码原则新增"禁止追踪编号"规则 + 模板约束 | 已完成 | 不适用 | references/common.md, templates/RESULT.md | 2026-06-29 | — | — |
 | TASK-REQ-00043-00001 | REQ-00043 | 修改 | 需求新增 | [修改] 移除 fix-plan.md 废弃引用,替换为 PLAN.md/RESULT.md | 已完成 | 不适用 | CLAUDE.md, code-auto/SKILL.md, code-fix/SKILL.md, code-fix/templates/, README.md, README.en.md | 2026-06-29 | — | — |
+| TASK-REQ-00044-00001 | REQ-00044 | 新增 | 需求新增 | [基础] 创建共享模板文件(8 个模板) | code-req/templates/*, code-fix/templates/BUG.md | 待开始 | 不适用 | — | — | — | — |
+| TASK-REQ-00044-00002 | REQ-00044 | 新增 | 需求新增 | [基础] 创建 code-req references(6 个阶段文档) | code-req/references/*.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
+| TASK-REQ-00044-00003 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-ver 技能 | code-ver/SKILL.md + references/common.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
+| TASK-REQ-00044-00004 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-req 技能 | code-req/SKILL.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001, TASK-REQ-00044-00002 |
+| TASK-REQ-00044-00005 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | code-fix/SKILL.md + references/fix-register.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004 |
+| TASK-REQ-00044-00006 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | code-faq/SKILL.md + references/common.md + templates/*.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
+| TASK-REQ-00044-00007 | REQ-00044 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | 3 个技能 SKILL.md + references/ | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005 |
+| TASK-REQ-00044-00008 | REQ-00044 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00007 |
+| TASK-REQ-00044-00009 | REQ-00044 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | .claude-plugin/plugin.json, .claude-plugin/marketplace.json | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005, TASK-REQ-00044-00006 |
+| TASK-REQ-00044-00010 | REQ-00044 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | code-require/design/plan/it/check/auto/version/publish/init/answer | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00003~00009 |
 
 **统计**:
-- 总任务数:7
+- 总任务数:17
 - 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):7
-- 开发已完成 / 未完成:7 / 0
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 7 / 0
+- 开发已完成 / 未完成:7 / 10
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 17 / 0
 
 ---
 
