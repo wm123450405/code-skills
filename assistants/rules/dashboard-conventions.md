@@ -1,7 +1,7 @@
 # 看板与版本工作空间规范(dashboard-conventions)
 
 > 本规范文件由 `code-rule` 技能维护,所有 `code-*` 技能在执行时会读取本文件作为强制约束。
-> 最后更新:2026-06-03 18:50
+> 最后更新:2026-06-30 18:00
 > 适用版本:跨所有版本共享(项目级)
 
 ## 适用场景
@@ -19,7 +19,7 @@
 
 | 同步位置 | 路径 | 角色 |
 | --- | --- | --- |
-| 看板模板 | `plugins/code-skills/skills/code-version/templates/version-RESULT.md` | 各版本 `RESULT.md` 的**实际样板** |
+| 看板模板 | `plugins/code-skills/skills/code-ver/templates/version-RESULT.md` | 各版本 `RESULT.md` 的**实际样板** |
 | 字段约定说明 | `plugins/code-skills/CLAUDE.md` 中"看板字段约定"段落 | **给人/AI 看的字段语义与填写规则** |
 | 本规范自身 | `./assistants/rules/dashboard-conventions.md` | 跨版本共享的**强约束** |
 
@@ -43,7 +43,7 @@
 **场景**:新增"风险登记"区段到看板
 
 **同一次提交内**:
-1. `plugins/code-skills/skills/code-version/templates/version-RESULT.md` 中插入"风险登记"段(放在"缺陷清单"与"评审发现汇总"之间)
+1. `plugins/code-skills/skills/code-ver/templates/version-RESULT.md` 中插入"风险登记"段(放在"缺陷清单"与"评审发现汇总"之间)
 2. `plugins/code-skills/CLAUDE.md` 中"看板字段约定"段加一句:"风险登记 — 记录本版本中识别到的风险及其缓解措施,字段:风险 ID/描述/级别/状态/缓解人/关联任务"
 3. 在本文件 §规则 1 同步追加新规则(若属于"看板字段约定扩展"的新类型)
 
@@ -51,7 +51,7 @@
 ```markdown
 # 反例 A:改了模板,CLAUDE.md 没改
 #   提交内容:
-plugins/code-skills/skills/code-version/templates/version-RESULT.md  | 12 +++++++---
+plugins/code-skills/skills/code-ver/templates/version-RESULT.md  | 12 +++++++---
 #   缺漏:
 plugins/code-skills/CLAUDE.md  ← 未同步更新"看板字段约定"段
 
@@ -59,18 +59,18 @@ plugins/code-skills/CLAUDE.md  ← 未同步更新"看板字段约定"段
 #   提交内容:
 plugins/code-skills/CLAUDE.md  | 8 ++++++++
 #   缺漏:
-plugins/code-skills/skills/code-version/templates/version-RESULT.md  ← 未同步插入新段
+plugins/code-skills/skills/code-ver/templates/version-RESULT.md  ← 未同步插入新段
 ```
 
 ### 例外
 - **纯排版/格式调整**(如改表格对齐、改链接文本)不触发本规则,只调整样式不影响字段语义
-- **历史快照**:`code-version` 在切换到旧版本时,旧版本的 `RESULT.md` 是历史快照,不再受本规则约束(本规则只约束**当前及未来**版本)
+- **历史快照**:`code-ver` 在切换到旧版本时,旧版本的 `RESULT.md` 是历史快照,不再受本规则约束(本规则只约束**当前及未来**版本)
 
 ### 关联规范
 - `./assistants/rules/skill-conventions.md §规则 1`(SKILL.md frontmatter 同步扩展)
-- `./assistants/rules/module-conventions.md §规则 1`(技能资源摆放)
+- `./assistants/rules/directory-conventions.md`(技能资源摆放)
 - `plugins/code-skills/CLAUDE.md`(同步位置之一)
-- `plugins/code-skills/skills/code-version/templates/version-RESULT.md`(同步位置之一)
+- `plugins/code-skills/skills/code-ver/templates/version-RESULT.md`(同步位置之一)
 
 ### 来源
 - 由 `code-rule` 技能添加于 2026-06-03 18:50

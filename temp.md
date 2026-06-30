@@ -71,3 +71,14 @@ BUG:
        9 - 运行命令:无
       10 - 测试命令:无(项目不可测;沿用 T-1 步骤 8a 守卫判定)
      … +115 lines (ctrl+o to expand)
+
+
+
+需要对现有工程的所有技能组进行功能大改版，需要将现有技能缩减为 `code-ver`、`code-req`、`code-fix`、`code-faq`、`code-rule`, `code-merge`、`code-dashboard` 7个技能。
+1. `code-ver` 技能合并现有 `code-version`、`code-publish` 和 `code-init` 技能的主要能力，若是初始项目执行 `code-ver` 是应该按照现在 `code-init` 技能能力进行工程的初始化，后按照现在 `code-version` 技能能力创建版本；若是已初始化过的工程，应该按照现有 `code-versin` 技能的功能切换版本号，若当前所处的版本是未发布的版本应该在切换版本号时询问是否执行现有 `code-publish` 技能的功能进行发布后再切换到指定的版本号上。
+2. `code-req` 技能合并现有 `code-require`、`code-design`、`code-plan`、`code-it`、`code-check` 技能中关于需求开发的内容，按照现有 `code-auto` 中针对需求的全自动化逻辑执行上述技能功能（`code-req`技能无需完成 `code-auto` 技能中的缺陷修复路径，仅需要完成需求开发的路径）。同时使用 `code-req` 进行需求自动开发过程中时区别现有的 `code-auto` 技能，应该事事与用户确认后再进行下一步。但增加 `--auto` 指令来达到现在 `code-auto` 技能中所有事项使用推荐选项的静默开发效果。
+3. `code-fix` 技能合并现有 `code-fix`、`code-plan`、`code-it`、`code-check` 技能中关于缺陷修复的内容，按照现有 `code-fix` + `code-auto` 中针对缺陷修复的全自动化逻辑执行上述技能功能（新`code-fix` 技能无需完成原 `code-auto` 技能中的需求开发路径，仅需要完成缺陷修复的路径）。同时使用新 `code-fix` 进行缺陷自动化修复过程中时区别现有的 `code-auto` 技能，应该事事与用户确认后再进行下一步。但增加 `--auto` 指令来达到现在 `code-auto` 技能中所有事项使用推荐选项的静默开发效果。
+4. 新 `code-req` 技能与新 `code-fix` 技能输出内容上做精简，输出格式上做优化：`assistants/` 目录功能保持不变，依然统一存放所有本工程下技能的所有输出；`assistants/<版本号>/` 目录与 `assistants/.current-version` 文件的功能保持不变，用于管理各版本下的需求、缺陷、任务以及当前版本信息；`assistants/<版本号>/` 目录下的 `code/`、`design/`、`plan/`、`require/`、`review/`、`check/`、`test/`、`fix/` 等目录重组，按照 `req/`、`fix/` 两大目录分别管理需求和缺陷；`req/` 目录下按照需求编号目录管理各需求，其中使用 `REQUIRE.md` 作为需求分析的结果产物，使用 `DESGIN.md` 作为软件设计产物（不区分概要设计、详细设计），使用 `PLAN.md` 作为开发任务排期计划结果产物，使用 `TASK-<任务需要>.md` 文档作为任务完成的结果产物，使用 `CHECK.md` 文档作为代码审查的结果产物，无需额外记录多份过程文档，如有额外信息需要记录可记录为一份 `LOG.md` 的过程文档（非必要不记录）；`fix/` 目录下按照缺陷编号目录管理各缺陷，其中使用 `BUG.md` 作为缺陷分析的结果产物（主要分析缺陷出发的条件、缺陷的可能成因），`DESGIN.md`、`PLAN.md`、`TASK-<任务序号>.md`、`CHECK.md`、`LOG.md` 等文档与 `req/` 目录下内容和生成逻辑保持一致（新 `code-req` 与 `code-fix` 大部分开发进程能力一致，仅登记的需求与登记的缺陷文档不一致，两项技能中应保持一致的总体逻辑）；每个需求目录或缺陷目录中应当包含 `PROCESS.md` 文件用于记录当前的执行进程，在操作中断后能够通过新的 `code-req`、`code-fix` 技能从中断的地方继续执行（`PROCESS.md`文件以追加的方式记录过程，记录前无需单独读取文件内容）。
+5. `code-faq` 技能主要保留现有 `code-answer` 技能内容，但是增加 `--require` 参数 + 文件路径导出需求文档功能、增加 `--desgin` 参数 + 文件路径导出详细设计文档功能（额外增加 `--summary` 参数导出概要设计文档，概要设计文档应该从软件设计文档中提取概要设计信息编写为新文档内容）。以上三个参数模式下可以通过 `--template` + 文件路径的方式执行导出的文件模板。需要导出的内容参考最新的文件结构和输出内容。
+6. 各项技能需要简化 `assistants/<版本号>/RESULT.md` 中版本看板数据的记录逻辑，避免频繁读写该文档，仅在需求、缺陷创建时追加记录需求、缺陷对应的进度文档（`PROCESS.md`）引用。
+7. 保留现有 `code-rule`, `code-merge`、`code-dashboard` 三个技能的基本功能，但是参考的文件和内容按照最新的各项技能的输出要求。

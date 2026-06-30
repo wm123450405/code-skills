@@ -1,7 +1,7 @@
 # 技能编写规范(skill-conventions)
 
 > 本规范文件由 `code-rule` 技能维护,所有 `code-*` 技能在执行时会读取本文件作为强制约束。
-> 最后更新:2026-06-03 18:50
+> 最后更新:2026-06-30 18:00
 > 适用版本:跨所有版本共享(项目级)
 
 ## 适用场景
@@ -16,7 +16,7 @@
 
 ### 条款
 `plugins/code-skills/skills/<技能名>/SKILL.md` 必须以 YAML frontmatter 开头,至少包含以下两个字段:
-- `name`:取值为**技能目录名**(kebab-case),与所在目录严格一致(例如 `skills/code-init/SKILL.md` 的 `name` 必须为 `code-init`)
+- `name`:取值为**技能目录名**(kebab-case),与所在目录严格一致(例如 `skills/code-ver/SKILL.md` 的 `name` 必须为 `code-ver`)
 - `description`:一段完整的自然语言描述,说明该技能的目标、适用场景、典型触发条件;**不**接受空字符串、占位符、纯关键词堆砌
 
 `name` 与目录名不一致、或 `description` 缺失/为空,视为本规则违反。
@@ -29,16 +29,16 @@
 - 新增技能 / 修改技能元信息 / 重命名技能目录时均适用
 
 ### 正面示例
-`plugins/code-skills/skills/code-version/SKILL.md` 顶部:
+`plugins/code-skills/skills/code-ver/SKILL.md` 顶部:
 ```markdown
 ---
-name: code-version
-description: 版本管理(Version Management)。要求用户提供一个"版本号",切换或创建 `./assistants/<版本号>/` 工作空间。在所有其他 `code-*` 技能调用之前使用,也可随时重跑以切换版本。
+name: code-ver
+description: 版本管理。合并 code-version + code-publish + code-init 能力。新项目自动初始化;已初始化项目切换版本;当前版本未发布时询问是否先发布再切换。
 ---
 ```
 
 要点:
-- `name` 与目录名 `code-version` 完全一致
+- `name` 与目录名 `code-ver` 完全一致
 - `description` 一句话讲清"做什么、何时用",可被 Claude Code 触发决策使用
 
 ### 反面示例
@@ -60,7 +60,7 @@ description:              # 错误:description 为空
 - 若因 Claude Code 协议未来调整新增 frontmatter 字段,本规则应同步扩展(参见 `dashboard-conventions.md §看板字段约定扩展`)
 
 ### 关联规范
-- `./assistants/rules/module-conventions.md §规则 1`(技能目录结构约定)
+- `./assistants/rules/directory-conventions.md`(技能目录结构约定)
 - `./assistants/rules/dashboard-conventions.md §规则 1`(看板/模板扩展时的同步)
 
 ### 来源
@@ -86,14 +86,14 @@ description:              # 错误:description 为空
 - 必须
 
 ### 适用范围
-- `plugins/code-skills/skills/*/SKILL.md`(全体 14 个 code-* 技能)
+- `plugins/code-skills/skills/*/SKILL.md`(全体 7 个 code-* 技能)
 - `plugins/code-skills/skills/*/templates/*.md`(全体模板)
 - **不**适用于:
-  - `plugins/code-skills/skills/code-check/checklists/`(留作后续规范)
-  - `plugins/code-skills/skills/code-it/guidelines/`(留作后续规范)
+  - `plugins/code-skills/skills/code-req/references/`(留作后续规范)
+  - `plugins/code-skills/skills/code-req/templates/`(留作后续规范)
   - `assistants/` 下的任何历史工作产物(它们是有史料价值的工作记录)
   - `plugins/code-skills/.claude-plugin/`、`marketplace.json` / `plugin.json` / `README*.md` / `CLAUDE.md`
-  - 已被代码层面删除的技能目录(如 `code-unit`)
+  - 已被代码层面删除的技能目录
 
 ### 例外(白名单)
 
@@ -137,7 +137,7 @@ function parseResultTitle(filePath: string): string { ... }  // (Q-1 锁定 A,20
 
 ### 关联规范
 - `./assistants/rules/dashboard-conventions.md §规则 1`(本规则不触发看板字段扩展三方同步——本规则是"内容约束",不是"字段扩展")
-- `./assistants/rules/module-conventions.md §规则 1`(资源放 `templates/` / `checklists/` / `guidelines/` 子目录——本规则约束范围只覆盖 `templates/`,不覆盖后两者)
+- `./assistants/rules/directory-conventions.md`(资源放 `templates/` / `checklists/` / `guidelines/` 子目录——本规则约束范围只覆盖 `templates/`,不覆盖后两者)
 - `./assistants/rules/doc-conventions.md §规则 1`(本规则与之**正交**:`doc-conventions` 约束 README 多语言对仗,本规则约束 SKILL.md / templates/ 内容纯净度)
 
 ### 来源

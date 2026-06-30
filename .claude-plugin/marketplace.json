@@ -17,31 +17,25 @@
       "source": "./plugins/code-skills",
       "keywords": [
         "skills",
-        "code-require",
-        "code-design",
-        "code-plan",
-        "code-it",
-        "code-check",
+        "code-ver",
+        "code-req",
         "code-fix",
-        "code-version",
-        "code-init",
+        "code-faq",
         "code-rule",
+        "code-merge",
+        "code-dashboard",
         "version-aware",
         "sdlc",
         "lifecycle"
       ],
       "skills": [
-        "./skills/code-require",
-        "./skills/code-design",
-        "./skills/code-plan",
-        "./skills/code-it",
-        "./skills/code-check",
+        "./skills/code-ver",
+        "./skills/code-req",
         "./skills/code-fix",
-        "./skills/code-version",
-        "./skills/code-init",
+        "./skills/code-faq",
         "./skills/code-rule",
-        "./skills/code-auto",
-        "./skills/code-merge"
+        "./skills/code-merge",
+        "./skills/code-dashboard"
       ]
     }
   ]

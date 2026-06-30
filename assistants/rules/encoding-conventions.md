@@ -1,14 +1,14 @@
 # 编码格式规范(encoding-conventions)
 
 > 本规范文件由 `code-rule` 技能维护,所有 `code-*` 技能在执行时会读取本文件作为强制约束。
-> 最后更新:2026-06-04 10:05
+> 最后更新:2026-06-30 18:00
 > 适用版本:跨所有版本共享(项目级)
 
 ## 适用场景
 
 本规范定义了 `code-skills` 仓库内**所有**编码格式(需求 / 任务 / 缺陷)的**权威定义**。当:
 
-- AI 协作者准备调用 `code-require` / `code-design` / `code-plan` / `code-it` 产出新编码时
+- AI 协作者准备调用 `code-req` / `code-fix` 产出新编码时
 - 用户调 `code-fix` 登记新缺陷时
 - 任何技能在示例、文档、模板中引用编码格式时
 - 团队讨论"为什么这个需求叫 `REQ-00001` 而不是 `REQ-2026-0001`"时
@@ -83,7 +83,7 @@ REQ-1                  # ❌ 数字段不足 5 位
 1. **用户登记新前缀**:用户调 `code-rule` 登记新前缀(例如 `JIRA- → 等价 REQ-`、`ADOPROJ- → 等价 BUG-`)。
    - 登记位置:本节"第三方平台前缀登记表"。
    - 登记内容:平台名 / 前缀 / 等价类别(`REQ` / `BUG` / `TASK`)/ 登记时间 / 登记人 / 备注。
-2. **AI 自动识别**:登记完成后,`code-require JIRA-123` 自动识别为"需求"(以 `JIRA-` 为前缀,等价于 `REQ-` 路径);`code-fix ADOPROJ-456` 自动识别为"缺陷"(等价于 `BUG-` 路径)。
+2. **AI 自动识别**:登记完成后,`code-req JIRA-123` 自动识别为"需求"(以 `JIRA-` 为前缀,等价于 `REQ-` 路径);`code-fix ADOPROJ-456` 自动识别为"缺陷"(等价于 `BUG-` 路径)。
 3. **路径映射**:所有 `code-*` 技能在解析用户输入时,先按 §规则 1 的默认正则(`^REQ-\d{5}$` / `^BUG-\d{5}$` / `^TASK-(REQ|BUG)-\d{5}-\d{5}$`);未命中时回退到本表查询等价类别,再用等价类别的"宽松正则"(`^REQ-[A-Za-z0-9.\-_]+$` / 同 BUG / 同 TASK)兜底匹配。
 4. **生成端 vs 接收端**:
    - **生成端**(本仓库主动产出的新编号):仍沿用 5 位纯数字(§规则 2 不变)。
@@ -105,11 +105,11 @@ REQ-1                  # ❌ 数字段不足 5 位
 
 ### 正面示例
 - 用户调 `code-rule "登记 JIRA- 前缀,等价 REQ-"` → 表格新增 1 行(`JIRA-` / `REQ` / 2026-06-XX / wangmiao)
-- 用户调 `code-require JIRA-V0.0.1.001` → 命中登记表 → 等价 `REQ-` 路径 → 进入 `require/JIRA-V0.0.1.001/RESULT.md`
-- 用户调 `code-require REQ-00001` → 未命中登记表(默认前缀)→ 直接走 `require/REQ-00001/RESULT.md`
+- 用户调 `code-req JIRA-V0.0.1.001` → 命中登记表 → 等价 `REQ-` 路径 → 进入 `req/JIRA-V0.0.1.001/REQUIRE.md`
+- 用户调 `code-req REQ-00001` → 未命中登记表(默认前缀)→ 直接走 `req/REQ-00001/REQUIRE.md`
 
 ### 反面示例
-- 用户调 `code-require JIRA-123` 但**未**调 `code-rule` 登记 → AI 应提示"请先调 `code-rule` 登记 `JIRA-` 前缀"(沿用既有"格式不匹配"错误信息 + 引导登记)
+- 用户调 `code-req JIRA-123` 但**未**调 `code-rule` 登记 → AI 应提示"请先调 `code-rule` 登记 `JIRA-` 前缀"(沿用既有"格式不匹配"错误信息 + 引导登记)
 - 用户**不**经 `code-rule` 私自修改本表 → 违反"登记表是 `code-rule` 唯一职责"硬约束
 
 ### 例外
@@ -164,7 +164,7 @@ REQ-1                  # ❌ 数字段不足 5 位
 1. **父级前缀**:`TASK-REQ-` 表示需求任务,`TASK-BUG-` 表示缺陷修复任务
 2. **父级数字段**:紧接着父级前缀的 5 位数字,直接是父级 ID 的数字段(无 `REQ-` 前缀)
 3. **任务序号**:末尾 5 位数字,父级内独立递增(从 00001 起)
-4. **解析规则**(AI 在 `code-it` / `code-plan` 步骤 1 解析任务编码时):
+4. **解析规则**(AI 在 `code-req` / `code-fix` 解析任务编码时):
    - 匹配 `^TASK-REQ-(\d{5})-(\d{5})$` → 需求任务,父级 = `REQ-<第 1 组>`,任务序号 = `<第 2 组>`
    - 匹配 `^TASK-BUG-(\d{5})-(\d{5})$` → 缺陷任务,父级 = `BUG-<第 1 组>`,任务序号 = `<第 2 组>`
 
@@ -172,7 +172,7 @@ REQ-1                  # ❌ 数字段不足 5 位
 - 必须
 
 ### 适用范围
-- 所有 `code-plan` 拆分的任务
+- 所有 `code-req` 在 PLAN 阶段拆分的任务
 - 所有 `code-fix` 派生的修复任务
 
 ### 正面示例
@@ -206,23 +206,23 @@ TASK-REQ-00001        # ❌ 缺任务序号
 
 新编码的产出流程:
 
-1. **由 `code-plan` 生成任务 ID**:
+1. **由 `code-req` 在 PLAN 阶段生成任务 ID**:
    - 用户告知父级(REQ-NNNNN 或 BUG-NNNNN)
-   - 扫描该父级下 `plan/<父级>/PLAN.md` 与 `code/TASK-(REQ|BUG)-<父级>-*/` 已有 TASK 编码
+   - 扫描该父级下 `req/<父级>/PLAN.md` 与 `req/<父级>/TASK-*.md`(或 `fix/<父级>/PLAN.md` 与 `fix/<父级>/TASK-*.md`)已有 TASK 编码
    - 取该父级内最大 TASK 编号 + 1
    - 拼装新编码 `TASK-REQ-<父级>-NNNNN` 或 `TASK-BUG-<父级>-NNNNN`,在 PLAN.md 追加任务行
 
-2. **由 `code-fix` 生成缺陷 ID**:
-   - 扫描 `fix/RESULT.md`(若存在)→ 解析所有 `BUG-NNNNN`,取最大 N
+2. **由 `code-fix` 在 INIT 阶段生成缺陷 ID**:
+   - 扫描 `fix/` 下所有 `BUG-*/` 目录(若存在)→ 解析所有 `BUG-NNNNN`,取最大 N
    - 新编号 = `BUG-{N+1 零填充到 5 位}`
-   - 若 `fix/RESULT.md` 不存在 → 编号 = `BUG-00001`
+   - 若 `fix/` 下无任何 `BUG-*/` 目录 → 编号 = `BUG-00001`
 
-3. **由 `code-require` / `code-version` 创版本时同步生成需求 ID**:
+3. **由 `code-req` / `code-ver` 创版本时同步生成需求 ID**:
    - 取仓库内最大 REQ 编号 + 1
    - 5 位零填充
 
 4. **解析入口**:
-   - `code-it` / `code-plan` / `code-check` 在步骤 1 解析任务编码时,**优先**使用本规范 §规则 1 定义的"接收端宽松正则"(`^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`,后缀任意长度,字符集 `A-Za-z0-9.\-_`);生成端仍默认 5 位纯数字(向后兼容)
+   - `code-req` / `code-fix` 在解析任务编码时,**优先**使用本规范 §规则 1 定义的"接收端宽松正则"(`^TASK-(REQ|BUG)-[A-Za-z0-9.\-_]+-[A-Za-z0-9.\-_]+$`,后缀任意长度,字符集 `A-Za-z0-9.\-_`);生成端仍默认 5 位纯数字(向后兼容)
    - 解析结果用于确定工作目录 + 上游输入源
 
 ### 强制级别
@@ -232,13 +232,13 @@ TASK-REQ-00001        # ❌ 缺任务序号
 - 所有 `code-*` 技能
 
 ### 正面示例
-- `code-plan REQ-00001` → 扫描 `plan/REQ-00001/PLAN.md` + 已有 TASK → 生成下一个 TASK 编码
-- `code-fix "用户报告:..."` → 扫描 `fix/RESULT.md` → 生成 BUG-00001 或下一个
-- `code-require "添加功能 X"` → 取 max REQ-NNNNN + 1
+- `code-req REQ-00001` → 扫描 `req/REQ-00001/PLAN.md` + 已有 TASK → 生成下一个 TASK 编码
+- `code-fix "用户报告:..."` → 扫描 `fix/` 下所有 `BUG-*/` → 生成 BUG-00001 或下一个
+- `code-req "添加功能 X"` → 取 max REQ-NNNNN + 1
 
 ### 反面示例
-- 在 `code-plan` 内部硬编码 `001` 起始序号(应扫描父级)
-- 在 `code-fix` 内部硬编码 `BUG-001` 起始(应扫描 `fix/RESULT.md`)
+- 在 `code-req` 内部硬编码 `001` 起始序号(应扫描父级)
+- 在 `code-fix` 内部硬编码 `BUG-001` 起始(应扫描 `fix/` 下已有 `BUG-*/`)
 
 ### 例外
 - 无
@@ -258,3 +258,4 @@ TASK-REQ-00001        # ❌ 缺任务序号
 | 时间 | 版本 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- |
 | 2026-06-04 10:05 | v1 | 初始创建,定义 3 类编码格式权威源(REQ-NNNNN / BUG-NNNNN / TASK-(REQ\|BUG)-NNNNN-NNNNN) | wangmiao |
+| 2026-06-30 18:00 | v2 | 适配 v2 结构:更新技能名引用(code-require→code-req, code-plan→code-req, code-it→code-req, code-version→code-ver);更新目录路径(require/→req/, plan/→req/, code/→req/);更新文档命名(RESULT.md→REQUIRE.md) | wangmiao |

@@ -7,7 +7,7 @@
 ## 文档头
 - 版本号:`V0.0.4`
 - 创建时间:2026-06-29 13:50
-- 最近更新:2026-06-30 17:00
+- 最近更新:2026-06-30 19:00
 - 创建人:<unknown>
 - 负责人:<unknown>
 - 状态:活跃
@@ -22,7 +22,7 @@
 | --- | --- |
 | 版本号 | `V0.0.4` |
 | 创建时间 | 2026-06-29 13:50 |
-| 最近更新 | 2026-06-29 13:50 |
+| 最近更新 | 2026-06-30 18:30 |
 | 创建人 | <unknown> |
 | 负责人 | <unknown> |
 | 状态 | 活跃 |
@@ -89,9 +89,9 @@
 | REQ-00041 | 技能多语言模块化重构 | 已完成 | 5 | 5 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00041/PLAN.md) / [RESULT.md](plan/REQ-00041/RESULT.md) |
 | REQ-00042 | 代码产出中禁止包含追踪编号 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00042/PLAN.md) / [RESULT.md](plan/REQ-00042/RESULT.md) |
 | REQ-00043 | 移除 fix-plan.md 废弃引用 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00043/PLAN.md) |
-| REQ-00044 | 技能系统 v2 大改版 | 已完成 | 10 | 5 | 0 | 2026-06-30 | [PLAN.md](plan/REQ-00044/PLAN.md) / [RESULT.md](plan/REQ-00044/RESULT.md) |
+| REQ-00044 | 技能系统 v2 大改版 | 已完成 | 11 | 10 | 0 | 2026-06-30 | [PLAN.md](plan/REQ-00044/PLAN.md) / [RESULT.md](plan/REQ-00044/RESULT.md) |
 
-**统计**:4 个计划 / 共 17 个任务 / 开发完成 12 / 测试通过 0
+**统计**:4 个计划 / 共 18 个任务 / 开发完成 17 / 测试通过 0
 
 ---
 
@@ -117,17 +117,18 @@
 | TASK-REQ-00044-00003 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-ver 技能 | 已完成 | 不适用 | code-ver/SKILL.md, references/common.md | 2026-06-30 | — | TASK-REQ-00044-00001 |
 | TASK-REQ-00044-00004 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-req 技能 | 已完成 | 不适用 | code-req/SKILL.md | 2026-06-30 | — | TASK-REQ-00044-00001, TASK-REQ-00044-00002 |
 | TASK-REQ-00044-00005 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | 已完成 | 不适用 | code-fix/SKILL.md, references/fix-register.md | 2026-06-30 | — | TASK-REQ-00044-00004 |
-| TASK-REQ-00044-00006 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | code-faq/SKILL.md + references/common.md + templates/*.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
-| TASK-REQ-00044-00007 | REQ-00044 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | 3 个技能 SKILL.md + references/ | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005 |
-| TASK-REQ-00044-00008 | REQ-00044 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00007 |
-| TASK-REQ-00044-00009 | REQ-00044 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | .claude-plugin/plugin.json, .claude-plugin/marketplace.json | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005, TASK-REQ-00044-00006 |
-| TASK-REQ-00044-00010 | REQ-00044 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | code-require/design/plan/it/check/auto/version/publish/init/answer | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00003~00009 |
+| TASK-REQ-00044-00006 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | 已完成 | 不适用 | code-faq/SKILL.md, references/common.md, templates/*.md | 2026-06-30 | — | TASK-REQ-00044-00001 |
+| TASK-REQ-00044-00007 | REQ-00044 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | 已完成 | 不适用 | code-rule/SKILL.md, code-merge/SKILL.md, code-dashboard/SKILL.md | 2026-06-30 | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005 |
+| TASK-REQ-00044-00008 | REQ-00044 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | 已完成 | 不适用 | encoding-conventions.md, skill-conventions.md, directory-conventions.md, dashboard-conventions.md | 2026-06-30 | — | TASK-REQ-00044-00007 |
+| TASK-REQ-00044-00009 | REQ-00044 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | 已完成 | 不适用 | plugin.json, marketplace.json | 2026-06-30 | — | TASK-REQ-00044-00004, TASK-REQ-00044-00005, TASK-REQ-00044-00006 |
+| TASK-REQ-00044-00010 | REQ-00044 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | 已完成 | 不适用 | code-require/design/plan/it/check/auto/version/publish/init/answer (10 dirs) | 2026-06-30 | — | TASK-REQ-00044-00003~00009 |
+| TASK-REQ-00044-00011 | REQ-00044 | 修改 | 审查改修 | [改修] 更新 CLAUDE.md 为 v2 结构 | 待开始 | 不适用 | CLAUDE.md | — | — | TASK-REQ-00044-00010 |
 
 **统计**:
-- 总任务数:17
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):12
-- 开发已完成 / 未完成:12 / 5
-- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 17 / 0
+- 总任务数:18
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):17
+- 开发已完成 / 未完成:17 / 1
+- 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 18 / 0
 
 ---
 
@@ -151,9 +152,9 @@
 
 | 评审 ID | 需求 | 任务 | 维度 | 级别 | 描述 | 派生改修任务 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| — | — | — | — | — | 无发现,评审通过 | — | — |
+| — | REQ-00044 | 技能系统 v2 大改版 | 10 任务完成, 1 审查改修待处理 | [REVIEW-REPORT.md](review/REQ-00044/REVIEW-REPORT.md) | 必须改: 1 / 建议改: 2 / 可选: 2 | 待处理 |
 
-**统计**:0 / 必须改: 0 / 建议改: 0 / 可选: 0 / 已处理: 0
+**统计**:1 / 必须改: 1 / 建议改: 2 / 可选: 2 / 已处理: 0
 
 ---
 
@@ -164,7 +165,7 @@
 
 | 派生任务 | 关联原任务 | 派生时间 | review 来源 | 状态 |
 | --- | --- | --- | --- | --- |
-| REQ-YYYY-NNNN-XXX | REQ-YYYY-NNNN-YYY | YYYY-MM-DD | [review/REQ-YYYY-NNNN/REVIEW-REPORT.md](review/REQ-YYYY-NNNN/REVIEW-REPORT.md) | 待开始 |
+| TASK-REQ-00044-00011 | TASK-REQ-00044-00010 | 2026-06-30 | [review/REQ-00044/REVIEW-REPORT.md](review/REQ-00044/REVIEW-REPORT.md) | 待开始 |
 
 ---
 
@@ -202,6 +203,13 @@
 | 2026-06-30 15:00 | 开发状态更新 | TASK-REQ-00044-00003 开发状态"待开始"→"已完成"(code-ver SKILL.md + references/common.md) | TASK-REQ-00044-00003 |
 | 2026-06-30 16:00 | 开发状态更新 | TASK-REQ-00044-00004 开发状态"待开始"→"已完成"(code-req SKILL.md) | TASK-REQ-00044-00004 |
 | 2026-06-30 17:00 | 开发状态更新 | TASK-REQ-00044-00005 开发状态"待开始"→"已完成"(code-fix SKILL.md + references/fix-register.md) | TASK-REQ-00044-00005 |
+| 2026-06-30 17:30 | 开发状态更新 | TASK-REQ-00044-00006 开发状态"待开始"→"已完成"(code-faq SKILL.md + references/common.md + 3 templates) | TASK-REQ-00044-00006 |
+| 2026-06-30 18:00 | 开发状态更新 | TASK-REQ-00044-00007 开发状态"待开始"→"已完成"(code-rule/code-merge/code-dashboard SKILL.md 适配) | TASK-REQ-00044-00007 |
+| 2026-06-30 18:00 | 开发状态更新 | TASK-REQ-00044-00008 开发状态"待开始"→"已完成"(4 个规范文件适配 v2 结构) | TASK-REQ-00044-00008 |
+| 2026-06-30 18:30 | 开发状态更新 | TASK-REQ-00044-00009 开发状态"待开始"→"已完成"(plugin.json + marketplace.json 更新为 v2 7 技能) | TASK-REQ-00044-00009 |
+| 2026-06-30 18:45 | 开发状态更新 | TASK-REQ-00044-00010 开发状态"待开始"→"已完成"(删除 10 个旧 v1 技能目录,保留 7 个 v2 技能) | TASK-REQ-00044-00010 |
+| 2026-06-30 19:00 | 评审发现 | REQ-00044 评审完成(5 条发现: 1 必须改/2 建议改/2 可选) | REQ-00044 |
+| 2026-06-30 19:00 | 派生任务 | TASK-REQ-00044-00011 派生自 REQ-00044 评审(审查改修:更新 CLAUDE.md) | TASK-REQ-00044-00011 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间

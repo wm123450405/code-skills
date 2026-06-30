@@ -7,7 +7,7 @@
 - 需求编码:REQ-00044
 - 所属版本:V0.0.4
 - 状态:已完成
-- 任务总数:10
+- 任务总数:11
 - 创建:2026-06-30 00:00
 
 ## 任务总览
@@ -19,11 +19,12 @@
 | TASK-REQ-00044-00003 | 新增 | 需求新增 | [技能] 创建 code-ver 技能 | code-ver/SKILL.md + references/common.md | 已完成 | 不适用 | TASK-00001 |
 | TASK-REQ-00044-00004 | 新增 | 需求新增 | [技能] 创建 code-req 技能 | code-req/SKILL.md | 已完成 | 不适用 | TASK-00001, TASK-00002 |
 | TASK-REQ-00044-00005 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | code-fix/SKILL.md + references/fix-register.md | 已完成 | 不适用 | TASK-00004 |
-| TASK-REQ-00044-00006 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | code-faq/SKILL.md + references/common.md + templates/*.md | 待开始 | 不适用 | TASK-00001 |
-| TASK-REQ-00044-00007 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | 3 个技能 SKILL.md + references/ | 待开始 | 不适用 | TASK-00004, TASK-00005 |
-| TASK-REQ-00044-00008 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 待开始 | 不适用 | TASK-00007 |
-| TASK-REQ-00044-00009 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | .claude-plugin/plugin.json, .claude-plugin/marketplace.json | 待开始 | 不适用 | TASK-00004, TASK-00005, TASK-00006 |
-| TASK-REQ-00044-00010 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | code-require/design/plan/it/check/auto/version/publish/init/answer | 待开始 | 不适用 | TASK-00003~00009 |
+| TASK-REQ-00044-00006 | 新增 | 需求新增 | [技能] 创建 code-faq 技能 | code-faq/SKILL.md + references/common.md + templates/*.md | 已完成 | 不适用 | TASK-00001 |
+| TASK-REQ-00044-00007 | 修改 | 需求新增 | [适配] 适配 code-rule/code-merge/code-dashboard 到新结构 | code-rule/SKILL.md, code-merge/SKILL.md, code-dashboard/SKILL.md | 已完成 | 不适用 | TASK-00004, TASK-00005 |
+| TASK-REQ-00044-00008 | 修改 | 需求新增 | [规范] 更新 rules/ 下 4 个规范文件 | encoding-conventions, skill-conventions, directory-conventions, dashboard-conventions | 已完成 | 不适用 | TASK-00007 |
+| TASK-REQ-00044-00009 | 修改 | 需求新增 | [配置] 更新 plugin.json + marketplace.json | .claude-plugin/plugin.json, .claude-plugin/marketplace.json | 已完成 | 不适用 | TASK-00004, TASK-00005, TASK-00006 |
+| TASK-REQ-00044-00010 | 删除 | 需求新增 | [清理] 删除 10 个旧技能目录 | code-require/design/plan/it/check/auto/version/publish/init/answer | 已完成 | 不适用 | TASK-00003~00009 |
+| TASK-REQ-00044-00011 | 修改 | 审查改修 | [改修] 更新 CLAUDE.md 为 v2 结构 | CLAUDE.md | 待开始 | 不适用 | TASK-00010 |
 
 ## 任务依赖图
 
@@ -62,10 +63,10 @@ graph TD
 
 | 里程碑 | 包含任务 | 完成定义 | 状态 |
 | --- | --- | --- | --- |
-| M1:基础就绪 | TASK-001, TASK-002 | 8 个模板 + 6 个 references 创建完成 | 待开始 |
-| M2:新技能上线 | TASK-003~006 | 4 个新技能 SKILL.md 创建完成 | 待开始 |
-| M3:全量适配 | TASK-007~009 | 旧技能适配 + 规范更新 + 配置更新 | 待开始 |
-| M4:旧技能清理 | TASK-010 | 10 个旧技能目录删除 | 待开始 |
+| M1:基础就绪 | TASK-001, TASK-002 | 8 个模板 + 6 个 references 创建完成 | 已完成 |
+| M2:新技能上线 | TASK-003~006 | 4 个新技能 SKILL.md 创建完成 | 已完成 |
+| M3:全量适配 | TASK-007~009 | 旧技能适配 + 规范更新 + 配置更新 | 已完成 |
+| M4:旧技能清理 | TASK-010 | 10 个旧技能目录删除 | 已完成 |
 
 ## 任务详情
 
