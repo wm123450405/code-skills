@@ -89,11 +89,35 @@ function allocateReqNum(versionPath):
 - 能给出 2-4 个具体选项 → 使用 `AskUserQuestion`
 - 需要开放式描述 → 自然语言提问
 - 每轮最多 1-3 个最阻塞的问题
-- 追加 `clarifications.md` 记录问答(格式:`| 时间 | 问题 | 回答 | 来源 |`)
+- 追加 `clarifications.md` 记录问答(格式见下方)
+
+**clarifications.md 字段格式**:
+```
+| 时间 | 问题 | 选项/上下文 | 用户回答 | 影响的 REQUIRE.md 章节 |
+| --- | --- | --- | --- | --- |
+| 2026-06-30 22:00 | 登录失败是否需要提示具体原因? | A.统一"登录失败" B.区分"密码错/账号不存在/已锁定" | B,区分 | §3 FR-1 错误提示 |
+```
+
+> **不要一次问完所有问题**。每轮聚焦 1-3 个最阻塞的点,得到答复后先更新对应章节,再迭代出下一批问题。
+
+#### 5a-1. 技术选型过滤(在弹出 AskUserQuestion 前执行)
+
+> 在生成 AskUserQuestion 候选选项后,先按关键词集过滤技术选型类问题,延迟到 DESIGN 阶段。
+
+**关键词集**(20 个):
+```
+{技术选型, 实现方式, 框架, 库, 工具, monorepo, single-package, pnpm, npm, yarn, Jest, Vitest, Mocha, React, Vue, Angular, 数据库, ORM, 消息队列, 缓存, Redis, MongoDB}
+```
+
+**过滤规则**:
+- 命中任一关键词的候选选项 → **不**弹出 AskUserQuestion
+- 改为追加到 `clarifications.md` 的 `## 延迟到 DESIGN 阶段(技术选型类)` 区段
+- 每条含:`时间` / `原始问题` / `命中的关键词` / `延迟到=DESIGN` 字段
+- 未命中关键词的候选选项 → 照常弹出 AskUserQuestion
 
 > **不过滤技术选型类问题**:本阶段确定功能点,技术选型归 DESIGN 阶段。
 
-#### 5b. 边界条件确认(新增)
+#### 5b. 边界条件确认
 
 对以下边界条件,向用户确认:
 
