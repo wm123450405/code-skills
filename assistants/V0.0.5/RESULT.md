@@ -24,6 +24,7 @@
 | REQ-00046 | 恢复旧技能中与用户确认的交互方式 | [PROCESS.md](req/REQ-00046/PROCESS.md) |
 | REQ-00047 | 优化 REQUIRE.md 和 BUG.md 保留用户原始输入 | [PROCESS.md](req/REQ-00047/PROCESS.md) |
 | REQ-00048 | 优化 code-dashboard 技能:输出模板化、移除需求模式、简化 | [PROCESS.md](req/REQ-00048/PROCESS.md) |
+| REQ-00049 | 为 code-req、code-fix 增加 --confirm 模式 | [PROCESS.md](req/REQ-00049/PROCESS.md) |
 
 **统计**:3
 
@@ -39,8 +40,9 @@
 | BUG-00002 | REQ-00044 重构后项目使用说明文档未更新,编码规范缺失同步规则 | [PROCESS.md](fix/BUG-00002/PROCESS.md) |
 | BUG-00003 | code-req 工作流强制指令位置不够靠前,AI 跳过工作流直接修改代码 | [PROCESS.md](fix/BUG-00003/PROCESS.md) |
 | BUG-00004 | code-req DONE 阶段兜底提交未触发,指令不够显式 | [PROCESS.md](fix/BUG-00004/PROCESS.md) |
+| BUG-00007 | REQ-00049 执行中遗漏用户确认环节 | [PROCESS.md](fix/BUG-00007/PROCESS.md) |
 
-**统计**:4
+**统计**:5
 
 ---
 
