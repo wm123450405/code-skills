@@ -5,6 +5,19 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 
 # code-fix — 缺陷修复
 
+> **⚠️ 强制工作流:本技能必须按以下阶段顺序执行,严禁跳过或合并任何阶段:**
+> **INIT → DESIGN → PLAN → CODING → CHECK → DONE**
+>
+> **在 PROCESS.md 显示 CODING 阶段之前,严禁使用 Edit/Write 修改 CWD 源码文件。**
+> **每个阶段必须独立完成并追加 PROCESS.md 后才能进入下一阶段。**
+
+## 启动检查(读取本文件后立即执行)
+
+1. 读取 `./assistants/.current-version`,不存在 → 停止,提示用户先调 `code-ver`
+2. 解析用户输入,分配缺陷编号(新缺陷取最大编号+1;已存在则直接使用)
+3. 检查 `fix/<BUG-NNNNN>/PROCESS.md` 是否存在,不存在则创建目录并初始化 PROCESS.md
+4. 从 PROCESS.md 确定当前阶段,开始执行
+
 ## 目标
 提供缺陷修复的**全生命周期管理**,将 4 段式缺陷流程合并为单一入口:
 - **缺陷登记**:将用户输入转化为结构化 BUG.md
