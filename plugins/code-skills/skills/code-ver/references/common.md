@@ -790,43 +790,43 @@ function generateUpdateManual(version, previousVersion):
   Write "assistants/{version}/publish/UPDATE.md", content
 ```
 
-#### Q&A.md(始终生成)
+#### FAQ.md(始终生成)
 
 ```
-function generateQAManual(version):
-  qandaFiles = Glob("assistants/qanda/*.md").filter(f => f != "README.md")
+function generateFAQManual(version):
+  faqFiles = Glob("assistants/faq/*.md").filter(f => f != "README.md")
 
-  if qandaFiles.length == 0:
+  if faqFiles.length == 0:
     content = """
-    # 发布部署 Q&A — {version}
+    # 发布部署 FAQ — {version}
 
-    > 本手册聚合自 `assistants/qanda/`,供发布部署中遇到问题时查阅。
+    > 本手册聚合自 `assistants/faq/`,供发布部署中遇到问题时查阅。
 
     ## 占位:常见问题(待补充)
-    请在 `assistants/qanda/` 目录下添加 Q&A 内容,再重跑 `code-ver --publish`。
+    请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `code-ver --publish`。
     """
   else:
-    content = "# 发布部署 Q&A — {version}\n\n"
-    for (i, file) in enumerate(qandaFiles):
+    content = "# 发布部署 FAQ — {version}\n\n"
+    for (i, file) in enumerate(faqFiles):
       fileContent = Read(file)
-      content += "## {i+1}. {extractTitle(fileContent)}(来源:qanda/{file})\n"
+      content += "## {i+1}. {extractTitle(fileContent)}(来源:faq/{file})\n"
       content += fileContent + "\n\n"
     content += "## 占位:常见问题(待补充)\n"
-    content += "请在 `assistants/qanda/` 目录下添加 Q&A 内容,再重跑 `code-ver --publish`。\n"
+    content += "请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `code-ver --publish`。\n"
 
-  Write "assistants/{version}/publish/Q&A.md", content
+  Write "assistants/{version}/publish/FAQ.md", content
 ```
 
-### §4.4 创建 qanda/ 骨架
+### §4.4 创建 faq/ 骨架
 
 ```
-function scaffoldQanda():
-  if not exists("assistants/qanda/"):
-    mkdir -p "assistants/qanda/"
-    Write "assistants/qanda/README.md", """
-    # Q&A 目录
+function scaffoldFaq():
+  if not exists("assistants/faq/"):
+    mkdir -p "assistants/faq/"
+    Write "assistants/faq/README.md", """
+    # FAQ 目录
 
-    本目录用于存放项目级 Q&A 内容,跨版本共享。
+    本目录用于存放项目级 FAQ 内容,跨版本共享。
 
     ## 使用方式
     1. 在本目录下创建 `.md` 文件,每个文件一个主题
@@ -834,7 +834,7 @@ function scaffoldQanda():
     3. 内容建议包含:问题描述、触发条件、解决方案、预防措施
 
     ## 与 code-ver 的关系
-    `code-ver --publish` 会聚合本目录下的所有 Q&A 文件到 `publish/Q&A.md`。
+    `code-ver --publish` 会聚合本目录下的所有 FAQ 文件到 `publish/FAQ.md`。
     """
 ```
 
@@ -849,7 +849,7 @@ function formatPublishReport(result):
 
       已生成 2 份手册(基线无 UPDATE.md):
       - assistants/{version}/publish/DEPLOY.md
-      - assistants/{version}/publish/Q&A.md
+      - assistants/{version}/publish/FAQ.md
 
       ⚠ 提示:手册均为通用骨架,请手动补全占位符后再按手册执行
       """)
@@ -860,7 +860,7 @@ function formatPublishReport(result):
       已生成 3 份手册:
       - assistants/{version}/publish/DEPLOY.md
       - assistants/{version}/publish/UPDATE.md(从 {previousVersion} 升级)
-      - assistants/{version}/publish/Q&A.md
+      - assistants/{version}/publish/FAQ.md
 
       ⚠ 提示:手册均为通用骨架,请手动补全占位符后再按手册执行
       """)
