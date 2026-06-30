@@ -74,3 +74,7 @@
 ### Lint/格式化
 - ESLint(`.eslintrc.*` / `eslint.config.*`)
 - Prettier(`.prettierrc.*`)
+
+## §8 编码规范读取
+
+> 本文件提供语言层面的默认约定。在 CODING 阶段,还须额外读取 `./assistants/rules/` 下的项目级编码规范(如 `coding-style.md`、`naming-conventions.md`),项目级规范优先级高于本文件的默认约定。

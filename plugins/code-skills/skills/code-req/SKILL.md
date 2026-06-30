@@ -1,6 +1,6 @@
 ---
 name: code-req
-description: 需求开发全流程。合并 code-require+design+plan+it+check(需求路径)。默认交互确认每阶段,--auto 静默执行,PROCESS.md 断点续跑。
+description: 需求开发。从需求分析到代码审查,引导你一步步完成功能开发。
 ---
 
 # code-req — 需求开发

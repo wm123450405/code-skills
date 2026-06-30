@@ -1,6 +1,6 @@
 ---
 name: code-merge
-description: Worktree 模式自动合并。在 git worktree 里开发完,本技能一键帮你把改动合回主干:提交未提交文件、拉取主干、LLM 智能解冲突(代码/文档/配置智能合并,看板数据按时间合并,二进制留给你处理)、看板上 5 区段自检,最后用 `git merge --no-ff` 合回 main 并出报告。不自动 push,也不清理 worktree,出问题用 Ctrl+C 中止时已 commit 不回滚。
+description: 分支合并。将 worktree 中的改动合回主干,自动解决冲突。
 ---
 
 # code-merge — Worktree 模式自动合并
@@ -479,7 +479,7 @@ function FR7_mergeToMain():
 - **Bash 工具**:执行 git 命令(FR-1~FR-7 全部 git 操作)
 - **Read 工具**:读 `.current-version` / `RESULT.md` / 冲突文件双方内容(FR-6 + FR-4)
 - **Grep 工具**:解析 RESULT.md 2 区段(FR-6 锚点定位)
-- **Glob 工具**:扫描看板数据冲突文件(FR-4.1 预扫描)
+- **Glob 工具**:扫描看板数据冲突文件(FR-4.1 预扫描);读取编码规范 `Glob "./assistants/rules/**/*"`
 - **Write 工具**:**0 使用**(执行阶段**不**写任何文件,NFR-1 严守)
 - **Edit 工具**:**0 使用**(同上)
 - **Skill 工具**:**0 使用**(本技能**不**调任何子技能,NFR-1 + INV-9 严守)

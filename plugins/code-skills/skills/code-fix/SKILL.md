@@ -1,6 +1,6 @@
 ---
 name: code-fix
-description: 缺陷修复全流程。合并 code-fix+plan+it+check(缺陷路径)。默认交互确认每阶段,--auto 静默执行,PROCESS.md 断点续跑。
+description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完成问题修复。
 ---
 
 # code-fix — 缺陷修复

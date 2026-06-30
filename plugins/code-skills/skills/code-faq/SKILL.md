@@ -1,6 +1,6 @@
 ---
 name: code-faq
-description: 知识查询与文档导出。跨版本查询需求/缺陷/功能定义,支持 --require/--design/--summary/--template 导出。
+description: 知识查询。跨版本查询需求和缺陷,支持导出为文档。
 ---
 
 # code-faq — 知识查询

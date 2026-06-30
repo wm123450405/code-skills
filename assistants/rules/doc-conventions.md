@@ -150,3 +150,43 @@ README 包含完整小节、且指向真实存在的文件:
 ### 来源
 - 由 `code-rule` 技能添加于 2026-06-03 19:15
 - 用户原始描述:"增加仓库级别使用说明文档,我会在后续版本中完善说明文档"(本规则在制度层面保证使用说明文档的"持续维护"属性)
+
+---
+
+## 规则 3:技能变更时须同步更新使用说明文档
+
+### 条款
+当 `plugins/code-skills/skills/` 下发生以下任一变更时,必须在**同一次需求/缺陷**中将 `plugins/code-skills/README.md` 和 `README.en.md` 的更新纳入任务范围:
+
+1. **技能新增/删除**:新增或删除技能目录
+2. **技能重命名**:SKILL.md 的 `name` 字段变更或目录重命名
+3. **工作流变更**:技能间的调用顺序、输入输出关系、阶段顺序发生变化
+4. **核心概念变更**:版本工作空间、目录结构、状态模型等核心概念发生变化
+5. **命令调用方式变更**:用户调用技能的命令格式、参数、交互方式发生变化
+
+### 强制级别
+- 必须
+
+### 适用范围
+- `plugins/code-skills/README.md` 和 `README.en.md`(两个语言版本同受约束)
+- 所有对 `skills/` 下技能的修改,在 DESIGN 阶段就必须评估"是否需要更新 README"
+- 若评估需要更新但未纳入 PLAN 任务 → 视为遗漏,CHECK 阶段必须发现
+
+### 正面示例
+REQ-00044 将 14 个技能合并为 7 个技能,DESIGN 阶段评估后,PLAN 中纳入"更新 README.md + README.en.md"任务,CODING 阶段执行。
+
+### 反面示例
+REQ-00044 重构后,README 仍描述 14 个旧技能、旧命令名、旧目录结构,用户在 README 中找不到任何当前可用的命令。
+
+### 例外
+- 仅修改技能内部实现细节(如 references 文件、templates 文件),不影响用户可见的调用方式和工作流 → 不需要更新 README
+- 修改 `CLAUDE.md`(面向 AI 的开发指南,非面向用户的使用说明)→ 不需要更新 README
+
+### 关联规范
+- `./assistants/rules/doc-conventions.md §规则 1`(README 多语言对仗)
+- `./assistants/rules/doc-conventions.md §规则 2`(README 必须存在并持续维护)
+- `./assistants/rules/skill-conventions.md §规则 1`(技能元信息一致性)
+
+### 来源
+- 由 `code-fix` 技能添加于 2026-06-30
+- 缺陷来源:BUG-00002 — REQ-00044 重构后项目使用说明文档未更新
