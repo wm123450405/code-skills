@@ -28,6 +28,40 @@
 
 ## 工作流程
 
+### 步骤 0 — CODING 阶段激活校验(强制)
+
+> **在任何代码修改之前,必须先通过本校验。本校验是代码修改权限的唯一依据。**
+
+1. 读取 `PROCESS.md` 最后一行
+2. 解析阶段字段:
+   - 阶段 = `CODING` → 校验通过,允许后续步骤修改 CWD 源码
+   - 阶段 ≠ `CODING` → **校验失败**,输出:
+     ```
+     ⛔ 代码修改被拒绝:当前阶段为 <阶段>,不允许修改 CWD 源码。
+     请先完成前置阶段(REQUIRE→DESIGN→PLAN),待 PROCESS.md 显示 CODING 阶段后再执行代码修改。
+     ```
+     立即停止,不执行任何代码修改操作
+3. 若 `PROCESS.md` 不存在 → 视为 `INIT` 阶段,拒绝修改代码,提示:
+   ```
+   ⛔ 代码修改被拒绝:PROCESS.md 不存在,当前视为 INIT 阶段。
+   请先完成 REQUIRE→DESIGN→PLAN 阶段后再执行代码修改。
+   ```
+
+```
+function codingStageGate(reqDir):
+  processMd = reqDir + "/PROCESS.md"
+  if not exists(processMd):
+    return { allowed: false, currentStage: "INIT", reason: "PROCESS.md 不存在" }
+  
+  lastLine = tail(processMd, 1)
+  stage = parseStage(lastLine)
+  
+  if stage == "CODING":
+    return { allowed: true, currentStage: "CODING" }
+  else:
+    return { allowed: false, currentStage: stage, reason: "当前阶段不是 CODING" }
+```
+
 ### 步骤 1 — 解析任务列表
 
 从 PLAN.md 任务总览表中提取任务列表:

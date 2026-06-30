@@ -74,6 +74,11 @@ echo "| $(date '+%Y-%m-%d %H:%M') | <阶段> | <状态> | <摘要> |" >> PROCESS
 
 ```
 async function executeStage(stage, context, autoMode):
+  // 0. 阶段前置校验(强制)
+  if not preStageCheck(stage, context.reqDir):
+    appendProcess(stage, "失败", "前置产出物缺失,退回上一阶段")
+    return { status: "ROLLBACK", targetStage: previousStage(stage) }
+  
   // 1. 追加 PROCESS.md 开始记录
   appendProcess(stage, "开始", stageDescriptions[stage].start)
   
@@ -90,6 +95,34 @@ async function executeStage(stage, context, autoMode):
       return { status: "CANCELLED" }
   
   return result
+```
+
+### 阶段前置校验
+
+> 每个阶段执行前,必须校验上一阶段的产出物已存在。校验失败则自动退回上一阶段。
+
+| 当前阶段 | 校验项 | 校验命令 | 校验失败处理 |
+| --- | --- | --- | --- |
+| DESIGN | `REQUIRE.md` 存在 | `test -f <reqDir>/REQUIRE.md` | 追加失败记录,退回到 REQUIRE 阶段 |
+| PLAN | `DESIGN.md` 存在 | `test -f <reqDir>/DESIGN.md` | 追加失败记录,退回到 DESIGN 阶段 |
+| CODING | `PLAN.md` 存在 | `test -f <reqDir>/PLAN.md` | 追加失败记录,退回到 PLAN 阶段 |
+| CHECK | 所有 `TASK-*.md` 存在 | `Glob "<reqDir>/TASK-*.md"` | 追加失败记录,退回到 CODING 阶段 |
+
+```
+function preStageCheck(stage, reqDir):
+  checks = {
+    "DESIGN":  ["REQUIRE.md"],
+    "PLAN":    ["DESIGN.md"],
+    "CODING":  ["PLAN.md"],
+    "CHECK":   ["TASK-*.md"]  // Glob 匹配,至少一个
+  }
+  if stage not in checks: return true  // INIT/REQUIRE/DONE 无需校验
+  for item in checks[stage]:
+    if item contains "*":
+      if Glob(reqDir + "/" + item).length == 0: return false
+    else:
+      if not exists(reqDir + "/" + item): return false
+  return true
 ```
 
 ### --auto 模式
