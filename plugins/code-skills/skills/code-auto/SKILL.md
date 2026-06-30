@@ -772,7 +772,7 @@ function parseFixTitle(fixPath: string): string {
 | **E-19** | 路径类型异常(`<input>` 是文件而非目录) | 屏显 `⚠ 路径类型异常:<path> 不是目录` + 按"两个目录都不存在"路径走(视为需求内容) | 提示用户检查 `<input>` 是否为目录名而非文件路径 |
 | **E-20** | BUG 路径模式 C 错配(例如 args 含 `BUG-00001-00001` 而非 `BUG-00001`) | 屏显 `⚠ BUG 路径模式 C 错配:<input> 不是合法 BUG 编号` + 提示格式 `^BUG-\d{5}$` | 用户需重新调 `/code-auto BUG-NNNNN` |
 | **E-21** | `code-check` SKILL.md 缺失或与 `code-review` 不一致 | 沿用既有"`fix/<BUG-NNN>/RESULT.md` 缺失 → 提示先调 `code-fix`" 模式 | BUG 路径步骤 4 退化 |
-| **E-22** | BUG 路径中断恢复 | 沿用 `code-auto` 既有"无增量恢复"约定;用户可 `Ctrl+C` 后重跑 `/code-auto <BUG-NNN>` 从步骤 1 重启 | 中断前已写入的 `fix/<BUG-NNN>/{RESULT,fix-plan,fix-work-log}.md` 保留 |
+| **E-22** | BUG 路径中断恢复 | 沿用 `code-auto` 既有"无增量恢复"约定;用户可 `Ctrl+C` 后重跑 `/code-auto <BUG-NNN>` 从步骤 1 重启 | 中断前已写入的 `fix/<BUG-NNN>/{RESULT,PLAN,fix-work-log}.md` 保留 |
 
 ## 上下游衔接
 

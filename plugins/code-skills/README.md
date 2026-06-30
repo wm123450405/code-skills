@@ -30,8 +30,8 @@ claude plugin install code-skills@code-skills-marketplace
 | [`code-rule`](skills/code-rule/SKILL.md) | 编码规范管理— 维护 `assistants/rules/` 下的项目级共享规范 | 用户描述(自然语言) | `assistants/rules/<分类>.md` | (所有 code-* 共享输入) |
 | [`code-require`](skills/code-require/SKILL.md) | 需求分析(Requirements Analysis) | 用户材料 + `assistants/rules/` | `assistants/<版本号>/require/<需求编码>/RESULT.md` | code-design |
 | [`code-design`](skills/code-design/SKILL.md) | 概要设计(High-level Design) | `requirements.md` + `assistants/rules/` | `design.md` | code-plan |
-| [`code-plan`](skills/code-plan/SKILL.md) | 详细设计 / 实施计划— 接收"需求编码"或"缺陷编号" | `requirements.md` + `design.md` 或 `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` 或 `fix/<BUG>/fix-plan.md` | code-it |
-| [`code-it`](skills/code-it/SKILL.md) | 开发编码— 接收"任务编码"或"缺陷编号"(含按需写单测:步骤 8a 项目可测性守卫 + 步骤 8.5 按需写单测) | `plan.md` 或 `fix-plan.md` + `assistants/rules/` | 源码 + 任务级 `RESULT.md` 或 `fix/<BUG>/fix-*.md` | code-check |
+| [`code-plan`](skills/code-plan/SKILL.md) | 详细设计 / 实施计划— 接收"需求编码"或"缺陷编号" | `requirements.md` + `design.md` 或 `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` 或 `fix/<BUG>/PLAN.md` | code-it |
+| [`code-it`](skills/code-it/SKILL.md) | 开发编码— 接收"任务编码"或"缺陷编号"(含按需写单测:步骤 8a 项目可测性守卫 + 步骤 8.5 按需写单测) | `plan.md` 或 `PLAN.md` + `assistants/rules/` | 源码 + 任务级 `RESULT.md` 或 `fix/<BUG>/fix-*.md` | code-check |
 | [`code-fix`](skills/code-fix/SKILL.md) | 缺陷登记与跟踪— 维护 `fix/RESULT.md` 与各 `BUG-NNN/RESULT.md` | 用户描述或既有 `fix/` 文件 | `assistants/<版本号>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
 | [`code-check`](skills/code-check/SKILL.md) | 代码评审(Code Review) | `code/RESULT.md` + `code/<任务>/unit-test-results.md` + `assistants/rules/` | 整体 `REVIEW-REPORT.md` + 派生改修任务 | code-it(改修任务) |
 | [`code-publish`](skills/code-publish/SKILL.md) | 发布部署(Release & Deployment)— 接收可选"版本号";先做发布前置检查(看板 3 区段全检查最严);通过后在 `<版本号>/publish/` 生成 `DEPLOY.md` + `UPDATE.md`(基线跳过) + `Q&A.md`(从 `qanda/` 聚合);3 份手册为通用骨架 + placeholder + 默认示例,用户手动补全;**(首次调用时)在项目级创建 `assistants/qanda/` 目录(若已存在则跳过)** | `.current-version` + `<版本号>/RESULT.md` 3 区段 + `qanda/*.md` + 5 份模板 | `qanda/README.md`(顺带)+ `<版本号>/publish/{DEPLOY,UPDATE,Q&A}.md` | (运维 / 现场支持 — 部署后查阅手册) |
@@ -108,7 +108,7 @@ code-skills/                          ← marketplace 仓库根
             │   └── templates/
             │       ├── plan.md
             │       ├── task-plan.md
-            │       ├── fix-plan.md
+            │       ├── PLAN.md
             │       └── assistants-layout.md
             ├── code-it/              # 开发编码 / 缺陷修复实施
             │   ├── SKILL.md
@@ -195,7 +195,7 @@ assistants/
 7. **评审**:调 `code-check`,产出整体评审报告与派生改修任务
 8. **缺陷修复**(任一阶段):
     - 登记:调 `code-fix "<bug 描述>"` 或 `code-fix BUG-NNN`
-    - 规划:调 `code-plan BUG-NNN` 产出 `fix-plan.md`
+    - 规划:调 `code-plan BUG-NNN` 产出 `PLAN.md`
     - 实施:调 `code-it BUG-NNN` 改代码
     - 状态推进:再次调 `code-fix BUG-NNN` 把状态推前(已修复-待验证 → 已修复-已验证 → 已关闭)
 
@@ -281,7 +281,7 @@ flowchart TD
 2. code-fix BUG-NNN              ← (再次)推进状态"报告"→"调查中"
      ↓ 用户补充根因 / 复现步骤
 3. code-plan BUG-NNN             ← 规划修复方案
-     ↓ fix/<BUG-NNN>/fix-plan.md,状态 →"修复规划中"
+     ↓ fix/<BUG-NNN>/PLAN.md,状态 →"修复规划中"
 4. code-it BUG-NNN               ← 实施修复
      ↓ fix/<BUG-NNN>/fix-*.md,状态 →"已修复-待验证"
 5. 跑测试,确认通过
@@ -518,7 +518,7 @@ flowchart TD
 | 格式 | 路径 | 上游 | 产物 |
 | --- | --- | --- | --- |
 | `REQ-YYYY-NNNN` | 主流程 | `require/<id>/RESULT.md` + `design/<id>/RESULT.md` | `plan/<id>/{RESULT.md, PLAN.md}` |
-| `BUG-NNN` | 缺陷分支 | `fix/<id>/RESULT.md` | `fix/<id>/fix-plan.md` |
+| `BUG-NNN` | 缺陷分支 | `fix/<id>/RESULT.md` | `fix/<id>/PLAN.md` |
 
 **示例**:
 - `code-plan REQ-00001`(主流程路径)
@@ -527,7 +527,7 @@ flowchart TD
 
 **输出**:
 - 主流程:`./assistants/<版本号>/plan/<需求编码>/RESULT.md` + `PLAN.md`
-- 缺陷分支:`./assistants/<版本号>/fix/<缺陷编号>/fix-plan.md`
+- 缺陷分支:`./assistants/<版本号>/fix/<缺陷编号>/PLAN.md`
 - 同步到版本看板:
   - 主流程:"详细设计与任务计划汇总" / "任务清单" / "里程碑" / "变更记录"
   - 缺陷分支:"缺陷清单" / "变更记录"
@@ -565,7 +565,7 @@ flowchart TD
 | 格式 | 路径 | 上游输入 | 产物 |
 | --- | --- | --- | --- |
 | `REQ-YYYY-NNNN-NNN`(任务编码) | 任务分支 | `plan/<需求编码>/RESULT.md` + `PLAN.md` | `code/<任务编码>/{RESULT.md, work-log.md, ...}` |
-| `BUG-NNN`(缺陷编号) | 缺陷分支 | `fix/<BUG-NNN>/RESULT.md` + `fix-plan.md` | `fix/<BUG-NNN>/{fix-work-log.md, fix-compile-and-run.md, fix-test-results.md, ...}` |
+| `BUG-NNN`(缺陷编号) | 缺陷分支 | `fix/<BUG-NNN>/RESULT.md` + `PLAN.md` | `fix/<BUG-NNN>/{fix-work-log.md, fix-compile-and-run.md, fix-test-results.md, ...}` |
 
 **触发/来源**(任务分支内,影响读哪个上游):
 - 大多数(`需求新增` / `需求变更` / `主动优化` / `缺陷修复` / ...)→ 读 `plan/<需求>/RESULT.md`
@@ -671,7 +671,7 @@ flowchart TD
 
 **与 `code-plan` / `code-it` 的协作**:
 - `code-fix` 只**跟踪**,不**实施**
-- 实施需:`code-plan BUG-NNN` 产出 `fix-plan.md` → `code-it BUG-NNN` 改代码 → `code-fix BUG-NNN` 推进状态
+- 实施需:`code-plan BUG-NNN` 产出 `PLAN.md` → `code-it BUG-NNN` 改代码 → `code-fix BUG-NNN` 推进状态
 
 **下一步**(根据当前状态):
 | 当前状态 | 建议 |
@@ -741,7 +741,7 @@ flowchart TD
    → 选"调查中"
    → 补充根因(根据日志/监控推断)
 3. 调 code-plan BUG-00001
-   → 产出 fix-plan.md(选定方案 + 风险 + 回退)
+   → 产出 PLAN.md(选定方案 + 风险 + 回退)
 4. 调 code-it BUG-00001
    → 实施代码修改
    → 编译/启动/测试全部通过

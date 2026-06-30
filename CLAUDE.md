@@ -85,7 +85,7 @@ assistants/
         ├── RESULT.md       # 缺陷总览
         └── <BUG-NNN>/
             ├── RESULT.md   # 缺陷详情
-            ├── fix-plan.md # 修复方案(code-plan BUG 分支)
+            ├── PLAN.md # 修复方案(code-plan BUG 分支)
             ├── fix-work-log.md / fix-compile-and-run.md / fix-test-results.md / deviations.md
             └── ...
 ```

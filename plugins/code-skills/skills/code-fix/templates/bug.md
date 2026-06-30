@@ -1,7 +1,7 @@
 # 缺陷详情 — <缺陷编号>:<标题>
 
 > 本文件由 `code-fix` 技能维护,记录该缺陷的**完整生命周期**。
-> 实际修复方案 / 实施日志 / 验证结果分别存放在 `fix-plan.md` / `fix-work-log.md` / `fix-test-results.md`,本文件只链接。
+> 实际修复方案 / 实施日志 / 验证结果分别存放在 `PLAN.md` / `fix-work-log.md` / `fix-test-results.md`,本文件只链接。
 > 最后更新:YYYY-MM-DD HH:mm
 > 适用版本:基线版本 `<版本号>`
 
@@ -26,7 +26,7 @@
 ### 状态枚举
 - `报告`:刚被登记,尚未开始调查
 - `调查中`:正在分析根因
-- `修复规划中`:已调 `code-plan` 产出 `fix-plan.md`
+- `修复规划中`:已调 `code-plan` 产出 `PLAN.md`
 - `修复编码中`:已调 `code-it` 实施修复
 - `已修复-待验证`:代码已改完,等待验证
 - `已修复-已验证`:测试通过 / 人工确认
@@ -101,7 +101,7 @@
 
 ## 修复方案(由 `code-plan` 产出)
 
-详见 `./fix-plan.md`(若有)。
+详见 `./PLAN.md`(若有)。
 
 - **关键变更**:
  - <如 修改 `src/auth/login.py:42` 的密码校验逻辑>
@@ -141,7 +141,7 @@
 | --- | --- | --- |
 | YYYY-MM-DD HH:mm | (登记) → 报告 | <报告人> 报告缺陷:<原始描述> |
 | YYYY-MM-DD HH:mm | 报告 → 调查中 | <调查人> 开始分析根因,初步假设:... |
-| YYYY-MM-DD HH:mm | 调查中 → 修复规划中 | code-plan 已产出 fix-plan.md |
+| YYYY-MM-DD HH:mm | 调查中 → 修复规划中 | code-plan 已产出 PLAN.md |
 | YYYY-MM-DD HH:mm | 修复规划中 → 修复编码中 | code-it 开始实施修复 |
 | YYYY-MM-DD HH:mm | 修复编码中 → 已修复-待验证 | code-it 完成,等待测试 |
 | YYYY-MM-DD HH:mm | 已修复-待验证 → 已修复-已验证 | 测试通过(12/12) |

@@ -10,7 +10,7 @@
 
 | 任务编号 | 类型 | 触发/来源 | 标题 | 涉及文件 | 开发状态 | 测试状态 | 前置任务 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| TASK-REQ-00043-00001 | 修改 | 需求新增 | [修改] 移除 fix-plan.md 废弃引用,替换为 PLAN.md/RESULT.md | CLAUDE.md, code-auto/SKILL.md, code-fix/SKILL.md, code-fix/templates/*.md, README.md, README.en.md | 待开始 | 不适用 | — |
+| TASK-REQ-00043-00001 | 修改 | 需求新增 | [修改] 移除 fix-plan.md 废弃引用,替换为 PLAN.md/RESULT.md | CLAUDE.md, code-auto/SKILL.md, code-fix/SKILL.md, code-fix/templates/*.md, README.md, README.en.md | 已完成 | 不适用 | — |
 
 ## 任务详情
 

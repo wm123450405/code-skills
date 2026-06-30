@@ -20,14 +20,14 @@ description: 缺陷登记与跟踪。给一段缺陷描述(或已有的缺陷编
 ## 不适用
 - 当前**没有激活的版本工作空间**(请先调 `code-version`)
 - 想**主动**为某项需求做计划(那是 `code-plan` 的事)
-- 想**实施**代码修复(那是 `code-it` 的事;`code-fix` 不产出 `fix-plan.md` / `fix-work-log.md`)
+- 想**实施**代码修复(那是 `code-it` 的事;`code-fix` 不产出 `PLAN.md` / `fix-work-log.md`)
 - 想**评审**已经写完的修复(那是 `code-check` 的事;本技能不实施)
 - 想**直接关闭**缺陷 —— 本技能不直接关闭;由 `code-check` 推进"已修复-已验证" / "已关闭-不修复",`code-fix` 复跑时直接确认
 
 ## 工作目录约定(强制)
 
 **版本工作空间**:`./assistants/<版本号>/`(由 `./assistants/.current-version` 决定)。
-本技能操作新增的 `fix/` 子目录(纯登记型,本技能**只**产出 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `fix-plan.md` / `fix-work-log.md` 等下游文件):
+本技能操作新增的 `fix/` 子目录(纯登记型,本技能**只**产出 `fix/RESULT.md` 与 `fix/<BUG-NNN>/RESULT.md`,**不**产出 `PLAN.md` / `fix-work-log.md` 等下游文件):
 ```
 ./assistants/
 ├── rules/ # 跨版本规范,本技能只读
@@ -295,7 +295,7 @@ function detectStartability(cwd):
 1. `Read "./assistants/<版本号>/fix/<缺陷编号>/RESULT.md"` —— 了解当前状态
 2. `Read` 该缺陷目录下所有其他 `*.md` 文件(若有):
  - `investigation.md`:调查笔记(由 `code-it` 写入,本技能只读)
- - `fix-plan.md`:修复方案(由 `code-plan` 写入)
+ - `PLAN.md`:修复方案(由 `code-plan` 写入)
  - `fix-work-log.md`:实施日志(由 `code-it` 写入)
  - 其他
 3. 把所有材料汇总,在本技能内构成"缺陷当前完整画像"
@@ -321,7 +321,7 @@ function detectStartability(cwd):
 **状态语义**(本技能维护的"登记/分析类"状态):
 - `报告`:刚被登记,尚未开始调查
 - `调查中`:正在分析根因,可能在写 `investigation.md`
-- `修复规划中`:用户已调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`(本技能**校验但不主动推进**;实际推进由 `code-plan`)
+- `修复规划中`:用户已调 `code-plan <BUG-NNN>` 产出 `PLAN.md`(本技能**校验但不主动推进**;实际推进由 `code-plan`)
 - `阻塞`:等待外部因素(等用户答复、等依赖版本升级、等权限开通等)
 
 ### 步骤 5 — 补充本轮信息
@@ -335,7 +335,7 @@ function detectStartability(cwd):
 
 > **注**:本技能**不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进。
 > 若需推进上述状态,请按以下顺序调:
-> 1. `code-plan <BUG-NNN>` —— 产出 `fix-plan.md`,推进"待处理 → 待开发"
+> 1. `code-plan <BUG-NNN>` —— 产出 `PLAN.md`,推进"待处理 → 待开发"
 > 2. `code-it <BUG-NNN>` —— 产出 `fix-work-log.md`,推进"待开发 → 开发中"(第 1 个任务)→ "待审查"(全部完成)
 > 3. (可选)`code-it <BUG-NNN>` 步骤 8.5 自含按需写单测—— 产出 `unit-test-results.md`(若项目可测)
 > 4. `code-check <BUG-NNN>` —— 产出 `REVIEW-REPORT.md`,推进"待审查 → 已完成"
@@ -366,7 +366,7 @@ function detectStartability(cwd):
  ```
  YYYY-MM-DD HH:mm 状态推进 <缺陷编号> 状态"<旧状态>"→"<新状态>" <缺陷编号>
  ```
-3. 若有 `fix-plan.md` / `fix-work-log.md` / `fix-test-results.md` 等下游文件,把它们的关键摘要链接到 `RESULT.md`
+3. 若有 `PLAN.md` / `fix-work-log.md` / `fix-test-results.md` 等下游文件,把它们的关键摘要链接到 `RESULT.md`
 
 ### 步骤 6.X — 复现产物登记(本需求新增子节,在"**关键:不重写**"注释前)
 
@@ -551,7 +551,7 @@ function executeStep(step, reproduceDir):
 | --- | --- |
 | 待处理 | 调 `code-fix <BUG-NNN>` 进入"报告",补充报告信息 |
 | 报告 | 调 `code-fix <BUG-NNN>` 进入"调查中",补充根因 |
-| 调查中 | 调 `code-plan <BUG-NNN>` 产出 `fix-plan.md`,进入"待开发" |
+| 调查中 | 调 `code-plan <BUG-NNN>` 产出 `PLAN.md`,进入"待开发" |
 | 待开发 | (由 `code-plan` 推进;本技能不参与此状态之后) |
 | 开发中 | (由 `code-it <BUG-NNN>` 推进) |
 | 待审查 | (由 `code-it` 全部完成时推进;本技能不参与) |
@@ -561,7 +561,7 @@ function executeStep(step, reproduceDir):
 > **典型修复流程**(本技能只参与前 2 步,后续由 `code-plan` / `code-it` / `code-check` 自动接力):
 > 1. `code-fix "用户报告:..."` → 登记 BUG,产出 `fix/<BUG-NNN>/RESULT.md`(本技能,初始状态 = `待处理`)
 > 2. `code-fix BUG-NNN` → 推进到"报告" → "调查中"(本技能前 3 段)
-> 3. `code-plan BUG-NNN` → 产出 `fix-plan.md`,状态由"调查中"自动推进到"待开发"
+> 3. `code-plan BUG-NNN` → 产出 `PLAN.md`,状态由"调查中"自动推进到"待开发"
 > 4. `code-it BUG-NNN` → 实际改代码,状态由"待开发"经"开发中"自动推进到"待审查"
 > 5. (可选)`code-it BUG-NNN` 步骤 8.5 自含按需写单测(若项目可测)→ 产出 `unit-test-results.md`
 > 6. `code-check BUG-NNN` → 产出 `REVIEW-REPORT.md`,状态由"待审查"自动推进到"已完成"
@@ -580,9 +580,9 @@ function executeStep(step, reproduceDir):
 ## 过程文档格式(纯登记型)
 
 ### fix/<BUG-NNN>/RESULT.md
-见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(若已调 `code-plan`,链接 `fix-plan.md`,否则标注"待 `code-plan` 补充")/ 修复日志(本轮工作记录)/ 变更记录。
+见 `templates/bug.md`,核心区段:文档头(缺陷元信息)/ 缺陷描述(用户原始报告+复现步骤)/ 根因分析(可选)/ 修复方案(若已调 `code-plan`,链接 `PLAN.md`,否则标注"待 `code-plan` 补充")/ 修复日志(本轮工作记录)/ 变更记录。
 
-> **本技能不产出**:`investigation.md` / `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-it` / `code-plan` / `code-check` 产出)。
+> **本技能不产出**:`investigation.md` / `PLAN.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(均由 `code-it` / `code-plan` / `code-check` 产出)。
 
 ### fix/RESULT.md(缺陷总览)
 见 `templates/fix-registry.md`,核心区段:文档头 / 缺陷清单(表格)/ 统计 / 变更记录。
@@ -600,8 +600,8 @@ function executeStep(step, reproduceDir):
 
 | 技能 | 关系 |
 | --- | --- |
-| `code-plan` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 读,产出 `fix/<BUG-NNN>/fix-plan.md`,**也**回写 `fix/RESULT.md` 与看板 |
-| `code-it` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 与 `fix-plan.md` 读,实施代码修改,产出 `fix-work-log.md` 等,**也**回写 `fix/RESULT.md` 与看板(若项目可测,`code-it` 步骤 8.5 自含按需写单测) |
+| `code-plan` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 读,产出 `fix/<BUG-NNN>/PLAN.md`,**也**回写 `fix/RESULT.md` 与看板 |
+| `code-it` | 接收 `BUG-NNN` 时,从 `fix/<BUG-NNN>/RESULT.md` 与 `PLAN.md` 读,实施代码修改,产出 `fix-work-log.md` 等,**也**回写 `fix/RESULT.md` 与看板(若项目可测,`code-it` 步骤 8.5 自含按需写单测) |
 | `code-check` | 接收 `BUG-NNN` 时,对已修复的 bug 走评审,产出 `fix/<BUG-NNN>/REVIEW-REPORT.md`,推进状态到"已修复-已验证" / "已关闭" |
 | `code-require` / `code-design` | 与本技能无直接关系(本技能在主流程之外) |
 | `code-version` | 不同版本的缺陷独立登记;切换版本后,新版本从空开始 |
@@ -609,7 +609,7 @@ function executeStep(step, reproduceDir):
 **典型完整流程**(本技能只负责登记 + 前 5 段状态推进;后续由 `code-plan` / `code-it` / `code-check` 自动接力):
 ```
 1. code-fix "用户报告:登录页密码框不显示" → BUG-00001 / 待处理
-2. code-plan BUG-00001 → fix-plan.md,状态自动推进到"待开发"
+2. code-plan BUG-00001 → PLAN.md,状态自动推进到"待开发"
 3. code-it BUG-00001 → 实际改代码,状态自动经"开发中"推进到"待审查"
 4. code-check BUG-00001 → REVIEW-REPORT.md,状态自动推进到"已完成"
 ```
@@ -626,9 +626,9 @@ function executeStep(step, reproduceDir):
 - 不要跳过"询问本轮状态推进"(步骤 4)直接写文件(状态推进是本技能的核心,必须显式确认)
 - 不要把 `BUG-NNN` 的编号搞乱(一旦分配稳定不变,即使关闭了也不复用)
 - 不要重写 `RESULT.md` 的稳定章节(缺陷描述、根因);只追加/更新状态字段
-- 不要在 `fix/<BUG-NNN>/RESULT.md` 中维护"详细修复方案"或"详细代码改动"(那些在 `fix-plan.md` / `fix-work-log.md`,本文件只链接)
+- 不要在 `fix/<BUG-NNN>/RESULT.md` 中维护"详细修复方案"或"详细代码改动"(那些在 `PLAN.md` / `fix-work-log.md`,本文件只链接)
 - 不要修改其他 `code-*` 技能负责的文件(本技能只动 `fix/` 下的 `RESULT.md` 与版本看板的"缺陷清单"/"变更记录")
-- **不**产出 `investigation.md` / `fix-plan.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-it` / `code-plan` / `code-check` 产出)
+- **不**产出 `investigation.md` / `PLAN.md` / `fix-work-log.md` / `fix-compile-and-run.md` / `fix-test-results.md` / `deviations.md`(由 `code-it` / `code-plan` / `code-check` 产出)
 - **不**实施代码改动(由 `code-it` 实施)
 - **不**推进"待开发 / 开发中 / 待审查 / 已完成"等状态 — 这些由 `code-plan` / `code-it` / `code-check` 自动推进
 - **不**直接关闭缺陷(终态由 `code-check` 推进)

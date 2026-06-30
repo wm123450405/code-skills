@@ -30,8 +30,8 @@ After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/cod
 | [`code-rule`](skills/code-rule/SKILL.md) | Coding-Standard Management — maintains the project-wide shared standards under `assistants/rules/` | User description (natural language) | `assistants/rules/<category>.md` | (shared input for all code-*) |
 | [`code-require`](skills/code-require/SKILL.md) | Requirements Analysis | User materials + `assistants/rules/` | `assistants/<version>/require/<req-id>/RESULT.md` | code-design |
 | [`code-design`](skills/code-design/SKILL.md) | High-level Design | `requirements.md` + `assistants/rules/` | `design.md` | code-plan |
-| [`code-plan`](skills/code-plan/SKILL.md) | Detailed Design & Implementation Plan — accepts a "requirement ID" or a "bug ID" | `requirements.md` + `design.md` or `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` or `fix/<BUG>/fix-plan.md` | code-it |
-| [`code-it`](skills/code-it/SKILL.md) | Implementation — accepts a "task ID" or a "bug ID" (includes on-demand unit testing: step 8a project-testability guard + step 8.5 on-demand write-tests) | `plan.md` or `fix-plan.md` + `assistants/rules/` | Source code + per-task `RESULT.md` or `fix/<BUG>/fix-*.md` | code-check |
+| [`code-plan`](skills/code-plan/SKILL.md) | Detailed Design & Implementation Plan — accepts a "requirement ID" or a "bug ID" | `requirements.md` + `design.md` or `fix/<BUG>/RESULT.md` + `assistants/rules/` | `plan.md` + `task-plan.md` or `fix/<BUG>/PLAN.md` | code-it |
+| [`code-it`](skills/code-it/SKILL.md) | Implementation — accepts a "task ID" or a "bug ID" (includes on-demand unit testing: step 8a project-testability guard + step 8.5 on-demand write-tests) | `plan.md` or `PLAN.md` + `assistants/rules/` | Source code + per-task `RESULT.md` or `fix/<BUG>/fix-*.md` | code-check |
 | [`code-fix`](skills/code-fix/SKILL.md) | Bug Registration & Tracking — maintains `fix/RESULT.md` and each `BUG-NNN/RESULT.md` | User description or existing `fix/` files | `assistants/<version>/fix/{RESULT.md, <BUG-NNN>/RESULT.md}` | code-plan / code-it |
 | [`code-check`](skills/code-check/SKILL.md) | Code Review | `code/RESULT.md` + `code/<task>/unit-test-results.md` + `assistants/rules/` | Overall `REVIEW-REPORT.md` + derived fix tasks | code-it (fix tasks) |
 | [`code-publish`](skills/code-publish/SKILL.md) | Release & Deployment — accepts an optional "version ID"; performs a preflight check (all-check strictest: requirements = done ∧ tasks dev = done ∧ test ∈ {passed, N/A} ∧ bugs = fixed); on pass, generates `DEPLOY.md` + `UPDATE.md` (baseline skipped) + `Q&A.md` (aggregated from `qanda/`) under `<version>/publish/`; all 3 manuals are generic skeletons with placeholders and default examples that users must complete; **(on first call) creates the project-level `assistants/qanda/` directory if it does not yet exist** | `.current-version` + `<version>/RESULT.md` (3 sections) + `qanda/*.md` + 5 templates | `qanda/README.md` (alongside) + `<version>/publish/{DEPLOY,UPDATE,Q&A}.md` | (Ops / on-call support — consult manuals after release) |
@@ -109,7 +109,7 @@ code-skills/                          ← marketplace repo root
             │   └── templates/
             │       ├── plan.md
             │       ├── task-plan.md
-            │       ├── fix-plan.md
+            │       ├── PLAN.md
             │       └── assistants-layout.md
             ├── code-it/              # Implementation / bug-fix execution
             │   ├── SKILL.md
@@ -196,7 +196,7 @@ Every task has a `Trigger/Source` field that determines the input source for `co
 7. **Review**: Call `code-check`, produce the overall review report and derived fix tasks
 8. **Bug Fix** (any stage):
     - Register: Call `code-fix "<bug description>"` or `code-fix BUG-NNN`
-    - Plan: Call `code-plan BUG-NNN` to produce `fix-plan.md`
+    - Plan: Call `code-plan BUG-NNN` to produce `PLAN.md`
     - Implement: Call `code-it BUG-NNN` to modify the code
     - Status Advance: Call `code-fix BUG-NNN` again to advance the status (Fixed-Pending-Verify → Fixed-Verified → Closed)
 
@@ -282,7 +282,7 @@ Connect the following in order, each step only cares about the previous step's o
 2. code-fix BUG-NNN                      ← (Again) advance status "Reported"→"Investigating"
      ↓ User supplements root cause / reproduction steps
 3. code-plan BUG-NNN                     ← Plan the fix
-     ↓ fix/<BUG-NNN>/fix-plan.md, status →"Fix Planning"
+     ↓ fix/<BUG-NNN>/PLAN.md, status →"Fix Planning"
 4. code-it BUG-NNN                       ← Implement the fix
      ↓ fix/<BUG-NNN>/fix-*.md, status →"Fixed-Pending-Verify"
 5. Run tests, confirm passing
@@ -519,7 +519,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Format | Path | Upstream | Output |
 | --- | --- | --- | --- |
 | `REQ-YYYY-NNNN` | Main flow | `require/<id>/RESULT.md` + `design/<id>/RESULT.md` | `plan/<id>/{RESULT.md, PLAN.md}` |
-| `BUG-NNN` | Bug branch | `fix/<id>/RESULT.md` | `fix/<id>/fix-plan.md` |
+| `BUG-NNN` | Bug branch | `fix/<id>/RESULT.md` | `fix/<id>/PLAN.md` |
 
 **Examples**:
 - `code-plan REQ-00001` (main-flow path)
@@ -528,7 +528,7 @@ Connect the following in order, each step only cares about the previous step's o
 
 **Output**:
 - Main flow: `./assistants/<version>/plan/<req-id>/RESULT.md` + `PLAN.md`
-- Bug branch: `./assistants/<version>/fix/<bug-id>/fix-plan.md`
+- Bug branch: `./assistants/<version>/fix/<bug-id>/PLAN.md`
 - Synced to version dashboard:
   - Main flow: "Detailed Design & Task Plan Summary" / "Task List" / "Milestones" / "Change Log"
   - Bug branch: "Bug List" / "Change Log"
@@ -566,7 +566,7 @@ Connect the following in order, each step only cares about the previous step's o
 | Format | Path | Upstream Input | Output |
 | --- | --- | --- | --- |
 | `REQ-YYYY-NNNN-NNN` (task ID) | Task branch | `plan/<req-id>/RESULT.md` + `PLAN.md` | `code/<task-id>/{RESULT.md, work-log.md, ...}` |
-| `BUG-NNN` (bug ID) | Bug branch | `fix/<BUG-NNN>/RESULT.md` + `fix-plan.md` | `fix/<BUG-NNN>/{fix-work-log.md, fix-compile-and-run.md, fix-test-results.md, ...}` |
+| `BUG-NNN` (bug ID) | Bug branch | `fix/<BUG-NNN>/RESULT.md` + `PLAN.md` | `fix/<BUG-NNN>/{fix-work-log.md, fix-compile-and-run.md, fix-test-results.md, ...}` |
 
 **Trigger/Source** (within task branch, affects which upstream to read):
 - Most cases (`Requirement Added` / `Requirement Changed` / `Proactive Optimization` / `Bug Fix` / ...) → read `plan/<req>/RESULT.md`
@@ -672,7 +672,7 @@ Any state → Blocked / Cancelled
 
 **Collaboration with `code-plan` / `code-it`**:
 - `code-fix` only **tracks**, does not **implement**
-- Implementation requires: `code-plan BUG-NNN` to produce `fix-plan.md` → `code-it BUG-NNN` to change code → `code-fix BUG-NNN` to advance status
+- Implementation requires: `code-plan BUG-NNN` to produce `PLAN.md` → `code-it BUG-NNN` to change code → `code-fix BUG-NNN` to advance status
 
 **Next** (based on current state):
 | Current State | Suggestion |
@@ -742,7 +742,7 @@ Any state → Blocked / Cancelled
    → Choose "Investigating"
    → Supplement root cause (inferred from logs/monitoring)
 3. Call code-plan BUG-00001
-   → Produce fix-plan.md (selected solution + risks + rollback)
+   → Produce PLAN.md (selected solution + risks + rollback)
 4. Call code-it BUG-00001
    → Implement code change
    → Compile/start/test all pass

@@ -12,7 +12,7 @@
  ├── BUG-00001/ # 第一个缺陷
  │ ├── RESULT.md # ★ 缺陷详情(本技能首次/更新)
  │ ├── investigation.md # 调查笔记(可选)
- │ ├── fix-plan.md # 修复方案(由 code-plan 写入)
+ │ ├── PLAN.md # 修复方案(由 code-plan 写入)
  │ ├── fix-work-log.md # 实施日志(由 code-it 写入)
  │ ├── fix-compile-and-run.md # 编译/运行(由 code-it 写入)
  │ ├── fix-test-results.md # 测试结果(由 code-it 写入)
@@ -34,5 +34,5 @@
 
 - `BUG-NNNNN`:`BUG-` 前缀 + 五位数字,从 `00001` 起递增
 - `RESULT.md`:缺陷详情(由本技能维护)与缺陷总览(由本技能维护)同名但位于不同层级
-- `fix-plan.md` / `fix-work-log.md` 等:以 `fix-` 前缀与主流程的 `work-log.md` 等区分(避免和 `code/<任务>/work-log.md` 冲突)
+- `PLAN.md` / `fix-work-log.md` 等:以 `fix-` 前缀与主流程的 `work-log.md` 等区分(避免和 `code/<任务>/work-log.md` 冲突)
 - `investigation.md` / `deviations.md`:与主流程同名约定保持一致

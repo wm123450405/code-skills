@@ -94,7 +94,7 @@
 - `缺陷登记`:新增 BUG-NNN
 - `状态推进`:BUG-NNN 状态变化
 - `修复完成`:code-it 完成修复
-- `修复规划`:code-plan 完成 fix-plan
+- `修复规划`:code-plan 完成 PLAN
 - `评审发现`:code-check 产出
 - `关闭`:BUG-NNN 进入"已关闭"终态
 - `其他`
