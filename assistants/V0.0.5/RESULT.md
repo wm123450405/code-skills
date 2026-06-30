@@ -36,8 +36,9 @@
 | BUG-00001 | code-req 未按阶段顺序执行,跳过需求/设计/排期直接修改代码 | [PROCESS.md](fix/BUG-00001/PROCESS.md) |
 | BUG-00002 | REQ-00044 重构后项目使用说明文档未更新,编码规范缺失同步规则 | [PROCESS.md](fix/BUG-00002/PROCESS.md) |
 | BUG-00003 | code-req 工作流强制指令位置不够靠前,AI 跳过工作流直接修改代码 | [PROCESS.md](fix/BUG-00003/PROCESS.md) |
+| BUG-00004 | code-req DONE 阶段兜底提交未触发,指令不够显式 | [PROCESS.md](fix/BUG-00004/PROCESS.md) |
 
-**统计**:3
+**统计**:4
 
 ---
 

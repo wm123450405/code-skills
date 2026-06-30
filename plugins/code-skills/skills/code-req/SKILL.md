@@ -213,14 +213,16 @@ description: 需求开发。从需求分析到代码审查,引导你一步步完
 
 ### 步骤 6 — DONE(收尾)
 
-- 追加 PROCESS.md `| <时间> | DONE | 完成 | 全部阶段完成 |`
-- 屏幕输出完成报告:各阶段统计摘要
-- 兜底提交代码(详见 references/common.md §10):
-  - 非 git 仓库 → 跳过
-  - git 仓库有变更 → `git add` + `git commit`
-  - `--auto` 模式 → 自动提交,无需确认
-  - 非 `--auto` 模式 → 展示 commit message 预览,确认后提交
-- 建议下一步:`code-dashboard` 查看进度,或 `code-ver --publish` 发布
+1. 追加 PROCESS.md `| <时间> | DONE | 完成 | 全部阶段完成 |`
+2. 屏幕输出完成报告:各阶段统计摘要
+3. **执行兜底提交**(强制,不可跳过):
+   - 执行 `Bash: git rev-parse --git-dir 2>/dev/null` → 退出码 ≠ 0 则输出"非 git 仓库,跳过提交"
+   - 执行 `Bash: git status --porcelain` → 输出为空则输出"无文件变更,跳过提交"
+   - 执行 `Bash: git add -A`
+   - 生成 commit message(格式:`chore(code-req): <需求编码> <标题>\n\n<阶段统计>\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`)
+   - `--auto` 模式 → 直接执行 `Bash: git commit -m "<message>"`
+   - 非 `--auto` 模式 → `AskUserQuestion` 确认后执行 commit
+4. 建议下一步:`code-dashboard` 查看进度,或 `code-ver --publish` 发布
 
 ---
 
