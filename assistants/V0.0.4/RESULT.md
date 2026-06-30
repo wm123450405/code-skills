@@ -89,9 +89,9 @@
 | REQ-00041 | 技能多语言模块化重构 | 已完成 | 5 | 5 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00041/PLAN.md) / [RESULT.md](plan/REQ-00041/RESULT.md) |
 | REQ-00042 | 代码产出中禁止包含追踪编号 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00042/PLAN.md) / [RESULT.md](plan/REQ-00042/RESULT.md) |
 | REQ-00043 | 移除 fix-plan.md 废弃引用 | 已完成 | 1 | 1 | 0 | 2026-06-29 | [PLAN.md](plan/REQ-00043/PLAN.md) |
-| REQ-00044 | 技能系统 v2 大改版 | 已完成 | 10 | 0 | 0 | 2026-06-30 | [PLAN.md](plan/REQ-00044/PLAN.md) / [RESULT.md](plan/REQ-00044/RESULT.md) |
+| REQ-00044 | 技能系统 v2 大改版 | 已完成 | 10 | 2 | 0 | 2026-06-30 | [PLAN.md](plan/REQ-00044/PLAN.md) / [RESULT.md](plan/REQ-00044/RESULT.md) |
 
-**统计**:4 个计划 / 共 17 个任务 / 开发完成 7 / 测试通过 0
+**统计**:4 个计划 / 共 17 个任务 / 开发完成 9 / 测试通过 0
 
 ---
 
@@ -112,8 +112,8 @@
 | TASK-REQ-00041-00005 | REQ-00041 | 修改 | 需求新增 | [修改] code-check 精简 SKILL.md + 创建 references/ 7 文件 | 已完成 | 不适用 | code-check/SKILL.md(157 lines) | 2026-06-29 | — | TASK-REQ-00041-00001 |
 | TASK-REQ-00042-00001 | REQ-00042 | 修改 | 需求新增 | [修改] code-it:编码原则新增"禁止追踪编号"规则 + 模板约束 | 已完成 | 不适用 | references/common.md, templates/RESULT.md | 2026-06-29 | — | — |
 | TASK-REQ-00043-00001 | REQ-00043 | 修改 | 需求新增 | [修改] 移除 fix-plan.md 废弃引用,替换为 PLAN.md/RESULT.md | 已完成 | 不适用 | CLAUDE.md, code-auto/SKILL.md, code-fix/SKILL.md, code-fix/templates/, README.md, README.en.md | 2026-06-29 | — | — |
-| TASK-REQ-00044-00001 | REQ-00044 | 新增 | 需求新增 | [基础] 创建共享模板文件(8 个模板) | code-req/templates/*, code-fix/templates/BUG.md | 待开始 | 不适用 | — | — | — | — |
-| TASK-REQ-00044-00002 | REQ-00044 | 新增 | 需求新增 | [基础] 创建 code-req references(6 个阶段文档) | code-req/references/*.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
+| TASK-REQ-00044-00001 | REQ-00044 | 新增 | 需求新增 | [基础] 创建共享模板文件(8 个模板) | 已完成 | 不适用 | code-req/templates/*.md, code-fix/templates/BUG.md | 2026-06-30 | — | — |
+| TASK-REQ-00044-00002 | REQ-00044 | 新增 | 需求新增 | [基础] 创建 code-req references(6 个阶段文档) | 已完成 | 不适用 | code-req/references/*.md | 2026-06-30 | — | TASK-REQ-00044-00001 |
 | TASK-REQ-00044-00003 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-ver 技能 | code-ver/SKILL.md + references/common.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001 |
 | TASK-REQ-00044-00004 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-req 技能 | code-req/SKILL.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00001, TASK-REQ-00044-00002 |
 | TASK-REQ-00044-00005 | REQ-00044 | 新增 | 需求新增 | [技能] 创建 code-fix 技能 | code-fix/SKILL.md + references/fix-register.md | 待开始 | 不适用 | — | — | — | TASK-REQ-00044-00004 |
@@ -125,8 +125,8 @@
 
 **统计**:
 - 总任务数:17
-- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):7
-- 开发已完成 / 未完成:7 / 10
+- 真正可发布数(开发=已完成 ∧ 测试∈{已运行-通过, 不适用}):9
+- 开发已完成 / 未完成:9 / 8
 - 测试已通过 / 已失败 / 不适用 / 未编写:0 / 0 / 17 / 0
 
 ---
@@ -197,6 +197,8 @@
 | 2026-06-29 14:10 | 任务新增 | REQ-00042 详细设计与编码计划完成(共 1 个任务) | REQ-00042 |
 | 2026-06-29 14:15 | 开发状态更新 | TASK-REQ-00042-00001 开发状态"待开始"→"已完成",M1 达成 | TASK-REQ-00042-00001 |
 | 2026-06-29 14:20 | 评审发现 | REQ-00042 评审完成(0 条发现,全部通过) | REQ-00042 |
+| 2026-06-30 10:00 | 开发状态更新 | TASK-REQ-00044-00001 开发状态"待开始"→"已完成"(8 个模板文件) | TASK-REQ-00044-00001 |
+| 2026-06-30 11:00 | 开发状态更新 | TASK-REQ-00044-00002 开发状态"待开始"→"已完成"(6 个 reference 文件) | TASK-REQ-00044-00002 |
 
 **变更类型枚举**:
 - `初始化`:创建版本工作空间
