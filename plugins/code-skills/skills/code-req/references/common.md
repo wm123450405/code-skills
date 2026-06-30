@@ -72,8 +72,10 @@ echo "| $(date '+%Y-%m-%d %H:%M') | <阶段> | <状态> | <摘要> |" >> PROCESS
 
 ### 执行流程
 
+> 三态确认模型:阶段边界确认(是否继续下一阶段)与阶段内内容确认(需求澄清/设计选型等)是正交关系。`--confirm` 仅控制阶段边界确认。
+
 ```
-async function executeStage(stage, context, autoMode):
+async function executeStage(stage, context, flags):
   // 0. 阶段前置校验(强制)
   if not preStageCheck(stage, context.reqDir):
     appendProcess(stage, "失败", "前置产出物缺失,退回上一阶段")
@@ -82,17 +84,45 @@ async function executeStage(stage, context, autoMode):
   // 1. 追加 PROCESS.md 开始记录
   appendProcess(stage, "开始", stageDescriptions[stage].start)
   
-  // 2. 执行阶段逻辑
+  // 2. 执行阶段逻辑(阶段内内容确认不受 flags 影响,由各阶段 references 自行控制)
   result = await stageHandlers[stage](context)
   
   // 3. 追加 PROCESS.md 完成记录
   appendProcess(stage, "完成", result.summary)
   
-  // 4. 交互确认(非 --auto 模式)
-  if not autoMode:
-    response = askUserQuestion("阶段完成,是否继续?")
-    if response == "取消":
-      return { status: "CANCELLED" }
+  // 4. 阶段边界确认(三态)
+  if flags.confirm:
+    // --confirm 模式:增强确认
+    // 4a. 提示产出物文件路径
+    outputFiles = getStageOutputFiles(stage, context.dir)
+    print("=== " + skillName + " --confirm: " + stage + " 阶段完成 ===")
+    print(result.summary)
+    print("")
+    print("产出物文件:")
+    for file in outputFiles:
+      print("  - " + file)
+    print("")
+    print("你可以手动修改上述文件,完成后选择继续。")
+    
+    // 4b. 弹出确认(继续/中止)
+    response = askUserQuestion("继续下一阶段?", [
+      "A. 继续(重新读取产出物,获取最新修改,进入下一阶段)",
+      "B. 中止(保存当前进度,退出)"
+    ])
+    
+    if response == "B":
+      appendProcess(stage, "中止", "用户在 --confirm 确认环节中止")
+      return { status: "ABORTED" }
+    
+    // 4c. 重新读取产出物(获取用户最新修改)
+    for file in outputFiles:
+      reRead(file)  // 刷新内存中的内容,确保下一阶段使用用户修改后的版本
+  
+  else if flags.auto:
+    // --auto 模式:自动继续
+    print("[" + skillName + " --auto] " + stage + " 完成,自动继续")
+  
+  // else: 默认模式 — 自动继续,无输出
   
   return result
 ```
@@ -125,7 +155,22 @@ function preStageCheck(stage, reqDir):
   return true
 ```
 
-### --auto 模式
+### 三态确认模型
+
+> 阶段边界确认(是否继续下一阶段)与阶段内内容确认(需求澄清/设计选型/任务拆分等)是**正交**关系。
+
+| 模式 | 触发条件 | 阶段边界确认 | 阶段内内容确认 |
+| --- | --- | --- | --- |
+| --confirm | `--confirm` flag | 增强确认(路径提示+重读+继续/中止) | 正常触发(AskUserQuestion) |
+| --auto | `--auto` flag | 自动继续(前缀输出) | 自动选推荐项(跳过 AskUserQuestion) |
+| 默认 | 无 flag | 自动继续(无输出) | 正常触发(AskUserQuestion) |
+
+**关键规则**:
+- `--confirm` 与 `--auto` 互斥,同时传入报错退出
+- 阶段内内容确认由各阶段 references 自行控制,不受阶段边界确认模式影响
+- `--auto` 模式下所有 AskUserQuestion 自动选第一项(推荐项)
+
+### --auto 模式(legacy)
 
 - 所有 `AskUserQuestion` 自动选第一项(推荐项)
 - 屏幕输出 `[code-req --auto] <阶段> 完成,自动继续`
@@ -184,24 +229,44 @@ assistants/<版本号>/fix/<BUG-NNNNN>/
 - 各阶段完成时**不再改写**看板
 - 进度通过 `PROCESS.md` 链接查看
 
-## §7 交互确认(非 --auto)
+## §7 交互确认
 
-### 确认时机
+> 三态确认模型:阶段边界确认与阶段内内容确认是正交关系。本节定义阶段边界确认的行为。
 
-每个阶段完成后,弹出确认:
+### --confirm 模式(增强确认)
+
+每个阶段完成后,弹出增强确认:
 
 ```
-阶段 <阶段名> 完成: <摘要>
-选项:
-A. 继续下一阶段(推荐)
-B. 暂停(保存进度,下次从此阶段继续)
-C. 取消(放弃本次执行)
+=== code-req --confirm: <阶段名> 阶段完成 ===
+<摘要统计>
+
+产出物文件:
+  - assistants/<版本号>/req/<REQ>/<文件名1>
+  - assistants/<版本号>/req/<REQ>/<文件名2>
+
+你可以手动修改上述文件,完成后选择:
+A. 继续(重新读取产出物,获取最新修改,进入下一阶段)
+B. 中止(保存当前进度,退出)
 ```
 
-### 暂停处理
+**确认后行为**:
+- 选 A(继续):重新读取所有产出物文件(获取用户最新修改),进入下一阶段
+- 选 B(中止):追加 PROCESS.md `| <时间> | <阶段> | 中止 | 用户在 --confirm 确认环节中止 |`,退出
 
-- 选 B(暂停):追加 PROCESS.md `| <时间> | <阶段> | 暂停 | 用户暂停 |`,退出
-- 下次调用时从 PROCESS.md 恢复,从暂停的阶段继续
+### --auto 模式
+
+- 阶段边界自动继续,屏幕输出前缀
+- 阶段内内容确认自动选推荐项
+
+### 默认模式(无 flag)
+
+- 阶段边界自动继续,无输出
+- 阶段内内容确认正常触发(AskUserQuestion)
+
+### 阶段内内容确认
+
+> 阶段内内容确认(需求澄清、设计选型、任务拆分、审查发现等)由各阶段 references 自行控制,不受阶段边界确认模式影响。仅在 `--auto` 模式下,阶段内内容确认也被跳过。
 
 ## §8 标题解析
 
@@ -361,3 +426,60 @@ C. 取消
 - 选 A → `Bash: git commit -m "<message>"`,输出结果
 - 选 B → 屏幕输出 `[兜底提交] 已跳过提交,文件保持暂存状态,请手动 git commit`
 - 选 C → 屏幕输出 `[兜底提交] 已取消`
+
+## §11 --confirm 模式
+
+> 本小节定义 `--confirm` 模式的完整行为规范。在解析到 `--confirm` flag 时加载。
+
+### 触发条件
+
+- 用户传入 `--confirm` flag
+- 与 `--auto` 互斥,同时传入报错退出
+
+### 阶段边界确认
+
+每个阶段完成后,触发增强确认:
+
+1. 提示产出物文件路径(所有本阶段新生成/修改的文件)
+2. 弹出 AskUserQuestion(继续/中止)
+3. 用户确认继续后,重新读取所有产出物文件(获取用户最新修改)
+4. 不提供"暂停"选项(--confirm 模式下要么继续要么中止)
+
+### 阶段内内容确认
+
+`--confirm` 不影响阶段内内容确认行为。阶段内内容确认(需求澄清、设计选型、任务拆分等)由各阶段 references 自行控制,正常触发 AskUserQuestion。
+
+### 各阶段产出物路径映射
+
+| 阶段 | code-req 产出物 | code-fix 产出物 |
+| --- | --- | --- |
+| INIT | — | `fix/<BUG>/BUG.md` |
+| REQUIRE | `req/<REQ>/REQUIRE.md`, `req/<REQ>/clarifications.md`(如有) | — |
+| DESIGN | `req/<REQ>/DESIGN.md` | `fix/<BUG>/DESIGN.md` |
+| PLAN | `req/<REQ>/PLAN.md` | `fix/<BUG>/PLAN.md` |
+| CODING | `req/<REQ>/TASK-*.md`(所有任务文件) | `fix/<BUG>/TASK-*.md`(所有任务文件) |
+| CHECK | `req/<REQ>/CHECK.md` | `fix/<BUG>/CHECK.md` |
+
+### 确认提示模板
+
+```
+=== code-req --confirm: <阶段名> 阶段完成 ===
+<摘要统计>
+
+产出物文件:
+  - <路径1>
+  - <路径2>
+
+你可以手动修改上述文件,完成后选择:
+A. 继续(重新读取产出物,获取最新修改,进入下一阶段)
+B. 中止(保存当前进度,退出)
+```
+
+### 重读机制
+
+用户选择继续后,对所有产出物文件执行 Read 操作,确保下一阶段使用用户修改后的最新内容。重读范围包括但不限于:REQUIRE.md/DESIGN.md/PLAN.md/TASK-*.md/CHECK.md。
+
+### 中止处理
+
+- 选 B(中止):追加 PROCESS.md `| <时间> | <阶段> | 中止 | 用户在 --confirm 确认环节中止 |`,退出
+- 下次调用时从 PROCESS.md 恢复,从中止的阶段重新开始

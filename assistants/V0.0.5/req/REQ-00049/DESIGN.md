@@ -5,39 +5,54 @@
 
 ## 1. 设计概述
 
-本需求为 `code-req` 和 `code-fix` 新增 `--confirm` 命令行参数，同时变更默认行为。涉及 3 个文件的修改，核心改动在 `common.md` 的阶段执行器(§4)和交互确认(§7)章节。
+为 `code-req` 和 `code-fix` 引入三态行为模型，通过 `--confirm`/`--auto` 两个互斥 flag 控制确认粒度。核心改动在 `common.md` 的阶段执行器(§4)和交互确认(§7)，以及两个 SKILL.md 的参数章节。
 
 ## 2. 模块拆分
 
 | 模块 | 职责 | 涉及文件 | 依赖 |
 | --- | --- | --- | --- |
-| code-req 参数 | 新增 --confirm 输入/解析 | `skills/code-req/SKILL.md` | common.md |
-| code-fix 参数 | 新增 --confirm 输入/解析 | `skills/code-fix/SKILL.md` | common.md |
-| 公共阶段执行器 | 实现 --confirm 确认流程、默认行为变更 | `skills/code-req/references/common.md` | 无 |
+| 参数模型 | 新增 --confirm 输入/解析，三态定义 | `skills/code-req/SKILL.md`, `skills/code-fix/SKILL.md` | common.md |
+| 阶段执行器 | 实现三态确认流程 | `skills/code-req/references/common.md` | 无 |
 
 ## 3. 接口设计(修改点)
 
-### 3.1 code-req SKILL.md 修改点
+### 3.1 三态行为模型
+
+> **核心原则**:`--confirm` 控制阶段边界确认(是否继续下一阶段)，不影响阶段内内容确认(需求澄清、设计选型、任务拆分等)。原有的 AskUserQuestion 与 --confirm 是正交关系，不冲突。
+
+| 模式 | 触发条件 | 阶段边界确认 | 阶段内内容确认 |
+| --- | --- | --- | --- |
+| --confirm | `--confirm` flag | ✅ 增强确认(路径+重读+继续/中止) | 正常触发(AskUserQuestion) |
+| --auto | `--auto` flag | ❌ 自动继续 | ❌ 自动选推荐项 |
+| 默认 | 无 flag | ❌ 自动继续 | 正常触发(AskUserQuestion) |
+
+**关键区别**:
+- 阶段边界确认:控制"是否进入下一阶段"，原为(继续/暂停/取消)
+- 阶段内内容确认:控制"需求细节/设计方案/任务拆分"等开发内容，原为 AskUserQuestion
+- `--confirm` 仅增强阶段边界确认，不改变阶段内内容确认行为
+- 原有 AskUserQuestion **保留**，不受 --confirm 影响
+
+### 3.2 code-req SKILL.md 修改点
 
 **输入章节**:
 ```
-- **--confirm**(可选):增强确认模式,每个阶段完成后强制确认,提示产出物路径,允许用户修改后重读
-- **--auto**(可选):静默模式,与 --confirm 互斥
+- **--confirm**(可选):增强确认模式,所有冲突/矛盾/二义性/模糊/规划/进程均需用户确认;与 --auto 互斥
+- **--auto**(可选):静默模式,所有决策自动选推荐项;与 --confirm 互斥
 ```
 
-**参数解析章节**:新增 `### --confirm 模式` 小节，描述确认流程
+**参数解析章节**:新增 `### --confirm 模式` 小节，描述三态行为
 
-**阶段执行器章节**:更新确认逻辑，增加 --confirm 分支
+**阶段执行器章节**:更新确认逻辑为三态分支
 
-### 3.2 code-fix SKILL.md 修改点
+### 3.3 code-fix SKILL.md 修改点
 
-与 code-req 对称修改，将 `code-req` 替换为 `code-fix`。
+与 code-req 对称修改。
 
-### 3.3 common.md 修改点
+### 3.4 common.md 修改点
 
-**§4 阶段执行器**:Update `executeStage` pseudocode to handle --confirm mode
+**§4 阶段执行器**:重写伪代码，支持三态分支
 
-**§7 交互确认**:Rewrite to describe --confirm enhanced confirmation flow
+**§7 交互确认**:重写，描述 --confirm 增强确认流程
 
 ## 4. 数据设计(关键流程)
 
@@ -46,20 +61,15 @@
 ```
 async function executeStage(stage, context, flags):
   // 0. 阶段前置校验(不变)
-  if not preStageCheck(stage, context.reqDir):
-    appendProcess(stage, "失败", "前置产出物缺失,退回上一阶段")
-    return { status: "ROLLBACK", targetStage: previousStage(stage) }
+  ...
   
-  // 1. 追加 PROCESS.md 开始记录(不变)
-  appendProcess(stage, "开始", stageDescriptions[stage].start)
-  
-  // 2. 执行阶段逻辑(不变)
-  result = await stageHandlers[stage](context)
+  // 1-2. 追加 PROCESS.md + 执行阶段逻辑(不变)
+  ...
   
   // 3. 追加 PROCESS.md 完成记录(不变)
-  appendProcess(stage, "完成", result.summary)
+  ...
   
-  // 4. --confirm 模式:增强确认
+  // 4. 阶段边界确认(三态)
   if flags.confirm:
     // 4a. 提示产出物文件路径
     outputFiles = getStageOutputFiles(stage, context.reqDir)
@@ -78,16 +88,14 @@ async function executeStage(stage, context, flags):
       appendProcess(stage, "中止", "用户在 --confirm 确认环节中止")
       return { status: "ABORTED" }
     
-    // 4c. 重新读取产出物(获取用户最新修改)
+    // 4c. 重新读取产出物
     for file in outputFiles:
-      reRead(file)  // 刷新内存中的内容
+      reRead(file)
   
-  // 5. --auto 模式:自动继续(不变)
   else if flags.auto:
     print("[code-req --auto] <stage> 完成,自动继续")
   
-  // 6. 默认:自动继续(新增,替代原有 AskUserQuestion)
-  // (无操作,直接进入下一阶段)
+  // else: 默认 — 自动继续,无输出
   
   return result
 ```
@@ -115,47 +123,33 @@ if flags.confirm and flags.auto:
 
 ### 5.1 阶段流转行为对比
 
-| 场景 | 当前行为 | 新行为 |
+| 场景 | 阶段边界确认 | 阶段内内容确认 |
 | --- | --- | --- |
-| 无 flag | AskUserQuestion(继续/暂停/取消) | 自动继续(无需确认) |
-| --confirm | (不存在) | 增强确认:产出物路径 + 允许修改 + 重读 |
-| --auto | 自动继续 + 前缀输出 | 不变 |
-| --confirm --auto | (不存在) | 错误退出 |
-
-### 5.2 --confirm 确认提示模板
-
-```
-=== code-req --confirm: <阶段名> 阶段完成 ===
-<摘要统计>
-
-产出物文件:
-  - assistants/<版本号>/req/<REQ>/<文件名1>
-  - assistants/<版本号>/req/<REQ>/<文件名2>
-
-你可以现在手动修改上述文件。完成后选择:
-A. 继续(重新读取产出物,进入下一阶段)
-B. 中止(保存当前进度,退出)
-```
+| 无 flag | 自动继续 | 正常触发 |
+| --confirm | 增强确认(路径+重读) | 正常触发 |
+| --auto | 自动继续 | 自动选推荐项 |
+| --confirm --auto | 错误退出 | — |
 
 ## 6. 方案选型
 
 ### 决策 1:--confirm 与 --auto 关系
-- **选择**:互斥,同时传入报错退出
+- **选择**:互斥，同时传入报错退出
 - **备选**:--confirm 优先(忽略 --auto)
-- **选择理由**:两个模式语义互斥(一个强制确认,一个强制自动),同时传入是用户错误,应明确提示
-- **权衡**:用户不能"在 auto 模式下只确认阶段边界"
+- **选择理由**:用户确认(见 clarifications.md)
+- **权衡**:两个模式语义互斥，不能同时使用
 
 ### 决策 2:默认行为变更
-- **选择**:无 flag 时自动流转,去除默认 AskUserQuestion
-- **备选**:保持默认 AskUserQuestion,仅 --confirm 增强
-- **选择理由**:用户明确要求"未启用 --confirm 模式时自动进入下一个阶段"
-- **权衡**:失去默认的安全确认机制,但 --confirm 提供了更强的确认能力
+- **选择**:无 flag 时阶段边界自动流转，但阶段内内容确认(需求澄清、设计选型等)保留
+- **备选**:保持默认阶段边界 AskUserQuestion
+- **选择理由**:用户原始需求明确要求"未启用 --confirm 模式时自动进入下一个阶段"；且阶段内内容确认与阶段边界确认是正交关系，不受影响
+- **权衡**:失去默认的"暂停"能力，但 --confirm 提供了更强的阶段边界控制
+- **用户确认**:原有的 AskUserQuestion 与 --confirm 不冲突，保留阶段内内容确认
 
 ### 决策 3:重读时机
-- **选择**:用户确认继续后,立即重读所有产出物文件
+- **选择**:用户确认继续后，立即重读所有产出物文件
 - **备选**:在下一阶段开始时重读
-- **选择理由**:确认后立即重读确保下一阶段看到的是用户修改后的内容,避免时序问题
-- **权衡**:增加一次文件读取,但 IO 开销可忽略
+- **选择理由**:确认后立即重读确保下一阶段看到的是用户修改后的内容
+- **权衡**:增加一次文件读取，IO 开销可忽略
 
 ## 7. 规范合规
 
@@ -170,3 +164,4 @@ B. 中止(保存当前进度,退出)
 | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
 | --- | --- | --- | --- | --- |
 | 2026-06-30 | v1 | 初始创建 | 软件设计完成 | wangmiao |
+| 2026-06-30 | v2 | 用户确认 | 9d 危险操作:保留原有 AskUserQuestion;9b 方案选型:三态模型合理;9c 改修方案:3 文件范围合理 | wangmiao |
