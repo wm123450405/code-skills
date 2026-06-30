@@ -170,7 +170,57 @@ C. 取消(放弃本次执行)
 - 选 B(暂停):追加 PROCESS.md `| <时间> | <阶段> | 暂停 | 用户暂停 |`,退出
 - 下次调用时从 PROCESS.md 恢复,从暂停的阶段继续
 
-## §8 通用边界
+## §8 标题解析
+
+> 适用对象:所有用户可见的屏幕输出位置(启动/完成/中止/错误/报告)。
+> 从产出文档中提取标题,用于屏幕输出。
+
+### 工具函数
+
+```ts
+function truncateTitle(title: string, maxLen: number = 30): string {
+  if ([...title].length <= maxLen) return title
+  return [...title].slice(0, maxLen).join('') + '...'
+}
+
+function formatReqTitle(reqNum: string, title: string): string {
+  return `${reqNum} · ${truncateTitle(title)}`
+}
+```
+
+### 标题解析入口
+
+```ts
+function parseResultTitle(filePath: string): string {
+  const content = readFile(filePath)
+  // 匹配 REQUIRE.md / DESIGN.md / PLAN.md 的标题行
+  const match = content.match(/^# (?:需求分析|软件设计|任务排期) — (.+)$/m)
+  return match ? match[1] : ''  // 退化:返回空字符串
+}
+```
+
+### 屏幕输出格式契约
+
+| 场景 | 格式 |
+| --- | --- |
+| 启动 | `正在处理: REQ-NNNNN · <需求标题>` |
+| 完成 | `完成: REQ-NNNNN · <需求标题>` |
+| 中止 | `⛔ code-req 中止: REQ-NNNNN · <需求标题>(<原因>)` |
+| 错误 | `✗ 错误: REQ-NNNNN · <需求标题>(<错误信息>)` |
+
+### 边界与异常
+
+- E-1:标题 > 30 字符 → `truncateTitle` 自动截断到 30 字 + `...`
+- E-2:标题字段缺失 → 退化:屏幕输出"编号+(无标题)"
+- E-3:多次执行 → 标题覆盖(幂等)
+
+### 约束
+
+- **不**使用"本需求"等指代词 — 替换为"编号+标题"
+- **不**修改 frontmatter
+- **不**修改既有章节
+
+## §9 通用边界
 
 ### 错误处理
 
@@ -187,4 +237,4 @@ C. 取消(放弃本次执行)
 
 - 产出代码中不得出现 REQ-NNNNN / BUG-NNNNN / TASK-* 格式的编号
 - 代码注释使用功能梗概替代编号
-- 此约束不覆盖 `./assistants/` 工作产物
+- 此约束不覆盖 commit message 和 `./assistants/` 工作产物
