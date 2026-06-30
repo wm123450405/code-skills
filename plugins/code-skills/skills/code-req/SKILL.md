@@ -198,10 +198,15 @@ description: 需求开发。从需求分析到代码审查,引导你一步步完
 - 对"建议改"询问用户(非 `--auto`)
 - 产出 `CHECK.md`,按 `templates/CHECK.md` 结构
 
-### 步骤 6 — DONE(完成)
+### 步骤 6 — DONE(收尾)
 
 - 追加 PROCESS.md `| <时间> | DONE | 完成 | 全部阶段完成 |`
 - 屏幕输出完成报告:各阶段统计摘要
+- 兜底提交代码(详见 references/common.md §10):
+  - 非 git 仓库 → 跳过
+  - git 仓库有变更 → `git add` + `git commit`
+  - `--auto` 模式 → 自动提交,无需确认
+  - 非 `--auto` 模式 → 展示 commit message 预览,确认后提交
 - 建议下一步:`code-dashboard` 查看进度,或 `code-ver --publish` 发布
 
 ---

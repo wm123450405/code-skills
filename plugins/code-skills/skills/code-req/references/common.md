@@ -271,3 +271,93 @@ function parseResultTitle(filePath: string): string {
 - 产出代码中不得出现 REQ-NNNNN / BUG-NNNNN / TASK-* 格式的编号
 - 代码注释使用功能梗概替代编号
 - 此约束不覆盖 commit message 和 `./assistants/` 工作产物
+
+## §10 DONE 阶段兜底提交
+
+> 本小节为 code-req 和 code-fix 的 DONE 阶段提供"兜底提交代码"的详细流程。
+> 在进入 DONE 阶段时加载。
+
+### 步骤 1 — 检测 git 仓库
+
+```
+Bash: git rev-parse --git-dir 2>/dev/null
+```
+
+- 退出码 ≠ 0 → 非 git 仓库,屏幕输出 `[兜底提交] 非 git 仓库,跳过提交`,结束
+- 退出码 = 0 → 进入步骤 2
+
+### 步骤 2 — 检查变更
+
+```
+Bash: git status --porcelain
+```
+
+- 输出为空 → 屏幕输出 `[兜底提交] 无文件变更,跳过提交`,结束
+- 输出非空 → 进入步骤 3
+
+### 步骤 3 — 暂存文件
+
+```
+Bash: git add -A
+```
+
+- 失败 → 透传 stderr,屏幕输出 `[兜底提交] git add 失败: <stderr>`,中断
+- 成功 → 进入步骤 4
+
+### 步骤 4 — 生成 commit message
+
+按以下格式生成 commit message:
+
+```
+chore(<技能名>): <需求/缺陷编码> <标题>
+
+<阶段统计摘要>
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+```
+
+示例:
+```
+chore(code-req): REQ-00045 补充 REQ-00044 重构后丢失的旧技能能力
+
+需求分析:6 FR / 6 NFR / 12 AC
+软件设计:6 新增文件 / 7 修改文件 / 4 决策
+任务排期:8 任务 / 4 里程碑
+编码执行:8/8 任务完成
+代码审查:0 发现 / 通过
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+```
+
+### 步骤 5 — 确认或执行提交
+
+#### --auto 模式
+
+直接执行提交,无需确认:
+
+```
+Bash: git commit -m "<message>"
+```
+
+- 成功 → 屏幕输出 `[兜底提交] commit 完成, hash: <hash>`
+- 失败 → 屏幕输出 `[兜底提交] commit 失败: <stderr>`,提示用户手动处理
+
+#### 非 --auto 模式
+
+使用 `AskUserQuestion` 确认:
+
+```
+兜底提交:所有阶段已完成,是否提交代码?
+commit message 预览:
+---
+<commit message>
+---
+选项:
+A. 确认提交(推荐)
+B. 跳过提交(文件保持暂存状态)
+C. 取消
+```
+
+- 选 A → `Bash: git commit -m "<message>"`,输出结果
+- 选 B → 屏幕输出 `[兜底提交] 已跳过提交,文件保持暂存状态,请手动 git commit`
+- 选 C → 屏幕输出 `[兜底提交] 已取消`
