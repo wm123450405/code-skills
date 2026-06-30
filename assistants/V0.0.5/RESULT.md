@@ -41,6 +41,7 @@
 | BUG-00003 | code-req 工作流强制指令位置不够靠前,AI 跳过工作流直接修改代码 | [PROCESS.md](fix/BUG-00003/PROCESS.md) |
 | BUG-00004 | code-req DONE 阶段兜底提交未触发,指令不够显式 | [PROCESS.md](fix/BUG-00004/PROCESS.md) |
 | BUG-00007 | REQ-00049 执行中遗漏用户确认环节 | [PROCESS.md](fix/BUG-00007/PROCESS.md) |
+| BUG-00008 | REQ-00049 阶段 references 未适配三态确认模式 | [PROCESS.md](fix/BUG-00008/PROCESS.md) |
 
 **统计**:5
 
