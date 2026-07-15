@@ -1,10 +1,10 @@
 # code-skills
 
-> A suite of Claude Code skills for AI-assisted project management and development workflow.
+> A suite of Claude Code skills for AI-assisted software development lifecycle management (based on Claude Code).
 
 ## Introduction
 
-`code-skills` is a set of Claude Code skills covering the full development cycle: requirements → design → planning → coding → unit tests → review → release.
+`code-skills` is a set of Claude Code skills covering the full development cycle from requirements analysis to code review, with built-in version-aware workspace management.
 
 ## Quick Start
 
@@ -16,30 +16,27 @@
    ```
    claude plugin install code-skills@code-skills-marketplace
    ```
-3. Invoke the first skill in your project:
+3. Invoke skills in your project:
    ```
-   /code-version V0.0.0
-   /code-require "Add user login feature"
+   /code-ver              ← Initialize project, create version (or view progress)
+   /code-req "your req"   ← Start requirement development
+   /code-fix "bug desc"   ← Fix a bug
    ```
 
-## Main Capabilities
+## Skill Overview
 
 | Skill | Purpose |
 | --- | --- |
-| `code-version` | Version workspace management |
-| `code-require` | Requirements analysis |
-| `code-design` | High-level design |
-| `code-plan` | Detailed design + task breakdown |
-| `code-it` | Task coding |
-| `code-check` | Code review |
-| `code-dashboard` | Dev dashboard |
-| `code-publish` | Release deployment |
-| `code-auto` | Automated development (orchestrator) |
-| `code-rule` | Coding conventions |
+| `code-ver` | Version Management & Dashboard — init, switch version, publish, view progress |
+| `code-req` | Requirement Development — full lifecycle from analysis to code review |
+| `code-fix` | Bug Fix — full lifecycle from registration to fix review |
+| `code-faq` | Knowledge Base — cross-version query with document export |
+| `code-rule` | Coding Standards — describe standards in natural language |
+| `code-merge` | Branch Merge — merge worktree changes back to main |
 
 ## 📖 Detailed Documentation
 
-Full skill descriptions, installation details, version management:[./plugins/code-skills/README.md](./plugins/code-skills/README.md)
+Full skill descriptions, installation details, and usage guide: [./plugins/code-skills/README.md](./plugins/code-skills/README.md)
 
 ## License
 

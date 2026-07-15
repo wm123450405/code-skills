@@ -14,7 +14,6 @@
     "code-faq",
     "code-rule",
     "code-merge",
-    "code-dashboard",
     "version-aware",
     "sdlc",
     "lifecycle"
@@ -25,7 +24,6 @@
     "./skills/code-fix",
     "./skills/code-faq",
     "./skills/code-rule",
-    "./skills/code-merge",
-    "./skills/code-dashboard"
+    "./skills/code-merge"
   ]
 }

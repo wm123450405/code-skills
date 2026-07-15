@@ -23,13 +23,13 @@ claude plugin install code-skills@code-skills-marketplace
 
 ## 技能概览
 
-本插件提供 **7 个技能**,分为主流程和辅助工具两类:
+本插件提供 **6 个技能**,分为主流程和辅助工具两类:
 
 **主流程**:
 
 | 技能 | 用途 | 一句话说明 |
 | --- | --- | --- |
-| [`code-ver`](skills/code-ver/SKILL.md) | 版本管理 | 新项目初始化 / 切换开发版本 / 发布检查,所有技能的前置门 |
+| [`code-ver`](skills/code-ver/SKILL.md) | 版本管理与开发看板 | 新项目初始化 / 切换开发版本 / 发布检查 / 开发进度看板,所有技能的前置门 |
 | [`code-req`](skills/code-req/SKILL.md) | 需求开发 | 从需求分析到代码审查的全流程:需求分析→软件设计→任务排期→编码→审查 |
 | [`code-fix`](skills/code-fix/SKILL.md) | 缺陷修复 | 缺陷登记→修复设计→任务排期→编码→审查,全流程闭环 |
 
@@ -40,7 +40,6 @@ claude plugin install code-skills@code-skills-marketplace
 | [`code-faq`](skills/code-faq/SKILL.md) | 知识查询 | 跨版本查询需求/缺陷,支持导出文档 |
 | [`code-rule`](skills/code-rule/SKILL.md) | 编码规范 | 用自然语言描述规范,自动整理为结构化条款 |
 | [`code-merge`](skills/code-merge/SKILL.md) | 分支合并 | Worktree 模式下自动合并回主干,智能解决冲突 |
-| [`code-dashboard`](skills/code-dashboard/SKILL.md) | 开发看板 | 只读,一行命令看版本进度,提供下一步建议 |
 
 ## 快速上手
 
@@ -56,10 +55,9 @@ claude plugin install code-skills@code-skills-marketplace
 ### 日常开发
 
 ```
-code-ver       ← 确保在正确的版本上
+code-ver       ← 确保在正确的版本上(或查看进度)
 code-req "xxx" ← 一句话描述需求,AI 会引导你走完全流程
 code-fix "xxx" ← 报告缺陷,AI 会引导你修复
-code-dashboard ← 随时查看进度
 ```
 
 ### 静默模式
@@ -73,7 +71,7 @@ code-fix "xxx" --auto  ← 同上
 
 ```mermaid
 flowchart LR
-    CV[code-ver<br/>版本管理] --> CR[code-req<br/>需求开发]
+    CV[code-ver<br/>版本管理+看板] --> CR[code-req<br/>需求开发]
     CV --> CF[code-fix<br/>缺陷修复]
 
     CR -->|需求完成| CV
@@ -83,7 +81,6 @@ flowchart LR
         CQ[code-faq<br/>知识查询]
         CRL[code-rule<br/>编码规范]
         CM[code-merge<br/>分支合并]
-        CD[code-dashboard<br/>开发看板]
     end
 ```
 
@@ -129,12 +126,12 @@ assistants/
 | --- | --- |
 | 初始化项目 | `/code-ver` |
 | 切换版本 | `/code-ver V0.0.5` |
+| 查看进度 | `/code-ver` |
 | 开发新功能 | `/code-req "功能描述"` |
 | 静默开发 | `/code-req "功能描述" --auto` |
 | 修复缺陷 | `/code-fix "缺陷描述"` |
 | 查询需求 | `/code-faq "关键词"` |
 | 加编码规范 | `/code-rule "规范描述"` |
-| 查看进度 | `/code-dashboard` |
 | 合并分支 | `/code-merge` |
 | 发布版本 | `/code-ver --publish` |
 
@@ -142,10 +139,9 @@ assistants/
 
 每个技能都有自己的 `SKILL.md`,包含完整工作流说明:
 
-- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — 版本管理(初始化+切换+发布)
+- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — 版本管理与开发看板(初始化+切换+发布+看板)
 - [`code-req/SKILL.md`](skills/code-req/SKILL.md) — 需求开发全流程
 - [`code-fix/SKILL.md`](skills/code-fix/SKILL.md) — 缺陷修复全流程
 - [`code-faq/SKILL.md`](skills/code-faq/SKILL.md) — 知识查询与文档导出
 - [`code-rule/SKILL.md`](skills/code-rule/SKILL.md) — 编码规范管理
 - [`code-merge/SKILL.md`](skills/code-merge/SKILL.md) — Worktree 自动合并
-- [`code-dashboard/SKILL.md`](skills/code-dashboard/SKILL.md) — 开发看板(只读)

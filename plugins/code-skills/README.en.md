@@ -23,13 +23,13 @@ After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/cod
 
 ## Skills Overview
 
-This plugin provides **7 skills**, organized into main flow and auxiliary tools:
+This plugin provides **6 skills**, organized into main flow and auxiliary tools:
 
 **Main Flow**:
 
 | Skill | Purpose | One-liner |
 | --- | --- | --- |
-| [`code-ver`](skills/code-ver/SKILL.md) | Version Management | Project init / switch version / publish check — the prerequisite gateway for all skills |
+| [`code-ver`](skills/code-ver/SKILL.md) | Version Management & Dashboard | Project init / switch version / publish check / progress dashboard — the prerequisite gateway for all skills |
 | [`code-req`](skills/code-req/SKILL.md) | Requirement Development | Full lifecycle: analysis → design → plan → coding → review |
 | [`code-fix`](skills/code-fix/SKILL.md) | Bug Fix | Full lifecycle: registration → design → plan → coding → review |
 
@@ -40,7 +40,6 @@ This plugin provides **7 skills**, organized into main flow and auxiliary tools:
 | [`code-faq`](skills/code-faq/SKILL.md) | Knowledge Base | Cross-version query of requirements/bugs, with document export |
 | [`code-rule`](skills/code-rule/SKILL.md) | Coding Standards | Describe standards in natural language, auto-structured into clauses |
 | [`code-merge`](skills/code-merge/SKILL.md) | Branch Merge | Auto-merge worktree changes back to main with smart conflict resolution |
-| [`code-dashboard`](skills/code-dashboard/SKILL.md) | Dev Dashboard | Read-only, one command to see progress with next-step suggestions |
 
 ## Quick Start
 
@@ -56,10 +55,9 @@ Step 4: code-req "your req" ← Start requirement development
 ### Daily Development
 
 ```
-code-ver       ← Ensure you're on the correct version
+code-ver       ← Ensure you're on the correct version (or view progress)
 code-req "xxx" ← Describe your requirement in one sentence, AI guides you through
 code-fix "xxx" ← Report a bug, AI guides you through the fix
-code-dashboard ← Check progress anytime
 ```
 
 ### Silent Mode
@@ -73,7 +71,7 @@ code-fix "xxx" --auto  ← Same as above
 
 ```mermaid
 flowchart LR
-    CV[code-ver<br/>Version Mgmt] --> CR[code-req<br/>Req Development]
+    CV[code-ver<br/>Version Mgmt<br/>+ Dashboard] --> CR[code-req<br/>Req Development]
     CV --> CF[code-fix<br/>Bug Fix]
 
     CR -->|Done| CV
@@ -83,7 +81,6 @@ flowchart LR
         CQ[code-faq<br/>Knowledge Base]
         CRL[code-rule<br/>Standards]
         CM[code-merge<br/>Merge]
-        CD[code-dashboard<br/>Dashboard]
     end
 ```
 
@@ -129,12 +126,12 @@ assistants/
 | --- | --- |
 | Initialize project | `/code-ver` |
 | Switch version | `/code-ver V0.0.5` |
+| View progress | `/code-ver` |
 | Develop a feature | `/code-req "description"` |
 | Silent development | `/code-req "description" --auto` |
 | Fix a bug | `/code-fix "description"` |
 | Query requirements | `/code-faq "keyword"` |
 | Add coding standard | `/code-rule "description"` |
-| View progress | `/code-dashboard` |
 | Merge branch | `/code-merge` |
 | Publish version | `/code-ver --publish` |
 
@@ -142,10 +139,9 @@ assistants/
 
 Each skill has its own `SKILL.md` with complete workflow details:
 
-- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — Version management (init + switch + publish)
+- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — Version management & dashboard (init + switch + publish + dashboard)
 - [`code-req/SKILL.md`](skills/code-req/SKILL.md) — Full requirement development lifecycle
 - [`code-fix/SKILL.md`](skills/code-fix/SKILL.md) — Full bug fix lifecycle
 - [`code-faq/SKILL.md`](skills/code-faq/SKILL.md) — Knowledge base query & document export
 - [`code-rule/SKILL.md`](skills/code-rule/SKILL.md) — Coding standard management
 - [`code-merge/SKILL.md`](skills/code-merge/SKILL.md) — Worktree auto-merge
-- [`code-dashboard/SKILL.md`](skills/code-dashboard/SKILL.md) — Dev dashboard (read-only)

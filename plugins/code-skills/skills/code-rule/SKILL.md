@@ -434,7 +434,7 @@ description: 编码规范。用自然语言描述规范,自动整理为结构化
 
 ## 衔接
 
-- **下游(被消费方)**:`code-req` / `code-fix` / `code-ver` / `code-faq` / `code-merge` / `code-dashboard` / `code-check` 全部会 `Glob "./assistants/rules/**/*"` 读取本技能的产出,作为只读约束
+- **下游(被消费方)**:`code-req` / `code-fix` / `code-ver` / `code-faq` / `code-merge` / `code-check` 全部会 `Glob "./assistants/rules/**/*"` 读取本技能的产出,作为只读约束
 - **上游(本技能的输入)**:用户直接发起的自然语言描述
 - **横向**:本技能与 `code-ver` 无依赖关系,可任意顺序调用
  - 典型顺序:先 `code-rule` 建立规范 → 再 `code-ver` 创建版本 → 再 `code-req` 起步

@@ -31,26 +31,15 @@ function detectScenario(userInput):
   if hasVersionArg:
     return "SWITCH"  // 版本切换
 
-  // 无参数:列出已有版本,让用户选择
-  return "PROMPT"
+  // 无参数:显示开发看板
+  return "DASHBOARD"
 ```
 
-### 无参数时的交互
+### 无参数时的行为
 
-```
-function promptUserForAction():
-  versions = listVersions("assistants/")
-  currentVersion = readCurrentVersion()
+无参数 + 已初始化项目 → 显示开发看板(§8 看板模式),屏幕输出进度条 + 状态分布 + 建议。
 
-  AskUserQuestion:
-    当前激活版本: <currentVersion>
-    已有版本: <versions>
-
-    A. 切换到已有版本
-    B. 创建新版本
-    C. 初始化新项目
-    D. 发布当前版本
-```
+无参数 + 未初始化项目 → 走 INIT 流程(§2)。
 
 ### 边界条件
 
@@ -971,3 +960,340 @@ function parseVersionField(filename, content):
 - 版本号不允许含 `/` `\` `..`(防路径穿越)
 - 不在 `assistants/rules/` 下创建版本子目录
 - 不修改项目源代码(初始化时只读分析)
+
+---
+
+## §8 看板模式(无参数,已初始化项目)
+
+### §8.1 版本上下文检测
+
+```
+function checkVersionContext():
+  currentVersion = Read("assistants/.current-version")
+  if not currentVersion:
+    print("✗ 未检测到激活的版本工作空间")
+    print("请先调 code-ver <版本号> 初始化或切换版本")
+    exit()
+
+  version = currentVersion.trim()
+  if not exists("assistants/{version}/"):
+    print("✗ 版本 {version} 工作空间不存在")
+    print("请先调 code-ver <版本号> 初始化或切换版本")
+    exit()
+
+  return version
+```
+
+### §8.2 数据加载
+
+```
+function loadDashboardData(version):
+  // 1. 读主看板
+  dashboard = Read("assistants/{version}/RESULT.md")
+  if not dashboard:
+    print("✗ 看板文件不存在,请先初始化版本")
+    exit()
+
+  // 2. 列出所有需求/缺陷
+  reqDirs = Glob("assistants/{version}/req/REQ-*")
+  bugDirs = Glob("assistants/{version}/fix/BUG-*")
+
+  // 3. 并行读取所有 PROCESS.md
+  reqProcesses = []
+  for dir in reqDirs:
+    processFile = "{dir}/PROCESS.md"
+    if exists(processFile):
+      reqProcesses.push({ id: basename(dir), content: Read(processFile) })
+    else:
+      reqProcesses.push({ id: basename(dir), content: null })
+
+  bugProcesses = []
+  for dir in bugDirs:
+    processFile = "{dir}/PROCESS.md"
+    if exists(processFile):
+      bugProcesses.push({ id: basename(dir), content: Read(processFile) })
+    else:
+      bugProcesses.push({ id: basename(dir), content: null })
+
+  return { dashboard, reqProcesses, bugProcesses }
+```
+
+### §8.3 区段解析
+
+```
+function parseDashboard(dashboard):
+  // 按 ^## (.+)$ 匹配所有区段标题
+  anchors = {}
+  for match in dashboard.matchAll(/^## (.+)$/gm):
+    anchors[match[1]] = match.index
+
+  // 提取需求清单区段
+  reqSection = extractSection(dashboard, "需求清单", anchors)
+  bugSection = extractSection(dashboard, "缺陷清单", anchors)
+
+  // 解析表格行
+  reqRows = parseTableRows(reqSection)
+  bugRows = parseTableRows(bugSection)
+
+  return { reqRows, bugRows }
+
+function parseTableRows(sectionText):
+  if not sectionText:
+    return []
+
+  rows = []
+  for line in sectionText.split("\n"):
+    if line.match(/^\| .* \|$/) and not line.match(/^\| ---/):
+      cols = line.split("|").map(c => c.trim()).filter(c => c != "")
+      rows.push(cols)
+
+  return rows
+```
+
+**L2 退化**:
+- 区段缺失 → 返回 `[]`(显示 `(无)`)
+- 表格列错位 → 退化到原始 markdown 块原样输出
+- 字段值缺失 → 显示 `?` 占位
+
+### §8.4 进度计算
+
+```
+function calculateProgress(reqProcesses, bugProcesses):
+  // 需求 6 阶段: INIT→REQUIRE→DESIGN→PLAN→CODING→CHECK→DONE
+  // 缺陷 5 阶段: INIT→DESIGN→PLAN→CODING→CHECK→DONE
+
+  reqStages = ["INIT", "REQUIRE", "DESIGN", "PLAN", "CODING", "CHECK"]
+  bugStages = ["INIT", "DESIGN", "PLAN", "CODING", "CHECK"]
+
+  totalStages = reqProcesses.length * reqStages.length + bugProcesses.length * bugStages.length
+  completedStages = 0
+
+  for req in reqProcesses:
+    if not req.content:
+      continue  // 0 阶段完成
+    lastStage = parseLastStage(req.content)
+    if lastStage == "DONE":
+      completedStages += reqStages.length
+    else:
+      idx = reqStages.indexOf(lastStage)
+      if idx >= 0:
+        completedStages += idx  // 已完成阶段数(不含当前阶段)
+
+  for bug in bugProcesses:
+    if not bug.content:
+      continue
+    lastStage = parseLastStage(bug.content)
+    if lastStage == "DONE":
+      completedStages += bugStages.length
+    else:
+      idx = bugStages.indexOf(lastStage)
+      if idx >= 0:
+        completedStages += idx
+
+  return { completedStages, totalStages }
+
+function parseLastStage(processContent):
+  // 读取 PROCESS.md 最后一条记录,提取阶段字段
+  lines = processContent.trim().split("\n")
+  lastLine = lines[lines.length - 1]
+  // 格式: | <时间> | <阶段> | <状态> | <描述> |
+  cols = lastLine.split("|").map(c => c.trim())
+  if cols.length >= 3:
+    return cols[2]  // 阶段字段
+  return null
+```
+
+### §8.5 状态归类
+
+```
+function classifyByStatus(reqProcesses, bugProcesses):
+  statuses = {
+    "待需求分析": 0,
+    "待设计": 0,
+    "待排期": 0,
+    "待编码": 0,
+    "待审查": 0,
+  }
+
+  for req in reqProcesses:
+    lastStage = req.content ? parseLastStage(req.content) : null
+    if not lastStage or lastStage == "INIT":
+      statuses["待需求分析"]++
+    else if lastStage == "REQUIRE":
+      statuses["待设计"]++
+    else if lastStage == "DESIGN":
+      statuses["待排期"]++
+    else if lastStage == "PLAN":
+      statuses["待编码"]++
+    else if lastStage == "CODING":
+      statuses["待审查"]++
+
+  for bug in bugProcesses:
+    lastStage = bug.content ? parseLastStage(bug.content) : null
+    if not lastStage or lastStage == "INIT":
+      statuses["待设计"]++  // 缺陷不经过"待需求分析"
+    else if lastStage == "DESIGN":
+      statuses["待排期"]++
+    else if lastStage == "PLAN":
+      statuses["待编码"]++
+    else if lastStage == "CODING":
+      statuses["待审查"]++
+
+  return statuses
+```
+
+### §8.6 高优先级缺陷统计
+
+```
+function countHighPriorityBugs(bugRows):
+  p0 = 0
+  p1 = 0
+  for bug in bugRows:
+    // 按列名匹配,而非列号位置
+    priority = getField(bug, "优先级")  // 或 "级别" / "严重程度"
+    status = getField(bug, "状态")      // 或 "缺陷状态"
+    if status in ["已完成", "已修复-已验证", "已关闭"]:
+      continue
+    if priority == "P0":
+      p0++
+    else if priority == "P1":
+      p1++
+  return { p0, p1 }
+```
+
+### §8.7 建议生成
+
+```
+function generateSuggestions(reqProcesses, bugProcesses, bugRows):
+  suggestions = []
+
+  // 1. 高:P0 待修复
+  p0Bugs = bugRows.filter(b => b.priority == "P0" and b.status not in ["已完成", "已修复-已验证", "已关闭"])
+  if p0Bugs.length > 0:
+    suggestions.push({
+      command: "/code-fix {p0Bugs[0].id}",
+      priority: "高",
+      reason: "P0 待修复 {p0Bugs.length} 个",
+    })
+
+  // 2. 高:需求 INIT 阶段
+  initReqs = reqProcesses.filter(r => not r.content or parseLastStage(r.content) == "INIT")
+  if initReqs.length > 0:
+    suggestions.push({
+      command: "/code-req {initReqs[0].id}",
+      priority: "高",
+      reason: "{initReqs.length} 个需求待启动",
+    })
+
+  // 3. 中:需求 DESIGN 阶段 或 缺陷 INIT 阶段
+  designReqs = reqProcesses.filter(r => parseLastStage(r.content) == "DESIGN")
+  initBugs = bugProcesses.filter(b => not b.content or parseLastStage(b.content) == "INIT")
+  if designReqs.length > 0:
+    suggestions.push({
+      command: "/code-req {designReqs[0].id}",
+      priority: "中",
+      reason: "{designReqs.length} 个需求待排期",
+    })
+  if initBugs.length > 0:
+    suggestions.push({
+      command: "/code-fix {initBugs[0].id}",
+      priority: "中",
+      reason: "{initBugs.length} 个缺陷待启动",
+    })
+
+  // 4. 低:需求 CODING 阶段
+  codingReqs = reqProcesses.filter(r => parseLastStage(r.content) == "CODING")
+  if codingReqs.length > 0:
+    suggestions.push({
+      command: "/code-req {codingReqs[0].id}",
+      priority: "低",
+      reason: "{codingReqs.length} 个需求待编码完成",
+    })
+
+  // 5. 特殊:全版本已完成
+  allDone = reqProcesses.every(r => parseLastStage(r.content) == "DONE")
+         and bugProcesses.every(b => parseLastStage(b.content) == "DONE")
+         and p0Bugs.length == 0 and p1Bugs.length == 0
+  if allDone and (reqProcesses.length > 0 or bugProcesses.length > 0):
+    suggestions.push({
+      command: "/code-ver V0.0.x",
+      priority: "高",
+      reason: "当前版本已完成,建议切换新版本",
+    })
+
+  // 无任何建议
+  if suggestions.length == 0:
+    suggestions.push({ command: null, priority: null, reason: "无后续动作" })
+
+  return suggestions.slice(0, 5)
+```
+
+### §8.8 屏幕渲染
+
+```
+function renderDashboard(progress, statuses, highPriorityBugs, suggestions):
+  // 段 1: 进度条
+  if progress.totalStages == 0:
+    print("— / 无需求无缺陷,无需进度")
+  else:
+    pct = round(progress.completedStages / progress.totalStages * 100)
+    blocks = round(pct / 100 * 12)
+    bar = "[" + "█" * blocks + "░" * (12 - blocks) + "] " + pct + "%"
+    print(bar)
+
+  // 段 2: 状态分布
+  nonZeroStatuses = []
+  for (status, count) in statuses:
+    if count > 0:
+      nonZeroStatuses.push("{status} {count}")
+  if nonZeroStatuses.length > 0:
+    print("状态: " + nonZeroStatuses.join(" / "))
+  else:
+    print("状态: (无)")
+
+  // 段 3: 高优先级缺陷
+  p0Marker = highPriorityBugs.p0 > 0 ? "█" : "░"
+  p1Marker = highPriorityBugs.p1 > 0 ? "▓" : "░"
+  print("P0 待修复: {p0Marker} {highPriorityBugs.p0} | P1 待修复: {p1Marker} {highPriorityBugs.p1}")
+
+  // 段 4: 建议
+  for s in suggestions:
+    if s.command:
+      print("> {s.command} [{s.priority}] (依据: {s.reason})")
+    else:
+      print("> 无后续动作")
+```
+
+### §8.9 看板模式边界
+
+#### L1 启动错误
+
+| 场景 | 触发条件 | 屏幕输出 |
+| --- | --- | --- |
+| E-1 无激活版本 | `.current-version` 不存在 | `✗ 未检测到激活的版本工作空间` |
+| E-2 版本工作空间不存在 | 目录缺失 | `✗ 版本 <X> 工作空间不存在` |
+| E-3 看板文件缺失 | `RESULT.md` 不存在 | `✗ 看板文件不存在,请先初始化版本` |
+
+#### L2 数据错误(可降级)
+
+| 场景 | 触发条件 | 处理 |
+| --- | --- | --- |
+| 区段缺失 | 看板不含目标区段 | 该段显示 `(无)` |
+| 表格列错位 | 列数≠期望 | 退化到原始 markdown 块 |
+| 字段值缺失 | 单元格为空 | 显示 `?` |
+| PROCESS.md 缺失 | 文件不存在 | 视为 0 阶段完成 |
+| PROCESS.md 解析失败 | 阶段字段异常 | 归入"待需求分析" |
+| 全版本无需求 | 初始化态 | 建议 `/code-req`(高) |
+| 全版本已完成 | 所有 DONE + 无 P0/P1 待修复 | 建议 `/code-ver V0.0.x`(高) |
+| 旧格式任务编号 | 字面透传 | 不解析路径 |
+
+#### L3 异常兜底
+
+任何未预期异常 → `✗ 内部错误: <msg>` + 退出
+
+### §8.10 看板模式工具约束
+
+- 仅调用 `Read`/`Glob`/`Grep`
+- 不调用 `Write`/`Edit`/`Bash`/`WebFetch`/`WebSearch`/`Task`/`Agent`
+- 不修改任何文件(只读)
+- 多次执行幂等

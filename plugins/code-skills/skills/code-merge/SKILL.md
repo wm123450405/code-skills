@@ -347,7 +347,7 @@ function FR5_verifyCommit():
 
 **目标**:合并完成后扫描 2 个看板区段,确保统计数据无矛盾
 
-**算法**(复用 `code-dashboard` 算法 1 + 算法 5):
+**算法**(复用 `code-ver` 看板算法 1 + 算法 5):
 ```
 function FR6_dashboardCheck():
  version = read("./assistants/.current-version")
@@ -463,7 +463,7 @@ function FR7_mergeToMain():
 
 ## 关联需求
 
-- **REQ-00004**(`/code-dashboard`):FR-6 看板自检复用其"算法 1 + 算法 5"(2 区段表格行计数)
+- **REQ-00004**(`/code-ver`):FR-6 看板自检复用其"算法 1 + 算法 5"(2 区段表格行计数)
 - **REQ-00005**(首步拉取 + 末步提交):FR-2 / FR-5 commit 格式 `chore(<scope>): ...` 同源
 - **REQ-00006**(`/code-ver --publish`):FR-6 自检**不**阻塞 publish 流程(同源"非阻塞警告"语义)
 - **REQ-00007**(`/code-req --auto`):`code-req --auto` **不**自动调本技能(职责分离)

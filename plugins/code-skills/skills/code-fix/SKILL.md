@@ -221,7 +221,7 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
    - 生成 commit message(格式:`chore(code-fix): <缺陷编号> <标题>\n\n<阶段统计>\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`)
    - `--auto` 模式 → 直接执行 `Bash: git commit -m "<message>"`
    - 非 `--auto` 模式 → `AskUserQuestion` 确认后执行 commit
-4. 建议下一步:`code-dashboard` 查看进度,或 `code-ver --publish` 发布
+4. 建议下一步:`code-ver` 查看进度,或 `code-ver --publish` 发布
 
 ---
 

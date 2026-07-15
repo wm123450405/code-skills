@@ -7,14 +7,15 @@
 `code-skills` 是一套用于走完完整软件开发生命周期的 Claude Code 技能集合,内置**版本感知工作空间管理**:
 
 ```
-code-ver → code-req → code-fix → code-faq → code-dashboard
- 版本管理   需求开发   缺陷修复   知识查询   开发看板
+code-ver → code-req → code-fix → code-faq
+ 版本管理   需求开发   缺陷修复   知识查询
+  +看板
 
  code-rule  (横向,非主流程) — 编码规范管理
  code-merge (横向,非主流程) — Worktree 自动合并
 ```
 
-`code-ver` 是**必备的前置门** —— 合并了版本管理、项目初始化、发布检查三种能力:新项目自动检测并初始化;已初始化项目切换版本;当前版本未发布时询问是否先发布再切换。
+`code-ver` 是**必备的前置门** —— 合并了版本管理、项目初始化、发布检查、开发看板四种能力:新项目自动检测并初始化;已初始化项目无参数时显示开发进度看板;传入版本号执行版本切换;`--publish` 发布检查。
 
 `code-req` 是**需求开发全流程入口** —— 合并了需求分析、软件设计、任务排期、编码执行、代码审查五阶段,默认交互确认每阶段,`--auto` 静默执行,支持 `PROCESS.md` 断点续跑。
 
@@ -25,8 +26,6 @@ code-ver → code-req → code-fix → code-faq → code-dashboard
 `code-rule` **不在主流程管道中** —— 它负责维护跨版本共享的 `./assistants/rules/` 目录,主流程中的所有技能都会以只读方式读取该目录作为约束。
 
 `code-merge` **不在主流程管道中** —— 在 git worktree 中完成开发后,一键合回主干:提交未提交文件、拉取主干、LLM 智能解冲突、看板自检、`git merge --no-ff` 合回 main。
-
-`code-dashboard` **不在主流程管道中** —— 只读看板,一行命令查看版本进度,解析简化版 `RESULT.md`(需求清单+缺陷清单)和 `PROCESS.md` 获取进度。
 
 ## 仓库结构
 
@@ -50,7 +49,7 @@ code-skills/                          ← marketplace 仓库根
             ├── code-faq/             # 知识查询与文档导出(原 code-answer)
             ├── code-rule/            # 编码规范管理(项目级共享)
             ├── code-merge/           # Worktree 自动合并
-            └── code-dashboard/       # 开发看板(只读)
+            └── code-ver/             # 版本管理与开发看板(合并 code-version + code-publish + code-init + code-dashboard)
 ```
 
 ## 需与用户确认的约定
@@ -129,7 +128,7 @@ assistants/
 
 ### 指引 1: (待添加)
 
-### 指引 N: `code-dashboard` 行为约定
+### 指引 N: `code-ver` 看板行为约定
 - 展示策略:ASCII 进度表 + 文本柱状图(固定 12 字符 + `█` / `░` / `▓`)
 - 建议策略:5 类优先级(高/中/低/—)+ 最多 5 条;命令严格按既有 7 个 `code-*` SKILL.md 真实语法
 - 解析锚点:看板 2 区段(需求清单 / 缺陷清单);按 `^## .*$` 定位 + 表格行 `^\| .* \|$` 匹配
