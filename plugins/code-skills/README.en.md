@@ -17,76 +17,76 @@ claude plugin install code-skills@code-skills-marketplace
 /reload-plugins
 ```
 
-After installation, invoke each skill as `/code-skills:<skill-name>`, e.g. `/code-skills:code-ver`, `/code-skills:code-req`.
+After installation, the entry skill is `/code-skills:code`, which dispatches subcommands by the first argument — e.g. `/code-skills:code ver`, `/code-skills:code req`.
 
 > ⚠️ The form `claude plugin install code-skills@https://github.com/...` (splicing a GitHub URL directly after `@`) **does not work** in current Claude Code versions. You must first `marketplace add` to register, then install via `@marketplace-name`.
 
 ## Skills Overview
 
-This plugin provides **6 skills**, organized into main flow and auxiliary tools:
+This plugin exposes **a single entry skill `/code`** with 6 subcommands:
 
 **Main Flow**:
 
-| Skill | Purpose | One-liner |
+| Subcommand | Purpose | One-liner |
 | --- | --- | --- |
-| [`code-ver`](skills/code-ver/SKILL.md) | Version Management & Dashboard | Project init / switch version / publish check / progress dashboard — the prerequisite gateway for all skills |
-| [`code-req`](skills/code-req/SKILL.md) | Requirement Development | Full lifecycle: analysis → design → plan → coding → review |
-| [`code-fix`](skills/code-fix/SKILL.md) | Bug Fix | Full lifecycle: registration → design → plan → coding → review |
+| `/code ver` | Version Management & Dashboard | Project init / switch version / publish check / progress dashboard — the prerequisite gateway for all subcommands |
+| `/code req` | Requirement Development | Full lifecycle: analysis → design → plan → coding → review |
+| `/code fix` | Bug Fix | Full lifecycle: registration → design → plan → coding → review |
 
 **Auxiliary Tools**:
 
-| Skill | Purpose | One-liner |
+| Subcommand | Purpose | One-liner |
 | --- | --- | --- |
-| [`code-faq`](skills/code-faq/SKILL.md) | Knowledge Base | Cross-version query of requirements/bugs, with document export |
-| [`code-rule`](skills/code-rule/SKILL.md) | Coding Standards | Describe standards in natural language, auto-structured into clauses |
-| [`code-merge`](skills/code-merge/SKILL.md) | Branch Merge | Auto-merge worktree changes back to main with smart conflict resolution |
+| `/code faq` | Knowledge Base | Cross-version query of requirements/bugs, with document export |
+| `/code rule` | Coding Standards | Describe standards in natural language, auto-structured into clauses |
+| `/code merge` | Branch Merge | Auto-merge worktree changes back to main with smart conflict resolution |
 
 ## Quick Start
 
 ### First Time (New Project)
 
 ```
-Step 1: code-ver           ← Initialize project, scan code, create baseline
-Step 2: code-rule          ← (Optional but recommended) Establish coding standards
-Step 3: code-ver V0.0.5    ← Switch to a new development version
-Step 4: code-req "your req" ← Start requirement development
+Step 1: /code ver            ← Initialize project, scan code, create baseline
+Step 2: /code rule           ← (Optional but recommended) Establish coding standards
+Step 3: /code ver V0.0.5     ← Switch to a new development version
+Step 4: /code req "your req" ← Start requirement development
 ```
 
 ### Daily Development
 
 ```
-code-ver       ← Ensure you're on the correct version (or view progress)
-code-req "xxx" ← Describe your requirement in one sentence, AI guides you through
-code-fix "xxx" ← Report a bug, AI guides you through the fix
+/code ver          ← Ensure you're on the correct version (or view progress)
+/code req "xxx"    ← Describe your requirement in one sentence, AI guides you through
+/code fix "xxx"    ← Report a bug, AI guides you through the fix
 ```
 
 ### Silent Mode
 
 ```
-code-req "xxx" --auto  ← Fully automatic, no manual confirmation needed
-code-fix "xxx" --auto  ← Same as above
+/code req "xxx" --auto  ← Fully automatic, no manual confirmation needed
+/code fix "xxx" --auto  ← Same as above
 ```
 
 ## Workflow Overview
 
 ```mermaid
 flowchart LR
-    CV[code-ver<br/>Version Mgmt<br/>+ Dashboard] --> CR[code-req<br/>Req Development]
-    CV --> CF[code-fix<br/>Bug Fix]
+    CV[/code ver<br/>Version Mgmt<br/>+ Dashboard] --> CR[/code req<br/>Req Development]
+    CV --> CF[/code fix<br/>Bug Fix]
 
     CR -->|Done| CV
     CF -->|Done| CV
 
     subgraph Auxiliary
-        CQ[code-faq<br/>Knowledge Base]
-        CRL[code-rule<br/>Standards]
-        CM[code-merge<br/>Merge]
+        CQ[/code faq<br/>Knowledge Base]
+        CRL[/code rule<br/>Standards]
+        CM[/code merge<br/>Merge]
     end
 ```
 
-### Core Flow: `code-req` Requirement Development
+### Core Flow: `/code req` Requirement Development
 
-When you call `/code-req "Add user login feature"`, the AI advances through these stages:
+When you call `/code req "Add user login feature"`, the AI advances through these stages:
 
 ```
 Requirement → Design → Plan → Coding → Review
@@ -97,14 +97,14 @@ Requirement → Design → Plan → Coding → Review
 - **`--auto` mode**: Fully unattended, runs through all stages automatically
 - **Resume**: If interrupted, restarting picks up from the last completed stage (tracked via `PROCESS.md`)
 
-### Side Flow: `code-fix` Bug Fix
+### Side Flow: `/code fix` Bug Fix
 
 ```
 Registration → Design → Plan → Coding → Review
 (INIT)         (DESIGN)  (PLAN)  (CODING)  (CHECK)
 ```
 
-Shares the DESIGN/PLAN/CODING/CHECK stage logic with `code-req`.
+Shares the DESIGN/PLAN/CODING/CHECK stage logic with `/code req`.
 
 ## Version Workspace
 
@@ -124,24 +124,17 @@ assistants/
 
 | I want to... | Call |
 | --- | --- |
-| Initialize project | `/code-ver` |
-| Switch version | `/code-ver V0.0.5` |
-| View progress | `/code-ver` |
-| Develop a feature | `/code-req "description"` |
-| Silent development | `/code-req "description" --auto` |
-| Fix a bug | `/code-fix "description"` |
-| Query requirements | `/code-faq "keyword"` |
-| Add coding standard | `/code-rule "description"` |
-| Merge branch | `/code-merge` |
-| Publish version | `/code-ver --publish` |
+| Initialize project | `/code ver` |
+| Switch version | `/code ver V0.0.5` |
+| View progress | `/code ver` |
+| Develop a feature | `/code req "description"` |
+| Silent development | `/code req "description" --auto` |
+| Fix a bug | `/code fix "description"` |
+| Query requirements | `/code faq "keyword"` |
+| Add coding standard | `/code rule "description"` |
+| Merge branch | `/code merge` |
+| Publish version | `/code ver --publish` |
 
 ## Detailed Documentation
 
-Each skill has its own `SKILL.md` with complete workflow details:
-
-- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — Version management & dashboard (init + switch + publish + dashboard)
-- [`code-req/SKILL.md`](skills/code-req/SKILL.md) — Full requirement development lifecycle
-- [`code-fix/SKILL.md`](skills/code-fix/SKILL.md) — Full bug fix lifecycle
-- [`code-faq/SKILL.md`](skills/code-faq/SKILL.md) — Knowledge base query & document export
-- [`code-rule/SKILL.md`](skills/code-rule/SKILL.md) — Coding standard management
-- [`code-merge/SKILL.md`](skills/code-merge/SKILL.md) — Worktree auto-merge
+The single entry skill document: [`code/SKILL.md`](skills/code/SKILL.md) — covers all 6 subcommands with their complete workflow.

@@ -16,7 +16,7 @@
 
 ### 条款
 `plugins/code-skills/skills/<技能名>/SKILL.md` 必须以 YAML frontmatter 开头,至少包含以下两个字段:
-- `name`:取值为**技能目录名**(kebab-case),与所在目录严格一致(例如 `skills/code-ver/SKILL.md` 的 `name` 必须为 `code-ver`)
+- `name`:取值为**技能目录名**(kebab-case),与所在目录严格一致(例如 `skills/code/SKILL.md` 的 `name` 必须为 `code`)
 - `description`:一段完整的自然语言描述,说明该技能的目标、适用场景、典型触发条件;**不**接受空字符串、占位符、纯关键词堆砌
 
 `name` 与目录名不一致、或 `description` 缺失/为空,视为本规则违反。
@@ -29,7 +29,7 @@
 - 新增技能 / 修改技能元信息 / 重命名技能目录时均适用
 
 ### 正面示例
-`plugins/code-skills/skills/code-ver/SKILL.md` 顶部:
+`plugins/code-skills/skills/code/SKILL.md` 顶部:
 ```markdown
 ---
 name: code-ver
@@ -86,11 +86,11 @@ description:              # 错误:description 为空
 - 必须
 
 ### 适用范围
-- `plugins/code-skills/skills/*/SKILL.md`(全体 7 个 code-* 技能)
+- `plugins/code-skills/skills/*/SKILL.md`(合并后本体 1 个 `code` 技能,含 6 个子命令 `ver`/`req`/`fix`/`faq`/`rule`/`merge`)
 - `plugins/code-skills/skills/*/templates/*.md`(全体模板)
 - **不**适用于:
-  - `plugins/code-skills/skills/code-req/references/`(留作后续规范)
-  - `plugins/code-skills/skills/code-req/templates/`(留作后续规范)
+  - `plugins/code-skills/skills/code/references/`(留作后续规范)
+  - `plugins/code-skills/skills/code/templates/`(留作后续规范)
   - `assistants/` 下的任何历史工作产物(它们是有史料价值的工作记录)
   - `plugins/code-skills/.claude-plugin/`、`marketplace.json` / `plugin.json` / `README*.md` / `CLAUDE.md`
   - 已被代码层面删除的技能目录

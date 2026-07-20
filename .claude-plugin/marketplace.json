@@ -17,6 +17,7 @@
       "source": "./plugins/code-skills",
       "keywords": [
         "skills",
+        "code",
         "code-ver",
         "code-req",
         "code-fix",
@@ -28,12 +29,7 @@
         "lifecycle"
       ],
       "skills": [
-        "./skills/code-ver",
-        "./skills/code-req",
-        "./skills/code-fix",
-        "./skills/code-faq",
-        "./skills/code-rule",
-        "./skills/code-merge"
+        "./skills/code"
       ]
     }
   ]

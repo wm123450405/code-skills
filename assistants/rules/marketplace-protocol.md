@@ -51,8 +51,8 @@
       "version": "1.0.0",
       "source": "./plugins/code-skills",
       "skills": [
-        "./skills/code-require",
-        "./skills/code-version"
+        "./skills/code",
+        "./skills/code"
       ]
     }
   ]

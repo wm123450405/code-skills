@@ -18,21 +18,23 @@
    ```
 3. Invoke skills in your project:
    ```
-   /code-ver              ← Initialize project, create version (or view progress)
-   /code-req "your req"   ← Start requirement development
-   /code-fix "bug desc"   ← Fix a bug
+   /code ver                ← Initialize project, create version (or view progress)
+   /code req "your req"     ← Start requirement development
+   /code fix "bug desc"     ← Fix a bug
    ```
 
 ## Skill Overview
 
-| Skill | Purpose |
+`/code` is the single entry skill, dispatching via the first argument:
+
+| Subcommand | Purpose |
 | --- | --- |
-| `code-ver` | Version Management & Dashboard — init, switch version, publish, view progress |
-| `code-req` | Requirement Development — full lifecycle from analysis to code review |
-| `code-fix` | Bug Fix — full lifecycle from registration to fix review |
-| `code-faq` | Knowledge Base — cross-version query with document export |
-| `code-rule` | Coding Standards — describe standards in natural language |
-| `code-merge` | Branch Merge — merge worktree changes back to main |
+| `/code ver` | Version Management & Dashboard — init, switch version, publish, view progress |
+| `/code req` | Requirement Development — full lifecycle from analysis to code review |
+| `/code fix` | Bug Fix — full lifecycle from registration to fix review |
+| `/code faq` | Knowledge Base — cross-version query with document export |
+| `/code rule` | Coding Standards — describe standards in natural language |
+| `/code merge` | Branch Merge — merge worktree changes back to main |
 
 ## 📖 Detailed Documentation
 

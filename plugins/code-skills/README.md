@@ -17,76 +17,76 @@ claude plugin install code-skills@code-skills-marketplace
 /reload-plugins
 ```
 
-安装完成后,所有技能以 `/code-skills:<技能名>` 形式调用,例如 `/code-skills:code-ver`、`/code-skills:code-req`。
+安装完成后,主技能为 `/code-skills:code`,通过首参数区分子命令,例如 `/code-skills:code ver`、`/code-skills:code req`。
 
 > ⚠️ `claude plugin install code-skills@https://github.com/...` 这种直接把 GitHub URL 拼到 `@` 后面的形式在当前 Claude Code 版本下**不会工作** —— 必须先 `marketplace add` 注册,再用 `@marketplace-name` 安装。
 
 ## 技能概览
 
-本插件提供 **6 个技能**,分为主流程和辅助工具两类:
+本插件提供 **1 个入口技能 `/code`**,含 6 个子命令:
 
 **主流程**:
 
-| 技能 | 用途 | 一句话说明 |
+| 子命令 | 用途 | 一句话说明 |
 | --- | --- | --- |
-| [`code-ver`](skills/code-ver/SKILL.md) | 版本管理与开发看板 | 新项目初始化 / 切换开发版本 / 发布检查 / 开发进度看板,所有技能的前置门 |
-| [`code-req`](skills/code-req/SKILL.md) | 需求开发 | 从需求分析到代码审查的全流程:需求分析→软件设计→任务排期→编码→审查 |
-| [`code-fix`](skills/code-fix/SKILL.md) | 缺陷修复 | 缺陷登记→修复设计→任务排期→编码→审查,全流程闭环 |
+| `/code ver` | 版本管理与开发看板 | 新项目初始化 / 切换开发版本 / 发布检查 / 开发进度看板,所有子命令的前置门 |
+| `/code req` | 需求开发 | 从需求分析到代码审查的全流程:需求分析→软件设计→任务排期→编码→审查 |
+| `/code fix` | 缺陷修复 | 缺陷登记→修复设计→任务排期→编码→审查,全流程闭环 |
 
 **辅助工具**:
 
-| 技能 | 用途 | 一句话说明 |
+| 子命令 | 用途 | 一句话说明 |
 | --- | --- | --- |
-| [`code-faq`](skills/code-faq/SKILL.md) | 知识查询 | 跨版本查询需求/缺陷,支持导出文档 |
-| [`code-rule`](skills/code-rule/SKILL.md) | 编码规范 | 用自然语言描述规范,自动整理为结构化条款 |
-| [`code-merge`](skills/code-merge/SKILL.md) | 分支合并 | Worktree 模式下自动合并回主干,智能解决冲突 |
+| `/code faq` | 知识查询 | 跨版本查询需求/缺陷,支持导出文档 |
+| `/code rule` | 编码规范 | 用自然语言描述规范,自动整理为结构化条款 |
+| `/code merge` | 分支合并 | Worktree 模式下自动合并回主干,智能解决冲突 |
 
 ## 快速上手
 
 ### 第一次使用(新项目)
 
 ```
-第 1 步: code-ver           ← 初始化项目,扫描代码,创建基线版本
-第 2 步: code-rule          ← (可选但推荐)建立编码规范
-第 3 步: code-ver V0.0.5    ← 切换到新开发版本
-第 4 步: code-req "你的需求" ← 开始需求开发
+第 1 步: /code ver            ← 初始化项目,扫描代码,创建基线版本
+第 2 步: /code rule           ← (可选但推荐)建立编码规范
+第 3 步: /code ver V0.0.5     ← 切换到新开发版本
+第 4 步: /code req "你的需求"  ← 开始需求开发
 ```
 
 ### 日常开发
 
 ```
-code-ver       ← 确保在正确的版本上(或查看进度)
-code-req "xxx" ← 一句话描述需求,AI 会引导你走完全流程
-code-fix "xxx" ← 报告缺陷,AI 会引导你修复
+/code ver          ← 确保在正确的版本上(或查看进度)
+/code req "xxx"    ← 一句话描述需求,AI 会引导你走完全流程
+/code fix "xxx"    ← 报告缺陷,AI 会引导你修复
 ```
 
 ### 静默模式
 
 ```
-code-req "xxx" --auto  ← 全自动执行,无需人工确认
-code-fix "xxx" --auto  ← 同上
+/code req "xxx" --auto   ← 全自动执行,无需人工确认
+/code fix "xxx" --auto   ← 同上
 ```
 
 ## 工作流全景
 
 ```mermaid
 flowchart LR
-    CV[code-ver<br/>版本管理+看板] --> CR[code-req<br/>需求开发]
-    CV --> CF[code-fix<br/>缺陷修复]
+    CV[/code ver<br/>版本管理+看板] --> CR[/code req<br/>需求开发]
+    CV --> CF[/code fix<br/>缺陷修复]
 
     CR -->|需求完成| CV
     CF -->|缺陷完成| CV
 
     subgraph 辅助
-        CQ[code-faq<br/>知识查询]
-        CRL[code-rule<br/>编码规范]
-        CM[code-merge<br/>分支合并]
+        CQ[/code faq<br/>知识查询]
+        CRL[/code rule<br/>编码规范]
+        CM[/code merge<br/>分支合并]
     end
 ```
 
-### 核心流程: `code-req` 需求开发
+### 核心流程: `/code req` 需求开发
 
-当你调用 `/code-req "添加用户登录功能"` 时,AI 会按以下阶段自动推进:
+当你调用 `/code req "添加用户登录功能"` 时,AI 会按以下阶段自动推进:
 
 ```
 需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查
@@ -97,14 +97,14 @@ flowchart LR
 - **`--auto` 模式**:无人值守,全自动跑通
 - **断点续跑**:中断后重跑,从上次停下的阶段继续(通过 `PROCESS.md` 追踪)
 
-### 支线流程: `code-fix` 缺陷修复
+### 支线流程: `/code fix` 缺陷修复
 
 ```
 缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查
 (INIT)     (DESIGN)    (PLAN)    (CODING)    (CHECK)
 ```
 
-与 `code-req` 共享 DESIGN/PLAN/CODING/CHECK 阶段的流程逻辑。
+与 `/code req` 共享 DESIGN/PLAN/CODING/CHECK 阶段的流程逻辑。
 
 ## 版本工作空间
 
@@ -124,24 +124,17 @@ assistants/
 
 | 我想... | 调哪个命令 |
 | --- | --- |
-| 初始化项目 | `/code-ver` |
-| 切换版本 | `/code-ver V0.0.5` |
-| 查看进度 | `/code-ver` |
-| 开发新功能 | `/code-req "功能描述"` |
-| 静默开发 | `/code-req "功能描述" --auto` |
-| 修复缺陷 | `/code-fix "缺陷描述"` |
-| 查询需求 | `/code-faq "关键词"` |
-| 加编码规范 | `/code-rule "规范描述"` |
-| 合并分支 | `/code-merge` |
-| 发布版本 | `/code-ver --publish` |
+| 初始化项目 | `/code ver` |
+| 切换版本 | `/code ver V0.0.5` |
+| 查看进度 | `/code ver` |
+| 开发新功能 | `/code req "功能描述"` |
+| 静默开发 | `/code req "功能描述" --auto` |
+| 修复缺陷 | `/code fix "缺陷描述"` |
+| 查询需求 | `/code faq "关键词"` |
+| 加编码规范 | `/code rule "规范描述"` |
+| 合并分支 | `/code merge` |
+| 发布版本 | `/code ver --publish` |
 
 ## 详细文档
 
-每个技能都有自己的 `SKILL.md`,包含完整工作流说明:
-
-- [`code-ver/SKILL.md`](skills/code-ver/SKILL.md) — 版本管理与开发看板(初始化+切换+发布+看板)
-- [`code-req/SKILL.md`](skills/code-req/SKILL.md) — 需求开发全流程
-- [`code-fix/SKILL.md`](skills/code-fix/SKILL.md) — 缺陷修复全流程
-- [`code-faq/SKILL.md`](skills/code-faq/SKILL.md) — 知识查询与文档导出
-- [`code-rule/SKILL.md`](skills/code-rule/SKILL.md) — 编码规范管理
-- [`code-merge/SKILL.md`](skills/code-merge/SKILL.md) — Worktree 自动合并
+主技能入口:[`code/SKILL.md`](skills/code/SKILL.md),含 6 个子命令完整工作流说明。
