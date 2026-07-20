@@ -192,6 +192,13 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 
 **强制产出**:`fix/<BUG-NNNNN>/TASK-<序号>.md`(每个任务一份)
 
+**运行环境约束**(详见 `../code-req/references/runtime-environment.md`):
+- 在 CODING 阶段末编译/运行/单测时,若常规命令找不到运行时,需走"运行时确认机制"(`runtime-environment.md §2`)询问用户,**不得擅自安装运行时**;`--auto` 模式下自动安装
+- **直接**走包管理器安装缺失的依赖包(如 `pip install` / `npm install` / `go get`),不需要询问
+- **允许**用户放弃后续运行验证:TASK-N.md 中标注"用户跳过"即可,本任务仍然可以完成
+- **禁止**把运行时安装位置或用户提供的路径写入 TASK.md / PROCESS.md / LOG.md
+- **禁止**把运行时相关信息存储为 MEMORY 项
+
 - 解析 PLAN.md 任务列表,按依赖顺序逐任务执行
 - 每个任务:前置守卫 → 推进状态 → 读取设计 → 探索代码 → 实施编码 → 编译验证 → 运行验证 → 按需写单测 → 使用 `Write` 写入 `TASK-<序号>.md`
 - 编码原则:贴合项目风格,边界显式处理,代码注释不引用追踪编号
@@ -286,3 +293,7 @@ description: 缺陷修复。从缺陷登记到修复审查,引导你一步步完
 - 不要一次问完所有澄清问题(每轮 1-3 个最阻塞的点)
 - 不要在 DESIGN 阶段涉及移除/变更现有行为时跳过危险操作确认(见 ../code-req/references/design.md §9d)
 - 不要在 DESIGN 阶段跳过步骤 9 用户确认(扩展性/方案选型/改修方案/危险操作)
+- 不要在 CODING 阶段未尝试执行编译/单测就先询问"是否需要安装运行时"——必须先尝试运行,确认是"运行时缺失"而非"依赖包缺失"才触发确认机制(见 ../code-req/references/runtime-environment.md)
+- 不要在 CODING 阶段未经用户同意(非 `--auto`)擅自执行 `winget/brew/apt install` 等系统级安装
+- 不要把运行时安装位置、用户提供的运行时路径、PATH 内容等写入 TASK.md / PROCESS.md / LOG.md
+- 不要把用户的本地运行时配置存为 MEMORY 项

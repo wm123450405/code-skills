@@ -246,28 +246,79 @@ function shouldWriteUnitTest(taskType, files):
 
 - 判定为"YES" → 使用语言感知的测试框架,编写覆盖关键路径的单元测试
 - 判定为"NO" → 在 TASK-N.md 中写占位说明(如"不适用:文档类型任务")
-- 测试失败 → 进入步骤 4.11 错误修复循环
+- 测试失败 → 进入 §7 错误修复循环
 
 #### 4.9 编译验证
 
 1. 使用语言感知的构建命令(参考 `languages/<lang>.md §2`)
 2. `Bash` 执行构建
 3. 记录到 `compile-and-run.md`
-4. 失败 → 进入步骤 4.11 错误修复循环
+4. 失败 → **先做运行环境/依赖边界判定**(见 `references/runtime-environment.md §0`)
+   - 失败信息指向"工具链本身不可用"(`command not found`、版本检测不通过等)→ 走 §5 运行环境确认机制
+   - 失败信息指向"依赖包/库缺失"(`Cannot find package` / `No module named` / `package xxx does not exist` 等)→ 直接走对应包管理器安装,**不**走确认
+   - 失败信息指向语法错误、链接错误等**代码 bug** → 进入 §7 错误修复循环
 
 #### 4.10 运行验证
 
 1. 使用语言感知的运行命令(参考 `languages/<lang>.md §4`)
 2. 启动运行,验证功能正常
 3. 记录到 `compile-and-run.md`
-4. 失败 → 进入步骤 4.11 错误修复循环
+4. 失败 → 同 §4.9 第 4 点,先做运行环境/依赖边界判定,再决定走 §5 还是错误修复循环
 
 #### 4.11 测试验证(若适用)
 
 1. 使用语言感知的测试命令(参考 `languages/<lang>.md §3`)
 2. 执行测试,确保通过
 3. 记录到 `test-results.md`
-4. 失败 → 进入步骤 4.11 错误修复循环
+4. 失败 → 同 §4.9 第 4 点,先做运行环境/依赖边界判定,再决定走 §5 还是错误修复循环
+
+### §5 运行环境确认机制(新增)
+
+> **仅当** §4.9-§4.11 已经实际执行编译/运行/单测命令并确实因"运行时缺失"失败时,才触发本机制。区分边界详见 `references/runtime-environment.md §0`。
+>
+> 严禁未尝试执行就先询问用户"是否需要安装运行时"。
+
+**判定流程**:
+
+```
+1. 已经执行了 build/run/test 命令并拿到失败信号
+2. 解析失败信息:
+   - "command not found: <runtime>" / "<runtime> 不是内部或外部命令" 等
+     → 归类为"运行时缺失",走本 §5
+   - "Cannot find package" / "No module named" / "package xxx does not exist"
+     → 归类为"依赖包缺失",直接走包管理器(npm install / pip install / go get / cargo add / 修改 pom.xml|build.gradle)
+   - 其它 → 进入 §7 错误修复循环
+```
+
+**触发**:
+
+- 默认模式 / `--confirm` 模式 → 在弹出 `AskUserQuestion`(选 A/B/C/D)前**先尝试一次 `where <runtime>` / `command -v <runtime>` 探测**——常见情况下用户其实已经装好,只是 PATH 没刷新;探测成功就直接继续本任务,无需询问
+- `--auto` 模式 → 不询问,直接尝试通过系统包管理器(`winget` / `choco` / `scoop` / `brew` / `apt`)安装缺失的运行时
+
+**核心约束**(完整规范见 `references/runtime-environment.md`):
+
+1. **不要**未经用户确认(非 `--auto`)擅自安装运行时
+2. **可以**直接通过包管理器安装缺失的"依赖包"(不需要询问)
+3. 用户**可以**放弃编译/测试运行——选 C 路径后,代码改动仍然完成,TASK-N.md 中标注"用户跳过运行验证"即可
+4. **不要**将运行时安装位置或用户提供的运行时路径写入 TASK.md / PROCESS.md / LOG.md
+5. **不要**将运行时位置存储为 MEMORY 项
+
+确认提示模板与各选项处理详见 `runtime-environment.md §2`。
+
+### §6 运行时状态字段(新增)
+
+`TASK-N.md` 第 4 节"验证结果"表格中,新增一行**运行时**:
+
+| 验证类型 | 命令/方式 | 结果 |
+| --- | --- | --- |
+| 运行时 | `<runtime>` 检查 | ✅ 已配置 / 🔧 用户提供路径 / 📦 自动安装 / 🚫 用户跳过 / ⛔ 未配置(影响判定) |
+
+- ✅ 已配置:常规 `command -v` 即通过,无需特别动作
+- 🔧 用户提供路径:走运行时确认机制的选项 A
+- 📦 自动安装:`--auto` 模式或用户授权后由系统包管理器安装
+- 🚫 用户跳过:用户放弃本次任务的运行验证
+
+**禁止在此行或相邻位置写出绝对路径、用户名、PATH 内容等具体信息**。
 
 #### 4.12 逻辑行统计(新增)
 
@@ -318,25 +369,31 @@ function shouldWriteUnitTest(taskType, files):
 更新 PLAN.md 中本任务的状态:
 - 开发状态:进行中 → 已完成
 
-### 步骤 7 — 错误修复循环(增强)
+### §7 错误修复循环(增强,整合运行时机制)
 
 ```
 loop:
   if 编译/启动/测试 有错误:
-    // 区分错误类型
-    if 代码 bug:
+    // 步骤 0:判定错误类别 — 边界见 runtime-environment.md §0
+    if 运行时缺失:
+      → 走 §5 运行环境确认机制:
+        * --auto:自动包管理器安装;失败 → 停下询问
+        * 默认/--confirm:弹出选 A/B/C/D,等待用户决策;选 A/B 后再回到本循环
+    elif 依赖包缺失:
+      → 直接走包管理器安装(npm install / pip install / go get / cargo add / 修改 pom.xml|build.gradle 等),无需询问
+    elif 代码 bug:
       → 修代码 → 重跑
-    if 设计缺陷:
+    elif 设计缺陷:
       → 记入 deviations.md → 停下询问用户
-    if 环境/依赖问题:
-      → 尝试解决 → 记入 work-log.md
   else: 跳出循环
 最多连续失败 5 次后必须停下询问用户
 ```
 
+- 运行时缺失:`command not found` 等工具链整体不可用 → 见 §5 与 `runtime-environment.md`
+- 依赖包缺失:工具链在,但具体某个库/模块拉不到/装不上 → 直接走包管理器
 - 代码 bug:逻辑错误、语法错误、空指针等 → 自行修复
 - 设计缺陷:方案本身有问题,需调整设计 → 记录到 deviations.md,停下询问
-- 环境/依赖问题:缺少依赖、版本不匹配 → 尝试解决,记入 work-log.md
+- 网络/镜像源问题:归类按 §0 区分(运行时下载失败 vs 依赖下载失败),按上面对应分支处理
 
 ## 阶段完成确认
 
