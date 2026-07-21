@@ -23,7 +23,14 @@
         "lifecycle"
       ],
       "skills": [
-        "./skills/code"
+        "./skills/code",
+        "./skills/code/references/ver",
+        "./skills/code/references/req",
+        "./skills/code/references/fix",
+        "./skills/code/references/faq",
+        "./skills/code/references/rule",
+        "./skills/code/references/merge",
+        "./skills/code/references/help"
       ]
     }
   ]
