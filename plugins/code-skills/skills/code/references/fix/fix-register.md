@@ -1,6 +1,6 @@
-# 缺陷登记阶段 — code-fix
+# 缺陷登记阶段 — `/code fix`
 
-> 本文件为 code-fix 技能的 INIT 阶段提供详细流程。在进入 INIT 阶段时加载。
+> 本文件为 `/code fix` 子命令的 INIT 阶段提供详细流程。在进入 INIT 阶段时加载。
 
 ## 目标
 
@@ -8,7 +8,7 @@
 
 ## 与 REQUIRE 阶段的差异
 
-| 方面 | REQUIRE 阶段(code-req) | INIT 阶段(code-fix) |
+| 方面 | REQUIRE 阶段(`/code req`) | INIT 阶段(`/code fix`) |
 | --- | --- | --- |
 | 产出 | REQUIRE.md(FR/NFR/AC) | BUG.md(缺陷描述/触发条件/可能成因/影响范围) |
 | 关注点 | 功能点(系统必须做什么) | 缺陷(系统哪里出了问题) |
@@ -149,13 +149,13 @@ function allocateBugNum(versionPath):
 
 ## 阶段完成确认
 
-> 三态确认模型:阶段边界确认由 `--confirm`/`--auto`/默认 控制。阶段内内容确认(缺陷澄清)仅在 `--auto` 模式下跳过。详见 ../code-req/references/common.md §4、§7、§11。
+> 三态确认模型:阶段边界确认由 `--confirm`/`--auto`/默认 控制。阶段内内容确认(缺陷澄清)仅在 `--auto` 模式下跳过。详见 `../req/common.md` §4、§7、§11。
 
 ### --confirm 模式
 
 阶段完成后弹出增强确认:
 ```
-=== code-fix --confirm: INIT 阶段完成 ===
+=== code fix --confirm: INIT 阶段完成 ===
 缺陷登记完成: <标题>(严重度: P<N>)
 
 产出物文件:
@@ -168,7 +168,7 @@ B. 中止(保存当前进度,退出)
 
 ### --auto 模式
 
-自动继续,屏幕输出 `[code-fix --auto] INIT 完成,自动继续`。阶段内澄清问题自动选推荐项。
+自动继续,屏幕输出 `[code fix --auto] INIT 完成,自动继续`。阶段内澄清问题自动选推荐项。
 
 ### 默认模式(无 flag)
 

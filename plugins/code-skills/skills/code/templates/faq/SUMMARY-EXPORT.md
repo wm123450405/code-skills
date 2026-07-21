@@ -1,7 +1,7 @@
 # 概要设计 — {{REQ_ID}} · {{REQ_TITLE}}
 
 > 导出时间:{{导出时间}}
-> 来源:code-faq --design {{REQ_ID}} --summary
+> 来源:`/code faq --design {{REQ_ID}} --summary`
 
 ## 1. 设计概述
 

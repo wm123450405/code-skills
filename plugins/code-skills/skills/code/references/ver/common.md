@@ -1,6 +1,6 @@
-# 公共流程 — code-ver
+# 公共流程 — `/code ver`
 
-> 本文件为 code-ver 技能提供场景检测、初始化、版本切换、发布检查的详细流程。始终加载。
+> 本文件为 `/code ver` 子命令提供场景检测、初始化、版本切换、发布检查的详细流程。始终加载。
 
 ## §1 场景检测
 
@@ -109,7 +109,7 @@ function writeDashboard(version):
   # 版本开发进度看板 — {version}
 
   > 本文件是 `{version}` 版本工作空间的**单一事实来源**。
-  > 由 `code-ver` 创建,`code-req` / `code-fix` 更新。
+  > 由 `/code ver` 创建,`/code req` / `/code fix` 更新。
 
   ## 文档头
   - 版本号:`{version}`
@@ -119,7 +119,7 @@ function writeDashboard(version):
 
   ## 需求清单
 
-  > 写入方:`code-req`(新建需求时追加)
+  > 写入方:`/code req`(新建需求时追加)
   > 进度通过 PROCESS.md 链接查看
 
   | 需求编码 | 标题 | 进度文档 |
@@ -130,7 +130,7 @@ function writeDashboard(version):
 
   ## 缺陷清单
 
-  > 写入方:`code-fix`(登记缺陷时追加)
+  > 写入方:`/code fix`(登记缺陷时追加)
 
   | 缺陷编号 | 标题 | 进度文档 |
   | --- | --- | --- |
@@ -308,7 +308,7 @@ function generateInitReport(analysis, version):
   content = """
   # 功能分析报告 — {version}
 
-  > 由 `code-ver` 在 {now} 生成,用于快速了解项目现状。
+  > 由 `/code ver` 在 {now} 生成,用于快速了解项目现状。
 
   ## 1. 项目概述
   {analysis.summary}
@@ -349,7 +349,7 @@ function generateInitReport(analysis, version):
 
   ## 12. 本报告生成信息
   - 生成时间:{now}
-  - 生成工具:code-ver
+  - 生成工具:`/code ver`
   - 覆盖源文件数:{analysis.fileCount}
   """
 
@@ -426,7 +426,7 @@ function writeExistingRequirement(feature, version):
   ## 变更记录
   | 时间 | 版本 | 变更类型 | 变更摘要 | 变更人 |
   | --- | --- | --- | --- | --- |
-  | {now} | v1 | 需求登记 | code-ver 识别并登记现有功能 | <unknown> |
+  | {now} | v1 | 需求登记 | `/code ver` 识别并登记现有功能 | <unknown> |
   """
 
   mkdir -p "assistants/{version}/require/EXISTING-{feature.id}/"
@@ -463,9 +463,9 @@ function guideToRules():
 
   if not hasRules:
     print("""
-    ⚠️ `./assistants/rules/` 目录为空,后续 `code-req` / `code-fix` 都会从这里读规范作为约束。
+    ⚠️ `./assistants/rules/` 目录为空,后续 `/code req` / `/code fix` 都会从这里读规范作为约束。
 
-    建议下一步:调 `code-rule` 添加编码规范。
+    建议下一步:调 `/code rule` 添加编码规范。
     输入示例:
     - "Python 函数命名统一用 snake_case"
     - "所有数据库操作必须走 ORM,禁止裸 SQL"
@@ -597,8 +597,8 @@ function verifyAndReport(version):
   {lsOutput}
 
   下一步建议:
-  - 创建首个需求 → 调 `code-req`
-  - 登记缺陷 → 调 `code-fix`
+  - 创建首个需求 → 调 `/code req`
+  - 登记缺陷 → 调 `/code fix`
   """)
 ```
 
@@ -702,7 +702,7 @@ function generateDeployManual(version):
   content = """
   # 发布部署手册 — {version}
 
-  > ⚠ **本手册为通用发布部署骨架**,由 `code-ver` 生成。
+  > ⚠ **本手册为通用发布部署骨架**,由 `/code ver` 生成。
   > 请先手动补全所有 `<placeholder>`,再按本手册的步骤执行部署。
 
   ## 1. 概述
@@ -747,7 +747,7 @@ function generateUpdateManual(version, previousVersion):
   content = """
   # 升级部署手册 — {version}(从 {previousVersion} 升级)
 
-  > ⚠ **本手册为通用升级骨架**,由 `code-ver` 生成。
+  > ⚠ **本手册为通用升级骨架**,由 `/code ver` 生成。
   > 请先手动补全所有 `<placeholder>`,再按本手册的步骤执行升级。
 
   ## 1. 升级概述
@@ -792,7 +792,7 @@ function generateFAQManual(version):
     > 本手册聚合自 `assistants/faq/`,供发布部署中遇到问题时查阅。
 
     ## 占位:常见问题(待补充)
-    请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `code-ver --publish`。
+    请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `/code ver --publish`。
     """
   else:
     content = "# 发布部署 FAQ — {version}\n\n"
@@ -801,7 +801,7 @@ function generateFAQManual(version):
       content += "## {i+1}. {extractTitle(fileContent)}(来源:faq/{file})\n"
       content += fileContent + "\n\n"
     content += "## 占位:常见问题(待补充)\n"
-    content += "请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `code-ver --publish`。\n"
+    content += "请在 `assistants/faq/` 目录下添加 FAQ 内容,再重跑 `/code ver --publish`。\n"
 
   Write "assistants/{version}/publish/FAQ.md", content
 ```
@@ -822,8 +822,8 @@ function scaffoldFaq():
     2. 文件名建议用问题简述(如 `数据库连接失败.md`)
     3. 内容建议包含:问题描述、触发条件、解决方案、预防措施
 
-    ## 与 code-ver 的关系
-    `code-ver --publish` 会聚合本目录下的所有 FAQ 文件到 `publish/FAQ.md`。
+    ## 与 `/code ver` 的关系
+    `/code ver --publish` 会聚合本目录下的所有 FAQ 文件到 `publish/FAQ.md`。
     """
 ```
 
@@ -924,17 +924,17 @@ function parseVersionField(filename, content):
 
 ## §6 看板字段约定(简化版)
 
-`code-ver` 创建的 `RESULT.md` 是简化版,仅含 2 个核心区段:
+`/code ver` 创建的 `RESULT.md` 是简化版,仅含 2 个核心区段:
 
 | 区段 | 主要写入方 | 用途 |
 | --- | --- | --- |
-| 需求清单 | `code-req`(首次创建时追加) | 需求编码、标题、PROCESS.md 链接 |
-| 缺陷清单 | `code-fix`(登记缺陷时追加) | 缺陷编号、标题、PROCESS.md 链接 |
+| 需求清单 | `/code req`(首次创建时追加) | 需求编码、标题、PROCESS.md 链接 |
+| 缺陷清单 | `/code fix`(登记缺陷时追加) | 缺陷编号、标题、PROCESS.md 链接 |
 
-**与旧版看板的区别**:
-- 不再包含:概要设计清单、详细设计与任务计划汇总、任务清单、评审发现汇总、派生任务记录
+**简化版看板的范围**:
+- 仅含 2 个核心区段(需求清单、缺陷清单)
 - 进度通过 `PROCESS.md` 链接查看,而非看板本身的表格
-- `code-req` 各阶段完成时**不再改写**看板,仅追加 PROCESS.md
+- `/code req` 各阶段完成时**不再改写**看板,仅追加 PROCESS.md
 
 **发布检查**直接解析 PROCESS.md 或需求/缺陷目录下的状态文件,而非看板表格。
 
@@ -972,13 +972,13 @@ function checkVersionContext():
   currentVersion = Read("assistants/.current-version")
   if not currentVersion:
     print("✗ 未检测到激活的版本工作空间")
-    print("请先调 code-ver <版本号> 初始化或切换版本")
+    print("请先调 /code ver <版本号> 初始化或切换版本")
     exit()
 
   version = currentVersion.trim()
   if not exists("assistants/{version}/"):
     print("✗ 版本 {version} 工作空间不存在")
-    print("请先调 code-ver <版本号> 初始化或切换版本")
+    print("请先调 /code ver <版本号> 初始化或切换版本")
     exit()
 
   return version
@@ -1171,7 +1171,7 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
   p0Bugs = bugRows.filter(b => b.priority == "P0" and b.status not in ["已完成", "已修复-已验证", "已关闭"])
   if p0Bugs.length > 0:
     suggestions.push({
-      command: "/code-fix {p0Bugs[0].id}",
+      command: "/code fix {p0Bugs[0].id}",
       priority: "高",
       reason: "P0 待修复 {p0Bugs.length} 个",
     })
@@ -1180,7 +1180,7 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
   initReqs = reqProcesses.filter(r => not r.content or parseLastStage(r.content) == "INIT")
   if initReqs.length > 0:
     suggestions.push({
-      command: "/code-req {initReqs[0].id}",
+      command: "/code req {initReqs[0].id}",
       priority: "高",
       reason: "{initReqs.length} 个需求待启动",
     })
@@ -1190,13 +1190,13 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
   initBugs = bugProcesses.filter(b => not b.content or parseLastStage(b.content) == "INIT")
   if designReqs.length > 0:
     suggestions.push({
-      command: "/code-req {designReqs[0].id}",
+      command: "/code req {designReqs[0].id}",
       priority: "中",
       reason: "{designReqs.length} 个需求待排期",
     })
   if initBugs.length > 0:
     suggestions.push({
-      command: "/code-fix {initBugs[0].id}",
+      command: "/code fix {initBugs[0].id}",
       priority: "中",
       reason: "{initBugs.length} 个缺陷待启动",
     })
@@ -1205,7 +1205,7 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
   codingReqs = reqProcesses.filter(r => parseLastStage(r.content) == "CODING")
   if codingReqs.length > 0:
     suggestions.push({
-      command: "/code-req {codingReqs[0].id}",
+      command: "/code req {codingReqs[0].id}",
       priority: "低",
       reason: "{codingReqs.length} 个需求待编码完成",
     })
@@ -1216,7 +1216,7 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
          and p0Bugs.length == 0 and p1Bugs.length == 0
   if allDone and (reqProcesses.length > 0 or bugProcesses.length > 0):
     suggestions.push({
-      command: "/code-ver V0.0.x",
+      command: "/code ver V0.0.x",
       priority: "高",
       reason: "当前版本已完成,建议切换新版本",
     })
@@ -1283,8 +1283,8 @@ function renderDashboard(progress, statuses, highPriorityBugs, suggestions):
 | 字段值缺失 | 单元格为空 | 显示 `?` |
 | PROCESS.md 缺失 | 文件不存在 | 视为 0 阶段完成 |
 | PROCESS.md 解析失败 | 阶段字段异常 | 归入"待需求分析" |
-| 全版本无需求 | 初始化态 | 建议 `/code-req`(高) |
-| 全版本已完成 | 所有 DONE + 无 P0/P1 待修复 | 建议 `/code-ver V0.0.x`(高) |
+| 全版本无需求 | 初始化态 | 建议 `/code req`(高) |
+| 全版本已完成 | 所有 DONE + 无 P0/P1 待修复 | 建议 `/code ver V0.0.x`(高) |
 | 旧格式任务编号 | 字面透传 | 不解析路径 |
 
 #### L3 异常兜底

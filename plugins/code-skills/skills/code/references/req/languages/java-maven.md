@@ -1,6 +1,6 @@
-# Java(Maven) 项目参考 — code-req
+# Java(Maven) 项目参考 — `/code req`
 
-> 本文件为 code-req 技能提供 Java(Maven) 项目的语言差异说明。
+> 本文件为 `/code req` 子命令提供 Java(Maven) 项目的语言差异说明。
 > 在 CODING 阶段(步骤 4.2)中,当检测到项目语言为 java-maven 时加载本文件。
 
 ## §1 项目结构识别

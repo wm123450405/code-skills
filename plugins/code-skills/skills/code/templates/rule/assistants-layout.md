@@ -1,6 +1,6 @@
-# 目录结构 — code-rule
+# 目录结构 — `/code rule`
 
-本技能操作的目录结构如下:
+`/code rule` 子命令操作的目录结构如下:
 
 ```
 <当前工作目录(CWD)>/
@@ -23,8 +23,8 @@
 ## 关键约束
 
 - `./assistants/` 与 `./assistants/rules/` 由本技能按需创建(若不存在)
-- `./assistants/.current-version` **不**由本技能读写(属于 `code-version` 技能)
-- `./assistants/<版本号>/` **不**由本技能读写(属于 `code-version` 技能)
+- `./assistants/.current-version` **不**由本技能读写(由 `/code ver` 管理)
+- `./assistants/<版本号>/` **不**由本技能读写(由 `/code ver` 管理)
 - 本技能只**追加**到已有规范文件,**不**重写或删除既有内容
 
 ## 文件名约定

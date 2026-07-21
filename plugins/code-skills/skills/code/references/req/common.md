@@ -1,11 +1,11 @@
-# 公共流程 — code-req
+# 公共流程 — `/code req`
 
-> 本文件为 code-req 技能提供阶段无关的公共流程。始终加载。
+> 本文件为 `/code req` 子命令提供阶段无关的公共流程。始终加载。
 
 ## §1 版本检测(强制前置)
 
 1. 读取 `./assistants/.current-version`
-2. **文件不存在** → 立即停下,告知用户先调 `code-ver`
+2. **文件不存在** → 立即停下,告知用户先调 `/code ver`
 3. 读取内容,记为 `<版本号>`,后续所有路径用 `assistants/<版本号>/...`
 
 ## §2 PROCESS.md 恢复(断点续跑)
@@ -170,12 +170,6 @@ function preStageCheck(stage, reqDir):
 - 阶段内内容确认由各阶段 references 自行控制,不受阶段边界确认模式影响
 - `--auto` 模式下所有 AskUserQuestion 自动选第一项(推荐项)
 
-### --auto 模式(legacy)
-
-- 所有 `AskUserQuestion` 自动选第一项(推荐项)
-- 屏幕输出 `[code-req --auto] <阶段> 完成,自动继续`
-- 错误时仍中断(不静默吞错误)
-
 ## §5 目录结构
 
 ### 需求路径
@@ -192,7 +186,7 @@ assistants/<版本号>/req/<REQ-NNNNN>/
 └── LOG.md              # 过程记录(可选,非必要不记录)
 ```
 
-### 缺陷路径(code-fix 复用)
+### 缺陷路径(`/code fix` 复用)
 
 ```
 assistants/<版本号>/fix/<BUG-NNNNN>/
@@ -238,7 +232,7 @@ assistants/<版本号>/fix/<BUG-NNNNN>/
 每个阶段完成后,弹出增强确认:
 
 ```
-=== code-req --confirm: <阶段名> 阶段完成 ===
+=== code req --confirm: <阶段名> 阶段完成 ===
 <摘要统计>
 
 产出物文件:
@@ -303,7 +297,7 @@ function parseResultTitle(filePath: string): string {
 | --- | --- |
 | 启动 | `正在处理: REQ-NNNNN · <需求标题>` |
 | 完成 | `完成: REQ-NNNNN · <需求标题>` |
-| 中止 | `⛔ code-req 中止: REQ-NNNNN · <需求标题>(<原因>)` |
+| 中止 | `⛔ code req 中止: REQ-NNNNN · <需求标题>(<原因>)` |
 | 错误 | `✗ 错误: REQ-NNNNN · <需求标题>(<错误信息>)` |
 
 ### 边界与异常
@@ -339,7 +333,7 @@ function parseResultTitle(filePath: string): string {
 
 ## §10 DONE 阶段兜底提交
 
-> 本小节为 code-req 和 code-fix 的 DONE 阶段提供"兜底提交代码"的详细流程。
+> 本小节为 `/code req` 与 `/code fix` 流程的 DONE 阶段提供"兜底提交代码"的详细流程。
 > 在进入 DONE 阶段时加载。
 
 ### 步骤 1 — 检测 git 仓库
@@ -383,7 +377,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 
 示例:
 ```
-chore(code-req): REQ-00045 补充 REQ-00044 重构后丢失的旧技能能力
+chore(code req): REQ-00045 补充 REQ-00044 缺失的子命令能力
 
 需求分析:6 FR / 6 NFR / 12 AC
 软件设计:6 新增文件 / 7 修改文件 / 4 决策
@@ -451,7 +445,7 @@ C. 取消
 
 ### 各阶段产出物路径映射
 
-| 阶段 | code-req 产出物 | code-fix 产出物 |
+| 阶段 | `/code req` 产出物 | `/code fix` 产出物 |
 | --- | --- | --- |
 | INIT | — | `fix/<BUG>/BUG.md` |
 | REQUIRE | `req/<REQ>/REQUIRE.md`, `req/<REQ>/clarifications.md`(如有) | — |
@@ -463,7 +457,7 @@ C. 取消
 ### 确认提示模板
 
 ```
-=== code-req --confirm: <阶段名> 阶段完成 ===
+=== code req --confirm: <阶段名> 阶段完成 ===
 <摘要统计>
 
 产出物文件:

@@ -1,6 +1,6 @@
-# 代码审查阶段 — code-req
+# 代码审查阶段 — `/code req`
 
-> 本文件为 code-req 技能的 CHECK 阶段提供详细流程。在进入 CHECK 阶段时加载。
+> 本文件为 `/code req` 子命令的 CHECK 阶段提供详细流程。在进入 CHECK 阶段时加载。
 
 ## 目标
 
@@ -247,7 +247,7 @@ C. 记录但不修复
 
 阶段完成后弹出增强确认:
 ```
-=== code-req --confirm: CHECK 阶段完成 ===
+=== code req --confirm: CHECK 阶段完成 ===
 代码审查完成: <N> 发现 / <M> 必须改(已处理) / <K> 建议改 / <R> 轮循环
 结论: <通过/不通过>
 

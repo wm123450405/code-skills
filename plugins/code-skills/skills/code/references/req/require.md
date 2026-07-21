@@ -1,6 +1,6 @@
-# 需求分析阶段 — code-req
+# 需求分析阶段 — `/code req`
 
-> 本文件为 code-req 技能的 REQUIRE 阶段提供详细流程。在进入 REQUIRE 阶段时加载。
+> 本文件为 `/code req` 子命令的 REQUIRE 阶段提供详细流程。在进入 REQUIRE 阶段时加载。
 
 ## 目标
 
@@ -224,7 +224,7 @@ C. 两者共存,正交控制不同维度
 
 阶段完成后弹出增强确认:
 ```
-=== code-req --confirm: REQUIRE 阶段完成 ===
+=== code req --confirm: REQUIRE 阶段完成 ===
 需求分析完成: <N> FR / <M> NFR / <K> AC / <C> 待澄清
 
 产出物文件:
@@ -238,7 +238,7 @@ B. 中止(保存当前进度,退出)
 
 ### --auto 模式
 
-自动继续,屏幕输出 `[code-req --auto] REQUIRE 完成,自动继续`。阶段内澄清问题自动选推荐项,未确认项标注为"假设(待确认)"。
+自动继续,屏幕输出 `[code req --auto] REQUIRE 完成,自动继续`。阶段内澄清问题自动选推荐项,未确认项标注为"假设(待确认)"。
 
 ### 默认模式(无 flag)
 

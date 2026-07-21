@@ -1,12 +1,9 @@
 ---
 name: code
-description: 一体化开发工具集合并入口。包含 6 个子命令:ver(版本管理与开发看板——新项目初始化、版本切换、发布检查、无参数显示看板)/ req(需求开发——从需求分析到代码审查 7 阶段全流程)/ fix(缺陷修复——从缺陷登记到修复审查 6 阶段全流程)/ faq(知识查询——跨版本需求与缺陷检索,支持文档导出)/ rule(编码规范——用自然语言描述规则,自动整理为结构化条款)/ merge(分支合并——worktree 自动合回主干,智能解决冲突)。req/fix 调用时必须严格走 7/6 阶段流程,先建 req/<REQ>/ 或 fix/<BUG>/ 工作产物目录再动代码,严禁 EnterPlanMode 或在 PROCESS.md 最后阶段 ≠ CODING 时修改 CWD 源码。各子命令效果与原独立技能完全一致。
+description: 一体化开发工具集入口。包含 6 个子命令:ver(版本管理与开发看板——新项目初始化、版本切换、发布检查、无参数显示看板)/ req(需求开发——从需求分析到代码审查 7 阶段全流程)/ fix(缺陷修复——从缺陷登记到修复审查 6 阶段全流程)/ faq(知识查询——跨版本需求与缺陷检索,支持文档导出)/ rule(编码规范——用自然语言描述规则,自动整理为结构化条款)/ merge(分支合并——worktree 自动合回主干,智能解决冲突)。req/fix 调用时必须严格走 7/6 阶段流程,先建 req/<REQ>/ 或 fix/<BUG>/ 工作产物目录再动代码,严禁 EnterPlanMode 或在 PROCESS.md 最后阶段 ≠ CODING 时修改 CWD 源码。
 ---
 
 # `/code` — 一体化开发工具集
-
-> 本技能合并不久:`/code-ver` → `/code ver`、`/code-req` → `/code req`、以此类推。
-> 6 个子命令的输入参数、阶段流程、产出物、错误处理与原独立技能一一对应,**功能完全一致**。
 
 ---
 
@@ -135,7 +132,7 @@ B. 某条不清楚,先解释
 ║                          /code  · 一体化开发工具集                         ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 
-  /code 是合并 6 个原 code-* 技能的单一入口。首 token = 子命令。
+  /code 是单一入口。首 token = 子命令。
 
 ┌─────────────────────────────────────────────────────────────────────────┐
 │  ver   版本管理与开发看板                                                 │
@@ -220,7 +217,6 @@ F. /code merge        ← 合并 worktree
   · merge — worktree 合并
 
 常见误用对照:
-  /code-req "xxx"     →  /code req "xxx"     (用空格,不再用中横线)
   /code --ver         →  /code ver            (不要给子命令加 --)
   /code help          →  /code                (help 直接调 /code 看完整帮助)
 ```
@@ -251,20 +247,19 @@ F. /code merge        ← 合并 worktree
 
 ## 子命令索引
 
-| 子命令 | 入口 | 原技能 | 关键能力 |
-| --- | --- | --- | --- |
-| `ver` | `/code ver` | `code-ver` | 版本管理 + 开发看板 |
-| `req` | `/code req` | `code-req` | 需求开发 7 阶段全流程 |
-| `fix` | `/code fix` | `code-fix` | 缺陷修复 6 阶段全流程 |
-| `faq` | `/code faq` | `code-faq` | 知识查询 + 文档导出 |
-| `rule` | `/code rule` | `code-rule` | 编码规范管理 |
-| `merge` | `/code merge` | `code-merge` | worktree 自动合并 |
+| 子命令 | 入口 | 关键能力 |
+| --- | --- | --- |
+| `ver` | `/code ver` | 版本管理 + 开发看板 |
+| `req` | `/code req` | 需求开发 7 阶段全流程 |
+| `fix` | `/code fix` | 缺陷修复 6 阶段全流程 |
+| `faq` | `/code faq` | 知识查询 + 文档导出 |
+| `rule` | `/code rule` | 编码规范管理 |
+| `merge` | `/code merge` | worktree 自动合并 |
 
 ---
 
 ## 子命令:`ver` — 版本管理与开发看板
 
-> 替代原 `/code-ver`。所有行为一致。
 > 工作流细节见 `references/ver/common.md`。
 
 ### 目标
@@ -756,7 +751,6 @@ Suggestion:
 
 ## 子命令:`req` — 需求开发
 
-> 替代原 `/code-req`。所有行为一致。
 > 流程细节见 `references/req/common.md` / `require.md` / `design.md` / `plan.md` / `coding.md` / `check.md` / `runtime-environment.md`(根级)/ `languages/<lang>.md`。
 
 ### 启动检查(读取本节后立即执行)
@@ -909,7 +903,7 @@ Suggestion:
 - 在 CODING 阶段之前用 `Edit`/`Write` 修改任何 CWD 源代码
 - 用"用户描述复杂、需要先有一个完整方案再启动"为理由,直接编写源代码
 
-**反模式**:用户输入 `/code req "合并所有 code-* 技能为 1 个"` → 错误做法:`EnterPlanMode` + 写 plan 文件 → 用 `Edit` 改 SKILL.md。**正确做法**:进入 `INIT` → `REQUIRE`(补完需求)→ `DESIGN`(设计目录结构 + 对外接口)→ `PLAN`(分任务)→ 按任务 `CODING`(每任务产 TASK-N.md)。
+**反模式**:用户输入 `/code req "对 /code 技能做结构性改造"` → 错误做法:`EnterPlanMode` + 写 plan 文件 → 用 `Edit` 改 SKILL.md。**正确做法**:进入 `INIT` → `REQUIRE`(补完需求)→ `DESIGN`(设计目录结构 + 对外接口)→ `PLAN`(分任务)→ 按任务 `CODING`(每任务产 TASK-N.md)。
 
 **发现反模式**:立即停下,在 `req/<REQ>/PROCESS.md` 追加失败行并退到 INIT 阶段重新开始。
 
@@ -1043,7 +1037,7 @@ Suggestion:
 
 ### 衔接
 
-- **下游**:`code-check`(已内化在 CHECK 阶段);`/code ver --publish`(发布)
+- **下游**:CHECK 阶段已包含代码审查;`/code ver --publish` 用于发布
 - **上游**:`/code ver`(必须,提供激活版本);`/code rule`(项目级规范)
 - **横向**:`/code fix`(缺陷修复,复用本技能 references);`/code faq`(查询导出)
 
@@ -1088,7 +1082,6 @@ Suggestion:
 
 ## 子命令:`fix` — 缺陷修复
 
-> 替代原 `/code-fix`。所有行为一致。
 > 流程细节复用 `references/req/` 下文件(`common.md` / `design.md` / `plan.md` / `coding.md` / `check.md` / `runtime-environment.md`),fix 专用资料见 `references/fix/fix-register.md`。
 
 ### 启动检查(读取本节后立即执行)
@@ -1386,7 +1379,6 @@ Suggestion:
 
 ## 子命令:`faq` — 知识查询
 
-> 替代原 `/code-faq`。所有行为一致。
 > 流程细节见 `references/faq/common.md`。
 
 ### 目标
@@ -1607,7 +1599,6 @@ Suggestion:
 
 ## 子命令:`rule` — 编码规范管理
 
-> 替代原 `/code-rule`。所有行为一致。
 > 当前 SKILL.md 内未抽出独立的 references,模板见 `templates/rule/` 与 `templates/fix/assistants-layout.md`(后者为 assistants/ 目录结构示意)。
 
 ### 目标
@@ -1724,7 +1715,7 @@ Suggestion:
 
 ### Type B 子流程(AI 工作指引追加)
 
-适用对象:`<本仓库>/CLAUDE.md` 中的"AI 工作约定(由 code-rule 维护)"小节。
+适用对象:`<本仓库>/CLAUDE.md` 中的"AI 工作约定(由 `/code rule` 维护)"小节。
 新增"指引 N"小节,根据用户描述追加。
 
 ### Type C 子流程(模板内容提示追加)
@@ -1756,7 +1747,6 @@ Suggestion:
 
 ## 子命令:`merge` — Worktree 模式自动合并
 
-> 替代原 `/code-merge`。所有行为一致。
 > 当前 SKILL.md 内未抽出独立的 references。
 
 ### 目标

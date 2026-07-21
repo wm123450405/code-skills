@@ -1,6 +1,6 @@
-# 编码执行阶段 — code-req
+# 编码执行阶段 — `/code req`
 
-> 本文件为 code-req 技能的 CODING 阶段提供详细流程。在进入 CODING 阶段时加载。
+> 本文件为 `/code req` 子命令的 CODING 阶段提供详细流程。在进入 CODING 阶段时加载。
 
 ## 目标
 
@@ -17,7 +17,7 @@
 - `req/<REQ-NNNNN>/DESIGN.md`(设计参考)
 - `req/<REQ-NNNNN>/REQUIRE.md`(需求参考)
 - 项目级规范:`./assistants/rules/` 下所有文件
-- 语言适配:`./code-req/references/languages/<lang>.md`(按需加载)
+- 语言适配:`./references/req/languages/<lang>.md`(按需加载)
 - 当前项目代码:CWD 下的源文件
 
 ## 输出
@@ -94,7 +94,7 @@ function guardPredecessors(task, planMd):
     depTask = findTask(planMd, dep)
     if depTask.status != "已完成":
       print("前置任务未完成: ${dep}")
-      print("推荐先执行: code-it ${dep}")
+      print("推荐先执行 TASK-${dep}")
       return false
   return true
 ```
@@ -416,7 +416,7 @@ B. 中止
 
 `--confirm` 模式下弹出增强确认:
 ```
-=== code-req --confirm: CODING 阶段完成 ===
+=== code req --confirm: CODING 阶段完成 ===
 <N> 任务全部完成
 
 产出物文件:

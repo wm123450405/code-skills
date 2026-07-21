@@ -1,8 +1,8 @@
-# 运行环境探测与提示机制 — code-req / code-fix
+# 运行环境探测与提示机制 — `/code req` / `/code fix`
 
-> 本文件为 code-req 与 code-fix 技能在 CODING 阶段的最后编译/单测环节提供统一的运行环境处理规范,避免擅自安装运行环境造成不可预期的副作用。
+> 本文件为 `/code req` 与 `/code fix` 子命令在 CODING 阶段的最后编译/单测环节提供统一的运行环境处理规范,避免擅自安装运行环境造成不可预期的副作用。
 >
-> 在 CODING 阶段编译/单测步骤(对应 code-req references/coding.md §4.9-§4.11、code-fix SKILL.md 步骤 4)遇到"常规命令找不到运行环境"的场景时加载本文件。
+> 在 CODING 阶段编译/单测步骤(`/code req` 流程的 `references/req/coding.md` §4.9-§4.11、`/code fix` 流程的对应步骤)遇到"常规命令找不到运行环境"的场景时加载本文件。
 >
 > **本文件**也为各语言参考(`languages/<lang>.md`)提供统一的运行环境边界基线,使各语言文档能聚焦在命令模板而不是策略说明。
 
@@ -139,9 +139,9 @@ D. 终止整个任务(回退本任务代码)
 
 ## 衔接
 
-- 上游:`code-req references/coding.md` §4.9-§4.11(编译/运行/测试);`code-fix SKILL.md` 步骤 4(同一组步骤)
-- 下游:`code-req references/coding.md` §7 错误修复循环 / 步骤 5 撰写 TASK-N.md
-- 相关:`code-req/templates/TASK.md` 第 4 节验证结果(含一行运行时)
+- 上游:`references/req/coding.md` §4.9-§4.11(`/code req` 与 `/code fix` 流程共用)
+- 下游:`references/req/coding.md` §7 错误修复循环 / 步骤 5 撰写 TASK-N.md
+- 相关:`templates/req/TASK.md` 第 4 节验证结果(含一行运行时)
 
 ## 不要做的事
 

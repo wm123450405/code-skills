@@ -1,7 +1,7 @@
 # 需求文档 — {{REQ_ID}} · {{REQ_TITLE}}
 
 > 导出时间:{{导出时间}}
-> 来源:code-faq --require {{REQ_ID}}
+> 来源:`/code faq --require {{REQ_ID}}`
 
 ## 1. 需求概述
 

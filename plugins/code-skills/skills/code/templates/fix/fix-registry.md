@@ -1,7 +1,7 @@
 # 缺陷总览 — 版本 <版本号>
 
-> 本文件由 `code-fix` 技能维护,是**本版本所有缺陷**的注册表。
-> 每个缺陷的完整详情见 `./<缺陷编号>/RESULT.md`。
+> 本文件由 `/code fix` 子命令维护,是**本版本所有缺陷**的注册表。
+> 每个缺陷的完整详情见 `./<缺陷编号>/PROCESS.md` 与同级文档。
 > 最后更新:YYYY-MM-DD HH:mm
 > 适用版本:`<版本号>`
 
@@ -9,7 +9,7 @@
 
 | 字段 | 值 |
 | --- | --- |
-| 维护者 | `code-fix` |
+| 维护者 | `/code fix` |
 | 创建时间 | YYYY-MM-DD HH:mm |
 | 适用版本 | `<版本号>` |
 | 缺陷总数 | N |
@@ -21,8 +21,8 @@
 
 | 缺陷编号 | 严重度 | 标题 | 状态 | 报告时间 | 报告人 | 修复时间 | 修复人 | 关联需求 | 缺陷详情 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| BUG-00001 | P1 | <一句话> | 已修复-已验证 | YYYY-MM-DD | <报告人> | YYYY-MM-DD | <修复人> | REQ-... | [RESULT.md](BUG-00001/RESULT.md) |
-| BUG-00002 | P2 | <一句话> | 修复编码中 | YYYY-MM-DD | <报告人> | — | — | — | [RESULT.md](BUG-00002/RESULT.md) |
+| BUG-00001 | P1 | <一句话> | 已修复-已验证 | YYYY-MM-DD | <报告人> | YYYY-MM-DD | <修复人> | REQ-... | [PROCESS.md](BUG-00001/PROCESS.md) |
+| BUG-00002 | P2 | <一句话> | 修复编码中 | YYYY-MM-DD | <报告人> | — | — | — | [PROCESS.md](BUG-00002/PROCESS.md) |
 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 ### 状态值
@@ -78,14 +78,14 @@
 
 ## 变更记录
 
-> 写入方:`code-fix`(登记/状态推进)、`code-plan`(规划完成)、`code-it`(实施完成)、`code-check`(评审)
+> 写入方:`/code fix`(登记/状态推进/修复完成/评审发现)
 > 格式:`YYYY-MM-DD HH:mm <变更类型> <摘要> <关联缺陷>`
 
 | 时间 | 变更类型 | 变更摘要 | 关联缺陷 |
 | --- | --- | --- | --- |
-| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-00001(严重度 P1) | BUG-00001 |
+| YYYY-MM-DD HH:mm | 缺陷登记 | `/code fix` 创建缺陷 BUG-00001(严重度 P1) | BUG-00001 |
 | YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"报告"→"调查中" | BUG-00001 |
-| YYYY-MM-DD HH:mm | 缺陷登记 | code-fix 创建缺陷 BUG-00002(严重度 P2) | BUG-00002 |
+| YYYY-MM-DD HH:mm | 缺陷登记 | `/code fix` 创建缺陷 BUG-00002(严重度 P2) | BUG-00002 |
 | YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"调查中"→"修复规划中" | BUG-00001 |
 | YYYY-MM-DD HH:mm | 修复完成 | BUG-00001 修复完成,提交 abc1234 | BUG-00001 |
 | YYYY-MM-DD HH:mm | 状态推进 | BUG-00001 状态"已修复-待验证"→"已修复-已验证" | BUG-00001 |
@@ -93,8 +93,8 @@
 **变更类型枚举**:
 - `缺陷登记`:新增 BUG-NNN
 - `状态推进`:BUG-NNN 状态变化
-- `修复完成`:code-it 完成修复
-- `修复规划`:code-plan 完成 PLAN
-- `评审发现`:code-check 产出
+- `修复完成`:`/code fix` CODING 阶段完成所有任务
+- `修复规划`:`/code fix` PLAN 阶段产出 PLAN.md
+- `评审发现`:`/code fix` CHECK 阶段产出 CHECK.md
 - `关闭`:BUG-NNN 进入"已关闭"终态
 - `其他`

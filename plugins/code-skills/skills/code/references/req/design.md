@@ -1,6 +1,6 @@
-# 软件设计阶段 — code-req
+# 软件设计阶段 — `/code req`
 
-> 本文件为 code-req 技能的 DESIGN 阶段提供详细流程。在进入 DESIGN 阶段时加载。
+> 本文件为 `/code req` 子命令的 DESIGN 阶段提供详细流程。在进入 DESIGN 阶段时加载。
 
 ## 目标
 
@@ -67,7 +67,7 @@ C. 可维护性(代码清晰,易于修改)
 #### 屏显模板
 
 ```
-=== code-req DESIGN 设计目标确认 ===
+=== code req DESIGN 设计目标确认 ===
 设计目标: <--minimal/--extensible/--balanced>
 维度优先级: <功能性/扩展性/可维护性>(<高/中/低>)
 已回写至 DESIGN.md "## 设计目标" 小节
@@ -229,7 +229,7 @@ C. 直接替换旧接口(不兼容)
 1. **移除现有行为**:删除/禁用现有功能、命令行参数、API 接口
 2. **变更默认行为**:修改默认值、默认流程、默认输出格式
 3. **标记过时**:将现有功能标记为 deprecated
-4. **影响其他技能**:修改其他 `code-*` 技能依赖的接口/契约/文件格式
+4. **影响其他 `/code` 子命令**:修改其他 `/code` 子命令依赖的接口/契约/文件格式
 
 **处理流程**:
 
@@ -245,7 +245,7 @@ C. 直接替换旧接口(不兼容)
 当前默认行为:每个阶段完成后弹出 AskUserQuestion(继续/暂停/取消)
 设计方案选择:移除默认 AskUserQuestion,改为自动流转
 
-此变更影响所有使用 code-req/code-fix 的交互流程:
+此变更影响所有使用 `/code req` / `/code fix` 的交互流程:
 A. 同意移除,改为自动流转(需用户明确确认)
 B. 保留默认 AskUserQuestion,仅 --confirm 增强
 C. 保留默认 AskUserQuestion,同时支持 --confirm 增强
@@ -298,7 +298,7 @@ C. 保留默认 AskUserQuestion,同时支持 --confirm 增强
 
 阶段完成后弹出增强确认:
 ```
-=== code-req --confirm: DESIGN 阶段完成 ===
+=== code req --confirm: DESIGN 阶段完成 ===
 软件设计完成: <N> 模块 / <M> 接口 / <K> 决策
 
 产出物文件:
@@ -311,7 +311,7 @@ B. 中止(保存当前进度,退出)
 
 ### --auto 模式
 
-自动继续,屏幕输出 `[code-req --auto] DESIGN 完成,自动继续`。阶段内确认自动选推荐项,记录为"自动选择"。
+自动继续,屏幕输出 `[code req --auto] DESIGN 完成,自动继续`。阶段内确认自动选推荐项,记录为"自动选择"。
 
 ### 默认模式(无 flag)
 
