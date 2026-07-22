@@ -396,22 +396,36 @@ function findMainWorktree(target):
 - **上游**:`/code ver`(必须,提供激活版本);`/code req` 完成后**不**自动调本技能(职责分离)
 - **横向**:`/code ver` 看板算法(FR-6 复用其"算法 1 + 算法 5")
 
+## 必须做事项清单
+
+> 以下事项为强制要求,违反即视为本技能执行失败。
+> 详见 §0 不变式、`FR-12 worktree 操作契约`、`references/_shared/contracts.md` §8。
+
+### 工作区与流程
+
+- **执行前必须**读取 `./assistants/.current-version`;不存在则停下
+- **当前必须在** git worktree 内运行;主工作区调用立即报错(E-M1)
+- **执行前必须**检查当前 / feature / target 三处 worktree dirty;任一 dirty → 拒绝
+- **目标分支必须**通过 `git worktree list --porcelain` 解析主工作区,**必须**在主工作区执行 `git -C <main-worktree> merge <feature-branch> --no-ff`;**不得**直接 `git checkout` 目标分支
+- **冲突未解决时必须**返回非 0,屏显冲突文件列表,不得报告成功
+
+### 自动行为边界(显式"不做"的反向"必须不做"清单 — 保留位置)
+
+- **`git push` 必须**由用户手动执行;本技能**不**自动 push
+- **`git worktree remove` 必须**由用户手动执行;本技能**不**自动 remove
+- **不回滚**已 commit 的状态(冲突未解决时仅返回非 0,不 git reset)
+- **不写**任何过程文件 / 结果文件;所有结果仅屏显
+- **不调**任何其他子技能(INV-9 严守);不自动 `--publish` / `--auto` / 其他子技能
+- **不实现** v1 follow-up 项(`--ff-only` / `--target` / 自动 push / 自动 remove / 跨多 worktree / 自检自动修复)
+- **不接受** `--no-worktree` 开关;不接受 `--squash` 合并(必须用 `--no-ff`)
+
+### 配置文件
+
+- **本技能不修改**既有 SKILL.md / `marketplace.json` 既有字段 / `plugin.json` / `./assistants/rules/` 已有规范
+- **本技能不嵌入**具体 git 命令模板到 SKILL.md(命令参数应在调用时由用户/系统提供)
+
+---
+
 ## 不要做的事
 
-- 不要在没有 `.current-version` 的情况下继续(步骤 0 强制)
-- 不要在主工作区(非 worktree)中运行本技能(E-M1 立即报错)
-- 不要自动 `git push` 到 origin
-- 不要自动 `git worktree remove`
-- 不要回滚已 commit 的状态
-- 不要写任何过程文件 / 结果文件
-- 不要调任何其他子技能(INV-9 严守)
-- 不要自动 `/code ver --publish` / `/code req --auto` / 任何子技能
-- 不要修改既有 SKILL.md
-- 不要修改 `marketplace.json` 既有字段
-- 不要修改 `plugin.json`
-- 不要修改 `./assistants/rules/` 已有规范
-- 不要用 `--squash` 合并(必须用 `--no-ff`)
-- 不要实现 v1 follow-up 项(`--ff-only` / `--target` / 自动 push / 自动 remove / 跨多 worktree / 自检自动修复)
-- 不要在 SKILL.md 中嵌入具体 git 命令模板
-- 不要接受 `--no-worktree` 开关
-- 不要在异常 / 中止时尝试 flush 任何文件
+- (本节保留位置;具体约束见上文"必须做事项清单")

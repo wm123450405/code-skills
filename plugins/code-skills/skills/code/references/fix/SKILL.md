@@ -268,26 +268,52 @@ description: 缺陷修复 6 阶段全流程。仅首 token = `fix` 触发。例:
 - **上游**:`/code ver`(必须,提供激活版本);`/code rule`(项目级规范)
 - **横向**:`/code req`(需求开发,共用 `../req/`);`/code faq`(查询导出)
 
+## 必须做事项清单
+
+> 以下事项为强制要求,违反即视为本技能执行失败。
+> 本技能复用 `../req/` references(REPORT/PLAN/CODING/CHECK),阶段内澄清/异常处理与 `/code req` 一致,详见 `../req/SKILL.md` 必须做清单。
+
+### 阶段门控
+
+- **执行前必须**读取 `./assistants/.current-version`;不存在则停下提示用户先调 `/code ver`
+- **阶段开始/完成时必须**追加 `fix/<BUG>/PROCESS.md` 一行
+- **阶段失败时必须**追加 `PROCESS.md` 失败行,不得静默吞错
+- **6 阶段顺序必须**严格执行(`INIT → DESIGN → PLAN → CODING → CHECK → DONE`),严禁合并或跳过
+
+### 源码修改窗口
+
+- **修改 CWD 源码必须**仅在 `PROCESS.md` 最后阶段 = `CODING` 时执行
+- **本技能不**经过 REQUIRE 阶段;但**严禁**在 INIT 阶段做技术选型(归 DESIGN 阶段)
+
+### 文档与规范
+
+- **代码注释必须**用功能描述,**不得**出现 BUG-NNNNN / TASK-* 追踪编号
+- **修改既有规则文件**时**必须**用 `Edit` 在末尾追加;新建分类**必须**用 `Write` 首次
+- **修改 `RESULT.md` 时必须**只动本技能负责的缺陷清单区段,不得越界写需求清单
+
+### 阶段内操作
+
+- **阶段内澄清问题**每轮**必须**聚焦 1-3 个最阻塞的点
+- **DESIGN 阶段必须**完成 §9 全部用户确认(扩展性/方案选型/改修方案/危险操作);复用 `../req/design.md`
+- **危险操作**(移除/变更现有行为)时必须执行 `design.md` §9d 确认流程
+- **CODING 阶段编译/测试前必须**先检测项目语言
+- **审查改修时必须**只处理发现清单中的项;其他问题记入 `deviations.md`
+
+### 运行时
+
+- **CODING 阶段编译/测试运行时缺失必须**先尝试运行一次,确认是"运行时缺失"才触发确认机制(见 `../runtime-environment.md` §0)
+- **系统级安装**(`winget`/`brew`/`apt` 等)**必须**经用户明确同意
+- **运行时配置必须**只以枚举值(机器值)记录,不写路径到 TASK/PROCESS/LOG
+
+### 模式
+
+- **`--auto` 模式下**所有 `AskUserQuestion` 自动选第一项;**默认/--confirm 模式下**阶段内澄清正常触发
+
+---
+
 ## 不要做的事
 
-- 不要在没有 `./assistants/.current-version` 的情况下继续执行
-- 不要在 CODING 阶段之外修改 CWD 源码
-- 不要跳过 PROCESS.md 追加(断点续跑的唯一依据)
-- 不要在阶段失败时不追加 PROCESS.md 失败记录
-- 不要在 `--auto` 模式下弹出 `AskUserQuestion`
-- 不要在代码注释中引用 REQ-NNNNN/BUG-NNNNN/TASK-* 追踪编号
-- 不要修改 `./assistants/rules/` 下的任何内容
-- 不要修改 `RESULT.md` 中非本技能负责的区段
-- 不要在 INIT 阶段做技术选型(归 DESIGN 阶段)
-- 不要一次问完所有澄清问题(每轮 1-3 个最阻塞的点)
-- 不要在 DESIGN 阶段涉及移除/变更现有行为时跳过危险操作确认(见 `../req/design.md` §9d)
-- 不要在 DESIGN 阶段跳过步骤 9 用户确认(扩展性/方案选型/改修方案/危险操作)
-- 不要在 CODING 阶段未尝试执行编译/单测就先询问"是否需要安装运行时"——必须先尝试运行,确认是"运行时缺失"而非"依赖包缺失"才触发确认机制(见 `../runtime-environment.md`)
-- 不要在 CODING 阶段未经用户同意(非 `--auto`)擅自执行 `winget/brew/apt install` 等系统级安装
-- 不要把运行时安装位置、用户提供的运行时路径、PATH 内容等写入 TASK.md / PROCESS.md / LOG.md
-- 不要把用户的本地运行时配置存为 MEMORY 项
-- **不要调 `EnterPlanMode`**:本技能的 PLAN 阶段(`PLAN.md`)已取代其功能
-- **不要在 `PROCESS.md` 最后阶段 ≠ `CODING` 时用 `Edit`/`Write` 修改 CWD 源代码**:识别后立即停,`fix/<BUG>/PROCESS.md` 追加失败行,回退到 INIT
+- (本节保留位置;具体约束见上文"必须做事项清单")
 
 ## 启动纪律自检表(进入步骤 1 之前必读)
 
