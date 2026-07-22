@@ -14,3 +14,4 @@
 | 2026-07-22 11:23 | CODING | TASK-00009~00011 (M4) | 完成 | FR-7 PLAN.md 附录 A 测试状态流转 / FR-8 CHECK.md 9 维度 + 契约层 §10 / FR-10 TASK.md + runtime-environment.md 统一为 5 项机器值
 | 2026-07-22 11:28 | CODING | TASK-00012~00015 (M5) | 完成 | FR-9 ver 四步流程 + SKILL.md 声明同步 / FR-12 merge worktree 主工作区操作 + dirty 检查 / FR-13 merge 看板自检 dashboard-v2 + 现存 RESULT.md 迁移 / FR-14 rule Type A/B/C 表格化;RESULT.md.bak.2026-07-22 备份保留 |
 | 2026-07-22 11:31 | CHECK | 完成 | 9 维度审查 / 0 发现 / 1 轮循环 / 3 项已知边界(merge worktree 需冒烟 / require 兼容 V0.0.7 内 / RESULT.md 兼容已移除) |
+| 2026-07-22 11:33 | DONE | 完成 | 全部阶段完成;commit hash d2c3fed;44 文件 / +3600 / -124;建议下一步: /code ver --publish(若需发布本版本)或 /code faq --summary REQ-OPT-00001 导出概要 |
