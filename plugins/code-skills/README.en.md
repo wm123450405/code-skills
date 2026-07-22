@@ -23,7 +23,7 @@ After installation, the entry skill is `/code-skills:code`, which dispatches sub
 
 ## Skills Overview
 
-This plugin exposes **a single entry skill `/code`** with 6 subcommands:
+This plugin exposes **a single entry skill `/code`** with 6 business subcommands + 1 help branch (7 routing options total):
 
 **Main Flow**:
 
@@ -137,4 +137,4 @@ assistants/
 
 ## Detailed Documentation
 
-The single entry skill document: [`code/SKILL.md`](skills/code/SKILL.md) — covers all 6 subcommands with their complete workflow.
+The single entry skill document: [`code/SKILL.md`](skills/code/SKILL.md) — covers all 6 business subcommands + 1 help branch (7 routing options total) with their complete workflow.

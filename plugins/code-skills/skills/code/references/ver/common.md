@@ -1,6 +1,18 @@
 # 公共流程 — `/code ver`
 
 > 本文件为 `/code ver` 子命令提供场景检测、初始化、版本切换、发布检查的详细流程。始终加载。
+>
+> **契约层引用**:本文件中所有"派生状态"的逻辑(§4 发布检查 / §8.6 高优先级缺陷统计)统一通过 `deriveItemStatus()` 实现,该函数定义在 `references/_shared/contracts.md` §3。`RESULT.md` 不再作为动态状态数据源(FR-1)。
+
+## §0 派生函数引用
+
+```
+// 完整定义见 references/_shared/contracts.md §3
+// 本文件不重复定义,所有调用方按契约层签名使用:
+//   deriveItemStatus(reqOrBugId: string): ItemStatus
+// 返回 { stage, devStatus, testStatus, completed }
+// 编号不存在 → 返回 { stage: 'UNKNOWN', devStatus: 'N/A', testStatus: 'N/A', completed: false }
+```
 
 ## §1 场景检测
 
@@ -429,8 +441,13 @@ function writeExistingRequirement(feature, version):
   | {now} | v1 | 需求登记 | `/code ver` 识别并登记现有功能 | <unknown> |
   """
 
-  mkdir -p "assistants/{version}/require/EXISTING-{feature.id}/"
-  Write "assistants/{version}/require/EXISTING-{feature.id}/RESULT.md", content
+  mkdir -p "assistants/{version}/req/EXISTING-{feature.id}/"
+  Write "assistants/{version}/req/EXISTING-{feature.id}/RESULT.md", content
+  // 兼容读取(NFR-7, V0.0.7 之内有效,V0.0.8 起移除):
+  // 扫描时若发现旧的 require/EXISTING-NNN/ 目录,自动 mv 到 req/
+  legacyRequireDir = "assistants/{version}/require/EXISTING-{feature.id}/"
+  if exists(legacyRequireDir):
+    mv legacyRequireDir "assistants/{version}/req/EXISTING-{feature.id}/"
 ```
 
 #### 回填版本看板
@@ -439,18 +456,16 @@ function writeExistingRequirement(feature, version):
 function backfillDashboard(version, features):
   dashboard = Read("assistants/{version}/RESULT.md")
   // 在"需求清单"区段追加 M 行
+  // 注意:dashboard-v2 schema 不存动态状态列(FR-1);状态从 deriveItemStatus() 派生
+  // 写入时只填静态字段(编码 / 标题 / 进度文档);EXISTING-NNN 在 /code ver 初始化阶段
+  // 由 deriveItemStatus() 判定为已完成(基线功能,无 PROCESS.md)
   for feature in features:
     appendToDashboard("需求清单", {
       需求编码: "EXISTING-{feature.id}",
       标题: feature.name,
-      状态: "已完成",
-      创建时间: now,
-      完成时间: now,
-      需求文档: "[RESULT.md](require/EXISTING-{feature.id}/RESULT.md)",
+      进度文档: "[RESULT.md](req/EXISTING-{feature.id}/RESULT.md)",
     })
-  // 更新统计
-  updateStats("需求清单", total: features.length, 已完成: features.length)
-  // 追加变更记录
+  // 追加变更记录(变更记录保留,因为它本身是"何时发生什么"的元信息,不是动态状态)
   appendChangeRecord("需求新增", "批量登记了 {features.length} 条现有功能需求")
 ```
 
@@ -612,28 +627,32 @@ function verifyAndReport(version):
 
 ```
 function preflightCheck(version):
-  dashboard = Read("assistants/{version}/RESULT.md")
+  // 数据源:从各需求/缺陷的 PROCESS.md / PLAN.md / BUG.md 派生,
+  // 不再从 RESULT.md 状态列读取(FR-1, schema-v2 不存动态状态列)
+  requirements = Glob(`assistants/${version}/req/REQ-*/`)
+  defects = Glob(`assistants/${version}/fix/BUG-*/`)
 
-  // 解析 3 区段
-  requirements = parseSection(dashboard, "需求清单")
-  defects = parseSection(dashboard, "缺陷清单")
-
-  // 判定规则
   undone = []
-  for req in requirements:
-    if not req.状态.startswith("已完成"):
-      undone.push({ type: "需求", id: req.编码, title: req.标题, status: req.状态 })
+  for reqDir in requirements:
+    reqId = extractReqId(reqDir)  // 例:REQ-00051
+    status = deriveItemStatus(reqId)
+    if not status.completed:
+      meta = readReqMeta(reqId)    // 读 REQUIRE.md 的标题
+      undone.push({ type: "需求", id: reqId, title: meta.title, stage: status.stage })
 
-  for defect in defects:
-    if defect.状态 != "已修复":
-      undone.push({ type: "缺陷", id: defect.编号, title: defect.标题, status: defect.状态 })
+  for bugDir in defects:
+    bugId = extractBugId(bugDir)  // 例:BUG-00009
+    status = deriveItemStatus(bugId)
+    if not status.completed:
+      meta = readBugMeta(bugId)    // 读 BUG.md 的标题
+      undone.push({ type: "缺陷", id: bugId, title: meta.title, stage: status.stage })
 
   return {
     passed: undone.length == 0,
     undone: undone,
     stats: {
-      requirements: { total: requirements.length, done: requirements.length - countUndone(requirements, "需求") },
-      defects: { total: defects.length, done: defects.length - countUndone(defects, "缺陷") },
+      requirements: { total: requirements.length, done: countCompleted(requirements) },
+      defects: { total: defects.length, done: countCompleted(defects) },
     }
   }
 ```
@@ -859,10 +878,17 @@ function formatPublishReport(result):
 
 ---
 
-## §5 CWD 描述文件版本号同步
+## §5 CWD 描述文件版本号同步(四步流程,FR-9 方案 B)
+
+> 用户 2026-07-22 10:58 拍板方案 B:保留自动同步 CWD 描述文件的默认行为,加"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步前置。完整契约见 `references/_shared/contracts.md` §7。
 
 ```
-function syncCwdVersionFiles(newVersion):
+function syncCwdVersionFiles(newVersion, flags):
+  // 跳过同步开关:--no-sync
+  if flags.includes("--no-sync"):
+    print("⚠ --no-sync 启用,跳过 CWD 描述文件同步")
+    return
+
   descriptorFiles = [
     "package.json",     // Node.js / npm
     "pom.xml",          // Maven Java
@@ -878,26 +904,62 @@ function syncCwdVersionFiles(newVersion):
     print("⚠ CWD 下未检测到任何已知工程类型描述文件,跳过同步")
     return
 
+  // 步骤 1:差异预览
+  pendingChanges = []
   for file in matched:
-    try:
-      if file == "go.mod":
-        print("⚠ go.mod 无版本号字段(Go 用 git tag),跳过")
-        continue
-
-      content = Read(file)
-      oldVersion = parseVersionField(file, content)
-
-      if oldVersion == null:
-        print("⚠ {file} 未找到版本号字段,跳过")
-        continue
-
-      newContent = replaceVersionField(file, content, newVersion)
-      Write(file, newContent)
-
-      print("✓ CWD 描述文件同步:{file}: {oldVersion} → {newVersion}")
-    catch error:
-      print("⚠ {file} 格式不可解析,跳过")
+    if file == "go.mod":
+      print("⚠ go.mod 无版本号字段(Go 用 git tag),跳过")
       continue
+    content = Read(file)
+    oldVersion = parseVersionField(file, content)
+    if oldVersion == null:
+      print("⚠ {file} 未找到版本号字段,跳过")
+      continue
+    newContent = replaceVersionField(file, content, newVersion)
+    diffSummary = computeDiff(content, newContent)
+    pendingChanges.push({ file: file, oldVersion: oldVersion, newVersion: newVersion, newContent: newContent, diff: diffSummary })
+
+  if pendingChanges.length == 0:
+    print("✓ 无 CWD 描述文件需要同步")
+    return
+
+  print("""
+  ╔══ CWD 描述文件版本号同步预览 ══╗
+  待变更 {pendingChanges.length} 项:
+  {formatPendingChanges(pendingChanges)}
+  ╚════════════════════════════════╝
+  """)
+
+  // 步骤 2:用户确认
+  response = AskUserQuestion("确认同步?", [
+    "A. 全部同步(推荐)",
+    "B. 中止(只更新 .current-version,不写 CWD)",
+    "C. 仅同步特定文件(子流程:列出文件名让用户多选)",
+  ])
+
+  if response == "B":
+    print("⚠ 用户中止同步,只更新 .current-version")
+    return
+  if response == "C":
+    pendingChanges = filterByUserSelection(pendingChanges)
+
+  // 步骤 3:写文件 + 失败回滚
+  appliedFiles = []
+  for change in pendingChanges:
+    try:
+      Write(change.file, change.newContent)
+      appliedFiles.push(change.file)
+      print("✓ {change.file}: {change.oldVersion} → {change.newVersion}")
+    catch error:
+      // 失败回滚:已写的也回退
+      for applied in appliedFiles:
+        git checkout -- applied
+      print("✗ {change.file} 写入失败,已回滚所有已变更文件: {error}")
+      return 1
+
+  // 步骤 4:提交记录(走 BUG-00009 的修复路径:流程末尾统一 commit)
+  print("✓ CWD 描述文件同步完成 {appliedFiles.length} 项;待流程末尾统一 commit")
+  return 0
 ```
 
 ### 版本号字段解析
@@ -1145,19 +1207,27 @@ function classifyByStatus(reqProcesses, bugProcesses):
 ### §8.6 高优先级缺陷统计
 
 ```
-function countHighPriorityBugs(bugRows):
+function countHighPriorityBugs(bugRows, version):
+  // 数据源:从 BUG.md 派生 + deriveItemStatus(),
+  // 不再从 RESULT.md 状态/优先级列读取(FR-1, schema-v2 不存动态状态列)
+  // bugRows 参数仅用于回退展示,实际统计走派生
   p0 = 0
   p1 = 0
-  for bug in bugRows:
-    // 按列名匹配,而非列号位置
-    priority = getField(bug, "优先级")  // 或 "级别" / "严重程度"
-    status = getField(bug, "状态")      // 或 "缺陷状态"
-    if status in ["已完成", "已修复-已验证", "已关闭"]:
+  bugDirs = Glob(`assistants/${version}/fix/BUG-*/`)
+
+  for bugDir in bugDirs:
+    bugId = extractBugId(bugDir)
+    bugMeta = readBugMeta(bugId)        // 读 BUG.md 的优先级 + 标题
+    status = deriveItemStatus(bugId)
+
+    // 仅统计未完成的(契约层 §3 判定 completed)
+    if status.completed:
       continue
-    if priority == "P0":
+    if bugMeta.priority == "P0":
       p0++
-    else if priority == "P1":
+    else if bugMeta.priority == "P1":
       p1++
+
   return { p0, p1 }
 ```
 

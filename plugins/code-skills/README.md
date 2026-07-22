@@ -23,7 +23,7 @@ claude plugin install code-skills@code-skills-marketplace
 
 ## 技能概览
 
-本插件提供 **1 个入口技能 `/code`**,含 6 个子命令:
+本插件提供 **1 个入口技能 `/code`**,含 6 个业务子命令 + 1 个帮助分支(共 7 个路由选项):
 
 **主流程**:
 
@@ -40,6 +40,8 @@ claude plugin install code-skills@code-skills-marketplace
 | `/code faq` | 知识查询 | 跨版本查询需求/缺陷,支持导出文档 |
 | `/code rule` | 编码规范 | 用自然语言描述规范,自动整理为结构化条款 |
 | `/code merge` | 分支合并 | Worktree 模式下自动合并回主干,智能解决冲突 |
+
+**帮助**:`/code help`(或首 token 不可识别时自动进入)
 
 ## 快速上手
 
@@ -137,4 +139,4 @@ assistants/
 
 ## 详细文档
 
-主技能入口:[`code/SKILL.md`](skills/code/SKILL.md),含 6 个子命令完整工作流说明。
+主技能入口:[`code/SKILL.md`](skills/code/SKILL.md),含 6 个业务子命令 + 1 个帮助分支(共 7 个路由选项)完整工作流说明。

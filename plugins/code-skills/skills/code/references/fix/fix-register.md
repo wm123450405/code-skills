@@ -13,7 +13,7 @@
 | 产出 | REQUIRE.md(FR/NFR/AC) | BUG.md(缺陷描述/触发条件/可能成因/影响范围) |
 | 关注点 | 功能点(系统必须做什么) | 缺陷(系统哪里出了问题) |
 | 要素 | FR/NFR/AC/用户角色/交互流程 | 缺陷描述/触发条件/可能成因/影响范围/严重程度 |
-| 模板 | templates/REQUIRE.md | templates/BUG.md |
+| 模板 | templates/req/REQUIRE.md | templates/fix/BUG.md |
 
 ## 输入
 
@@ -107,7 +107,7 @@ function allocateBugNum(versionPath):
 
 ### 步骤 6 — 撰写 BUG.md
 
-按 `templates/BUG.md` 结构生成:
+按 `templates/fix/BUG.md` 结构生成:
 
 ```
 # 缺陷分析 — <BUG-NNNNN> · <标题>

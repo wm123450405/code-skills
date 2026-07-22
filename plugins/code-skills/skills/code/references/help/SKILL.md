@@ -1,6 +1,6 @@
 ---
-name: code-help
-description: /code 完整帮助与参数异常引导。当首 token 不在 {ver, req, fix, faq, rule, merge} 之中时触发,或用户输入 `/code`(无任何参数)/ `/code help` / `/code --help` / `/code -h` 时触发。负责输出完整 HELP + 6 选项 AskUserQuestion。
+name: help
+description: /code 完整帮助与参数异常引导。当首 token 不在 {ver, req, fix, faq, rule, merge} 之中时触发,或用户输入 `/code`(无任何参数)/ `/code help` / `/code --help` / `/code -h` 时触发。负责输出完整 HELP + 7 选项 AskUserQuestion(6 个业务命令 + help)。
 ---
 
 # `/code help` — 帮助引导

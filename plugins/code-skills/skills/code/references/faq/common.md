@@ -71,7 +71,7 @@ function determineSearchScope():
 
 2. **Grep 关键词匹配**:
    - 在列出的文档中 `Grep` 查询词(模糊匹配)
-   - 匹配:文档标题(H1)、需求概述(§1)、功能需求(FR)、缺陷描述(§1)
+   - 匹配:文档标题(H1)、需求概述章节、FR 章节标题、缺陷描述章节
 
 3. **相关性排序**:
    - 标题匹配 > 概述匹配 > FR/缺陷描述匹配
@@ -95,7 +95,7 @@ function determineSearchScope():
 
 1. `Read` 完整文档
 2. 提取:
-   - **需求**:FR 列表(§4)、NFR 列表(§5)、AC 列表(§10)
+   - **需求**:FR 列表(## 3. 功能需求(FR))、NFR 列表(## 4. 非功能需求(NFR))、AC 列表(## 5. 验收标准(AC))
    - **缺陷**:缺陷描述(§1)、触发条件(§2)、可能成因(§3)、影响范围(§4)
 3. 标注来源路径
 
@@ -212,12 +212,12 @@ function writeExport(outputPath, content):
 | --- | --- | --- |
 | `{{REQ_ID}}` | REQUIRE.md 文档头 | 需求编号 |
 | `{{REQ_TITLE}}` | REQUIRE.md H1 | 需求标题 |
-| `{{需求概述}}` | REQUIRE.md §1 | 需求概述全文 |
-| `{{FR_LIST}}` | REQUIRE.md §4 | 功能需求列表 |
-| `{{NFR_LIST}}` | REQUIRE.md §5 | 非功能需求列表 |
-| `{{AC_LIST}}` | REQUIRE.md §10 | 验收标准列表 |
-| `{{关联需求}}` | REQUIRE.md §11 | 关联需求列表 |
-| `{{待澄清}}` | REQUIRE.md §12 | 待澄清项列表 |
+| `{{需求概述}}` | REQUIRE.md ## 1. 需求概述 | 需求概述全文 |
+| `{{FR_LIST}}` | REQUIRE.md ## 3. 功能需求(FR)(或锚点 `<!-- code-skills:field=FR_LIST -->`) | 功能需求列表 |
+| `{{NFR_LIST}}` | REQUIRE.md ## 4. 非功能需求(NFR)(或锚点 `<!-- code-skills:field=NFR_LIST -->`) | 非功能需求列表 |
+| `{{AC_LIST}}` | REQUIRE.md ## 5. 验收标准(AC)(或锚点 `<!-- code-skills:field=AC_LIST -->`) | 验收标准列表 |
+| `{{关联需求}}` | REQUIRE.md ## 6. 关联需求(或锚点 `<!-- code-skills:field=RELATED -->`) | 关联需求列表 |
+| `{{待澄清}}` | clarifications.md | 待澄清项列表 |
 
 ### 设计导出(--design)占位符
 

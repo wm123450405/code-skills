@@ -177,7 +177,7 @@ C. 记录但不修复
 
 ### 步骤 6 — 撰写 CHECK.md
 
-按 `templates/CHECK.md` 结构生成:
+按 `templates/req/CHECK.md` 结构生成:
 
 ```
 # 代码审查 — <REQ-NNNNN> · <标题>

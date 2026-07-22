@@ -237,50 +237,106 @@ function FR5_verifyCommit():
    print "✓ 所有文件已提交,准备合回主分支"
 ```
 
-### 步骤 FR-6 — 看板自检(2 区段,全自动)
+### 步骤 FR-6 — 看板自检(dashboard-v2,FR-13 修复)
 
 ```
 function FR6_dashboardCheck():
+ // FR-13:只校验 dashboard-v2 schema;不保留旧 schema 兼容模式(用户 2026-07-22 10:55 确认)
+ // 详细契约见 references/_shared/contracts.md §1
  version = read("./assistants/.current-version")
  result_md = read(f"assistants/{version}/RESULT.md")
 
- sections = ["需求清单", "缺陷清单"]
+ // 校验 schema 标记
+ if not has_schema_marker(result_md, "schema: dashboard-v2"):
+   print "✗ RESULT.md 不含 dashboard-v2 schema 标记;非阻塞但提示用户就地升级"
+   print "  (TASK-REQ-OPT-00001-00014 应在迁移时处理)"
 
  all_consistent = true
- for section in sections:
-   section_start = find_section(result_md, f"^## {section}$")
-   table_rows = count_table_rows(result_md, section_start)
-   stat_value = extract_stat(result_md, section)
 
-   if table_rows == stat_value:
-     print f"✓ {section}: {table_rows} 行 (一致)"
-   else:
-     print f"✗ {section}: 表格 {table_rows} 行 vs 统计 {stat_value} 行"
-     all_consistent = false
+ // 校验需求清单(3 列:编码 / 标题 / 进度文档;无动态状态列)
+ req_section = find_section(result_md, "^## 需求清单$")
+ req_headers = extract_table_headers(result_md, req_section)
+ expected_req_headers = ["需求编码", "标题", "进度文档"]
+ if req_headers != expected_req_headers:
+   print f"✗ 需求清单表头不符合 dashboard-v2:实际 {req_headers} vs 期望 {expected_req_headers}"
+   all_consistent = false
+ else:
+   print "✓ 需求清单:3 列符合 dashboard-v2"
+
+ // 校验缺陷清单(同上)
+ bug_section = find_section(result_md, "^## 缺陷清单$")
+ bug_headers = extract_table_headers(result_md, bug_section)
+ expected_bug_headers = ["缺陷编号", "标题", "进度文档"]
+ if bug_headers != expected_bug_headers:
+   print f"✗ 缺陷清单表头不符合 dashboard-v2:实际 {bug_headers} vs 期望 {expected_bug_headers}"
+   all_consistent = false
+ else:
+   print "✓ 缺陷清单:3 列符合 dashboard-v2"
+
+ // 校验条目唯一性(进度文档链接不应重复)
+ if has_duplicate_progress_links(result_md):
+   print "✗ 看板存在重复的进度文档链接"
+   all_consistent = false
 
  if all_consistent:
-   print "✓ 看板自检通过"
+   print "✓ 看板自检通过(dashboard-v2)"
  else:
    print "⚠ 看板自检发现问题(非阻塞)"
 ```
 
-### 步骤 FR-7 — 合并 worktree 到主分支
+### 步骤 FR-7 — 合并 worktree 到主分支(FR-12 修复)
 
 ```
 function FR7_mergeToMain():
+ // FR-12 修复:不在当前 worktree checkout 目标分支;改在主工作区执行 merge
+ // 详细契约见 references/_shared/contracts.md §8
  target = env.CODE_MERGE_TARGET ?? "main"
 
- checkout = exec(f"git checkout {target}")
- if checkout.exit_code != 0:
-   print f"✗ git checkout {target} 失败: {checkout.stderr}"
+ // 找到目标分支对应的主工作区(主工作区才能 checkout 该分支)
+ // linked worktree 不能同时 checkout 同一分支,所以这里不能用当前 worktree
+ main_worktree = findMainWorktree(target)
+ if main_worktree == null:
+   print f"✗ 未找到 {target} 分支对应的主工作区"
    exit(非 0)
+
+ // 前置检查:target 主工作区 dirty → 拒绝
+ target_status = exec("git status --porcelain", cwd=main_worktree)
+ if target_status.stdout.strip():
+   print f"✗ {target} 主工作区 dirty,拒绝合并:"
+   print target_status.stdout
+   exit(非 0)
+
+ // 在主工作区 fetch + merge
+ exec(f"git -C {main_worktree} fetch origin {target}")
 
  worktree_branch = exec("git rev-parse --abbrev-ref HEAD", cwd=worktree_path)
  merge_msg = f"Merge branch '{worktree_branch}' into {target}"
- merge = exec(f"git merge {worktree_branch} --no-ff -m \"{merge_msg}\"")
+ merge = exec(f"git -C {main_worktree} merge {worktree_branch} --no-ff -m \"{merge_msg}\"")
  if merge.exit_code != 0:
-   print f"✗ git merge 失败: {merge.stderr}"
+   // unresolved 冲突必须返回非 0,不报告成功
+   unmerged = exec(f"git -C {main_worktree} diff --name-only --diff-filter=U")
+   if unmerged.stdout.strip():
+     print f"✗ git merge 失败,unmerged 文件:"
+     print unmerged.stdout
+     print "(请手动解决冲突后重试)"
+   else:
+     print f"✗ git merge 失败: {merge.stderr}"
    exit(非 0)
+
+ // 拆分后的 CODE_MERGE_TARGET 语义:分支名 / 远端 ref / 本地 checkout 目标分开建模
+ print f"✓ 在 {main_worktree} 执行 git merge {worktree_branch} --no-ff 完成"
+```
+
+#### findMainWorktree(target)
+
+```
+function findMainWorktree(target):
+ // 用 git worktree list --porcelain 找到 target 分支对应的工作区
+ worktrees = exec("git worktree list --porcelain").stdout
+ // 解析每个 worktree 块(以空行分隔)
+ // 找第一个 HEAD 匹配 origin/{target} 或 {target} 的块,提取 worktree 路径
+ // 如果找不到,返回 null
+ return main_worktree_path  // or null
 ```
 
 ### 步骤 FR-8 — 退出与清理

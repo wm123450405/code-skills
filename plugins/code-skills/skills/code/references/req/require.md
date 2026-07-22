@@ -104,18 +104,17 @@ function allocateReqNum(versionPath):
 
 > 在生成 AskUserQuestion 候选选项后,先按关键词集过滤技术选型类问题,延迟到 DESIGN 阶段。
 
-**关键词集**(20 个):
-```
-{技术选型, 实现方式, 框架, 库, 工具, monorepo, single-package, pnpm, npm, yarn, Jest, Vitest, Mocha, React, Vue, Angular, 数据库, ORM, 消息队列, 缓存, Redis, MongoDB}
-```
+**关键词集**(见契约层 `references/_shared/contracts.md` §9,不在本文件重复定义):
+
+- `decisionKeywords`:命中 → 延迟到 DESIGN 阶段,不弹出 AskUserQuestion
+- `conflictKeywords`:即使属于技术词也必须在 REQUIRE 阶段确认(因属于"需求冲突"范畴)
 
 **过滤规则**:
-- 命中任一关键词的候选选项 → **不**弹出 AskUserQuestion
-- 改为追加到 `clarifications.md` 的 `## 延迟到 DESIGN 阶段(技术选型类)` 区段
-- 每条含:`时间` / `原始问题` / `命中的关键词` / `延迟到=DESIGN` 字段
-- 未命中关键词的候选选项 → 照常弹出 AskUserQuestion
+- 命中 `decisionKeywords` 任一 → 不弹出 AskUserQuestion,改为追加到 `clarifications.md` 的 `## 延迟到 DESIGN 阶段(技术选型类)` 区段
+- 命中 `conflictKeywords` 任一 → **照常**弹出 AskUserQuestion(§5c 强制确认)
+- 每条记录含:`时间` / `原始问题` / `命中的关键词` / `延迟到=DESIGN` 或 `强制确认=REQUIRE`
 
-> **不过滤技术选型类问题**:本阶段确定功能点,技术选型归 DESIGN 阶段。
+> **不过滤技术选型类问题**:本阶段确定功能点,纯技术选型归 DESIGN 阶段;但属于"需求冲突"的,即使包含技术词也必须在本阶段确认。
 
 #### 5b. 边界条件确认
 
@@ -163,7 +162,7 @@ C. 两者共存,正交控制不同维度
 
 ### 步骤 6 — 撰写 REQUIRE.md
 
-按 `templates/REQUIRE.md` 结构生成:
+按 `templates/req/REQUIRE.md` 结构生成:
 
 ```
 # 需求分析 — <REQ-NNNNN> · <标题>
@@ -197,8 +196,7 @@ C. 两者共存,正交控制不同维度
 
 ## 技术选型过滤
 
-> 本阶段不涉及技术选型。以下关键词命中的内容**不写入** REQUIRE.md,留待 DESIGN 阶段处理:
-> `{技术选型, 实现方式, 框架, 库, 工具, 数据库, ORM, 消息队列, 缓存, 架构风格, 部署形态}`
+> 本阶段不涉及技术选型。决策词表(`decisionKeywords`)与冲突词表(`conflictKeywords`)均在契约层 `references/_shared/contracts.md` §9 定义,本文件不再重复列出。
 
 ## clarifications.md 记录机制(新增)
 

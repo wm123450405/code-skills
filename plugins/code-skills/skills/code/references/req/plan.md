@@ -190,7 +190,7 @@ graph TD
 
 ### 步骤 7 — 撰写 PLAN.md
 
-按 `templates/PLAN.md` 结构生成:
+按 `templates/req/PLAN.md` 结构生成:
 
 ```
 # 任务排期 — <REQ-NNNNN> · <标题>

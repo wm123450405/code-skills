@@ -17,9 +17,9 @@
 
 `/code ver` 是**必备的前置门** —— 提供新项目初始化、版本切换、发布检查、开发进度看板四种能力:新项目自动检测并初始化;已初始化项目无参数时显示开发进度看板;传入版本号执行版本切换;`--publish` 发布检查。
 
-`/code req` 是**需求开发全流程入口** —— 需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查 7 阶段,默认交互确认每阶段,`--auto` 静默执行,支持 `PROCESS.md` 断点续跑。
+`/code req` 是**需求开发全流程入口** —— 需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查 7 阶段;阶段边界自动继续(默认) / 每阶段确认(`--confirm`) / 静默全跑通(`--auto`);阶段内补充内容(需求澄清/方案选型/任务拆分)在默认和 `--confirm` 下等待用户确认,`--auto` 下用推荐项;支持 `PROCESS.md` 断点续跑。详见 `skills/code/references/_shared/contracts.md` §5。
 
-`/code fix` 是**缺陷修复全流程入口** —— 缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查 6 阶段,复用 `/code req` 的 references,同样支持 `--auto` 和断点续跑。
+`/code fix` 是**缺陷修复全流程入口** —— 缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查 6 阶段,复用 `/code req` 的 references,三态行为同 `/code req`,同样支持 `PROCESS.md` 断点续跑。
 
 `/code faq` 是**知识查询与文档导出** —— 跨版本查询需求/缺陷,支持 `--require`/`--design`/`--summary`/`--template` 导出。
 
@@ -95,8 +95,8 @@ assistants/
 - 每个主流程子命令的第一步是读取 `.current-version`;若文件不存在,子命令立即中止并提示用户调 `/code ver`。
 - `/code ver` 处理初始化、版本切换、发布检查三种场景:新项目无 `assistants/` 时自动执行初始化(扫描代码、登记基线需求、创建基线版本);已初始化项目切换版本;当前版本未发布时询问是否先发布再切换。
 - `/code rule` **不**做版本感知 —— 它直接操作 `rules/`,从不读取或写入 `.current-version` 与任何版本目录。
-- `/code fix` 是**独立全流程子命令**:缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查,复用 `/code req` 的 references(DESIGN/PLAN/CODING/CHECK 阶段),支持 `--auto` 和 `PROCESS.md` 断点续跑。
-- `/code req` 是**独立全流程子命令**:需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查,默认交互确认,`--auto` 静默,支持 `PROCESS.md` 断点续跑。
+- `/code fix` 是**独立全流程子命令**:缺陷登记 → 修复设计 → 任务排期 → 编码执行 → 代码审查,复用 `/code req` 的 references(DESIGN/PLAN/CODING/CHECK 阶段),三态行为同 `/code req`(默认阶段自动继续 / `--confirm` / `--auto`),支持 `PROCESS.md` 断点续跑。
+- `/code req` 是**独立全流程子命令**:需求分析 → 软件设计 → 任务排期 → 编码执行 → 代码审查,三态行为见 `skills/code/references/_shared/contracts.md` §5,支持 `PROCESS.md` 断点续跑。
 - 版本看板的写入责任划分:
   - `/code req` → 需求清单(首次创建需求时追加一行)
   - `/code fix` → 缺陷清单(首次创建缺陷时追加一行)

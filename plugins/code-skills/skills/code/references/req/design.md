@@ -263,7 +263,7 @@ C. 保留默认 AskUserQuestion,同时支持 --confirm 增强
 
 ### 步骤 11 — 撰写 DESIGN.md
 
-按 `templates/DESIGN.md` 结构生成:
+按 `templates/req/DESIGN.md` 结构生成:
 
 ```
 # 软件设计 — <REQ-NNNNN> · <标题>

@@ -333,7 +333,7 @@ function shouldWriteUnitTest(taskType, files):
 
 ### 步骤 5 — 撰写 TASK-N.md
 
-按 `templates/TASK.md` 结构生成:
+按 `templates/req/TASK.md` 结构生成:
 
 ```
 # TASK-<序号> — <任务标题>
