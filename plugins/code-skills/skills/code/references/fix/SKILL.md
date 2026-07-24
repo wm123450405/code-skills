@@ -227,7 +227,7 @@ description: 缺陷修复 6 阶段全流程。仅首 token = `fix` 触发。例:
    - 执行 `Bash: git rev-parse --git-dir 2>/dev/null` → 退出码 ≠ 0 则输出"非 git 仓库,跳过提交"
    - 执行 `Bash: git status --porcelain` → 输出为空则输出"无文件变更,跳过提交"
    - 执行 `Bash: git add -A`
-   - 生成 commit message(格式:`chore(code fix): <缺陷编号> <标题>\n\n<阶段统计>\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`)
+   - 生成 commit message(格式:`chore(code fix): <缺陷编号> <标题>\n\n<阶段统计>`)
    - `--auto` 模式 → 直接执行 `Bash: git commit -m "<message>"`
    - 非 `--auto` 模式 → `AskUserQuestion` 确认后执行 commit
 4. 建议下一步:`/code ver` 查看进度,或 `/code ver --publish` 发布
