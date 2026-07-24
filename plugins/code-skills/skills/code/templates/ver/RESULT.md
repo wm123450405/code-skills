@@ -1,7 +1,7 @@
 <!-- schema: dashboard-v2 -->
 # 版本开发进度看板 — <V>
 
-> 本文件是 `<V>` 版本工作空间的**简化版看板**。schema = dashboard-v2,所有动态状态从 `PROCESS.md` / `PLAN.md` / `BUG.md` / `TASK-N.md` 派生,详见 `references/_shared/contracts.md` §1。
+> 本文件是 `<V>` 版本工作空间的**简化版看板**。schema = dashboard-v2,所有动态状态从 `PROCESS.md` / `PLAN.md` / `BUG.md` / `TASK-N.md` 派生,详见 `references/_shared/contracts.md`「RESULT.md schema(`dashboard-v2`)」。
 > 需求/缺陷创建时追加一行,进度通过 `PROCESS.md` 追踪。
 
 ## 文档头
@@ -44,4 +44,4 @@
 | --- | --- | --- | --- |
 | YYYY-MM-DD HH:mm | 初始化 | 从基线版本创建 <V> | — |
 
-> 看板(本 schema-v2)**不存**任何动态状态列(如 状态 / 优先级 / 测试状态 / 完成时间)。所有动态信息通过 `deriveItemStatus()`(详见 `references/_shared/contracts.md` §3)从 `PROCESS.md` 等工作产物派生。
+> 看板(本 schema-v2)**不存**任何动态状态列(如 状态 / 优先级 / 测试状态 / 完成时间)。所有动态信息通过 `deriveItemStatus()`(详见 `references/_shared/contracts.md`「看板派生接口」)从 `PROCESS.md` 等工作产物派生。

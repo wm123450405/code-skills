@@ -3,9 +3,9 @@
 > 本文件是 `code-skills` 仓库的**单一事实来源**,定义所有跨子命令共享的字段、状态、章节锚点和 schema。
 > 所有子命令的 SKILL.md / common.md / 模板,凡涉及下列契约,**必须**按本文件定义实现,不得各自定义。
 
-## 1. RESULT.md schema(`dashboard-v2`)
+## RESULT.md schema(`dashboard-v2`)
 
-### 1.1 schema 标记
+### schema 标记
 
 ```
 <!-- schema: dashboard-v2 -->
@@ -13,7 +13,7 @@
 
 位于 `RESULT.md` 头部注释块。
 
-### 1.2 强制结构
+### 强制结构
 
 ```markdown
 # 版本开发进度看板 — <版本号>
@@ -43,7 +43,7 @@
 | --- | --- | --- | --- |
 ```
 
-### 1.3 禁止列
+### 禁止列
 
 以下动态列**不得**出现在 dashboard-v2 的"需求清单"/"缺陷清单"中(状态从 `PROCESS.md` / `PLAN.md` / `BUG.md` / `TASK-N.md` 派生):
 
@@ -52,9 +52,9 @@
 
 ---
 
-## 2. 状态字面表
+## 状态字面表
 
-### 2.1 阶段(PROCESS.md 用)
+### 阶段(PROCESS.md 用)
 
 ```
 INIT → REQUIRE → DESIGN → PLAN → CODING → CHECK → DONE
@@ -62,7 +62,7 @@ INIT → REQUIRE → DESIGN → PLAN → CODING → CHECK → DONE
 
 枚举值(严格匹配,大小写敏感):`INIT` / `REQUIRE` / `DESIGN` / `PLAN` / `CODING` / `CHECK` / `DONE`
 
-### 2.2 任务开发状态(PLAN.md / TASK-N.md 用)
+### 任务开发状态(PLAN.md / TASK-N.md 用)
 
 枚举值(中文,严格匹配):
 
@@ -75,7 +75,7 @@ INIT → REQUIRE → DESIGN → PLAN → CODING → CHECK → DONE
 待重新评估
 ```
 
-### 2.3 任务测试状态(PLAN.md / TASK-N.md 用)
+### 任务测试状态(PLAN.md / TASK-N.md 用)
 
 枚举值(中文,严格匹配):
 
@@ -104,7 +104,7 @@ INIT → REQUIRE → DESIGN → PLAN → CODING → CHECK → DONE
 
 **判定"可发布"**:`已完成` ∩ {`已运行-通过`, `不适用`}
 
-### 2.4 运行时状态(`TASK-N.md` 运行时行用)
+### 运行时状态(`TASK-N.md` 运行时行用)
 
 机器值(机器记录、模板直接使用):
 
@@ -130,9 +130,9 @@ unavailable       — 运行时不可用
 
 ---
 
-## 3. 看板派生接口
+## 看板派生接口
 
-### 3.1 `deriveItemStatus(reqOrBugId)`
+### `deriveItemStatus(reqOrBugId)`
 
 **用途**:根据 `req/<REQ>/PROCESS.md`、`req/<REQ>/PLAN.md`、`fix/<BUG>/BUG.md` 派生某需求/缺陷的当前状态。
 
@@ -157,7 +157,7 @@ type ItemStatus = {
 
 **使用方**:`/code ver --publish`、看板高优先级缺陷统计、建议生成、`/code faq --summary`。
 
-### 3.2 看板读取约定
+### 看板读取约定
 
 - 看板(本 schema-v2 RESULT.md)**不存**任何动态状态
 - 所有看板查询(高优先级缺陷、建议生成、统计)走 `deriveItemStatus()`
@@ -165,29 +165,29 @@ type ItemStatus = {
 
 ---
 
-## 4. FAQ 导出字段映射
+## FAQ 导出字段映射
 
-### 4.1 字段映射表
+### 字段映射表
 
 | 字段 | 模板标题(章节号兜底) | 锚点(优先) |
 | --- | --- | --- |
-| FR_LIST | `## 3. 功能需求(FR)` | `<!-- code-skills:field=FR_LIST -->` |
-| NFR_LIST | `## 4. 非功能需求(NFR)` | `<!-- code-skills:field=NFR_LIST -->` |
-| AC_LIST | `## 5. 验收标准(AC)` | `<!-- code-skills:field=AC_LIST -->` |
-| RELATED | `## 6. 关联需求` | `<!-- code-skills:field=RELATED -->` |
+| FR_LIST | `## 功能需求(FR)` | `<!-- code-skills:field=FR_LIST -->` |
+| NFR_LIST | `## 非功能需求(NFR)` | `<!-- code-skills:field=NFR_LIST -->` |
+| AC_LIST | `## 验收标准(AC)` | `<!-- code-skills:field=AC_LIST -->` |
+| RELATED | `## 关联需求` | `<!-- code-skills:field=RELATED -->` |
 | CLARIFICATIONS | (来自 `clarifications.md`,无锚点) | (无) |
 
-### 4.2 解析顺序
+### 解析顺序
 
 1. 优先匹配 `<!-- code-skills:field=<F> -->` 锚点
 2. 锚点不存在 → 匹配章节标题 `## <N>. <标题>`
 3. 都不存在 → 标记"未识别字段",**不抛错**
 
-### 4.3 锚点语法
+### 锚点语法
 
 ```markdown
 <!-- code-skills:field=<FIELD_NAME> -->
-## 3. 功能需求(FR)
+## 功能需求(FR)
 ...
 ```
 
@@ -196,7 +196,7 @@ type ItemStatus = {
 
 ---
 
-## 5. 三态确认契约
+## 三态确认契约
 
 | 模式 | 阶段边界 | 阶段内补充内容确认 |
 | --- | --- | --- |
@@ -214,7 +214,7 @@ type ItemStatus = {
 
 ---
 
-## 6. `/code rule` Type A/B/C 写权限
+## `/code rule` Type A/B/C 写权限
 
 | 类型 | 目标文件 | 允许动作 | 完成条件 |
 | --- | --- | --- | --- |
@@ -226,7 +226,7 @@ type ItemStatus = {
 
 ---
 
-## 7. `/code ver` 版本同步四步流程
+## `/code ver` 版本同步四步流程
 
 `/code ver <version>` 默认走四步流程:
 
@@ -241,9 +241,9 @@ type ItemStatus = {
 
 ---
 
-## 8. `/code merge` worktree 操作契约
+## `/code merge` worktree 操作契约
 
-### 8.1 dirty 检查(前置)
+### dirty 检查(前置)
 
 ```
 1. 当前 worktree dirty → 拒绝
@@ -251,19 +251,19 @@ type ItemStatus = {
 3. target worktree dirty → 拒绝
 ```
 
-### 8.2 merge 命令
+### merge 命令
 
 ```
 git worktree list --porcelain  →  找到 target 主工作区
 git -C <main-worktree> merge <feature-branch> --no-ff
 ```
 
-### 8.3 退出语义
+### 退出语义
 
 - 有 unresolved 冲突 → 返回非 0 + 屏显冲突文件列表 + **不**报告成功
 - 看板自检(FR-13)失败 → 不报告成功 + 返回非 0
 
-### 8.4 `CODE_MERGE_TARGET` 拆分
+### `CODE_MERGE_TARGET` 拆分
 
 | 字段 | 含义 |
 | --- | --- |
@@ -273,11 +273,11 @@ git -C <main-worktree> merge <feature-branch> --no-ff
 
 ---
 
-## 9. 需求分析技术选型词表
+## 需求分析技术选型词表
 
 > FR-11 来源:本节是技术选型过滤的**唯一事实源**;`references/req/require.md` 引用本节,不再重复定义。
 
-### 9.1 `decisionKeywords`(只用于延迟到 DESIGN 阶段)
+### `decisionKeywords`(只用于延迟到 DESIGN 阶段)
 
 ```
 技术选型, 实现方式, 框架, 库, 工具, monorepo, single-package,
@@ -288,15 +288,15 @@ pnpm, npm, yarn, Jest, Vitest, Mocha, React, Vue, Angular,
 
 行为:命中任一 → 不弹出 AskUserQuestion,改为追加到 `clarifications.md` 的"延迟到 DESIGN 阶段"区段。
 
-### 9.2 `conflictKeywords`(即使属于技术词也必须在 REQUIRE 阶段确认)
+### `conflictKeywords`(即使属于技术词也必须在 REQUIRE 阶段确认)
 
 ```
 互斥, 冲突, 不一致, 版本号, 路径, 状态, 枚举, schema, 字段名
 ```
 
-行为:命中任一 → 照常弹出 AskUserQuestion(§5c 强制确认);不被 §9.1 延迟。
+行为:命中任一 → 照常弹出 AskUserQuestion(三态确认契约强制确认);不被「`decisionKeywords`(只用于延迟到 DESIGN 阶段)」延迟。
 
-### 9.3 关键区别
+### 关键区别
 
 | 维度 | `decisionKeywords` | `conflictKeywords` |
 | --- | --- | --- |
@@ -304,13 +304,13 @@ pnpm, npm, yarn, Jest, Vitest, Mocha, React, Vue, Angular,
 | 典型词 | 框架 / 库 / ORM / 数据库 | 互斥 / 冲突 / 状态 |
 | 判定依据 | "这是怎么实现" | "这影响行为契约" |
 
-### 9.4 校验
+### 校验
 
-`references/req/require.md` 内应**不**重复定义关键词集;`grep -nE "技术选型.{0,3}框架" references/req/require.md` 应无散落定义(允许指向契约层 §9 的引用)。
+`references/req/require.md` 内应**不**重复定义关键词集;`grep -nE "技术选型.{0,3}框架" references/req/require.md` 应无散落定义(允许指向契约层「需求分析技术选型词表」的引用)。
 
 ---
 
-## 10. CHECK 评审维度(9 维)
+## CHECK 评审维度(9 维)
 
 > FR-8 来源:`templates/req/CHECK.md` 与 `references/req/check.md` 的 9 个评审维度定义以本节为唯一事实源。
 

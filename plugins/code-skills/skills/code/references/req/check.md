@@ -219,7 +219,7 @@ function determineConclusion(findings, loopStatus):
 
 ## 阶段完成确认
 
-> 三态确认模型:阶段边界确认由 `--confirm`/`--auto`/默认 控制。阶段内内容确认(建议改/循环确认)仅在 `--auto` 模式下跳过。详见 common.md §4、§7、§11。
+> 三态确认模型:阶段边界确认由 `--confirm`/`--auto`/默认 控制。阶段内内容确认(建议改/循环确认)仅在 `--auto` 模式下跳过。详见 common.md「阶段执行器」「交互确认」「--confirm 模式」。
 
 ### 建议改确认
 

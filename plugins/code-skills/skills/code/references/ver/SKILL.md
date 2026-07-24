@@ -50,7 +50,7 @@ description: 版本管理与开发看板。仅首 token = `ver` 触发。例:`/c
 - `rules/` **不**在版本下,跨版本共享
 - `.current-version` 是纯文本标记,内容只有版本号字符串
 - 本技能**不**修改 `./assistants/rules/` 下的任何内容(只读)
-- **【FR-9】本技能在版本切换时默认会同步更新 CWD 中的项目描述文件(`package.json` / `pom.xml` / `Cargo.toml` / `pyproject.toml` / `manifest.json` 等);同步走"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步流程(详见契约层 `references/_shared/contracts.md` §7);若需跳过同步,使用 `--no-sync` 参数**
+- **【FR-9】本技能在版本切换时默认会同步更新 CWD 中的项目描述文件(`package.json` / `pom.xml` / `Cargo.toml` / `pyproject.toml` / `manifest.json` 等);同步走"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步流程(详见契约层 `references/_shared/contracts.md`「`/code ver` 版本同步四步流程」);若需跳过同步,使用 `--no-sync` 参数**
 - 看板模式**只读**,不修改任何文件(不受上述四步影响)
 
 ## 输入
@@ -86,7 +86,7 @@ description: 版本管理与开发看板。仅首 token = `ver` 触发。例:`/c
 
 ### 步骤 0 — 场景检测(强制前置)
 
-> 详见 common.md §1
+> 详见 common.md「场景检测」
 
 1. 检测 `assistants/` 目录是否存在
 2. 检测 `.current-version` 是否存在
@@ -287,7 +287,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 1A — 收集初始版本号
 
-> 详见 common.md §2.1
+> 详见 common.md「收集初始版本号」
 
 - 默认:`V0.0.0`
 - 校验:非空,不含 `/` `\` `:` `*` `?` `"` `<` `>` `|`
@@ -295,27 +295,27 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 2A — 创建 assistants/ 骨架
 
-> 详见 common.md §2.2
+> 详见 common.md「创建 assistants/ 骨架」
 
 - 创建 `assistants/`、`assistants/rules/`、`assistants/<版本号>/` 目录
 - 不覆盖已存在文件
 
 #### 步骤 3A — 写入 .current-version
 
-> 详见 common.md §2.3
+> 详见 common.md「写入 .current-version」
 
 - `Write "./assistants/.current-version"`,内容 = `<版本号>\n`
 
 #### 步骤 4A — 写入版本看板 RESULT.md
 
-> 详见 common.md §2.4
+> 详见 common.md「写入版本看板 RESULT.md」
 
 - 基于简化版 RESULT.md 模板(仅需求清单 + 缺陷清单)
 - 填写版本信息、里程碑、变更记录
 
 #### 步骤 5A — 分析现有代码
 
-> 详见 common.md §2.5
+> 详见 common.md「分析现有代码」
 
 - 识别项目类型、目录结构、入口与主流程
 - 识别已有模块、数据模型、第三方依赖
@@ -323,7 +323,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 6A — 生成 INIT-REPORT.md
 
-> 详见 common.md §2.6
+> 详见 common.md「生成 INIT-REPORT.md」
 
 - 项目概述、技术栈、目录结构、核心模块、入口与主流程
 - 外部接口、数据模型、构建与运行、测试情况
@@ -331,7 +331,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 7A — 生成现有功能需求清单
 
-> 详见 common.md §2.7
+> 详见 common.md「生成现有功能需求清单」
 
 - 按功能拆分(M 个 `EXISTING-NNN`)
 - 编号:`EXISTING-NNN`,从 `EXISTING-001` 开始
@@ -339,7 +339,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 8A — 引导用户补齐编码规范
 
-> 详见 common.md §2.8
+> 详见 common.md「引导用户补齐编码规范」
 
 - 检查 `rules/` 是否为空
 - 若空,建议调 `/code rule`
@@ -348,7 +348,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 1B — 版本切换:读当前版本
 
-> 详见 common.md §3.1
+> 详见 common.md「读取当前版本与校验」
 
 1. `Read "./assistants/.current-version"` → 当前激活版本
 2. 校验目标版本号合法性
@@ -360,7 +360,7 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 2B — 检查是否需要发布
 
-> 详见 common.md §3.2
+> 详见 common.md「四种情形处理」
 
 - 若当前版本有活跃内容(需求清单非空 / 任务清单非空)
 - 询问用户:是否先发布当前版本?
@@ -370,14 +370,14 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 3B — 执行发布(若用户选择)
 
-> 详见 common.md §4
+> 详见 common.md「发布检查」
 
 - 走发布检查流程(步骤 1C-5C)
 - 若发布不通过,询问是否仍要切换
 
 #### 步骤 4B — 创建/切换到目标版本
 
-> 详见 common.md §3.3
+> 详见 common.md「检查是否需要发布」
 
 - 情形 A/B:创建新版本工作空间,写入 .current-version
 - 情形 C:只更新 .current-version
@@ -385,17 +385,17 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 5B — CWD 描述文件版本号同步
 
-> 详见 common.md §5
+> 详见 common.md「CWD 描述文件版本号同步(四步流程,FR-9 方案 B)」
 
 #### 步骤 6B — 验证与汇报
 
-> 详见 common.md §3.4
+> 详见 common.md「模板填充」
 
 ---
 
 #### 步骤 1C — 发布前置检查
 
-> 详见 common.md §4.1
+> 详见 common.md「基线识别」
 
 - 解析 RESULT.md 的需求清单 / 任务清单 / 缺陷清单
 - 判定:需求=已完成, 任务=可发布, 缺陷=已修复
@@ -404,14 +404,14 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 2C — 基线识别
 
-> 详见 common.md §4.2
+> 详见 common.md「生成部署手册」
 
 - 列出所有版本,字典序排序
 - 本版本 = 最小 → 基线(跳过 UPDATE.md)
 
 #### 步骤 3C — 生成部署手册
 
-> 详见 common.md §4.3
+> 详见 common.md「创建 faq/ 骨架」
 
 - 始终生成:DEPLOY.md
 - 非基线:UPDATE.md
@@ -419,13 +419,13 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 
 #### 步骤 4C — 创建 faq/ 骨架
 
-> 详见 common.md §4.4
+> 详见 common.md「发布报告」
 
 - 若 `assistants/faq/` 不存在 → 创建 + README.md
 
 #### 步骤 5C — 报告
 
-> 详见 common.md §4.5
+> 详见 common.md「发布报告」
 
 ---
 
@@ -443,11 +443,11 @@ P0 待修复: ░ 0 | P1 待修复: ░ 0
 - **版本号**解析/构造时**必须**仅含字母数字与 `.`/`-`/`_`(`/`、`\`、空格视作非法)
 - **覆盖 `RESULT.md` 前****必须**有 AskUserQuestion 用户确认(不得无确认覆盖)
 - **版本切换**时**必须**只操作目标版本目录,不删除其他版本目录
-- **初始化阶段**必须只读分析 CWD 代码,不修改项目源代码(详见 §2 分析算法)
+- **初始化阶段**必须只读分析 CWD 代码,不修改项目源代码(详见「新项目初始化」分析算法)
 - **分析结果**必须只写到 `assistants/<V>/` 下,不写进 CWD 根目录
 - **识别现有功能**时必须只基于实际代码,**绝不**臆造未实现的细节
 - **看板模式**(`/code ver` 无参数)下**必须**只读,不调用 `Write`/`Edit`/`Bash`
-- **状态读取**必须严格按字面匹配(参考 `references/_shared/contracts.md` §2),不归一化
+- **状态读取**必须严格按字面匹配(参考 `references/_shared/contracts.md`「状态字面表」),不归一化
 - **任务编号解析**必须双格式兼容(详见附录 A),旧格式不得改写为新格式
 - **发布检查**未通过时(`deriveItemStatus()` 判定存在未完成)必须返回非 0 并列出未完成项,不生成任何部署手册
 

@@ -192,7 +192,7 @@ function FR3_fetchMerge(target):
 
 ### 步骤 FR-4 — 冲突解决(LLM 智能合并)
 
-#### 4.1 看板数据冲突(最高优先级)
+#### 看板数据冲突(最高优先级)
 
 **触发条件**:冲突文件路径匹配 `assistants/V<版本>/RESULT.md` 或 `req/REQ-*/` / `fix/BUG-*/` 下关键文件。
 
@@ -202,7 +202,7 @@ function FR3_fetchMerge(target):
 3. **统计数据最终一致** — 合并后必须重新计算区段"统计"行
 4. **完成后**:`git add <file>` 标记已解决
 
-#### 4.2 其他类型文件(逐文件分析)
+#### 其他类型文件(逐文件分析)
 
 | 文件类型 | 处理方式 |
 | --- | --- |
@@ -211,7 +211,7 @@ function FR3_fetchMerge(target):
 | 文档文件(.md) | 同 4.1 看板数据规则 |
 | 二进制文件(.png / .pdf / .mp4 / .mp3 / .zip) | **不**自动合并,留 unmerged + 提示用户(E-M6) |
 
-#### 4.3 失败兜底
+#### 失败兜底
 
 - 严重无法解决 → 留 unmerged + 提示用户
 - **不**自动 `git add`(避免半成品入库)
@@ -241,7 +241,7 @@ function FR5_verifyCommit():
 
 ```
 function FR6_dashboardCheck():
- // 详细契约见 references/_shared/contracts.md §1
+ // 详细契约见 references/_shared/contracts.md「RESULT.md schema(`dashboard-v2`)」
  version = read("./assistants/.current-version")
  result_md = read(f"assistants/{version}/RESULT.md")
 
@@ -288,7 +288,7 @@ function FR6_dashboardCheck():
 ```
 function FR7_mergeToMain():
  // FR-12 修复:不在当前 worktree checkout 目标分支;改在主工作区执行 merge
- // 详细契约见 references/_shared/contracts.md §8
+ // 详细契约见 references/_shared/contracts.md「`/code merge` worktree 操作契约」
  target = env.CODE_MERGE_TARGET ?? "main"
 
  // 找到目标分支对应的主工作区(主工作区才能 checkout 该分支)
@@ -398,7 +398,7 @@ function findMainWorktree(target):
 ## 必须做事项清单
 
 > 以下事项为强制要求,违反即视为本技能执行失败。
-> 详见 §0 不变式、`FR-12 worktree 操作契约`、`references/_shared/contracts.md` §8。
+> 详见不变式、`FR-12 worktree 操作契约`、`references/_shared/contracts.md`「`/code merge` worktree 操作契约」。
 
 ### 工作区与流程
 

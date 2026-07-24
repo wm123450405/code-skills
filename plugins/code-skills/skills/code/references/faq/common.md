@@ -2,7 +2,7 @@
 
 > 本文件为 `/code faq` 子命令提供参数解析、查询搜索、导出处理的详细流程。始终加载。
 
-## §1 参数解析
+## 参数解析
 
 ### 解析算法
 
@@ -41,9 +41,9 @@ function parseArgs(userInput):
 | `--template` 无 `--require`/`--design` | 屏显 `⚠ --template 需与 --require 或 --design 配合使用,已忽略`,继续 |
 | 无查询词 + 无导出参数 | 屏显用法示例,退出 |
 
-## §2 查询模式
+## 查询模式
 
-### §2.1 搜索范围
+### 搜索范围
 
 ```
 function determineSearchScope():
@@ -62,7 +62,7 @@ function determineSearchScope():
     }
 ```
 
-### §2.2 搜索策略
+### 搜索策略
 
 1. **Glob 列出所有文档**:
    - `Glob "./assistants/*/req/*/REQUIRE.md"` — 需求文档
@@ -78,7 +78,7 @@ function determineSearchScope():
    - 当前版本 > 其他版本
    - 最近修改 > 较早修改
 
-### §2.3 搜索结果提取
+### 搜索结果提取
 
 对每个匹配文档,提取:
 
@@ -87,24 +87,24 @@ function determineSearchScope():
 | 标题 | REQUIRE.md H1 / BUG.md H1 | 正则 `^# .+ — (.+)$` |
 | 版本号 | 文件路径 | 解析 `assistants/<版本号>/...` |
 | 编号 | 文件路径 | 解析 `req/<REQ-NNNNN>` 或 `fix/<BUG-NNNNN>` |
-| 摘要 | §1 需求概述 / §1 缺陷描述 | 读取前 5 行 |
+| 摘要 | 需求概述 / 缺陷描述 | 读取前 5 行 |
 
-### §2.4 深度读取
+### 深度读取
 
 对排名前 3 的结果:
 
 1. `Read` 完整文档
 2. 提取:
    - **需求**:FR 列表(## 3. 功能需求(FR))、NFR 列表(## 4. 非功能需求(NFR))、AC 列表(## 5. 验收标准(AC))
-   - **缺陷**:缺陷描述(§1)、触发条件(§2)、可能成因(§3)、影响范围(§4)
+   - **缺陷**:缺陷描述、触发条件、可能成因、影响范围
 3. 标注来源路径
 
-### §2.5 回答组装
+### 回答组装
 
 ```
 ## 查询结果: "<查询词>"
 
-### 1. <标题> (<版本号> · <编号>)
+### <标题> (<版本号> · <编号>)
 **类型**:需求/缺陷
 **摘要**:<概述核心信息>
 **关键点**:
@@ -112,15 +112,15 @@ function determineSearchScope():
 - FR-2: ...
 **来源**:`assistants/<版本号>/req/<编号>/REQUIRE.md`
 
-### 2. ...
+### ...
 ```
 
 - 若结果 > 5 条 → 先展示前 3 条,末尾提示"还有 N 条结果,请缩小查询范围"
 - 若结果 = 0 → 提示"未找到匹配结果,请尝试不同关键词或调 `/code req` 创建新需求"
 
-## §3 导出模式
+## 导出模式
 
-### §3.1 源文档定位
+### 源文档定位
 
 ```
 function locateSourceDoc(mode, reqNum, version):
@@ -136,7 +136,7 @@ function locateSourceDoc(mode, reqNum, version):
   return path
 ```
 
-### §3.2 概要提取(--summary)
+### 概要提取(--summary)
 
 仅对 `--design` 模式生效:
 
@@ -145,10 +145,10 @@ function extractSummary(designContent):
   sections = parseSections(designContent)
 
   result = {
-    title: sections["设计概述"],      // §1
-    overview: sections["设计概述"],   // §1 全文
-    modules: sections["模块拆分"],    // §2,仅模块名+职责
-    decisions: sections["方案选型"],  // §5,保留完整决策
+    title: sections["设计概述"],      // 设计概述
+    overview: sections["设计概述"],   // 设计概述 全文
+    modules: sections["模块拆分"],    // 模块拆分,仅模块名+职责
+    decisions: sections["方案选型"],  // 方案选型,保留完整决策
   }
 
   // 去掉详细接口签名/数据结构/算法伪代码
@@ -158,13 +158,13 @@ function extractSummary(designContent):
   return formatSummary(result)
 ```
 
-### §3.3 概要信息格式
+### 概要信息格式
 
 ```
 # 概要设计 — <REQ-NNNNN> · <标题>
 
 ## 设计概述
-<DESIGN.md §1 全文>
+<DESIGN.md 设计概述 全文>
 
 ## 模块拆分
 | 模块 | 职责 |
@@ -172,10 +172,10 @@ function extractSummary(designContent):
 | ... | ... |
 
 ## 关键决策
-<DESIGN.md §5 全文,每个决策含:选择/备选/理由/权衡>
+<DESIGN.md 方案选型 全文,每个决策含:选择/备选/理由/权衡>
 ```
 
-### §3.4 模板填充
+### 模板填充
 
 ```
 function fillTemplate(templateContent, sourceContent):
@@ -189,7 +189,7 @@ function fillTemplate(templateContent, sourceContent):
   return templateContent
 ```
 
-### §3.5 写出文件
+### 写出文件
 
 ```
 function writeExport(outputPath, content):
@@ -202,7 +202,7 @@ function writeExport(outputPath, content):
   print("✓ 导出完成: " + outputPath + " (" + countLines(content) + " 行)")
 ```
 
-## §4 模板占位符映射表
+## 模板占位符映射表
 
 > 本表定义 `--template` 模式下支持的占位符及其数据来源。
 
@@ -225,12 +225,12 @@ function writeExport(outputPath, content):
 | --- | --- | --- |
 | `{{REQ_ID}}` | DESIGN.md 文档头 | 需求编号 |
 | `{{REQ_TITLE}}` | DESIGN.md H1 | 设计标题 |
-| `{{设计概述}}` | DESIGN.md §1 | 设计概述全文 |
-| `{{模块列表}}` | DESIGN.md §2 | 模块拆分列表 |
-| `{{接口列表}}` | DESIGN.md §3 | 接口设计列表 |
-| `{{数据结构}}` | DESIGN.md §4 | 数据设计全文 |
-| `{{方案选型}}` | DESIGN.md §5 | 方案选型全文 |
-| `{{关键流程}}` | DESIGN.md §6 | 关键流程全文 |
+| `{{设计概述}}` | DESIGN.md 设计概述 | 设计概述全文 |
+| `{{模块列表}}` | DESIGN.md 模块拆分 | 模块拆分列表 |
+| `{{接口列表}}` | DESIGN.md 接口设计 | 接口设计列表 |
+| `{{数据结构}}` | DESIGN.md 数据设计 | 数据设计全文 |
+| `{{方案选型}}` | DESIGN.md 方案选型 | 方案选型全文 |
+| `{{关键流程}}` | DESIGN.md 关键流程 | 关键流程全文 |
 
 ### 概要导出(--design + --summary)占位符
 
@@ -238,9 +238,9 @@ function writeExport(outputPath, content):
 | --- | --- | --- |
 | `{{REQ_ID}}` | DESIGN.md 文档头 | 需求编号 |
 | `{{REQ_TITLE}}` | DESIGN.md H1 | 设计标题 |
-| `{{设计概述}}` | DESIGN.md §1 | 设计概述全文 |
-| `{{模块概要}}` | DESIGN.md §2(精简) | 仅模块名+职责 |
-| `{{关键决策}}` | DESIGN.md §5 | 方案选型全文 |
+| `{{设计概述}}` | DESIGN.md 设计概述 | 设计概述全文 |
+| `{{模块概要}}` | DESIGN.md 模块拆分(精简) | 仅模块名+职责 |
+| `{{关键决策}}` | DESIGN.md 方案选型 | 方案选型全文 |
 
 ### 边界与异常
 

@@ -133,7 +133,7 @@ description: 编码规范追加/扩展。仅首 token = `rule` 触发。例:`/co
 
 ## Type A/B/C 写权限契约(FR-14)
 
-> 完整契约见 `references/_shared/contracts.md` §6。本节是契约引用,各类型的"目标 / 允许动作 / 完成条件"以契约层为唯一事实源。
+> 完整契约见 `references/_shared/contracts.md`「`/code rule` Type A/B/C 写权限」。本节是契约引用,各类型的"目标 / 允许动作 / 完成条件"以契约层为唯一事实源。
 
 | 类型 | 目标文件 | 允许动作 | 完成条件 |
 | --- | --- | --- | --- |
@@ -141,9 +141,9 @@ description: 编码规范追加/扩展。仅首 token = `rule` 触发。例:`/co
 | **B** | 明确指定的 `CLAUDE.md` | 仅追加 AI 工作约定区段 | 指引编号唯一,未改仓库说明区 |
 | **C** | 明确指定的 template | 末尾/字段内二选一并记录 | 提示位置和触发字段可定位 |
 
-**关键约束**(FR-14 来源,opt.md §3.15):
+**关键约束**(FR-14 来源,opt.md 3.15):
 
-- Type A 不得重写既有规则文件,只能在末尾追加(`§0 不变式 I-5`)
+- Type A 不得重写既有规则文件,只能在末尾追加(不变式 I-5)
 - Type B 仅追加到 `AI 工作约定` 区段,**不得**改动仓库说明区
 - Type C 的"末尾 vs 内联"二选一必须在执行时记录,**不得**事后模糊
 
@@ -158,11 +158,11 @@ description: 编码规范追加/扩展。仅首 token = `rule` 触发。例:`/co
 ## 必须做事项清单
 
 > 以下事项为强制要求,违反即视为本技能执行失败。
-> Type A/B/C 详细权限参见 §Type A/B/C 写权限契约(FR-14)与 `references/_shared/contracts.md` §6。
+> Type A/B/C 详细权限参见「`/code rule` Type A/B/C 写权限契约(FR-14)」与 `references/_shared/contracts.md`「`/code rule` Type A/B/C 写权限」。
 
 - **./assistants/.current-version 必须**仅由 `/code ver` 读写;本技能对其**只读**
 - **对 ./assistants/<版本号>/ 必须**只读,不操作其下任何文件
-- **修改既有规范文件必须**用 `Edit` 在末尾追加;新建分类**必须**用 `Write` 首次(详见 §0 I-5)
+- **修改既有规范文件必须**用 `Edit` 在末尾追加;新建分类**必须**用 `Write` 首次(详见不变式 I-5)
 - **写入文件前必须**完成分类确认(`AskUserQuestion` 让用户确认或调整分类)
 - **同一规则文件内必须**统一强制级别表述(全部"必须"或全部"推荐");不得混用同一文件头部声明
 - **写入规则文件前必须**先澄清强制级别(必须/推荐)

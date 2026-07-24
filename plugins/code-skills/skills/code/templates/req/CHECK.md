@@ -2,7 +2,7 @@
 
 > 评审时间:YYYY-MM-DD HH:mm
 > 评审范围:<需求编号/缺陷编号>
-> 维度定义以契约层 `references/_shared/contracts.md` §10(check dimensions)为唯一事实源。
+> 维度定义以契约层 `references/_shared/contracts.md`「CHECK 评审维度(9 维)」为唯一事实源。
 
 ## 评审维度
 

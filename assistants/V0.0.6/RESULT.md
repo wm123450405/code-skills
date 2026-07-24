@@ -25,6 +25,7 @@
 | REQ-00051 | 主 SKILL.md 拆分 + help 子命令化 | [PROCESS.md](req/REQ-00051/PROCESS.md) |
 | REQ-OPT-00001 | code-skills 技能能力优化建议报告 P0+P1 全部 14 项整改 | [PROCESS.md](req/REQ-OPT-00001/PROCESS.md) |
 | REQ-OPT-00002 | 技能"不要做"事项整治 + 全技能精简单调 | [PROCESS.md](req/REQ-OPT-00002/PROCESS.md) |
+| REQ-OPT-00003 | 移除板块标题序号 + 引用处同步改为板块标题 | [PROCESS.md](req/REQ-OPT-00003/PROCESS.md) |
 
 ---
 

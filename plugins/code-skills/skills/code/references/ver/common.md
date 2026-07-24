@@ -2,19 +2,19 @@
 
 > 本文件为 `/code ver` 子命令提供场景检测、初始化、版本切换、发布检查的详细流程。始终加载。
 >
-> **契约层引用**:本文件中所有"派生状态"的逻辑(§4 发布检查 / §8.6 高优先级缺陷统计)统一通过 `deriveItemStatus()` 实现,该函数定义在 `references/_shared/contracts.md` §3。`RESULT.md` 不再作为动态状态数据源(FR-1)。
+> **契约层引用**:本文件中所有"派生状态"的逻辑(发布检查 / 高优先级缺陷统计)统一通过 `deriveItemStatus()` 实现,该函数定义在 `references/_shared/contracts.md`「看板派生接口」。`RESULT.md` 不再作为动态状态数据源(FR-1)。
 
-## §0 派生函数引用
+## 派生函数引用
 
 ```
-// 完整定义见 references/_shared/contracts.md §3
+// 完整定义见 references/_shared/contracts.md「看板派生接口」
 // 本文件不重复定义,所有调用方按契约层签名使用:
 //   deriveItemStatus(reqOrBugId: string): ItemStatus
 // 返回 { stage, devStatus, testStatus, completed }
 // 编号不存在 → 返回 { stage: 'UNKNOWN', devStatus: 'N/A', testStatus: 'N/A', completed: false }
 ```
 
-## §1 场景检测
+## 场景检测
 
 ### 检测算法
 
@@ -49,9 +49,9 @@ function detectScenario(userInput):
 
 ### 无参数时的行为
 
-无参数 + 已初始化项目 → 显示开发看板(§8 看板模式),屏幕输出进度条 + 状态分布 + 建议。
+无参数 + 已初始化项目 → 显示开发看板(「看板模式(无参数,已初始化项目)」),屏幕输出进度条 + 状态分布 + 建议。
 
-无参数 + 未初始化项目 → 走 INIT 流程(§2)。
+无参数 + 未初始化项目 → 走 INIT 流程(「新项目初始化」)。
 
 ### 边界条件
 
@@ -61,9 +61,9 @@ function detectScenario(userInput):
 
 ---
 
-## §2 新项目初始化
+## 新项目初始化
 
-### §2.1 收集初始版本号
+### 收集初始版本号
 
 ```
 function collectInitialVersion():
@@ -88,7 +88,7 @@ function collectInitialVersion():
   return version
 ```
 
-### §2.2 创建 assistants/ 骨架
+### 创建 assistants/ 骨架
 
 ```
 function createSkeleton(version):
@@ -106,14 +106,14 @@ function createSkeleton(version):
       mkdir -p dir
 ```
 
-### §2.3 写入 .current-version
+### 写入 .current-version
 
 ```
 function writeCurrentVersion(version):
   Write "assistants/.current-version", content = version + "\n"
 ```
 
-### §2.4 写入版本看板 RESULT.md
+### 写入版本看板 RESULT.md
 
 ```
 function writeDashboard(version):
@@ -160,7 +160,7 @@ function writeDashboard(version):
   Write "assistants/{version}/RESULT.md", content
 ```
 
-### §2.5 分析现有代码
+### 分析现有代码
 
 #### 项目类型识别
 
@@ -313,7 +313,7 @@ function findConventions():
   return conventions
 ```
 
-### §2.6 生成 INIT-REPORT.md
+### 生成 INIT-REPORT.md
 
 ```
 function generateInitReport(analysis, version):
@@ -368,7 +368,7 @@ function generateInitReport(analysis, version):
   Write "assistants/{version}/INIT-REPORT.md", content
 ```
 
-### §2.7 生成现有功能需求清单
+### 生成现有功能需求清单
 
 #### 拆分功能边界
 
@@ -469,7 +469,7 @@ function backfillDashboard(version, features):
   appendChangeRecord("需求新增", "批量登记了 {features.length} 条现有功能需求")
 ```
 
-### §2.8 引导用户补齐编码规范
+### 引导用户补齐编码规范
 
 ```
 function guideToRules():
@@ -490,9 +490,9 @@ function guideToRules():
 
 ---
 
-## §3 版本切换
+## 版本切换
 
-### §3.1 读取当前版本与校验
+### 读取当前版本与校验
 
 ```
 function readCurrentAndValidate(targetVersion):
@@ -510,7 +510,7 @@ function readCurrentAndValidate(targetVersion):
   return { currentVersion, targetVersion, targetExists }
 ```
 
-### §3.2 四种情形处理
+### 四种情形处理
 
 ```
 function handleSwitchScenario(scenario):
@@ -551,7 +551,7 @@ function handleSwitchScenario(scenario):
         writeDashboard(targetVersion)
 ```
 
-### §3.3 检查是否需要发布
+### 检查是否需要发布
 
 ```
 function checkAndPublish(currentVersion):
@@ -579,7 +579,7 @@ function checkAndPublish(currentVersion):
       if B: exit()
 ```
 
-### §3.4 创建新版本
+### 创建新版本
 
 ```
 function createNewVersion(version):
@@ -592,7 +592,7 @@ function createNewVersion(version):
     writeDashboard(version)
 ```
 
-### §3.5 验证与汇报
+### 验证与汇报
 
 ```
 function verifyAndReport(version):
@@ -619,9 +619,9 @@ function verifyAndReport(version):
 
 ---
 
-## §4 发布检查
+## 发布检查
 
-### §4.1 发布前置检查
+### 发布前置检查
 
 #### 解析算法
 
@@ -701,7 +701,7 @@ function formatFailedReport(result):
   """)
 ```
 
-### §4.2 基线识别
+### 基线识别
 
 ```
 function isBaselineVersion(version):
@@ -712,7 +712,7 @@ function isBaselineVersion(version):
   return version == minVersion
 ```
 
-### §4.3 生成部署手册
+### 生成部署手册
 
 #### DEPLOY.md(始终生成)
 
@@ -825,7 +825,7 @@ function generateFAQManual(version):
   Write "assistants/{version}/publish/FAQ.md", content
 ```
 
-### §4.4 创建 faq/ 骨架
+### 创建 faq/ 骨架
 
 ```
 function scaffoldFaq():
@@ -846,7 +846,7 @@ function scaffoldFaq():
     """
 ```
 
-### §4.5 发布报告
+### 发布报告
 
 ```
 function formatPublishReport(result):
@@ -878,9 +878,9 @@ function formatPublishReport(result):
 
 ---
 
-## §5 CWD 描述文件版本号同步(四步流程,FR-9 方案 B)
+## CWD 描述文件版本号同步(四步流程,FR-9 方案 B)
 
-> 保留自动同步 CWD 描述文件的默认行为,加"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步前置。完整契约见 `references/_shared/contracts.md` §7。
+> 保留自动同步 CWD 描述文件的默认行为,加"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步前置。完整契约见 `references/_shared/contracts.md`「`/code ver` 版本同步四步流程」。
 
 ```
 function syncCwdVersionFiles(newVersion, flags):
@@ -984,7 +984,7 @@ function parseVersionField(filename, content):
 
 ---
 
-## §6 看板字段约定(简化版)
+## 看板字段约定(简化版)
 
 `/code ver` 创建的 `RESULT.md` 是简化版,仅含 2 个核心区段:
 
@@ -1002,7 +1002,7 @@ function parseVersionField(filename, content):
 
 ---
 
-## §7 通用边界
+## 通用边界
 
 ### 错误处理
 
@@ -1025,9 +1025,9 @@ function parseVersionField(filename, content):
 
 ---
 
-## §8 看板模式(无参数,已初始化项目)
+## 看板模式(无参数,已初始化项目)
 
-### §8.1 版本上下文检测
+### 版本上下文检测
 
 ```
 function checkVersionContext():
@@ -1046,7 +1046,7 @@ function checkVersionContext():
   return version
 ```
 
-### §8.2 数据加载
+### 数据加载
 
 ```
 function loadDashboardData(version):
@@ -1080,7 +1080,7 @@ function loadDashboardData(version):
   return { dashboard, reqProcesses, bugProcesses }
 ```
 
-### §8.3 区段解析
+### 区段解析
 
 ```
 function parseDashboard(dashboard):
@@ -1117,7 +1117,7 @@ function parseTableRows(sectionText):
 - 表格列错位 → 退化到原始 markdown 块原样输出
 - 字段值缺失 → 显示 `?` 占位
 
-### §8.4 进度计算
+### 进度计算
 
 ```
 function calculateProgress(reqProcesses, bugProcesses):
@@ -1165,7 +1165,7 @@ function parseLastStage(processContent):
   return null
 ```
 
-### §8.5 状态归类
+### 状态归类
 
 ```
 function classifyByStatus(reqProcesses, bugProcesses):
@@ -1204,7 +1204,7 @@ function classifyByStatus(reqProcesses, bugProcesses):
   return statuses
 ```
 
-### §8.6 高优先级缺陷统计
+### 高优先级缺陷统计
 
 ```
 function countHighPriorityBugs(bugRows, version):
@@ -1220,7 +1220,7 @@ function countHighPriorityBugs(bugRows, version):
     bugMeta = readBugMeta(bugId)        // 读 BUG.md 的优先级 + 标题
     status = deriveItemStatus(bugId)
 
-    // 仅统计未完成的(契约层 §3 判定 completed)
+    // 仅统计未完成的(契约层「看板派生接口」判定 completed)
     if status.completed:
       continue
     if bugMeta.priority == "P0":
@@ -1231,7 +1231,7 @@ function countHighPriorityBugs(bugRows, version):
   return { p0, p1 }
 ```
 
-### §8.7 建议生成
+### 建议生成
 
 ```
 function generateSuggestions(reqProcesses, bugProcesses, bugRows):
@@ -1298,7 +1298,7 @@ function generateSuggestions(reqProcesses, bugProcesses, bugRows):
   return suggestions.slice(0, 5)
 ```
 
-### §8.8 屏幕渲染
+### 屏幕渲染
 
 ```
 function renderDashboard(progress, statuses, highPriorityBugs, suggestions):
@@ -1334,7 +1334,7 @@ function renderDashboard(progress, statuses, highPriorityBugs, suggestions):
       print("> 无后续动作")
 ```
 
-### §8.9 看板模式边界
+### 看板模式边界
 
 #### L1 启动错误
 
@@ -1361,7 +1361,7 @@ function renderDashboard(progress, statuses, highPriorityBugs, suggestions):
 
 任何未预期异常 → `✗ 内部错误: <msg>` + 退出
 
-### §8.10 看板模式工具约束
+### 看板模式工具约束
 
 - 仅调用 `Read`/`Glob`/`Grep`
 - 不调用 `Write`/`Edit`/`Bash`/`WebFetch`/`WebSearch`/`Task`/`Agent`

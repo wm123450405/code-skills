@@ -163,7 +163,7 @@ description: 需求开发 7 阶段全流程。仅首 token = `req` 触发。例:
 
 ### 步骤 0 — 版本检测 + 恢复执行(强制前置)
 
-> 详见 common.md §1-§2
+> 详见 common.md「版本检测(强制前置)」「PROCESS.md 恢复(断点续跑)」
 
 1. 读取 `./assistants/.current-version`,不存在 → 停下,提示调 `/code ver`
 2. 解析用户输入:自然语言描述 → 分配新编号;`REQ-NNNNN` → 直接使用
@@ -174,7 +174,7 @@ description: 需求开发 7 阶段全流程。仅首 token = `req` 触发。例:
 
 ### 阶段执行器(通用)
 
-> 详见 common.md §3-§4
+> 详见 common.md「PROCESS.md 追加(强制)」「阶段执行器」
 
 每个阶段按统一模式执行:
 1. 追加 PROCESS.md `| <时间> | <阶段> | 开始 | <目标> |`
@@ -302,41 +302,41 @@ description: 需求开发 7 阶段全流程。仅首 token = `req` 触发。例:
 ### 阶段门控
 
 - **执行前必须**读取 `./assistants/.current-version`;不存在则停下提示用户先调 `/code ver`
-- **阶段开始/完成时必须**追加 `PROCESS.md` 一行(详见 `common.md` §3)
+- **阶段开始/完成时必须**追加 `PROCESS.md` 一行(详见 `common.md`「PROCESS.md 追加(强制)」)
 - **阶段失败时必须**追加 `PROCESS.md` 失败行,不得静默吞错
 - **7 阶段顺序必须**严格执行(`INIT → REQUIRE → DESIGN → PLAN → CODING → CHECK → DONE`),严禁合并或跳过(即使 `--auto` 也不能跳过阶段)
 
 ### 源码修改窗口
 
-- **修改 CWD 源码必须**仅在 `PROCESS.md` 最后阶段 = `CODING` 时执行(详见 §0 I-3)
+- **修改 CWD 源码必须**仅在 `PROCESS.md` 最后阶段 = `CODING` 时执行(详见不变式 I-3)
 - 修改前**必须**先 `git status --porcelain` 检查,已有修改先回退
 
 ### 文档与规范
 
 - **代码注释必须**用功能描述,**不得**出现 REQ-NNNNN / BUG-NNNNN / TASK-* 追踪编号
-- **修改既有规则文件**时**必须**用 `Edit` 在末尾追加;新建分类**必须**用 `Write` 首次(详见 §0 I-5)
+- **修改既有规则文件**时**必须**用 `Edit` 在末尾追加;新建分类**必须**用 `Write` 首次(详见不变式 I-5)
 - **修改 `RESULT.md` 时必须**只动本技能负责的区段,不得越界写其他技能区域
 
 ### 阶段内操作
 
-- **阶段内澄清问题**每轮**必须**聚焦 1-3 个最阻塞的点(详见 `require.md` §5)
-- **需求冲突必须**用 `AskUserQuestion` 确认,不可仅标注"设计推断"延迟到 DESIGN 阶段(见 `require.md` §5c)
+- **阶段内澄清问题**每轮**必须**聚焦 1-3 个最阻塞的点(详见 `require.md`「交互确认」)
+- **需求冲突必须**用 `AskUserQuestion` 确认,不可仅标注"设计推断"延迟到 DESIGN 阶段(见 `require.md` 阶段内冲突确认)
 - **REQUIRE 阶段必须**不做技术选型,归 DESIGN 阶段
-- **DESIGN 阶段必须**完成 §9 全部用户确认(扩展性/方案选型/改修方案/危险操作)
-- **危险操作**(移除/变更现有行为)时必须执行 `design.md` §9d 确认流程
+- **DESIGN 阶段必须**完成 design.md 全部用户确认(扩展性/方案选型/改修方案/危险操作)
+- **危险操作**(移除/变更现有行为)时必须执行 `design.md` 危险操作确认流程
 - **CODING 阶段编译/测试前必须**先检测项目语言;未检测则走通用启发式
 - **评审-编码循环达到 5 轮上限时必须**停下询问用户
 - **审查改修时必须**只处理发现清单中的项;其他问题记入 `deviations.md`,不得擅自越界
 
 ### 运行时
 
-- **CODING 阶段编译/测试运行时缺失必须**先尝试运行一次,确认是"运行时缺失"才触发确认机制(见 `references/runtime-environment.md` §0);严禁未尝试就先询问
+- **CODING 阶段编译/测试运行时缺失必须**先尝试运行一次,确认是"运行时缺失"才触发确认机制(见 `references/runtime-environment.md`「适用范围与术语」);严禁未尝试就先询问
 - **系统级安装**(`winget`/`brew`/`apt` 等)**必须**经用户明确同意,非 `--auto` 模式需 `AskUserQuestion`
 - **运行时配置必须**只以枚举值(机器值)记录,不写路径到 TASK/PROCESS/LOG,不存为 MEMORY 项
 
 ### 模式
 
-- **`--auto` 模式下**所有 `AskUserQuestion` 自动选第一项;**默认/--confirm 模式下**阶段内澄清正常触发 `AskUserQuestion`(详见 `common.md` §4)
+- **`--auto` 模式下**所有 `AskUserQuestion` 自动选第一项;**默认/--confirm 模式下**阶段内澄清正常触发 `AskUserQuestion`(详见 `common.md`「阶段执行器」)
 
 ## 启动纪律自检表(进入步骤 1 之前必读)
 

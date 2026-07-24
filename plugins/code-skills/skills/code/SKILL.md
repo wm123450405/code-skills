@@ -15,7 +15,7 @@ description: 一体化开发工具集 /code · 首 token 路由入口。包含 7
 >
 > **任一违反 = 立即停手 + 处置**。本节位于 frontmatter 后第一段,不会被任何子命令段落覆盖。
 
-### §0 不变式(5 条硬规则)
+### 不变式(5 条硬规则)
 
 | # | 不变式 | 触发条件 |
 | --- | --- | --- |
@@ -30,24 +30,24 @@ description: 一体化开发工具集 /code · 首 token 路由入口。包含 7
 - 已经用 `Edit`/`Write` 改过 CWD 代码但 `req/<REQ>/PROCESS.md` 不存在 → 违反 I-3 + I-4
 - 准备用 `Edit` 全量覆盖 `./assistants/rules/<分类>.md` → 违反 I-5
 
-### §0 违反后的处置流程(强制,不可降级)
+### 违反后的处置流程(强制,不可降级)
 
 ```
 step 1: 立即停止后续动作(不继续修改源代码、不进入下一阶段)
 step 2: git checkout -- <files> 回退已修改的 CWD 文件
 step 3: mkdir -p req/<REQ-NNNNN>/  (或 fix/<BUG-NNNNN>/)
         echo "| $(date '+%Y-%m-%d %H:%M') | INIT | 失败 | 违反不变式 §<N>: <具体说明> |" >> req/<REQ>/PROCESS.md
-step 4: 重新从 §0 不变式开始核对,逐条 ✓ 后再进入正常流程
+step 4: 重新从不变式开始核对,逐条 ✓ 后再进入正常流程
 ```
 
 > **反向用例**:用户描述"为 /code 加 HELP 功能"是技术性元任务,不是面向某个产品需求。**这种"自身技能改进"任务**也必须走 `req` 流程 → 在 `req/REQ-00050/REQUIRE.md` 里写"为 /code 加 HELP,FR-1 是..."
 
-### §0 验证:本 §0 是否生效
+### 验证:本节是否生效
 
 每次进入本技能时,**用 AskUserQuestion 自检一次**(即使是非 `--auto` 也走):
 
 ```
-请确认已读完 §0 不变式 5 条:
+请确认已读完不变式 5 条:
 - I-1(子命令路由)明白了吗?
 - I-2(禁 plan 模式)明白了吗?
 - I-3(非 CODING 禁改源码)明白了吗?
@@ -78,10 +78,10 @@ B. 某条不清楚,先解释
 ### 路由规则
 
 1. 首 token ∈ {`ver`, `req`, `fix`, `faq`, `rule`, `merge`} → 加载对应子命令 SKILL.md
-2. 首 token 缺失 / 无法识别 → 加载 `references/help/SKILL.md`,显示 §A 完整 HELP + AskUserQuestion 6 选项引导
+2. 首 token 缺失 / 无法识别 → 加载 `references/help/SKILL.md`,显示 完整 HELP + AskUserQuestion 6 选项引导
 3. 用户输入 `/code help` / `/code --help` / `/code -h` → 直接加载 `references/help/SKILL.md` §A
 
-> **本技能定位**:路由 + §0 不变式 + 全局纪律。子命令的具体流程、参数、边界、不做的事,均在各子命令 SKILL.md 内。
+> **本技能定位**:路由 + 不变式 + 全局纪律。子命令的具体流程、参数、边界、不做的事,均在各子命令 SKILL.md 内。
 
 ---
 
@@ -97,6 +97,6 @@ B. 某条不清楚,先解释
 
 > 以下事项为强制要求,违反即视为本技能执行失败。
 
-- 进入本技能时**必须**完整执行 §0 不变式验证(I-1 ~ I-5)
+- 进入本技能时**必须**完整执行不变式验证(I-1 ~ I-5)
 - 新增/修改子命令 `description` 时**必须**验证与已注册 description 无显著语义重叠(参考 `references/help/SKILL.md` 命令矩阵)
 - 子命令的详细流程**必须**写在 `references/<子命令>/SKILL.md` 内,主 SKILL.md 仅做路由

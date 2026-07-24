@@ -34,7 +34,7 @@
 
 ## 附录 A:测试状态流转规则(FR-7 来源)
 
-> 状态字面以契约层 `references/_shared/contracts.md` §2 为唯一事实源。
+> 状态字面以契约层 `references/_shared/contracts.md`「状态字面表」为唯一事实源。
 
 ### A.1 初值表
 

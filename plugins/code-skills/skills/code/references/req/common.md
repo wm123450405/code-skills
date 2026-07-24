@@ -2,13 +2,13 @@
 
 > 本文件为 `/code req` 子命令提供阶段无关的公共流程。始终加载。
 
-## §1 版本检测(强制前置)
+## 版本检测(强制前置)
 
 1. 读取 `./assistants/.current-version`
 2. **文件不存在** → 立即停下,告知用户先调 `/code ver`
 3. 读取内容,记为 `<版本号>`,后续所有路径用 `assistants/<版本号>/...`
 
-## §2 PROCESS.md 恢复(断点续跑)
+## PROCESS.md 恢复(断点续跑)
 
 ### 读取与解析
 
@@ -46,7 +46,7 @@ function nextStage(current):
   return idx >= 0 && idx < order.length - 1 ? order[idx + 1] : "DONE"
 ```
 
-## §3 PROCESS.md 追加(强制)
+## PROCESS.md 追加(强制)
 
 > 追加式写入,不预读文件内容。每次阶段开始/完成时追加一行。
 
@@ -68,7 +68,7 @@ echo "| $(date '+%Y-%m-%d %H:%M') | <阶段> | <状态> | <摘要> |" >> PROCESS
 - 阶段完成:关键产出统计(如 FR 数量、模块数量、任务数量)
 - 阶段失败:错误原因简述
 
-## §4 阶段执行器
+## 阶段执行器
 
 ### 执行流程
 
@@ -170,7 +170,7 @@ function preStageCheck(stage, reqDir):
 - 阶段内内容确认由各阶段 references 自行控制,不受阶段边界确认模式影响
 - `--auto` 模式下所有 AskUserQuestion 自动选第一项(推荐项)
 
-## §5 目录结构
+## 目录结构
 
 ### 需求路径
 
@@ -199,7 +199,7 @@ assistants/<版本号>/fix/<BUG-NNNNN>/
 └── LOG.md
 ```
 
-## §6 版本看板同步
+## 版本看板同步
 
 ### RESULT.md 格式(简化版)
 
@@ -223,7 +223,7 @@ assistants/<版本号>/fix/<BUG-NNNNN>/
 - 各阶段完成时**不再改写**看板
 - 进度通过 `PROCESS.md` 链接查看
 
-## §7 交互确认
+## 交互确认
 
 > 三态确认模型:阶段边界确认与阶段内内容确认是正交关系。本节定义阶段边界确认的行为。
 
@@ -262,7 +262,7 @@ B. 中止(保存当前进度,退出)
 
 > 阶段内内容确认(需求澄清、设计选型、任务拆分、审查发现等)由各阶段 references 自行控制,不受阶段边界确认模式影响。仅在 `--auto` 模式下,阶段内内容确认也被跳过。
 
-## §8 标题解析
+## 标题解析
 
 > 适用对象:所有用户可见的屏幕输出位置(启动/完成/中止/错误/报告)。
 > 从产出文档中提取标题,用于屏幕输出。
@@ -312,7 +312,7 @@ function parseResultTitle(filePath: string): string {
 - **不**修改 frontmatter
 - **不**修改既有章节
 
-## §9 通用边界
+## 通用边界
 
 ### 错误处理
 
@@ -331,7 +331,7 @@ function parseResultTitle(filePath: string): string {
 - 代码注释使用功能梗概替代编号
 - 此约束不覆盖 commit message 和 `./assistants/` 工作产物
 
-## §10 DONE 阶段兜底提交
+## DONE 阶段兜底提交
 
 > 本小节为 `/code req` 与 `/code fix` 流程的 DONE 阶段提供"兜底提交代码"的详细流程。
 > 在进入 DONE 阶段时加载。
@@ -421,7 +421,7 @@ C. 取消
 - 选 B → 屏幕输出 `[兜底提交] 已跳过提交,文件保持暂存状态,请手动 git commit`
 - 选 C → 屏幕输出 `[兜底提交] 已取消`
 
-## §11 --confirm 模式
+## --confirm 模式
 
 > 本小节定义 `--confirm` 模式的完整行为规范。在解析到 `--confirm` flag 时加载。
 
