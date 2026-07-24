@@ -880,7 +880,7 @@ function formatPublishReport(result):
 
 ## §5 CWD 描述文件版本号同步(四步流程,FR-9 方案 B)
 
-> 用户 2026-07-22 10:58 拍板方案 B:保留自动同步 CWD 描述文件的默认行为,加"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步前置。完整契约见 `references/_shared/contracts.md` §7。
+> 保留自动同步 CWD 描述文件的默认行为,加"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步前置。完整契约见 `references/_shared/contracts.md` §7。
 
 ```
 function syncCwdVersionFiles(newVersion, flags):

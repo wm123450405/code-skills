@@ -241,7 +241,6 @@ function FR5_verifyCommit():
 
 ```
 function FR6_dashboardCheck():
- // FR-13:只校验 dashboard-v2 schema;不保留旧 schema 兼容模式(用户 2026-07-22 10:55 确认)
  // 详细契约见 references/_shared/contracts.md §1
  version = read("./assistants/.current-version")
  result_md = read(f"assistants/{version}/RESULT.md")

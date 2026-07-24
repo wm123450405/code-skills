@@ -50,7 +50,7 @@ description: 版本管理与开发看板。仅首 token = `ver` 触发。例:`/c
 - `rules/` **不**在版本下,跨版本共享
 - `.current-version` 是纯文本标记,内容只有版本号字符串
 - 本技能**不**修改 `./assistants/rules/` 下的任何内容(只读)
-- **【FR-9 方案 B 用户确认 2026-07-22 10:58】本技能在版本切换时默认会同步更新 CWD 中的项目描述文件(`package.json` / `pom.xml` / `Cargo.toml` / `pyproject.toml` / `manifest.json` 等);同步走"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步流程(详见契约层 `references/_shared/contracts.md` §7);若需跳过同步,使用 `--no-sync` 参数**
+- **【FR-9】本技能在版本切换时默认会同步更新 CWD 中的项目描述文件(`package.json` / `pom.xml` / `Cargo.toml` / `pyproject.toml` / `manifest.json` 等);同步走"差异预览 → 用户确认 → 失败回滚 → 提交记录"四步流程(详见契约层 `references/_shared/contracts.md` §7);若需跳过同步,使用 `--no-sync` 参数**
 - 看板模式**只读**,不修改任何文件(不受上述四步影响)
 
 ## 输入
