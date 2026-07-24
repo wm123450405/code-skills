@@ -423,9 +423,3 @@ function findMainWorktree(target):
 
 - **本技能不修改**既有 SKILL.md / `marketplace.json` 既有字段 / `plugin.json` / `./assistants/rules/` 已有规范
 - **本技能不嵌入**具体 git 命令模板到 SKILL.md(命令参数应在调用时由用户/系统提供)
-
----
-
-## 不要做的事
-
-- (本节保留位置;具体约束见上文"必须做事项清单")

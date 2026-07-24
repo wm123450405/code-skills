@@ -36,6 +36,7 @@
 | --- | --- | --- |
 | BUG-00009 | /code ver 切换版本后未在最后阶段提交代码 | [PROCESS.md](fix/BUG-00009/PROCESS.md) |
 | BUG-00010 | req/fix CHECK 阶段建议改/可选改自动应用规则不明确 | [PROCESS.md](fix/BUG-00010/PROCESS.md) |
+| BUG-00011 | 技能中残余无意义板块清理(如主 SKILL.md "## 不要做的事"为空板块) | [PROCESS.md](fix/BUG-00011/PROCESS.md) |
 
 ---
 
